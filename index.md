@@ -16,3 +16,19 @@ Este sitio es una bitácora introspectiva donde conservo fragmentos, poemas, pen
 - [ↂ Poemas](poemas/)
 - [𝄞 Música](musica.md)
 - [◉ Archivo visual](visual/)
+
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 2rem;">
+
+{% for object in site.assemblage %}
+  <a href="{{ site.baseurl }}{{ object.link }}" style="text-decoration: none;">
+    <figure style="margin: 0;">
+      <img src="{{ site.baseurl }}{{ object.image }}" alt="{{ object.title }}" style="width: 100%; height: auto; display: block; border-radius: 8px;" />
+      <figcaption style="text-align: center; font-size: 0.9rem; color: #666; margin-top: 0.3rem;">
+        {{ object.title }}
+      </figcaption>
+    </figure>
+  </a>
+{% endfor %}
+
+</div>
