@@ -1,8 +1,8 @@
 # Minimal Jekyll configuration for GitHub Pages
 
 # Site settings
-title: "Bitácora KNDL"
-description: "Blog minimalista hecho con Jekyll y Markdown"
+title: "KNDL 000"
+description: "Fragments on technology, art, culture, philosophy — and the quiet noise of life."
 author: "KNDL"
 
 # Build settings
@@ -10,3 +10,7 @@ markdown: kramdown
 remote_theme: jekyll/minima
 plugins:
  - jekyll-feed
+ - jekyll-seo-tag
+
+sass:
+  style: compressed
