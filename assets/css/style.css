@@ -1,13 +1,17 @@
 body {
   background-color: #0e0e0e;
   color: #e0e0e0;
-  font-family: 'Georgia', serif;
+  font-family: 'Inter', sans-serif;
   line-height: 1.7;
   max-width: 800px;
   margin: auto;
   padding: 2rem;
 }
-
+h1, h2, h3, h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 700;
+  color: #eee;
+}
 a {
   color:rgb(82, 82, 90);
   text-decoration: none;
@@ -75,4 +79,39 @@ nav {
 
 .nav a:hover {
   text-decoration: underline;
+}
+
+
+.nube-de-palabras {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.2rem;
+  padding: 2rem;
+  text-align: center;
+  animation: flotar 20s infinite linear;
+}
+
+.nube-de-palabras a {
+  font-size: calc(1rem + 0.5vw);
+  color: #aaa;
+  text-decoration: none;
+  font-family: 'Cormorant Garamond', serif;
+  transition: transform 0.3s ease, color 0.3s;
+  display: inline-block;
+  animation: orbitar 12s ease-in-out infinite alternate;
+}
+
+.nube-de-palabras a:hover {
+  color: #fff;
+  transform: scale(1.2) rotate(2deg);
+}
+
+@keyframes orbitar {
+  from {
+    transform: translateY(0px) rotate(-2deg);
+  }
+  to {
+    transform: translateY(-14px) rotate(4deg);
+  }
 }
