@@ -13,4 +13,4 @@ plugins: []
 collections:
   images:
     output: true
-    permalink: /imagenes/:name/
+    permalink: kndl000/imagenes/:name/
