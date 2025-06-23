@@ -9,10 +9,14 @@ body {
 }
 
 a {
-  color: #7ab6f5;
+  color:rgb(82, 82, 90);
   text-decoration: none;
 }
 
+h1 > span > a {
+    color:rgb(82, 82, 90);
+    font-size: 1.5rem;
+}
 a:hover {
   text-decoration: underline;
 }

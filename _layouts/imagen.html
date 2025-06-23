@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ page.title }}</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+  <main>
+    <h1>Visual: {{ page.caption }} <span style="float:right;"><a href="/">⌂ init</a></span></h1>
+    <article>
+      <figure style="margin: 0;">
+        <img src="{{ page.image }}" alt="{{ page.alt | default: page.title }}" style="width: 100%; height: auto;" />
+        {% if page.caption %}
+        <figcaption style="text-align: center; font-size: 0.9rem; color: #666; margin-top: 0.5rem;">
+          {{ page.caption }}
+        </figcaption>
+        {% endif %}
+      </figure>
+      <div style="margin-top: 2rem;">
+        {{ content }}
+      </div>
+    </article>
+  </main>
+</body>
+</html>

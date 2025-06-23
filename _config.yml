@@ -9,3 +9,8 @@ author: "KNDL"
 markdown: kramdown
 theme:
 plugins: []
+
+collections:
+  images:
+    output: true
+    permalink: /imagenes/:name/
