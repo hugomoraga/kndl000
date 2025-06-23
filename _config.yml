@@ -15,3 +15,6 @@ collections:
   images:
     output: true
     permalink: /imagenes/:name/
+  poems:
+    output: true
+    permalink: /poemas/:name/  

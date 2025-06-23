@@ -3,8 +3,8 @@ layout: default
 title: Poema
 ---
 
-# Diario interior
+# Poemas
 
-{% for post in site.posts %}
-- [{{ post.title }}]({{ post.url | relative_url }}) <span style="color:#666">({{ post.date | date: "%Y-%m-%d" }})</span>
+{% for poems in site.poems %}
+- [{{ poems.title }}]({{ poems.url | relative_url }}) <span style="color:#666">({{ poems.date | date: "%Y-%m-%d" }})</span>
 {% endfor %}

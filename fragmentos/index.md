@@ -1,4 +1,4 @@
-# Fragmentos <span style="float:right;"><a href="/">⌂ init</a></span>
+# Fragmentos <span style="float:right;"><a href="{{ site.baseurl }}/">⌂ init</a></span>
 
 ## Fragmento 002
 
