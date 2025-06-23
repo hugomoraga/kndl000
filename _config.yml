@@ -4,6 +4,7 @@
 title: "KNDL 000"
 description: "Fragments on technology, art, culture, philosophy — and the quiet noise of life."
 author: "KNDL"
+baseurl: "/kndl000"
 
 # Build settings
 markdown: kramdown
@@ -13,4 +14,4 @@ plugins: []
 collections:
   images:
     output: true
-    permalink: kndl000/imagenes/:name/
+    permalink: /imagenes/:name/
