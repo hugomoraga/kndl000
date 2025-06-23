@@ -1,6 +1,17 @@
 ---
-layout: home
-title: "Bienvenido a la bitácora"
+layout: default
+title: Inicio
+nav: true
+nav_order: 1
 ---
 
-Este es un blog minimalista construido con [Jekyll](https://jekyllrb.com/) y Markdown. Aqui encontraras notas y registros.
+# Mi Santuario Invisible
+
+> “No me mires. Solo deja que exista.”
+
+Este sitio es una bitácora introspectiva donde conservo fragmentos, poemas, pensamientos, música y silencio.
+
+- [📝 Diario interior](diario/)
+- [🧩 Fragmentos](fragmentos/)
+- [🎵 Música](musica.md)
+- [🌑 Silencios](silencios.md)
