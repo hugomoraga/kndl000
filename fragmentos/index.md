@@ -1,13 +1,16 @@
-# Fragmentos <span style="float:right;"><a href="{{ site.baseurl }}/">⌂ init</a></span>
+---
+layout: default
+title: Fragmentos
+---
 
-## Fragmento 002
+{% for frag in site.data.fragmentos %}
+## K.N.D.L.0.0.{{ frag.id }}
 
-- "si no soy yo. ¿Quién?"
+{% for linea in frag.textos %}
+- "{{ linea }}"
+{% endfor %}
 
-## Fragmento 001
-
-- "Ya no, nada y a nadie."
-- "...Moriré conmigo."
+{% endfor %}
 
 ---
 

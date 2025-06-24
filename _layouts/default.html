@@ -10,6 +10,9 @@
   </head>
   <body>
     <main>
+      {% unless page.url == "/" %}
+        <h1>{{ page.title }} <span style="float:right;"><a href="{{ site.baseurl }}/">⌂ init</a></span></h1>
+      {% endunless %}
       {{ content }}
     </main>
   </body>
