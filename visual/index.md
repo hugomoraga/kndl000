@@ -1,4 +1,8 @@
-# Visuales: Imágenes y Capturas <span style="float:right;"><a href="{{ site.baseurl }}/">⌂ init</a></span>
+---
+layout: default
+title: 👁
+---
+
 
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 2rem;">
 

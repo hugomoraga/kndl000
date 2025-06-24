@@ -1,14 +1,14 @@
 ---
 layout: default
-title: Fragmentos
+title: 🜂
 ---
 
 {% for frag in site.data.fragmentos %}
-## K.N.D.L.0.0.{{ frag.id }}
+## ...{{ frag.id }}
 
-{% for linea in frag.textos %}
-- "{{ linea }}"
-{% endfor %}
+    {% for linea in frag.textos %}
+        ~ "{{ linea }}"
+    {% endfor %}
 
 {% endfor %}
 
