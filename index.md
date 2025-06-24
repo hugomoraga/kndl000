@@ -17,43 +17,6 @@ nav_order: 1
   <a href="{{ site.baseurl }}/visual/">◉ Visual</a>
 </div>
 
-<style>
-.collage {
-  column-count: 3;
-  column-gap: 1rem;
-  margin-top: 2rem;
-}
-
-@media (max-width: 800px) {
-  .collage {
-    column-count: 2;
-  }
-}
-@media (max-width: 500px) {
-  .collage {
-    column-count: 1;
-  }
-}
-
-.collage figure {
-  break-inside: avoid;
-  margin: 0 0 1rem;
-}
-
-.collage img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  display: block;
-}
-.collage figcaption {
-  text-align: center;
-  font-size: 0.85rem;
-  color: #888;
-  margin-top: 0.4rem;
-}
-</style>
-
 <div class="collage">
 
 {% for object in site.assemblage %}
