@@ -2,6 +2,8 @@
 layout: poems
 title: Cae - Mal Necesario part.2
 image: /assets/images/poems-002.png
+date: 2025-06-23
+
 ---
 
 

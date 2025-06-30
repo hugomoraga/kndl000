@@ -159,3 +159,16 @@ nav {
   font-size: 1.5rem;
   color: #bbb;
 } 
+
+#ui {
+   position: absolute; 
+   top: 10px; 
+   left: 10px; 
+   z-index: 10; 
+   background: rgba(0,0,0,0.6); 
+   padding: 10px; 
+   border-radius: 8px;
+}
+select, input, button {
+   margin: 5px; padding: 4px;
+}

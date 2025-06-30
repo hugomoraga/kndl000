@@ -2,6 +2,8 @@
 layout: poems
 title: Persistencias del Algo - Mal Necesario Part.1
 image: /assets/images/poems-001.png
+date: 2025-06-23
+
 ---
 
 ## 1. Persistir

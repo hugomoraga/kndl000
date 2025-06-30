@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <title>{{ page.title }} - {{ site.title }}</title>
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&family=Cormorant+Garamond:wght@400;700&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+
+
+  </head>
+  <body>
+    <main>
+
+        <control-panel></control-panel>
+        <canvas id="three-canvas"></canvas>
+        <script type="module" src="{{ '/assets/js/main.js' | relative_url }}"></script>
+    </main>
+  </body>
+</html>

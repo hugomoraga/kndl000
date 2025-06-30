@@ -2,6 +2,8 @@
 layout: poems
 title: Script el verbo
 image: /assets/images/poems-003.jpg
+date: 2025-06-21
+
 ---
 
 
