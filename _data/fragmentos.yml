@@ -1,3 +1,10 @@
+- id: 005
+  textos:
+    - "No hay nada que pueda hacer."
+    - "No hay nada que pueda decir."
+- id: 004
+  textos:
+    - "La vida es prestada."
 - id: 003
   textos:
     - "Quise escribirlo todo."
