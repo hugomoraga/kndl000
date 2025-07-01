@@ -3,12 +3,15 @@ layout: default
 title: 🜂
 ---
 
-{% for frag in site.data.fragmentos %}
-## ...{{ frag.id }}
+{% assign fragmentos = site.data.fragmentos %}
+{% assign count = fragmentos.size %}
 
-    {% for linea in frag.textos %}
-        ~ "{{ linea }}"
-    {% endfor %}
+{% for bloque in fragmentos %}
+## ...{{ count | minus: forloop.index0 }}
+
+{% for linea in bloque %}
+    ~ "{{ linea }}"
+{% endfor %}
 
 {% endfor %}
 
