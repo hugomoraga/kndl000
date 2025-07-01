@@ -18,6 +18,3 @@ collections:
   poems:
     output: true
     permalink: /poemas/:name/
-  assemblage:
-    output: true
-    permalink: /assemblage/:name/

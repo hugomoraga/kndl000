@@ -1,0 +1,18 @@
+- type: post
+  path: /2025/06/23/manifiesto.html
+  image: /assets/images/object-000.png
+
+- type: page
+  path: /fragmentos
+  image: /assets/images/object-002.png
+  title: Fragmentos
+
+- type: poem
+  path: /poemas/persistencias-del-algo
+  image: /assets/images/object-001.png
+
+
+- type: poem
+  path: /poemas/script
+  title: _script_speak_repeat
+

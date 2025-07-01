@@ -1,0 +1,75 @@
+{% assign collections = 
+  "poem:poems,post:posts,image:images,page:pages" | split: "," %}
+
+<div class="collage">
+
+  {%- comment -%}
+  Render manual desde _data/assemblage.yml
+  {%- endcomment -%}
+  {% for entry in site.data.assemblage %}
+    {% assign item = nil %}
+
+    {% for pair in collections %}
+      {% assign parts = pair | split: ":" %}
+      {% assign type_key = parts[0] %}
+      {% assign site_key = parts[1] %}
+
+      {% if entry.type == type_key %}
+        {% assign entries = site[site_key] %}
+        {% for p in entries %}
+          {% if p.url contains entry.path %}
+            {% assign item = p %}
+            {% break %}
+          {% endif %}
+        {% endfor %}
+        {% break %}
+      {% endif %}
+    {% endfor %}
+
+    {% if item %}
+      {% assign image = entry.image | default: item.image %}
+      {% assign title = entry.title | default: item.title %}
+      {% assign caption = entry.caption | default: title %}
+
+      {% if image %}
+        <figure>
+          <a href="{{ item.url | relative_url }}">
+            <img src="{{ image | relative_url }}" alt="{{ title }}">
+          </a>
+          <figcaption>{{ caption }}</figcaption>
+        </figure>
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+
+  {%- comment -%}
+  Render automático: últimos 6 contenidos con imagen (posts + poems + images)
+  {%- endcomment -%}
+
+  {% assign recent_posts = site.posts | where_exp: "p", "p.image" %}
+  {% assign recent_poems = site.poems | where_exp: "p", "p.image" %}
+  {% assign recent_images = site.images | where_exp: "p", "p.image" %}
+
+  {% assign combined = recent_posts | concat: recent_poems | concat: recent_images %}
+  {% assign sorted_auto = combined | sort: "date" | reverse %}
+
+  {% assign shown = 0 %}
+  {% for item in sorted_auto %}
+    {% if shown == 6 %}
+      {% break %}
+    {% endif %}
+
+    {% assign title = item.title %}
+    {% assign caption = item.title %}
+
+    <figure>
+      <a href="{{ item.url | relative_url }}">
+        <img src="{{ item.image | relative_url }}" alt="{{ title }}">
+      </a>
+      <figcaption>{{ caption }}</figcaption>
+    </figure>
+
+    {% assign shown = shown | plus: 1 %}
+  {% endfor %}
+
+</div>

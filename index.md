@@ -17,18 +17,8 @@ nav_order: 1
   <a href="{{ site.baseurl }}/visual/">◉ Visual</a>
 </div>
 
-<div class="collage">
+      {% include assemblage.html %}
 
-{% for object in site.assemblage %}
-  <figure>
-    <a href="{{ site.baseurl }}{{ object.link }}">
-      <img src="{{ site.baseurl }}{{ object.image }}" alt="{{ object.title }}">
-    </a>
-    <figcaption>{{ object.title }}</figcaption>
-  </figure>
-{% endfor %}
-
-</div>
 
 
 <canvas id="art" width="800" height="600" style="width: 100%; height: 300px;"></canvas>

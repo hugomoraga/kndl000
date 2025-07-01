@@ -33,11 +33,28 @@ blockquote {
   font-style: italic;
 }
 
-h1, h2, h3 {
+h1 {
   color: #e0e0e0;
   border-bottom: 1px solid #333;
   padding-bottom: 0.3rem;
   margin-top: 2rem;
+  font-size: 2rem;
+}
+
+h2 {
+  color: #cccccc;
+  border-bottom: 1px solid #222;
+  padding-bottom: 0.2rem;
+  margin-top: 1.5rem;
+  font-size: 1.5rem;
+}
+
+h3 {
+  color: #bbbbbb;
+  margin-top: 1.2rem;
+  font-size: 1.2rem;
+  font-weight: normal;
+  font-style: italic;
 }
 
 hr {
@@ -189,4 +206,28 @@ select, input, button {
 
   white-space: pre-wrap;  /* permite saltos de línea automáticos */
   word-wrap: break-word;  /* fuerza corte de palabras si es necesario */
+}
+
+.excerpt {
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  line-height: 1.6;
+  color: #ccc;
+}
+
+.read-more {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #999;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.read-more:hover {
+  color: #e0e0e0;
+  text-decoration: underline;
 }

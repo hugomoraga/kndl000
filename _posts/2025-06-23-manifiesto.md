@@ -1,6 +1,7 @@
 ---
 layout: default
 title: "Manifiesto"
+image: /assets/images/object-000.png
 ---
 
 No hay centro.  
