@@ -12,9 +12,8 @@
   </head>
   <body>
     <main>
-      {% unless page.url == "/" %}
-        <h1>{{ page.title }} <span class="init"><a href="{{ site.baseurl }}/">∅ INIT</a></span></h1>
-      {% endunless %}
+      {% include title.html %}
+
       {{ content }}
     </main>
   </body>

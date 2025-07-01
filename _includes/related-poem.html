@@ -1,0 +1,16 @@
+{% if page.series %}
+  {% assign related_poems = site.poems | where: "series", page.series | where_exp: "item", "item.url != page.url" %}
+  {% if related_poems.size > 0 %}
+    <section style="margin-top: 4rem;">
+      <h2 style="font-family: 'Cormorant Garamond', serif;">Poemas relacionados</h2>
+      <ul>
+        {% for poem in related_poems %}
+          <li>
+            <a href="{{ poem.url | relative_url }}">{{ poem.title }}</a>
+            <span style="color:#999">({{ poem.date | date: "%Y-%m-%d" }})</span>
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+{% endif %}

@@ -10,7 +10,9 @@
 </head>
 <body>
   <main>
-    <h1>◉ {{ page.caption }} ◉<span class="init"><a href="{{ site.baseurl }}/">⌂ init</a></span></h1>
+
+    {% include title.html %}
+
     <article>
       <figure style="margin: 0;">
         <img src="{{ site.baseurl }}{{ page.image }}" alt="{{ page.alt | default: page.title }}" style="width: 100%; height: auto;" />

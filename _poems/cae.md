@@ -1,13 +1,14 @@
 ---
 layout: poems
-title: Cae - Mal Necesario part.2
+title: Cae
 image: /assets/images/poems-002.png
 date: 2025-06-23
-
+series: Mal Necesario
+part: 2
 ---
 
 
-## ≠
+## **≠**
 
 Agotado...  
 Enquistado de tanto significado  
@@ -37,7 +38,7 @@ renuncio.
 
 ﹏
 
-## …
+## **…**
 
 ya no sé,  
 no sé quién soy,  
@@ -57,7 +58,7 @@ un alfabeto extinto.
 
 ﹏
 
-## ↘
+## **↘**
 
 fonemas y aullidos,  
 caos azaroso,  
@@ -75,7 +76,7 @@ más.
 
 ﹏
 
-## //
+## **//**
 
 dolor...  
 maldito dolor...  

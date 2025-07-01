@@ -1,8 +1,10 @@
 ---
 layout: poems
-title: Persistencias del Algo - Mal Necesario Part.1
+title: Persistencias del Algo
 image: /assets/images/poems-001.png
 date: 2025-06-23
+series: Mal Necesario
+part: 1
 
 ---
 
@@ -10,19 +12,18 @@ date: 2025-06-23
 
 **Persistir...**  
 *Mantenerse firme o constante en algo.*  
-Eso encuentro cuando busco su significado.
+Esto encuentro cuando busco el significado.
 
 Cuando intento entender,  
-cuando intento persistir en algo.
+cuando intento profundizar en algo.
 
-Constante de mi ser que busca  
-significados en el algo,  
+Constante de mi ser que busca significados
 
-en ese algo que no se encuentra,  
-pero que se siente,  
+Y ese algo que a veces no se encuentra,  
+pero que se intuye,  
 se respira,  
 
-y perpetúa mi existencia.
+para continuar con mi existencia.
 
 ﹏
 
@@ -96,7 +97,9 @@ persistimos.
 
 ## 5. Sentido
 
-Significado, dirección, motivo.  
+**Verbo...**  
+*Significado, dirección, motivo.*
+
 Eso encuentro  
 cuando busco su significado.
 

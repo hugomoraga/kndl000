@@ -1,0 +1,30 @@
+{% if page.series %}
+  {% assign poem_series = site.poems | where: "series", page.series | sort: "part" %}
+  {% assign index = 0 %}
+
+  {% for p in poem_series %}
+    {% if p.url == page.url %}
+      {% break %}
+    {% endif %}
+    {% assign index = index | plus: 1 %}
+  {% endfor %}
+
+  {% assign prev_index = index | minus: 1 %}
+  {% assign next_index = index | plus: 1 %}
+
+  <nav class="poem-nav" style="margin-top: 3rem; display: flex; justify-content: space-between;">
+    {% if index > 0 %}
+      {% assign prev_poem = poem_series[prev_index] %}
+      <a href="{{ prev_poem.url | relative_url }}">⟵ {{ prev_poem.title }}</a>
+    {% else %}
+      <span></span>
+    {% endif %}
+
+    {% if next_index < poem_series.size %}
+      {% assign next_poem = poem_series[next_index] %}
+      <a href="{{ next_poem.url | relative_url }}">{{ next_poem.title }} ⟶</a>
+    {% else %}
+      <span></span>
+    {% endif %}
+  </nav>
+{% endif %}

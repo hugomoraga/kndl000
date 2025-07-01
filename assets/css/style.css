@@ -172,3 +172,13 @@ nav {
 select, input, button {
    margin: 5px; padding: 4px;
 }
+
+.poem-nav a {
+  font-family: 'Inter', sans-serif;
+  text-decoration: none;
+  color: #444;
+}
+
+.poem-nav a:hover {
+  text-decoration: underline;
+}
