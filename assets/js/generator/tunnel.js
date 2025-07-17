@@ -3,8 +3,8 @@ function startTunnel({
   ellipseSpacing = 10,
   angleIncrement = 0.15,
   ellipseSizeFactor = 1,
-  strokeColor = [2],
-  backgroundColor = [0, 200],
+  strokeColor = [255],
+  backgroundColor = [0, 100],
 } = {}) {
   let angle = 0;
   new p5((sketch) => {
@@ -26,7 +26,6 @@ function startTunnel({
     };
   });
 }
-
 
 // Llamas directamente (¡sin exportar!)
 startTunnel();
