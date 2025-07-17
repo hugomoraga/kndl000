@@ -1,20 +1,19 @@
-function startTunnel({
-  ellipseCount = 100,
-  ellipseSpacing = 10,
-  angleIncrement = 0.15,
-  ellipseSizeFactor = 1,
-  strokeColor = [255],
-  backgroundColor = [0, 100],
-} = {}) {
+function startTunnel() {
   let angle = 0;
   new p5((sketch) => {
     sketch.setup = function() {
       sketch.createCanvas(window.innerWidth, window.innerHeight);
-      sketch.stroke(...strokeColor);
+      sketch.stroke(255);
       sketch.noFill();
     };
+
     sketch.draw = function() {
-      sketch.background(...backgroundColor);
+      let ellipseCount = parseInt(document.getElementById('ellipseCount').value);
+      let ellipseSpacing = parseFloat(document.getElementById('ellipseSpacing').value);
+      let angleIncrement = parseFloat(document.getElementById('angleIncrement').value);
+      let ellipseSizeFactor = parseFloat(document.getElementById('ellipseSizeFactor').value);
+
+      sketch.background(0, 20);
       sketch.translate(sketch.width / 2, sketch.height / 2);
       for (let i = 0; i < ellipseCount; i++) {
         let r = i * ellipseSpacing;
@@ -24,8 +23,12 @@ function startTunnel({
       }
       angle += angleIncrement;
     };
+
+    sketch.windowResized = function() {
+      sketch.resizeCanvas(window.innerWidth, window.innerHeight);
+    };
   });
 }
 
-// Llamas directamente (¡sin exportar!)
 startTunnel();
+

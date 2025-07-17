@@ -9,6 +9,13 @@
 
   </head>
   <body id="generator"  class="generator">
+
+  <div id="controls">
+    <label>Count <input id="ellipseCount" type="range" min="10" max="300" value="100"></label>
+    <label>Spacing <input id="ellipseSpacing" type="range" min="1" max="20" value="10"></label>
+    <label>Speed <input id="angleIncrement" type="range" min="0.01" max="0.2" step="0.01" value="0.05"></label>
+    <label>Size Factor <input id="ellipseSizeFactor" type="range" min="0.5" max="2" step="0.1" value="1"></label>
+  </div>
     <main>
       <script type="module" src="{{ '/assets/js/generator/main.js' | relative_url }}"></script>
     </main>
