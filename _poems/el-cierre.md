@@ -2,8 +2,7 @@
 layout: poems
 title: El Cierre
 image: /assets/images/desierto-florido.png
-date: 2025-14-09
-
+date: 2025-09-14
 ---
 
 I. El ciclo
