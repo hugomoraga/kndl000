@@ -97,7 +97,7 @@ persistimos.
 
 ## 5. Sentido
 
-**Verbo...**  
+**Sentido...**  
 *Significado, dirección, motivo.*
 
 Eso encuentro  
