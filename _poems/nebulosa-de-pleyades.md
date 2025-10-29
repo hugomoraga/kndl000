@@ -1,6 +1,6 @@
 ---
 layout: poems
-title: Nebula
+title: Nebula de Pleyades
 image: /assets/images/poems-nebula.png
 date: 2025-10-29
 ---
