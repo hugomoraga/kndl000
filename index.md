@@ -16,6 +16,7 @@ nav_order: 1
   <a href="{{ site.baseurl }}/musica/">𝄞 Música</a>
   <a href="{{ site.baseurl }}/visual/">◉ Visual</a>
   <a href="{{ site.baseurl }}/visual/generator">꩜ Espiral</a>
+  <a href="{{ site.baseurl }}/melange">🜏 Melange
 </div>
 
       {% include assemblage.html %}
