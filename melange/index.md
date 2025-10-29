@@ -13,4 +13,6 @@ nav_order: 6
 
 ### 5-meo-dmt
 
-### Mescalina en Arcana Festival
+### Mescalina en Arcaka Festival
+
+### Mdma con Epifania
