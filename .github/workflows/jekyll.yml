@@ -39,7 +39,10 @@ jobs:
         run: npm ci
       
       - name: Build Tina CMS admin
-        run: npx tinacms build
+        run: npm run build
+        env:
+          NEXT_PUBLIC_TINA_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_TINA_CLIENT_ID }}
+          TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
       
       - name: Setup Pages
         id: pages
