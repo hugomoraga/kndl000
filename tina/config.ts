@@ -37,7 +37,7 @@ export default defineConfig({
             type: "string",
             name: "layout",
             label: "Layout",
-            default: "default",
+            options: ["default"],
           },
           {
             type: "string",
@@ -69,6 +69,48 @@ export default defineConfig({
         name: "poemas",
         label: "ↂ Poemas",
         path: "_poems",
+        format: "md",
+        fields: [
+          {
+            type: "string",
+            name: "layout",
+            label: "Layout",
+            options: ["poems"],
+          },
+          {
+            type: "string",
+            name: "title",
+            label: "Title",
+            isTitle: true,
+            required: true,
+          },
+          {
+            type: "image",
+            name: "image",
+            label: "Image",
+          },
+          {
+            type: "datetime",
+            name: "date",
+            label: "Date",
+          },
+          {
+            type: "string",
+            name: "series",
+            label: "Series",
+          },
+          {
+            type: "rich-text",
+            name: "body",
+            label: "Body",
+            isBody: true,
+          },
+        ],
+      },
+       {
+        name: "melange_reports",
+        label: "☽ Melange Reports",
+        path: "_melange_reports",
         format: "md",
         fields: [
           {
@@ -156,6 +198,7 @@ export default defineConfig({
             name: "layout",
             label: "Layout",
             default: "imagen",
+            
           },
           {
             type: "string",

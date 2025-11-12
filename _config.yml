@@ -27,4 +27,7 @@ collections:
   vestigios:
     output: true
     permalink: /vestigios/:name/
+  melange_reports:
+    output: true
+    permalink: /melange-reports/:name/
   
