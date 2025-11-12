@@ -13,12 +13,10 @@ plugins:
   - jekyll-feed
   - jekyll-sitemap
 
-# Include admin directory (but don't process HTML files)
+# Include admin directory
 include:
   - admin
-exclude:
-  - admin/*.md
-  - admin/README.md
+# Don't exclude anything from admin - we need the HTML files
 
 collections:
   images:
