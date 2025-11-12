@@ -11,6 +11,10 @@ markdown: kramdown
 theme:
 plugins: []
 
+# Include admin directory
+include:
+  - admin
+
 collections:
   images:
     output: true
