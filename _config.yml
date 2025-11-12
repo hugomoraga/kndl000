@@ -13,9 +13,12 @@ plugins:
   - jekyll-feed
   - jekyll-sitemap
 
-# Include admin directory
+# Include admin directory (but don't process HTML files)
 include:
   - admin
+exclude:
+  - admin/*.md
+  - admin/README.md
 
 collections:
   images:

@@ -3,7 +3,8 @@ backend:
   repo: hugomoraga/kndl000
   branch: main
   base_url: https://kundala000.com
-  auth_type: pkce
+  auth_type: implicit
+  app_id: Ov23liM5Ca4jHPL9jR6K
 
 media_folder: "assets/images"
 public_folder: "/assets/images"
