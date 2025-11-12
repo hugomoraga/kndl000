@@ -9,7 +9,9 @@ baseurl: ""
 # Build settings
 markdown: kramdown
 theme:
-plugins: []
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
 
 # Include admin directory
 include:
