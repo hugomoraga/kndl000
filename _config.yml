@@ -6,11 +6,16 @@ description: "Fragments on technology, art, culture, philosophy — and the quie
 author: "KNDL"
 baseurl: ""
 
+# Build settings
 markdown: kramdown
 theme:
 plugins:
   - jekyll-feed
   - jekyll-sitemap
+
+# Include admin directory for Tina CMS
+include:
+  - admin
 
 collections:
   images:
@@ -22,3 +27,4 @@ collections:
   vestigios:
     output: true
     permalink: /vestigios/:name/
+  
