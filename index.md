@@ -7,7 +7,7 @@ nav_order: 1
 
 # C . E . N . I . Z . A . S
 
-> “Oculto y no tanto”
+> "Oculto y no tanto"<a href="{{ site.baseurl }}/vestigios/" class="link-oculto" title="Vestigios">·</a><a href="{{ site.baseurl }}/admin/" class="link-oculto" title="Admin" style="margin-left: 0.5rem;">⚙</a>
 
 <div class="nube-de-palabras">
   <a href="{{ site.baseurl }}/diario/">✶ Diario</a>

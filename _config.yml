@@ -18,3 +18,6 @@ collections:
   poems:
     output: true
     permalink: /poemas/:name/
+  vestigios:
+    output: true
+    permalink: /vestigios/:name/

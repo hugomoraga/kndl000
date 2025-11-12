@@ -1,0 +1,17 @@
+---
+layout: default
+title: "Fotografía sin fecha"
+date: 2025-02-03
+image: /assets/images/IMG_6302.jpg
+---
+
+Una imagen que no recuerdo tomar.  
+O tal vez sí, pero el momento se desvaneció.
+
+La cámara capturó algo que la memoria no retiene.  
+Un instante que existió solo para el dispositivo.  
+No para mí.
+
+¿Qué importa lo que muestra?  
+Lo que importa es lo que ya no está.
+

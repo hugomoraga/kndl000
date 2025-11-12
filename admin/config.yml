@@ -1,0 +1,61 @@
+backend:
+  name: github
+  repo: hugomoraga/kndl000
+  branch: main
+  base_url: https://kundala000.com
+  auth_type: pkce
+
+media_folder: "assets/images"
+public_folder: "/assets/images"
+
+collections:
+  - name: "diario"
+    label: "✶ Diario"
+    folder: "_posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Layout", name: "layout", widget: "hidden", default: "default"}
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Image", name: "image", widget: "image", required: false, media_library: {config: {multiple: false}}}
+      - {label: "Publish Date", name: "date", widget: "datetime", format: "YYYY-MM-DD HH:mm", default: ""}
+      - {label: "Body", name: "body", widget: "markdown"}
+
+  - name: "poemas"
+    label: "ↂ Poemas"
+    folder: "_poems"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Layout", name: "layout", widget: "select", options: ["poems", "default"], default: "poems"}
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Image", name: "image", widget: "image", required: false, media_library: {config: {multiple: false}}}
+      - {label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DD", required: false}
+      - {label: "Series", name: "series", widget: "string", required: false, hint: "Nombre de la serie si pertenece a una"}
+      - {label: "Body", name: "body", widget: "markdown"}
+
+  - name: "vestigios"
+    label: "⚱ Vestigios"
+    folder: "_vestigios"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Layout", name: "layout", widget: "hidden", default: "default"}
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Image", name: "image", widget: "image", required: false, media_library: {config: {multiple: false}}}
+      - {label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DD", required: false}
+      - {label: "Body", name: "body", widget: "markdown"}
+
+  - name: "imagenes"
+    label: "◉ Imágenes"
+    folder: "_images"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Layout", name: "layout", widget: "hidden", default: "imagen"}
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Image", name: "image", widget: "image", media_library: {config: {multiple: false}}}
+      - {label: "Caption", name: "caption", widget: "string", required: false}
+      - {label: "Alt Text", name: "alt", widget: "string", required: false, hint: "Texto alternativo para accesibilidad"}
+      - {label: "Body", name: "body", widget: "markdown", required: false}
+
