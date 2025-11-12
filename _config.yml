@@ -6,17 +6,11 @@ description: "Fragments on technology, art, culture, philosophy — and the quie
 author: "KNDL"
 baseurl: ""
 
-# Build settings
 markdown: kramdown
 theme:
 plugins:
   - jekyll-feed
   - jekyll-sitemap
-
-# Include admin directory
-include:
-  - admin
-# Don't exclude anything from admin - we need the HTML files
 
 collections:
   images:
