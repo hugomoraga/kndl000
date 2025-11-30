@@ -32,9 +32,9 @@
       {% assign caption = entry.caption | default: title %}
 
       {% if image %}
-        <figure>
+        <figure class="image-effect">
           <a href="{{ item.url | relative_url }}">
-            <img src="{{ image | relative_url }}" alt="{{ title }}">
+            <img src="{{ image | relative_url }}" alt="{{ title }}" loading="lazy">
           </a>
           <figcaption>{{ caption }}</figcaption>
         </figure>
@@ -62,9 +62,9 @@
     {% assign title = item.title %}
     {% assign caption = item.title %}
 
-    <figure>
+    <figure class="image-effect">
       <a href="{{ item.url | relative_url }}">
-        <img src="{{ item.image | relative_url }}" alt="{{ title }}">
+        <img src="{{ item.image | relative_url }}" alt="{{ title }}" loading="lazy">
       </a>
       <figcaption>{{ caption }}</figcaption>
     </figure>
