@@ -24,89 +24,12 @@ nav_order: 1
 
 
 
-<canvas id="art" width="800" height="600" style="width: 100%; height: 300px;"></canvas>
-<script>
-const canvas = document.getElementById("art");
-const ctx = canvas.getContext("2d");
-let t = 0;
+<canvas id="art" width="800" height="600" style="width: 100%; height:300px"></canvas>
+<script src="{{ '/assets/js/core/home-canvas.js' | relative_url }}" defer></script>
 
-function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.strokeStyle = "#999";
-  ctx.beginPath();
-  for (let x = 0; x < canvas.width; x += 10) {
-    let y = canvas.height / 2 + Math.sin(x * 0.01 + t) * 20;
-    ctx.lineTo(x, y);
-  }
-  ctx.stroke();
-  t += 0.05;
-  requestAnimationFrame(draw);
-}
-draw();
-</script>
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin: 1rem 0;">
+  <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/QNS9RGB1GWg?si=1kdQaWa02BWeQJiI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
 
-
-<iframe width="100%" height="400px" src="https://www.youtube.com/embed/QNS9RGB1GWg?si=1kdQaWa02BWeQJiI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-
-
-
-<script>
-  // Cargar samples
-  const kick = new Tone.Player("assets/samples/kick.wav").toDestination();
-  const pad = new Tone.Player("assets/samples/drone.wav").toDestination();
-  const reverb = new Tone.Reverb(4).toDestination();
-  const perc = new Tone.Player("assets/samples/perc.wav").toDestination();
-  // Conexión del pad al efecto
-  pad.connect(reverb);
-
-  // Filtro con LFO para movimiento
-  const padFilter = new Tone.Filter(400, "lowpass").toDestination();
-  reverb.connect(padFilter);
-
-  const lfo = new Tone.LFO("0.1hz", 200, 1000);
-  lfo.connect(padFilter.frequency).start();
-
-  // Contador para el kick
-  let kickCount = 0;
-
-  // Loop de kick
-  const kickLoop = new Tone.Loop((time) => {
-    kickCount++;
-    if (kickCount % 16 === 0) {
-
-    } else {
-      kick.start(time);
-    }
-  }, "4n");
-
-  // loop Percucion
-  const percLoop = new Tone.Loop((time) => {
-    perc.start(time);
-  }, "16m");
-
-  // Loop ambiental del pad
-  const padLoop = new Tone.Loop((time) => {
-    pad.playbackRate = Math.random() * 0.3 + 0.9; // variación sutil
-    pad.start(time);
-  }, "4m");
-
-  // Botón para iniciar
-  document.getElementById("start").addEventListener("click", async () => {
-    await Tone.start();
-    kick.volume.value = -8;
-    pad.volume.value = -12;
-    perc.volume.value = -12
-
-    pad.volume.rampTo(0, 8);
-    kick.volume.rampTo(0, 3);
-    perc.volume.rampTo(0, 6);
-
-    kickLoop.start(0);
-    padLoop.start(0);
-    percLoop.start(0);
-    Tone.Transport.start();
-
-    document.getElementById("start").style.display = "none";
-  });
-</script>
+<button id="start" style="margin: 1rem 0; padding: 0.75rem 1.5rem; background: #333; color: #fff; border: 1px solid #555; cursor: pointer; font-size: 1rem; min-height: 44px; width: 100%; max-width: 300px; display: block; margin-left: auto; margin-right: auto;">▶ Iniciar audio</button>
+<script src="{{ '/assets/js/core/home-audio.js' | relative_url }}" defer></script>

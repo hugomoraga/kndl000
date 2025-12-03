@@ -1,0 +1,36 @@
+{%- comment -%}
+  Include reutilizable para renderizar un item de contenido
+  Parámetros:
+    - item: el objeto del contenido
+    - show_excerpt: mostrar excerpt (default: false)
+    - excerpt_length: longitud del excerpt (default: 30)
+{%- endcomment -%}
+
+<div class="content-item" style="margin: 2rem 0; padding: 1.5rem; border-left: 1px solid #333;">
+  <a href="{{ include.item.url | relative_url }}" style="text-decoration: none;">
+    <h3 style="margin-top: 0; color: #888; font-size: clamp(1rem, 3vw, 1.1rem); word-wrap: break-word;">
+      {{ include.item.title }}
+      {% if include.item.date %}
+        <span style="color: #444; font-size: 0.85rem;">({{ include.item.date | date: "%Y-%m-%d" }})</span>
+      {% endif %}
+    </h3>
+  </a>
+  
+  {% if include.item.image %}
+    <img src="{{ include.item.image | relative_url }}" 
+         alt="{{ include.item.title }}" 
+         style="max-width: 100%; width: 100%; height: auto; margin: 1rem 0; opacity: 0.7; border-radius: 4px; display: block;">
+  {% endif %}
+  
+  {% if include.show_excerpt %}
+    <div style="color: #666; font-size: 0.9rem; line-height: 1.6;">
+      {{ include.item.content | strip_html | truncatewords: include.excerpt_length | default: 30 }}
+    </div>
+  {% endif %}
+  
+  <a href="{{ include.item.url | relative_url }}" 
+     style="color: #444; font-size: 0.85rem; text-decoration: none; margin-top: 0.5rem; display: inline-block;">
+    ↳ ver completo
+  </a>
+</div>
+

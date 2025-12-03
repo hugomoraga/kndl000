@@ -20,6 +20,25 @@ body#generator {
   font-size: 12px;
   opacity: 0;
   transition: opacity 0.3s, background 0.3s;
+  max-width: calc(100% - 20px);
+  overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+  #generator > #controls {
+    font-size: 11px;
+    padding: 8px;
+  }
+  
+  #generator > #controls label {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  
+  #generator > #controls input[type="range"] {
+    width: 100%;
+    max-width: 200px;
+  }
 }
 
 #generator > #controls:hover {
@@ -35,6 +54,11 @@ body {
   max-width: 800px;
   margin: auto;
   padding: 2rem;
+  box-sizing: border-box;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 h1, h2, h3, h4 {
@@ -68,7 +92,8 @@ h1 {
   border-bottom: 1px solid #333;
   padding-bottom: 0.3rem;
   margin-top: 2rem;
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  word-wrap: break-word;
 }
 
 h2 {
@@ -76,13 +101,14 @@ h2 {
   border-bottom: 1px solid #222;
   padding-bottom: 0.2rem;
   margin-top: 1.5rem;
-  font-size: 1.5rem;
+  font-size: clamp(1.25rem, 3.5vw, 1.5rem);
+  word-wrap: break-word;
 }
 
 h3 {
   color: #bbbbbb;
   margin-top: 1.2rem;
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 3vw, 1.2rem);
   font-weight: normal;
   font-style: italic;
 }
@@ -133,20 +159,21 @@ nav {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1.2rem;
-  padding: 2rem;
+  gap: clamp(0.5rem, 2vw, 1.2rem);
+  padding: clamp(1rem, 4vw, 2rem);
   text-align: center;
   animation: flotar 20s infinite linear;
 }
 
 .nube-de-palabras a {
-  font-size: calc(1rem + 0.5vw);
+  font-size: clamp(0.9rem, 2.5vw, 1.2rem);
   color: #aaa;
   text-decoration: none;
   font-family: 'Cormorant Garamond', serif;
   transition: transform 0.3s ease, color 0.3s;
   display: inline-block;
   animation: orbitar 12s ease-in-out infinite alternate;
+  padding: 0.25rem;
 }
 
 .nube-de-palabras a:hover {
@@ -169,14 +196,109 @@ nav {
   margin-top: 2rem;
 }
 
-@media (max-width: 800px) {
+/* Media Queries - Responsive Design */
+
+/* Tablets y pantallas medianas */
+@media (max-width: 900px) {
+  body {
+    padding: 1.5rem;
+  }
+  
   .collage {
     column-count: 2;
+    column-gap: 0.75rem;
+  }
+  
+  .nube-de-palabras {
+    gap: 0.8rem;
+    padding: 1.5rem 1rem;
   }
 }
+
+/* Móviles grandes */
+@media (max-width: 768px) {
+  body {
+    padding: 1rem;
+  }
+  
+  h1 {
+    margin-top: 1rem;
+  }
+  
+  h2 {
+    margin-top: 1rem;
+  }
+  
+  blockquote {
+    padding-left: 0.75rem;
+    margin-left: 0.5rem;
+  }
+  
+  .highlight pre {
+    margin-left: 0;
+    padding: 1rem;
+    overflow-x: auto;
+  }
+  
+  .nav li {
+    margin: 0 0.5rem;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Móviles pequeños */
 @media (max-width: 500px) {
+  body {
+    padding: 0.75rem;
+  }
+  
   .collage {
     column-count: 1;
+    column-gap: 0.5rem;
+  }
+  
+  .nube-de-palabras {
+    gap: 0.5rem;
+    padding: 1rem 0.5rem;
+  }
+  
+  .nube-de-palabras a {
+    font-size: 0.9rem;
+  }
+  
+  .init {
+    float: none;
+    text-align: center;
+    margin-top: 1rem;
+  }
+  
+  .init a {
+    font-size: 1.2rem;
+  }
+  
+  hr {
+    margin: 1.5rem 0;
+  }
+  
+  .excerpt {
+    -webkit-line-clamp: 4;
+  }
+}
+
+/* Pantallas muy pequeñas */
+@media (max-width: 360px) {
+  body {
+    padding: 0.5rem;
+  }
+  
+  .nube-de-palabras {
+    gap: 0.4rem;
+    padding: 0.75rem 0.25rem;
+  }
+  
+  .nube-de-palabras a {
+    font-size: 0.85rem;
   }
 }
 
@@ -210,60 +332,13 @@ nav {
   transform-style: preserve-3d;
 }
 
-/* Efectos Glitch */
+/* Efectos Glitch - Simplificado: las animaciones se generan dinámicamente en JS */
 
 .collage figure {
   position: relative;
 }
 
-.collage figure::before,
-.collage figure::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s;
-  z-index: 2;
-  background-image: var(--glitch-image);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  mix-blend-mode: screen;
-}
-
-.collage figure::before {
-  /* Canal rojo - usar blend mode para resaltar rojos */
-  filter: brightness(2) contrast(2) saturate(4);
-  mix-blend-mode: screen;
-  background-blend-mode: screen;
-  /* Overlay rojo para intensificar el canal */
-  box-shadow: inset 0 0 0 0 rgba(255, 0, 0, 0.3);
-}
-
-.collage figure::after {
-  /* Canal azul/cyan - usar blend mode para resaltar azules */
-  filter: brightness(2) contrast(2) saturate(4) hue-rotate(180deg);
-  mix-blend-mode: screen;
-  background-blend-mode: screen;
-  /* Overlay azul para intensificar el canal */
-  box-shadow: inset 0 0 0 0 rgba(0, 150, 255, 0.3);
-}
-
-.collage figure:hover::before {
-  opacity: 0.85;
-  animation: glitch-red 0.8s infinite;
-}
-
-.collage figure:hover::after {
-  opacity: 0.85;
-  animation: glitch-blue 0.8s infinite;
-}
-
-/* Capas RGB reales creadas con JavaScript */
+/* Capas RGB creadas dinámicamente por JavaScript */
 .glitch-rgb-layer {
   position: absolute;
   top: 0;
@@ -272,200 +347,10 @@ nav {
   height: 100%;
   pointer-events: none;
   z-index: 2;
-}
-
-.glitch-red {
   mix-blend-mode: screen;
-  filter: brightness(2.5) contrast(2.5) saturate(5);
 }
 
-.glitch-blue {
-  mix-blend-mode: screen;
-  filter: brightness(2.5) contrast(2.5) saturate(5) hue-rotate(180deg);
-}
-
-@keyframes glitch-red {
-  0%, 100% {
-    transform: translate(0);
-    clip-path: inset(0 0 0 0);
-    filter: brightness(2) contrast(2) saturate(4);
-  }
-  10% {
-    transform: translate(-4px, 1px);
-    clip-path: inset(0 0 96% 0);
-    filter: brightness(2.2) contrast(2.2) saturate(4.5);
-  }
-  20% {
-    transform: translate(4px, -1px);
-    clip-path: inset(0 0 92% 0);
-    filter: brightness(2.1) contrast(2.1) saturate(4.2);
-  }
-  30% {
-    transform: translate(-3px, 3px);
-    clip-path: inset(8% 0 88% 0);
-    filter: brightness(2.3) contrast(2.3) saturate(4.8);
-  }
-  40% {
-    transform: translate(3px, -3px);
-    clip-path: inset(88% 0 8% 0);
-    filter: brightness(2.2) contrast(2.2) saturate(4.5);
-  }
-  50% {
-    transform: translate(-4px, 0);
-    clip-path: inset(0 0 96% 0);
-    filter: brightness(2.1) contrast(2.1) saturate(4.2);
-  }
-  60% {
-    transform: translate(4px, 0);
-    clip-path: inset(0 0 92% 0);
-    filter: brightness(2.3) contrast(2.3) saturate(4.8);
-  }
-  70% {
-    transform: translate(-3px, -2px);
-    clip-path: inset(12% 0 84% 0);
-    filter: brightness(2.2) contrast(2.2) saturate(4.5);
-  }
-  80% {
-    transform: translate(3px, 2px);
-    clip-path: inset(84% 0 12% 0);
-    filter: brightness(2.1) contrast(2.1) saturate(4.2);
-  }
-  90% {
-    transform: translate(0);
-    clip-path: inset(0 0 0 0);
-    filter: brightness(2) contrast(2) saturate(4);
-  }
-}
-
-@keyframes glitch-blue {
-  0%, 100% {
-    transform: translate(0);
-    clip-path: inset(0 0 0 0);
-    filter: brightness(2) contrast(2) saturate(4) hue-rotate(180deg);
-  }
-  10% {
-    transform: translate(4px, -1px);
-    clip-path: inset(0 0 96% 0);
-    filter: brightness(2.2) contrast(2.2) saturate(4.5) hue-rotate(185deg);
-  }
-  20% {
-    transform: translate(-4px, 1px);
-    clip-path: inset(0 0 92% 0);
-    filter: brightness(2.1) contrast(2.1) saturate(4.2) hue-rotate(175deg);
-  }
-  30% {
-    transform: translate(3px, -3px);
-    clip-path: inset(8% 0 88% 0);
-    filter: brightness(2.3) contrast(2.3) saturate(4.8) hue-rotate(190deg);
-  }
-  40% {
-    transform: translate(-3px, 3px);
-    clip-path: inset(88% 0 8% 0);
-    filter: brightness(2.2) contrast(2.2) saturate(4.5) hue-rotate(170deg);
-  }
-  50% {
-    transform: translate(4px, 0);
-    clip-path: inset(0 0 96% 0);
-    filter: brightness(2.1) contrast(2.1) saturate(4.2) hue-rotate(175deg);
-  }
-  60% {
-    transform: translate(-4px, 0);
-    clip-path: inset(0 0 92% 0);
-    filter: brightness(2.3) contrast(2.3) saturate(4.8) hue-rotate(185deg);
-  }
-  70% {
-    transform: translate(3px, 2px);
-    clip-path: inset(12% 0 84% 0);
-    filter: brightness(2.2) contrast(2.2) saturate(4.5) hue-rotate(180deg);
-  }
-  80% {
-    transform: translate(-3px, -2px);
-    clip-path: inset(84% 0 12% 0);
-    filter: brightness(2.1) contrast(2.1) saturate(4.2) hue-rotate(175deg);
-  }
-  90% {
-    transform: translate(0);
-    clip-path: inset(0 0 0 0);
-    filter: brightness(2) contrast(2) saturate(4) hue-rotate(180deg);
-  }
-}
-
-.collage figure:hover img {
-  animation: glitch-main 0.8s infinite;
-  filter: contrast(1.08) brightness(1.03);
-}
-
-@keyframes glitch-main {
-  0%, 100% {
-    transform: translate(0);
-    clip-path: inset(0 0 0 0);
-  }
-  15% {
-    transform: translate(-2px, 1px);
-    clip-path: inset(3% 0 97% 0);
-  }
-  30% {
-    transform: translate(2px, -1px);
-    clip-path: inset(97% 0 3% 0);
-  }
-  45% {
-    transform: translate(-1px, -1px);
-    clip-path: inset(0 3% 0 97%);
-  }
-  60% {
-    transform: translate(1px, 1px);
-    clip-path: inset(0 97% 0 3%);
-  }
-  75% {
-    transform: translate(-1px, 0);
-    clip-path: inset(5% 0 95% 0);
-  }
-  90% {
-    transform: translate(0);
-    clip-path: inset(0 0 0 0);
-  }
-}
-
-/* Efecto Derretido */
-.collage figure::before {
-  background: linear-gradient(180deg, 
-    transparent 0%, 
-    rgba(0, 0, 0, 0.08) 50%, 
-    rgba(0, 0, 0, 0.2) 100%);
-  background-size: 100% 200%;
-  background-position: 0 0;
-  transition: background-position 0.6s ease;
-}
-
-.collage figure:hover::before {
-  background-position: 0 100%;
-  animation: melt 1.5s ease-in-out infinite;
-}
-
-@keyframes melt {
-  0%, 100% {
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-    transform: translateY(0) scaleY(1);
-  }
-  25% {
-    clip-path: polygon(0 0, 100% 0, 98% 95%, 2% 97%);
-    transform: translateY(2px) scaleY(0.98);
-  }
-  50% {
-    clip-path: polygon(0 0, 100% 0, 97% 90%, 3% 92%);
-    transform: translateY(4px) scaleY(0.96);
-  }
-  75% {
-    clip-path: polygon(0 0, 100% 0, 98% 95%, 2% 97%);
-    transform: translateY(2px) scaleY(0.98);
-  }
-}
-
-.collage figure:hover img {
-  filter: blur(0.3px) contrast(1.08);
-  transform: scale(1.01);
-}
-
+/* Efectos hover simplificados */
 .collage figure:hover {
   transform: translateY(-5px) scale(1.02);
   z-index: 10;
@@ -503,53 +388,6 @@ nav {
 .collage figure:nth-child(8) { animation-delay: 0.8s; }
 .collage figure:nth-child(9) { animation-delay: 0.9s; }
 
-/* Estilos adicionales para efectos JavaScript */
-.collage figure.image-effect {
-  position: relative;
-}
-
-.glitch-layers {
-  animation: glitch-flicker 0.2s;
-}
-
-@keyframes glitch-flicker {
-  0%, 100% { opacity: 0.8; }
-  25% { opacity: 0.4; }
-  50% { opacity: 0.9; }
-  75% { opacity: 0.5; }
-}
-
-.collage figure.glitch-active img {
-  animation: glitch-shake 0.2s;
-}
-
-@keyframes glitch-shake {
-  0%, 100% { transform: translate(0); }
-  10% { transform: translate(-2px, 1px); }
-  20% { transform: translate(2px, -1px); }
-  30% { transform: translate(-1px, 2px); }
-  40% { transform: translate(1px, -2px); }
-  50% { transform: translate(-2px, -1px); }
-  60% { transform: translate(2px, 1px); }
-  70% { transform: translate(-1px, -2px); }
-  80% { transform: translate(1px, 2px); }
-  90% { transform: translate(-1px, 1px); }
-}
-
-.melt-overlay {
-  animation: melt-drip 1.5s ease-in-out infinite;
-}
-
-@keyframes melt-drip {
-  0%, 100% {
-    transform: translateY(0);
-    opacity: 0.6;
-  }
-  50% {
-    transform: translateY(5px);
-    opacity: 0.8;
-  }
-}
 
 .collage figcaption {
   text-align: center;
@@ -559,11 +397,21 @@ nav {
 }
 
 .init {
-  float:right;
+  float: right;
 }
+
+@media (max-width: 768px) {
+  .init {
+    float: none;
+    text-align: center;
+    margin-top: 1rem;
+    display: block;
+  }
+}
+
 .init a {
-  family: 'Alegreya', serif;
-  font-size: 1.5rem;
+  font-family: 'Alegreya', serif;
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
   color: #bbb;
 } 
 
@@ -575,9 +423,29 @@ nav {
    background: rgba(0,0,0,0.6); 
    padding: 10px; 
    border-radius: 8px;
+   max-width: calc(100% - 20px);
+   box-sizing: border-box;
 }
+
+@media (max-width: 768px) {
+  #ui {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+}
+
 select, input, button {
-   margin: 5px; padding: 4px;
+   margin: 5px; 
+   padding: 4px;
+   box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  select, input, button {
+    width: 100%;
+    max-width: 200px;
+    margin: 4px 0;
+  }
 }
 
 .poem-nav a {
@@ -593,9 +461,17 @@ select, input, button {
 .highlight pre {
   color: #f8f8f2;
   margin-left: 3rem;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-x: auto;
+}
 
-  white-space: pre-wrap;  /* permite saltos de línea automáticos */
-  word-wrap: break-word;  /* fuerza corte de palabras si es necesario */
+@media (max-width: 768px) {
+  .highlight pre {
+    margin-left: 0;
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
 }
 
 .excerpt {
@@ -642,4 +518,126 @@ select, input, button {
 
 blockquote:hover .link-oculto {
   opacity: 0.3;
+}
+
+/* Mejoras adicionales de responsividad */
+main {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Ajustes para listas en móviles */
+ul, ol {
+  padding-left: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  ul, ol {
+    padding-left: 1.25rem;
+  }
+}
+
+/* Mejoras para código y pre */
+code {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+pre {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Ajustes para tablas */
+table {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+@media (min-width: 600px) {
+  table {
+    display: table;
+    white-space: normal;
+  }
+}
+
+/* Elementos responsive adicionales */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+canvas {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+#three-canvas {
+  width: 100% !important;
+  height: 100vh !important;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  #three-canvas {
+    height: 70vh !important;
+  }
+}
+
+/* Mejoras para contenido embebido */
+iframe[src*="youtube"],
+iframe[src*="vimeo"] {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  height: auto;
+}
+
+/* Tablas responsive */
+table {
+  width: 100%;
+  overflow-x: auto;
+  display: block;
+}
+
+@media (min-width: 600px) {
+  table {
+    display: table;
+  }
+}
+
+/* Mejoras de accesibilidad táctil en móviles */
+@media (max-width: 768px) {
+  a, button {
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .read-more {
+    padding: 0.5rem;
+    display: block;
+    text-align: center;
+  }
+}
+
+/* Ajustes para contenido largo */
+@media (max-width: 768px) {
+  .content-item {
+    padding: 1rem !important;
+    margin: 1.5rem 0 !important;
+  }
+  
+  .content-item h3 {
+    font-size: 1rem !important;
+  }
 }

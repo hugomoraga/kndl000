@@ -710,6 +710,7 @@
   "scripts": {
     "dev": "tinacms dev -c \"bundle exec jekyll serve\"",
     "build": "tinacms build",
+    "clean": "rm -rf _site .jekyll-cache .sass-cache",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

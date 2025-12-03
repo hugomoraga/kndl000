@@ -17,6 +17,9 @@ plugins:
 include:
   - admin
 
+# Collections configuration
+collections_dir: content/collections
+
 collections:
   images:
     output: true

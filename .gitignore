@@ -1,7 +1,29 @@
-_site
-node_modules/*
-.bundle
-node_modules
+# Build outputs
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+
+# Dependencies
+node_modules/
+vendor/
+.bundle/
+
+# Environment variables
 .env
 .env.local
-vendor/
+.env.*.local
+
+# TinaCMS generated
+config/tina/__generated__/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~

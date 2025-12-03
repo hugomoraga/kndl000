@@ -1,31 +1,37 @@
-{% assign collections = 
-  "poem:poems,post:posts,image:images,page:pages" | split: "," %}
+{%- comment -%}
+  Render manual desde _data/assemblage.yml
+  Mapeo simplificado de tipos a colecciones
+{%- endcomment -%}
+{% assign collection_map = site.data.assemblage %}
+{% assign type_to_collection = "poem:poems,post:posts,image:images,page:pages" | split: "," %}
 
 <div class="collage">
 
-  {%- comment -%}
-  Render manual desde _data/assemblage.yml
-  {%- endcomment -%}
   {% for entry in site.data.assemblage %}
     {% assign item = nil %}
+    {% assign target_collection = nil %}
 
-    {% for pair in collections %}
-      {% assign parts = pair | split: ":" %}
-      {% assign type_key = parts[0] %}
-      {% assign site_key = parts[1] %}
-
-      {% if entry.type == type_key %}
-        {% assign entries = site[site_key] %}
-        {% for p in entries %}
-          {% if p.url contains entry.path %}
-            {% assign item = p %}
-            {% break %}
-          {% endif %}
-        {% endfor %}
+    {%- comment -%} Buscar colección por tipo {%- endcomment -%}
+    {% for mapping in type_to_collection %}
+      {% assign parts = mapping | split: ":" %}
+      {% if entry.type == parts[0] %}
+        {% assign target_collection = parts[1] %}
         {% break %}
       {% endif %}
     {% endfor %}
 
+    {%- comment -%} Buscar item en la colección {%- endcomment -%}
+    {% if target_collection %}
+      {% assign entries = site[target_collection] %}
+      {% for p in entries %}
+        {% if p.url contains entry.path %}
+          {% assign item = p %}
+          {% break %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+
+    {%- comment -%} Renderizar figura si existe {%- endcomment -%}
     {% if item %}
       {% assign image = entry.image | default: item.image %}
       {% assign title = entry.title | default: item.title %}

@@ -1,16 +1,47 @@
 import { defineConfig } from "tinacms";
+import type { Collection, Template } from "tinacms";
 
-// Your hosting provider likely exposes this as an environment variable
+// Configuración base
 const branch =
   process.env.GITHUB_BRANCH ||
   process.env.VERCEL_GIT_COMMIT_REF ||
   process.env.HEAD ||
   "main";
 
+// Campos comunes reutilizables - usando 'as const' para preservar tipos literales
+const commonFields = {
+  title: {
+    type: "string" as const,
+    name: "title",
+    label: "Title",
+    isTitle: true,
+    required: true,
+  },
+  image: {
+    type: "image" as const,
+    name: "image",
+    label: "Image",
+  },
+  date: {
+    type: "datetime" as const,
+    name: "date",
+    label: "Date",
+  },
+  body: {
+    type: "rich-text" as const,
+    name: "body",
+    label: "Body",
+    isBody: true,
+  },
+} as const;
+
+// Helper para crear campos comunes
+function createCommonFields(fields: Array<keyof typeof commonFields>) {
+  return fields.map(field => ({ ...commonFields[field] }));
+}
+
 export default defineConfig({
   branch,
-
-  // Credenciales de TinaCloud (se obtienen de https://tina.io/cloud)
   clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID,
   token: process.env.TINA_TOKEN,
   
@@ -20,215 +51,119 @@ export default defineConfig({
   },
   media: {
     tina: {
-      mediaRoot: "assets/images",
+      mediaRoot: "assets/media/images",
       publicFolder: "./",
     },
   },
-  // See docs on content modeling for more info on how to setup new content models: https://tina.io/docs/r/content-modelling-collections/
+  
   schema: {
     collections: [
       {
         name: "diario",
         label: "✶ Diario",
-        path: "_posts",
+        path: "content/collections/_posts",
         format: "md",
         fields: [
           {
-            type: "string",
+            type: "string" as const,
             name: "layout",
             label: "Layout",
             options: ["default"],
           },
+          ...createCommonFields(["title", "image", "body"]),
           {
-            type: "string",
-            name: "title",
-            label: "Title",
-            isTitle: true,
-            required: true,
-          },
-          {
-            type: "image",
-            name: "image",
-            label: "Image",
-          },
-          {
-            type: "datetime",
+            type: "datetime" as const,
             name: "date",
             label: "Publish Date",
             required: true,
-          },
-          {
-            type: "rich-text",
-            name: "body",
-            label: "Body",
-            isBody: true,
           },
         ],
       },
       {
         name: "poemas",
         label: "ↂ Poemas",
-        path: "_poems",
+        path: "content/collections/_poems",
         format: "md",
         fields: [
           {
-            type: "string",
+            type: "string" as const,
             name: "layout",
             label: "Layout",
             options: ["poems"],
           },
+          ...createCommonFields(["title", "image", "date", "body"]),
           {
-            type: "string",
-            name: "title",
-            label: "Title",
-            isTitle: true,
-            required: true,
-          },
-          {
-            type: "image",
-            name: "image",
-            label: "Image",
-          },
-          {
-            type: "datetime",
-            name: "date",
-            label: "Date",
-          },
-          {
-            type: "string",
+            type: "string" as const,
             name: "series",
             label: "Series",
-          },
-          {
-            type: "rich-text",
-            name: "body",
-            label: "Body",
-            isBody: true,
           },
         ],
       },
-       {
+      {
         name: "melange_reports",
         label: "☽ Melange Reports",
-        path: "_melange_reports",
+        path: "content/collections/_melange_reports",
         format: "md",
         fields: [
           {
-            type: "string",
+            type: "string" as const,
             name: "layout",
             label: "Layout",
-            default: "poems",
             options: ["poems", "default"],
           },
+          ...createCommonFields(["title", "image", "date", "body"]),
           {
-            type: "string",
-            name: "title",
-            label: "Title",
-            isTitle: true,
-            required: true,
-          },
-          {
-            type: "image",
-            name: "image",
-            label: "Image",
-          },
-          {
-            type: "datetime",
-            name: "date",
-            label: "Date",
-          },
-          {
-            type: "string",
+            type: "string" as const,
             name: "series",
             label: "Series",
-          },
-          {
-            type: "rich-text",
-            name: "body",
-            label: "Body",
-            isBody: true,
           },
         ],
       },
       {
         name: "vestigios",
         label: "⚱ Vestigios",
-        path: "_vestigios",
+        path: "content/collections/_vestigios",
         format: "md",
         fields: [
           {
-            type: "string",
+            type: "string" as const,
             name: "layout",
             label: "Layout",
-            default: "default",
+            options: ["default"],
           },
-          {
-            type: "string",
-            name: "title",
-            label: "Title",
-            isTitle: true,
-            required: true,
-          },
-          {
-            type: "image",
-            name: "image",
-            label: "Image",
-          },
-          {
-            type: "datetime",
-            name: "date",
-            label: "Date",
-          },
-          {
-            type: "rich-text",
-            name: "body",
-            label: "Body",
-            isBody: true,
-          },
+          ...createCommonFields(["title", "image", "date", "body"]),
         ],
       },
       {
         name: "imagenes",
         label: "◉ Imágenes",
-        path: "_images",
+        path: "content/collections/_images",
         format: "md",
         fields: [
           {
-            type: "string",
+            type: "string" as const,
             name: "layout",
             label: "Layout",
-            default: "imagen",
-            
+            options: ["imagen"],
           },
+          { ...commonFields.title },
           {
-            type: "string",
-            name: "title",
-            label: "Title",
-            isTitle: true,
-            required: true,
-          },
-          {
-            type: "image",
+            type: "image" as const,
             name: "image",
             label: "Image",
             required: true,
           },
           {
-            type: "string",
+            type: "string" as const,
             name: "caption",
             label: "Caption",
           },
           {
-            type: "string",
+            type: "string" as const,
             name: "alt",
             label: "Alt Text",
           },
-          {
-            type: "rich-text",
-            name: "body",
-            label: "Body",
-            isBody: true,
-          },
+          { ...commonFields.body },
         ],
       },
     ],
