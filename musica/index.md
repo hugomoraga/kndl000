@@ -7,6 +7,10 @@ nav_order: 4
 
 
 
+## 🎛️ [Mixer Generativo](/musica/mixer/)
+
+---
+
 ## Playlist
 
 ### Ritual Groove **[Dark Disco / Tribal Techno / EBM / PostClub / Ritual Tech / Indie Dance]**
