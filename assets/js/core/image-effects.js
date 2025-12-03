@@ -113,6 +113,30 @@
     return layer;
   }
 
+  // Detectar si es dispositivo móvil/touch
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                   ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+
+  // Funciones para activar/desactivar glitch
+  function activateGlitch(redLayer, blueLayer, img, animationId, preset) {
+    redLayer.style.opacity = preset.opacity;
+    blueLayer.style.opacity = preset.opacity;
+    redLayer.style.animation = `${animationId}-red ${preset.speed}s infinite`;
+    blueLayer.style.animation = `${animationId}-blue ${preset.speed}s infinite`;
+    img.style.animation = `${animationId}-main ${preset.speed}s infinite`;
+  }
+
+  function deactivateGlitch(redLayer, blueLayer, img) {
+    redLayer.style.opacity = '0';
+    blueLayer.style.opacity = '0';
+    redLayer.style.animation = 'none';
+    blueLayer.style.animation = 'none';
+    img.style.animation = 'none';
+  }
+
+  // Almacenar configuraciones de figuras para uso en móviles
+  const figureConfigs = new Map();
+
   // Configurar efectos RGB para una figura
   function setupRGBLayers(figure, img, index) {
     const imgSrc = img.src || img.getAttribute('src');
@@ -149,27 +173,33 @@
     figure.appendChild(redLayer);
     figure.appendChild(blueLayer);
 
-    // Event listeners
-    const delay = getRand() * 0.3;
-    figure.addEventListener('mouseenter', () => {
-      redLayer.style.opacity = preset.opacity;
-      blueLayer.style.opacity = preset.opacity;
-      redLayer.style.animation = `${animationId}-red ${preset.speed}s infinite`;
-      blueLayer.style.animation = `${animationId}-blue ${preset.speed}s infinite`;
-      img.style.animation = `${animationId}-main ${preset.speed}s infinite`;
-    });
+    // Guardar configuración para uso en móviles
+    if (isMobile) {
+      figureConfigs.set(figure, {
+        redLayer,
+        blueLayer,
+        img,
+        animationId,
+        preset
+      });
+    }
 
-    figure.addEventListener('mouseleave', () => {
-      redLayer.style.opacity = '0';
-      blueLayer.style.opacity = '0';
-      redLayer.style.animation = 'none';
-      blueLayer.style.animation = 'none';
-      img.style.animation = 'none';
-    });
+    // Event listeners para desktop (hover)
+    if (!isMobile) {
+      figure.addEventListener('mouseenter', () => {
+        activateGlitch(redLayer, blueLayer, img, animationId, preset);
+      });
+
+      figure.addEventListener('mouseleave', () => {
+        deactivateGlitch(redLayer, blueLayer, img);
+      });
+    }
   }
 
-  // Efecto de parallax sutil
+  // Efecto de parallax sutil (solo desktop)
   function setupParallax() {
+    if (isMobile) return;
+
     document.addEventListener('mousemove', (e) => {
       const figures = document.querySelectorAll('.collage figure:hover');
       figures.forEach(figure => {
@@ -198,6 +228,80 @@
     });
   }
 
+  // Activar glitch en móviles durante scroll/touch
+  function setupMobileGlitch() {
+    if (!isMobile) return;
+
+    let scrollTimeout;
+    let isScrolling = false;
+    const activeFigures = new Set();
+
+    function handleScroll() {
+      isScrolling = true;
+      
+      // Activar glitch en figuras visibles durante scroll
+      figureConfigs.forEach((config, figure) => {
+        const rect = figure.getBoundingClientRect();
+        const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+        
+        if (isVisible && !activeFigures.has(figure)) {
+          activeFigures.add(figure);
+          activateGlitch(config.redLayer, config.blueLayer, config.img, config.animationId, config.preset);
+        }
+      });
+      
+      // Desactivar después de un tiempo sin scroll
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        activeFigures.forEach(figure => {
+          const config = figureConfigs.get(figure);
+          if (config) {
+            deactivateGlitch(config.redLayer, config.blueLayer, config.img);
+          }
+        });
+        activeFigures.clear();
+        isScrolling = false;
+      }, 300);
+    }
+
+    // Detectar scroll
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    // También activar en touchstart/touchmove
+    let touchStartY = 0;
+    let isTouching = false;
+    
+    document.addEventListener('touchstart', (e) => {
+      touchStartY = e.touches[0].clientY;
+      isTouching = true;
+      handleScroll();
+    }, { passive: true });
+
+    document.addEventListener('touchmove', (e) => {
+      if (!isTouching) return;
+      
+      const touchY = e.touches[0].clientY;
+      const deltaY = Math.abs(touchY - touchStartY);
+      
+      if (deltaY > 5) { // Solo si hay movimiento significativo
+        handleScroll();
+      }
+    }, { passive: true });
+
+    document.addEventListener('touchend', () => {
+      isTouching = false;
+    }, { passive: true });
+  }
+
   // Inicialización
   function init() {
     const figures = document.querySelectorAll('.collage figure');
@@ -220,6 +324,10 @@
     });
 
     setupParallax();
+    
+    if (isMobile) {
+      setupMobileGlitch();
+    }
   }
 
   utils.ready(init);
