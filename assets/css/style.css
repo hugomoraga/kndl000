@@ -315,6 +315,11 @@ nav {
   transform-style: preserve-3d;
 }
 
+/* Soporte para grid layout en galería visual */
+.collage[style*="grid"] figure {
+  margin: 0;
+}
+
 .collage img {
   width: 100%;
   height: auto;
