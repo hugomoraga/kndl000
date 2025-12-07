@@ -9,19 +9,9 @@ title: 🜂
 {% for fragmento in fragmentos %}
 ## ...{{ count | minus: forloop.index0 }}
 
-{% if fragmento.lineas %}
-  {% assign lineas_texto = fragmento.lineas | strip_html | strip %}
-  {% assign lineas = lineas_texto | split: '
-' %}
-```
-  {% for linea in lineas %}
-    {% assign linea_trim = linea | strip %}
-    {% if linea_trim != '' %}
-      ~ "{{ linea_trim }}"
-    {% endif %}
-  {% endfor %}
-```
-{% endif %}
+{% for item in fragmento.lineas %}
+    ~ "{{ item.linea }}"
+{% endfor %}
 
 {% endfor %}
 

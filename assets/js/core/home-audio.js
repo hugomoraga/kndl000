@@ -295,7 +295,7 @@
       drone.start(time);
     }
   }, '4n');
-  
+
   // Loop de percusión generativo (más espacios para respirar)
   const percLoop = new Tone.Loop((time) => {
     // Patrón más espaciado para dar respiración
@@ -305,7 +305,7 @@
     if (percPattern[step]) {
       // Variación ocasional de playback rate para más variación
       perc.playbackRate = 0.95 + Math.random() * 0.1;
-      perc.start(time);
+    perc.start(time);
     }
   }, '16n');
 
@@ -334,8 +334,8 @@
   audioButton.addEventListener('click', async () => {
     if (!isPlaying) {
       // Iniciar
-      await Tone.start();
-      
+    await Tone.start();
+    
       // Generar reverbs (async)
       await reverb.generate();
       await hihatReverb.generate();
@@ -347,16 +347,16 @@
       stepCount = 0;
       padChordStep = 0;
       hihatEnergyCycle = 0;
-      
-      // Iniciar loops
-      kickLoop.start(0);
+
+    // Iniciar loops
+    kickLoop.start(0);
       bassLoop.start(0);
       hihatLoop.start(0);
-      padLoop.start(0);
+    padLoop.start(0);
       leadLoop.start(0);
-      percLoop.start(0);
-      Tone.Transport.start();
-      
+    percLoop.start(0);
+    Tone.Transport.start();
+
       isPlaying = true;
       audioButton.innerHTML = '⏸ Pausar';
       audioButton.style.opacity = '0.9';

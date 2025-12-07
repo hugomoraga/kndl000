@@ -166,6 +166,71 @@ export default defineConfig({
           { ...commonFields.body },
         ],
       },
+      {
+        name: "fragmentos",
+        label: "☍ Fragmentos",
+        path: "content/collections/_fragmentos",
+        format: "md",
+        ui: {
+          filename: {
+            slugify: (values) => {
+              // Generar automáticamente el nombre basado en fecha/hora
+              const now = new Date();
+              const year = now.getFullYear();
+              const month = String(now.getMonth() + 1).padStart(2, '0');
+              const day = String(now.getDate()).padStart(2, '0');
+              const hour = String(now.getHours()).padStart(2, '0');
+              const minute = String(now.getMinutes()).padStart(2, '0');
+              const second = String(now.getSeconds()).padStart(2, '0');
+              
+              // Formato: fragmento-YYYYMMDD-HHMMSS (se ordena cronológicamente)
+              return `fragmento-${year}${month}${day}-${hour}${minute}${second}`;
+            },
+          },
+        },
+        fields: [
+          {
+            type: "string" as const,
+            name: "layout",
+            label: "Layout",
+            options: ["default"],
+            required: false,
+            ui: {
+              component: "hidden",
+            },
+          },
+          {
+            type: "object" as const,
+            name: "lineas",
+            label: "Líneas del Fragmento",
+            list: true,
+            fields: [
+              {
+                type: "string" as const,
+                name: "linea",
+                label: "Línea",
+              },
+            ],
+            ui: {
+              itemProps: (item) => {
+                return { label: item?.linea || "Nueva línea" };
+              },
+              defaultItem: {
+                linea: "",
+              },
+            },
+          },
+          {
+            type: "datetime" as const,
+            name: "date",
+            label: "Fecha",
+            required: false,
+            ui: {
+              component: "hidden",
+            },
+          },
+        ],
+      },
     ],
   },
 });

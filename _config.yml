@@ -8,6 +8,8 @@ baseurl: ""
 
 # Build settings
 markdown: kramdown
+kramdown:
+  hard_wrap: false
 theme:
 plugins:
   - jekyll-feed
@@ -33,4 +35,6 @@ collections:
   melange_reports:
     output: true
     permalink: /melange-reports/:name/
+  fragmentos:
+    output: false
   
