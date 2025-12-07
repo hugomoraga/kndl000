@@ -22,7 +22,7 @@ nav_order: 1
 
       {% include assemblage.html %}
 
-
+<script src="{{ '/assets/js/core/infinite-scroll.js' | relative_url }}" defer></script>
 
 <canvas id="art" width="800" height="600" style="width: 100%; height:300px"></canvas>
 <script src="{{ '/assets/js/core/home-canvas.js' | relative_url }}" defer></script>
