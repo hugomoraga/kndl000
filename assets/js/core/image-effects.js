@@ -50,6 +50,13 @@
     { speed: CONFIG.ANIMATION_SPEED, intensity: 1.35, maxOffset: 10, opacity: 0.95, saturation: 3.5, redHue: -60, blueHue: 100 }
   ];
 
+  // Presets más sutiles para móvil
+  const mobileEffectPresets = [
+    { speed: CONFIG.ANIMATION_SPEED * 1.5, intensity: 1.05, maxOffset: 2, opacity: 0.3, saturation: 1.3, redHue: 0, blueHue: 140 },
+    { speed: CONFIG.ANIMATION_SPEED * 1.5, intensity: 1.08, maxOffset: 3, opacity: 0.4, saturation: 1.5, redHue: -20, blueHue: 120 },
+    { speed: CONFIG.ANIMATION_SPEED * 1.5, intensity: 1.1, maxOffset: 4, opacity: 0.5, saturation: 1.7, redHue: -40, blueHue: 100 }
+  ];
+
   // Tipos de movimiento
   const movementTypes = {
     VERTICAL: 'vertical',
@@ -645,71 +652,172 @@
   }
 
   // ============================================================================
-  // GLITCH EN MÓVILES (SCROLL/TOUCH)
+  // GLITCH EN MÓVILES (SCROLL/TOUCH) - Solo imagen visible/tocada
   // ============================================================================
 
   function setupMobileGlitch() {
     if (!isMobile) return;
 
+    let activeFigure = null;
     let scrollTimeout;
-    const activeFigures = new Set();
+    let touchTimeout;
 
-    function handleScroll() {
+    // Función para encontrar la imagen más centrada en el viewport
+    function getMostVisibleFigure() {
+      let mostVisible = null;
+      let maxVisibility = 0;
+      const viewportCenter = window.innerHeight / 2;
+
       figureConfigs.forEach((config, figure) => {
         const rect = figure.getBoundingClientRect();
         const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
         
-        if (isVisible && !activeFigures.has(figure)) {
-          activeFigures.add(figure);
-          const movementType = config.movementType || movementTypes.HORIZONTAL;
-          const useRGB = config.useRGB !== undefined ? config.useRGB : true;
-          activateGlitch(config.redLayer, config.blueLayer, config.img, config.animationId, config.preset, movementType, useRGB);
+        if (isVisible) {
+          // Calcular qué tan centrada está la imagen en el viewport
+          const figureCenter = rect.top + (rect.height / 2);
+          const distanceFromCenter = Math.abs(figureCenter - viewportCenter);
+          const visibility = 1 / (1 + distanceFromCenter / 100); // Más cerca del centro = mayor visibilidad
+          
+          if (visibility > maxVisibility) {
+            maxVisibility = visibility;
+            mostVisible = figure;
+          }
         }
       });
-      
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
-        activeFigures.forEach(figure => {
-          const config = figureConfigs.get(figure);
-          if (config) {
-            deactivateGlitch(config.redLayer, config.blueLayer, config.img);
-          }
-        });
-        activeFigures.clear();
-      }, CONFIG.MOBILE_SCROLL_TIMEOUT);
+
+      return mostVisible;
     }
 
-    let ticking = false;
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          handleScroll();
-          ticking = false;
-        });
-        ticking = true;
+    // Función para encontrar la imagen tocada
+    function getTouchedFigure(touchX, touchY) {
+      let touchedFigure = null;
+      let minDistance = Infinity;
+
+      figureConfigs.forEach((config, figure) => {
+        const rect = figure.getBoundingClientRect();
+        const isInside = touchX >= rect.left && touchX <= rect.right && 
+                        touchY >= rect.top && touchY <= rect.bottom;
+        
+        if (isInside) {
+          const centerX = rect.left + rect.width / 2;
+          const centerY = rect.top + rect.height / 2;
+          const distance = Math.sqrt(
+            Math.pow(touchX - centerX, 2) + Math.pow(touchY - centerY, 2)
+          );
+          
+          if (distance < minDistance) {
+            minDistance = distance;
+            touchedFigure = figure;
+          }
+        }
+      });
+
+      return touchedFigure;
+    }
+
+    function activateFigureGlitch(figure) {
+      // Desactivar la figura anterior si existe
+      if (activeFigure && activeFigure !== figure) {
+        const prevConfig = figureConfigs.get(activeFigure);
+        if (prevConfig) {
+          deactivateGlitch(prevConfig.redLayer, prevConfig.blueLayer, prevConfig.img);
+        }
       }
-    }, { passive: true });
 
-    let touchStartY = 0;
-    let isTouching = false;
-    
+      // Activar la nueva figura
+      if (figure) {
+        const config = figureConfigs.get(figure);
+        if (config) {
+          // Usar preset móvil más sutil
+          const mobilePreset = mobileEffectPresets[
+            Math.floor(Math.random() * mobileEffectPresets.length)
+          ];
+          const movementType = config.movementType || movementTypes.HORIZONTAL;
+          const useRGB = config.useRGB !== undefined ? config.useRGB : true;
+          
+          // Aplicar preset móvil más sutil
+          activateGlitch(
+            config.redLayer, 
+            config.blueLayer, 
+            config.img, 
+            config.animationId, 
+            mobilePreset, 
+            movementType, 
+            useRGB
+          );
+          activeFigure = figure;
+        }
+      }
+    }
+
+    function deactivateAllGlitch() {
+      if (activeFigure) {
+        const config = figureConfigs.get(activeFigure);
+        if (config) {
+          deactivateGlitch(config.redLayer, config.blueLayer, config.img);
+        }
+        activeFigure = null;
+      }
+    }
+
+    // IntersectionObserver para detectar la imagen más visible
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: [0, 0.25, 0.5, 0.75, 1]
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      // Solo activar si no hay touch activo
+      if (touchTimeout) return;
+
+      let mostVisibleEntry = null;
+      let maxRatio = 0;
+
+      entries.forEach(entry => {
+        if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
+          maxRatio = entry.intersectionRatio;
+          mostVisibleEntry = entry.target;
+        }
+      });
+
+      if (mostVisibleEntry && maxRatio > 0.3) {
+        activateFigureGlitch(mostVisibleEntry);
+        
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          deactivateAllGlitch();
+        }, CONFIG.MOBILE_SCROLL_TIMEOUT * 2);
+      }
+    }, observerOptions);
+
+    // Observar todas las figuras
+    figureConfigs.forEach((config, figure) => {
+      observer.observe(figure);
+    });
+
+    // Touch events - solo activar la imagen tocada
     document.addEventListener('touchstart', (e) => {
-      touchStartY = e.touches[0].clientY;
-      isTouching = true;
-      handleScroll();
-    }, { passive: true });
-
-    document.addEventListener('touchmove', (e) => {
-      if (!isTouching) return;
-      const touchY = e.touches[0].clientY;
-      const deltaY = Math.abs(touchY - touchStartY);
-      if (deltaY > CONFIG.MOBILE_TOUCH_THRESHOLD) {
-        handleScroll();
+      const touch = e.touches[0];
+      const touchedFigure = getTouchedFigure(touch.clientX, touch.clientY);
+      
+      if (touchedFigure) {
+        activateFigureGlitch(touchedFigure);
+        
+        clearTimeout(touchTimeout);
+        touchTimeout = setTimeout(() => {
+          deactivateAllGlitch();
+          touchTimeout = null;
+        }, CONFIG.MOBILE_SCROLL_TIMEOUT * 3);
       }
     }, { passive: true });
 
     document.addEventListener('touchend', () => {
-      isTouching = false;
+      clearTimeout(touchTimeout);
+      touchTimeout = setTimeout(() => {
+        deactivateAllGlitch();
+        touchTimeout = null;
+      }, CONFIG.MOBILE_SCROLL_TIMEOUT * 2);
     }, { passive: true });
   }
 

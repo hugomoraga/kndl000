@@ -471,6 +471,28 @@ select, input, button {
   overflow-x: auto;
 }
 
+/* Botón de volver minimalista */
+.back-button {
+  margin: 3rem 0 2rem 0;
+  padding-top: 2rem;
+  border-top: 1px solid #222;
+}
+
+.back-button a {
+  color: #666;
+  font-size: 1.2rem;
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  transition: color 0.2s ease;
+  display: inline-block;
+}
+
+.back-button a:hover {
+  color: #aaa;
+  text-decoration: none;
+}
+
 @media (max-width: 768px) {
   .highlight pre {
     margin-left: 0;

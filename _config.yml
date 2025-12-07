@@ -37,4 +37,10 @@ collections:
     permalink: /melange-reports/:name/
   fragmentos:
     output: false
+  spotify_playlists:
+    output: false
+  youtube_setlists:
+    output: false
+  personal_music:
+    output: false
   

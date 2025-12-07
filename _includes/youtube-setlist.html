@@ -1,0 +1,39 @@
+{%- comment -%}
+  Include para mostrar un setlist de YouTube
+  Parámetros:
+    - setlist: objeto de la colección youtube_setlists
+{%- endcomment -%}
+
+<div class="youtube-setlist" style="margin: 2rem 0;">
+  <div style="display: flex; align-items: baseline; gap: 0.5rem; margin-bottom: 0.5rem; flex-wrap: wrap;">
+    <h3 style="margin: 0; color: #ccc;">
+      🎛️ {{ include.setlist.title }}
+    </h3>
+    {% if include.setlist.artist %}
+      <span style="color: #888; font-size: 0.9em;">
+        – {{ include.setlist.artist }}
+      </span>
+    {% endif %}
+  </div>
+
+  {% if include.setlist.event %}
+    <p style="color: #888; font-size: 0.9em; margin-bottom: 1rem;">
+      {{ include.setlist.event }}
+    </p>
+  {% endif %}
+
+  {% if include.setlist.youtube_id %}
+    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border-radius: 8px; overflow: hidden;">
+      <iframe 
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+        src="https://www.youtube.com/embed/{{ include.setlist.youtube_id }}" 
+        title="{{ include.setlist.title }}"
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+        referrerpolicy="strict-origin-when-cross-origin" 
+        allowfullscreen>
+      </iframe>
+    </div>
+  {% endif %}
+</div>
+

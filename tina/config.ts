@@ -231,6 +231,168 @@ export default defineConfig({
           },
         ],
       },
+      {
+        name: "spotify_playlists",
+        label: "🎵 Spotify Playlists",
+        path: "content/collections/_spotify_playlists",
+        format: "md",
+        fields: [
+          {
+            type: "string" as const,
+            name: "layout",
+            label: "Layout",
+            options: ["default"],
+            required: false,
+            ui: {
+              component: "hidden",
+            },
+          },
+          {
+            type: "string" as const,
+            name: "title",
+            label: "Título de la Playlist",
+            required: true,
+          },
+          {
+            type: "string" as const,
+            name: "description",
+            label: "Descripción",
+            ui: {
+              component: "textarea",
+            },
+          },
+          {
+            type: "string" as const,
+            name: "spotify_id",
+            label: "Spotify Playlist ID",
+            description: "ID de la playlist de Spotify (ej: 2W7MsN6moBf3dRoVzEFGCd)",
+            required: true,
+          },
+          {
+            type: "string" as const,
+            name: "genre",
+            label: "Género/Tags",
+            description: "Ej: Dark Disco / Tribal Techno / EBM",
+          },
+          {
+            type: "datetime" as const,
+            name: "date",
+            label: "Fecha",
+            required: false,
+            ui: {
+              component: "hidden",
+            },
+          },
+        ],
+      },
+      {
+        name: "youtube_setlists",
+        label: "🎛️ YouTube Setlists",
+        path: "content/collections/_youtube_setlists",
+        format: "md",
+        fields: [
+          {
+            type: "string" as const,
+            name: "layout",
+            label: "Layout",
+            options: ["default"],
+            required: false,
+            ui: {
+              component: "hidden",
+            },
+          },
+          {
+            type: "string" as const,
+            name: "title",
+            label: "Título del Set",
+            required: true,
+          },
+          {
+            type: "string" as const,
+            name: "artist",
+            label: "Artista/DJ",
+          },
+          {
+            type: "string" as const,
+            name: "youtube_id",
+            label: "YouTube Video ID",
+            description: "ID del video de YouTube (ej: QNS9RGB1GWg)",
+            required: true,
+          },
+          {
+            type: "string" as const,
+            name: "event",
+            label: "Evento/Lugar",
+            description: "Ej: Live at Fabric 2023",
+          },
+          {
+            type: "datetime" as const,
+            name: "date",
+            label: "Fecha",
+            required: false,
+            ui: {
+              component: "hidden",
+            },
+          },
+        ],
+      },
+      {
+        name: "personal_music",
+        label: "🎧 Música Personal",
+        path: "content/collections/_personal_music",
+        format: "md",
+        fields: [
+          {
+            type: "string" as const,
+            name: "layout",
+            label: "Layout",
+            options: ["default"],
+            required: false,
+            ui: {
+              component: "hidden",
+            },
+          },
+          {
+            type: "string" as const,
+            name: "title",
+            label: "Título del Track",
+            required: true,
+          },
+          {
+            type: "string" as const,
+            name: "artist",
+            label: "Artista",
+          },
+          {
+            type: "string" as const,
+            name: "spotify_url",
+            label: "URL de Spotify",
+            description: "URL completa del track en Spotify",
+          },
+          {
+            type: "string" as const,
+            name: "youtube_url",
+            label: "URL de YouTube",
+            description: "URL completa del video en YouTube",
+          },
+          {
+            type: "string" as const,
+            name: "type",
+            label: "Tipo",
+            options: ["track", "videoclip"],
+            default: "track",
+          },
+          {
+            type: "datetime" as const,
+            name: "date",
+            label: "Fecha",
+            required: false,
+            ui: {
+              component: "hidden",
+            },
+          },
+        ],
+      },
     ],
   },
 });

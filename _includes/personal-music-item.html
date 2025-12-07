@@ -1,0 +1,35 @@
+{%- comment -%}
+  Include para mostrar un track o videoclip personal
+  Parámetros:
+    - track: objeto de la colección personal_music
+{%- endcomment -%}
+
+<div class="personal-music-item" style="margin: 1.5rem 0; padding: 1rem; border-left: 2px solid #333;">
+  <div style="display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.5rem;">
+    {% if include.track.type == "videoclip" %}
+      <span style="color: #888;">📼</span>
+    {% else %}
+      <span style="color: #888;">🎧</span>
+    {% endif %}
+    <strong style="color: #ccc;">
+      {% if include.track.artist %}
+        {{ include.track.artist }} – 
+      {% endif %}
+      {{ include.track.title }}
+    </strong>
+  </div>
+
+  <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+    {% if include.track.spotify_url %}
+      <a href="{{ include.track.spotify_url }}" target="_blank" rel="noopener noreferrer" style="color: #7ab6f5; text-decoration: none; font-size: 0.9em;">
+        Spotify →
+      </a>
+    {% endif %}
+    {% if include.track.youtube_url %}
+      <a href="{{ include.track.youtube_url }}" target="_blank" rel="noopener noreferrer" style="color: #7ab6f5; text-decoration: none; font-size: 0.9em;">
+        YouTube →
+      </a>
+    {% endif %}
+  </div>
+</div>
+

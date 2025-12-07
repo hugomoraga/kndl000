@@ -1,0 +1,33 @@
+{%- comment -%}
+  Botón minimalista para volver
+  Detecta automáticamente a dónde volver basado en la URL
+{%- endcomment -%}
+
+{% unless page.url == "/" %}
+  {% assign back_url = "/" %}
+  {% assign back_text = "←" %}
+  
+  {%- comment -%} Detectar sección basada en la URL {%- endcomment -%}
+  {% if page.url contains "/diario/" or page.url contains "/posts/" %}
+    {% assign back_url = "/diario/" | relative_url %}
+  {% elsif page.url contains "/poemas/" or page.url contains "/poems/" %}
+    {% assign back_url = "/poemas/" | relative_url %}
+  {% elsif page.url contains "/fragmentos/" %}
+    {% assign back_url = "/fragmentos/" | relative_url %}
+  {% elsif page.url contains "/visual/" or page.url contains "/imagenes/" or page.url contains "/images/" %}
+    {% assign back_url = "/visual/" | relative_url %}
+  {% elsif page.url contains "/melange/" %}
+    {% assign back_url = "/melange/" | relative_url %}
+  {% elsif page.url contains "/vestigios/" %}
+    {% assign back_url = "/vestigios/" | relative_url %}
+  {% elsif page.url contains "/musica/" %}
+    {% assign back_url = "/musica/" | relative_url %}
+  {% endif %}
+  
+  <div class="back-button">
+    <a href="{{ back_url }}">
+      {{ back_text }}
+    </a>
+  </div>
+{% endunless %}
+

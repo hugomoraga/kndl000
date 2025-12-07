@@ -1,0 +1,38 @@
+{%- comment -%}
+  Include para mostrar una playlist de Spotify
+  Parámetros:
+    - playlist: objeto de la colección spotify_playlists
+{%- endcomment -%}
+
+<div class="spotify-playlist" style="margin: 2rem 0;">
+  {% if include.playlist.title %}
+    <h3 style="margin-bottom: 0.5rem; color: #ccc;">
+      {{ include.playlist.title }}
+      {% if include.playlist.genre %}
+        <span style="color: #888; font-size: 0.9em; font-weight: normal;">
+          [{{ include.playlist.genre }}]
+        </span>
+      {% endif %}
+    </h3>
+  {% endif %}
+
+  {% if include.playlist.description %}
+    <p style="color: #888; font-style: italic; margin-bottom: 1rem; line-height: 1.6;">
+      {{ include.playlist.description }}
+    </p>
+  {% endif %}
+
+  {% if include.playlist.spotify_id %}
+    <iframe 
+      style="border-radius:12px" 
+      src="https://open.spotify.com/embed/playlist/{{ include.playlist.spotify_id }}?utm_source=generator&theme=0" 
+      width="100%" 
+      height="152" 
+      frameBorder="0" 
+      allowfullscreen="" 
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+      loading="lazy">
+    </iframe>
+  {% endif %}
+</div>
+
