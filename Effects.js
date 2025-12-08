@@ -600,22 +600,50 @@ export const Effects = {
    */
   waveGlitch: (sketch) => {
     let time = 0;
+    let wavePhases = []; // Fase inicial de cada onda
+    let modulationPhases = []; // Fase de modulación para cada onda
+    let initialized = false;
     
     return {
       draw: () => {
         const { enabled: audioEnabled, level: audioLevel } = getAudioState();
         sketch.background(0, 15);
-        time += 0.03;
+        time += 0.08;
+        
+        const waveCount = 8;
+        
+        // Inicializar fases individuales para cada onda
+        if (!initialized) {
+          for (let w = 0; w < waveCount; w++) {
+            wavePhases[w] = Math.random() * Math.PI * 2; // Fase inicial aleatoria
+            modulationPhases[w] = Math.random() * Math.PI * 2; // Fase de modulación aleatoria
+          }
+          initialized = true;
+        }
         
         const audioBoost = audioEnabled && audioLevel > 0.01 ? audioLevel : 0.1;
         const glitchIntensity = audioLevel * 40;
-        const waveCount = 8;
         const centerY = sketch.height / 2;
         
         for (let w = 0; w < waveCount; w++) {
-          const waveHeight = 40 + w * 25;
+          // Velocidad y dirección única para cada onda
+          const waveSpeed = (0.15 + w * 0.05) * (w % 2 === 0 ? 1 : -1);
+          const baseWaveHeight = 40 + w * 25;
           const frequency = 0.015 + w * 0.008;
-          const speed = 0.04 + w * 0.015;
+          
+          // Velocidad de modulación única para cada onda (crece y decrece)
+          const modulationSpeed = 0.02 + w * 0.01; // Cada onda modula a diferente velocidad
+          modulationPhases[w] += modulationSpeed * (1 + audioLevel * 0.3);
+          
+          // Modulación de amplitud - hace que la onda crezca y decrezca
+          // Usa seno para crear un ciclo suave de crecimiento/decrecimiento
+          const modulation = (Math.sin(modulationPhases[w]) + 1) / 2; // Entre 0 y 1
+          const minHeight = baseWaveHeight * 0.3; // Altura mínima (30% del base)
+          const maxHeight = baseWaveHeight * 1.5; // Altura máxima (150% del base)
+          const waveHeight = minHeight + modulation * (maxHeight - minHeight);
+          
+          // Actualizar fase de la onda - esto hace que la onda se mueva
+          wavePhases[w] += waveSpeed * (1 + audioLevel * 0.5);
           
           sketch.beginShape();
           sketch.noFill();
@@ -629,15 +657,19 @@ export const Effects = {
           sketch.strokeWeight(1.2 + audioLevel * 1.5);
           
           for (let x = 0; x < sketch.width; x += 3) {
-            // Onda base
+            // Onda que se mueve horizontalmente con amplitud modulada
+            const phase = x * frequency + wavePhases[w] + w * 0.5;
             let y = centerY + 
-              Math.sin(x * frequency + time * speed + w) * waveHeight * (1 + audioBoost);
+              Math.sin(phase) * waveHeight * (1 + audioBoost);
+            
+            // Agregar movimiento vertical sutil
+            y += Math.sin(time * 0.3 + w * 0.4) * 10 * audioBoost;
             
             // Aplicar glitch periódico - más sutil
             const glitchX = glitchNoise(time + x * 0.01 + w, 0.06 + audioLevel * 0.04) * glitchIntensity * 0.7;
             const glitchY = glitchNoise(time + x * 0.015 + w * 0.5, 0.08) * glitchIntensity * 0.4;
             
-            // Distorsión de onda - más orgánica
+            // Distorsión de onda - más orgánica con movimiento
             const distortion = distortionWave(x, y, time + w, 0.12, glitchIntensity * 0.25);
             
             // Efecto de derretimiento - más sutil
