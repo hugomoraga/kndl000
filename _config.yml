@@ -43,4 +43,7 @@ collections:
     output: false
   personal_music:
     output: false
+  codigos:
+    output: true
+    permalink: /codigo/:name/
   

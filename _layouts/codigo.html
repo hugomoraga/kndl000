@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }} - {{ site.title }}</title>
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&family=Cormorant+Garamond:wght@400;700&family=Inter:wght@300;400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <main class="codigo-page">
+      {% include title.html %}
+
+      {% if page.concept %}
+      <div class="concept">
+        <em>{{ page.concept }}</em>
+      </div>
+      {% endif %}
+
+      {% if page.language or page.date %}
+      <div class="codigo-meta">
+        {% if page.language %}
+        <span>Lenguaje: {{ page.language }}</span>
+        {% endif %}
+        {% if page.date %}
+        <span>{{ page.date | date: "%d %B %Y" }}</span>
+        {% endif %}
+      </div>
+      {% endif %}
+
+      {{ content }}
+
+      {% include back-button.html %}
+    </main>
+    <script src="{{ '/assets/js/core/code-runner.js' | relative_url }}"></script>
+  </body>
+</html>
+

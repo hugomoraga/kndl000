@@ -16,6 +16,7 @@ nav_order: 1
   <a href="{{ site.baseurl }}/musica/">𝄞 Música</a>
   <a href="{{ site.baseurl }}/visual/">◉ Visual</a>
   <a href="{{ site.baseurl }}/melange">🜏 Melange </a>  
+  <a href="{{ site.baseurl }}/codigo/">◊ Código</a>
   <a href="{{ site.baseurl }}/visual/generator">꩜</a>
 
 </div>
@@ -26,9 +27,5 @@ nav_order: 1
 
 <canvas id="art" width="800" height="600" style="width: 100%; height:300px"></canvas>
 <script src="{{ '/assets/js/core/home-canvas.js' | relative_url }}" defer></script>
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin: 1rem 0;">
-  <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/QNS9RGB1GWg?si=1kdQaWa02BWeQJiI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-</div>
 
 <script src="{{ '/assets/js/core/home-audio.js' | relative_url }}" defer></script>

@@ -1,9 +1,10 @@
 
-html, body#generator {
+/* Solo aplicar estas reglas cuando el body tiene id="generator" */
+body#generator {
   background: #000;
   color: #fff;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   overflow: hidden !important;
   padding: 0;
   margin: 0;
@@ -12,17 +13,9 @@ html, body#generator {
   left: 0;
 }
 
-html {
+/* Solo bloquear scroll en html cuando el body tiene id="generator" - usando selector más específico */
+html body#generator {
   overflow: hidden !important;
-}
-
-body#generator {
-  overflow: hidden !important;
-}
-
-body#generator {
-  width: 100vw;
-  height: 100vh;
 }
 
 #generator > main {
@@ -92,6 +85,12 @@ body#generator {
   visibility: visible !important;
 }
 
+/* Asegurar que html y body permitan scroll en páginas normales */
+html {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 body {
   background-color: #0e0e0e;
   color: #e0e0e0;
@@ -101,6 +100,9 @@ body {
   margin: auto;
   padding: 2rem;
   box-sizing: border-box;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative; /* Cambiar de fixed a relative para permitir scroll */
 }
 
 * {
@@ -619,6 +621,396 @@ code {
 pre {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+}
+
+/* Estilos artísticos para sección de código - Estética Giger */
+.codigo-page pre {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(74, 155, 142, 0.3);
+  border-left: 4px solid rgba(74, 155, 142, 0.6);
+  padding: 2rem;
+  margin: 2.5rem 0;
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 0.8rem;
+  line-height: 1.8;
+  color: #5fa8a0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(74, 155, 142, 0.05);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  overflow-x: auto;
+  text-shadow: 0 0 2px rgba(95, 168, 160, 0.3);
+}
+
+.codigo-page pre:hover {
+  border-left-color: rgba(74, 155, 142, 0.9);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5), inset 0 0 25px rgba(74, 155, 142, 0.1);
+  text-shadow: 0 0 3px rgba(95, 168, 160, 0.5);
+}
+
+.codigo-page pre code {
+  background: transparent;
+  padding: 0;
+  color: #5fa8a0;
+  font-size: inherit;
+  font-family: inherit;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Colores específicos para elementos del código - Paleta Giger */
+.codigo-page pre code .keyword {
+  color: #6bb3a8;
+  font-weight: 500;
+}
+
+.codigo-page pre code .string {
+  color: #4a9b8e;
+}
+
+.codigo-page pre code .comment {
+  color: #4a7c8e;
+  font-style: italic;
+  opacity: 0.8;
+}
+
+.codigo-page pre code .function {
+  color: #5fa8a0;
+}
+
+.codigo-page pre code .number {
+  color: #6bb3a8;
+}
+
+/* Concepto filosófico como cita */
+.codigo-page .concept {
+  font-style: italic;
+  color: #999;
+  margin: 1rem 0;
+  padding-left: 1rem;
+  border-left: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Separador estético */
+.codigo-page hr {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 3rem 0;
+}
+
+/* Metadatos del código */
+.codigo-page .codigo-meta {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.codigo-page .codigo-meta span {
+  margin-right: 1rem;
+}
+
+/* Botón Run para código ejecutable */
+.code-run-button {
+  background: rgba(74, 155, 142, 0.2);
+  border: 1px solid rgba(74, 155, 142, 0.5);
+  color: #5fa8a0;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.code-run-button:hover {
+  background: rgba(74, 155, 142, 0.3);
+  border-color: rgba(74, 155, 142, 0.8);
+  color: #6bb3a8;
+  box-shadow: 0 0 10px rgba(74, 155, 142, 0.3);
+}
+
+.code-run-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Modal de output */
+.code-output-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  backdrop-filter: blur(4px);
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.code-output-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.code-output-container {
+  background: rgba(0, 0, 0, 0.9);
+  border: 2px solid rgba(74, 155, 142, 0.5);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 800px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 20px rgba(74, 155, 142, 0.2);
+  margin: 0 auto;
+}
+
+.code-output-header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(74, 155, 142, 0.3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.code-output-title {
+  color: #5fa8a0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.code-output-close {
+  background: transparent;
+  border: none;
+  color: #5fa8a0;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s ease;
+}
+
+.code-output-close:hover {
+  color: #6bb3a8;
+}
+
+.code-output-content {
+  padding: 1.5rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.code-output-text {
+  font-family: 'Courier New', 'Consolas', 'Monaco', 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  line-height: 1.1;
+  color: #5fa8a0;
+  margin: 0;
+  background: transparent;
+  border: none;
+  padding: 0;
+  white-space: pre;
+  font-variant-ligatures: none;
+  letter-spacing: 0.5px;
+  font-weight: normal;
+}
+
+.code-output-line {
+  margin-bottom: 0.5rem;
+  padding-left: 0.5rem;
+  border-left: 2px solid transparent;
+}
+
+.code-output-line.code-output-log {
+  color: #5fa8a0;
+  border-left-color: rgba(95, 168, 160, 0.3);
+}
+
+.code-output-line.code-output-result {
+  color: #6bb3a8;
+  border-left-color: rgba(107, 179, 168, 0.5);
+  font-weight: 500;
+}
+
+.code-output-line.code-output-error {
+  color: #8b4a4a;
+  border-left-color: rgba(139, 74, 74, 0.5);
+}
+
+.code-output-line.code-output-warn {
+  color: #8b7a4a;
+  border-left-color: rgba(139, 122, 74, 0.5);
+}
+
+/* Versión expandible (alternativa) */
+.code-output-expandable {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(74, 155, 142, 0.2);
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+}
+
+.code-output-expandable.expanded {
+  max-height: 500px;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+.code-output-expandable pre {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  font-size: 0.8rem;
+}
+
+/* Modal de input */
+.code-input-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 10001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+.code-input-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.code-input-container {
+  background: rgba(0, 0, 0, 0.9);
+  border: 2px solid rgba(74, 155, 142, 0.5);
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 20px rgba(74, 155, 142, 0.2);
+}
+
+.code-input-header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(74, 155, 142, 0.3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.code-input-title {
+  color: #5fa8a0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.code-input-close {
+  background: transparent;
+  border: none;
+  color: #5fa8a0;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s ease;
+}
+
+.code-input-close:hover {
+  color: #6bb3a8;
+}
+
+.code-input-content {
+  padding: 1.5rem;
+}
+
+.code-input-field {
+  width: 100%;
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(74, 155, 142, 0.3);
+  border-radius: 4px;
+  color: #5fa8a0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+}
+
+.code-input-field:focus {
+  outline: none;
+  border-color: rgba(74, 155, 142, 0.6);
+  box-shadow: 0 0 10px rgba(74, 155, 142, 0.2);
+}
+
+.code-input-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid rgba(74, 155, 142, 0.3);
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.code-input-submit,
+.code-input-cancel {
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(74, 155, 142, 0.5);
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.code-input-submit {
+  background: rgba(74, 155, 142, 0.2);
+  color: #5fa8a0;
+}
+
+.code-input-submit:hover {
+  background: rgba(74, 155, 142, 0.3);
+  border-color: rgba(74, 155, 142, 0.8);
+}
+
+.code-input-cancel {
+  background: transparent;
+  color: #666;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.code-input-cancel:hover {
+  color: #999;
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 /* Ajustes para tablas */
