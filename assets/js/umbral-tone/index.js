@@ -1,5 +1,5 @@
 /**
- * Audio Framework - Mini framework modular para generación de música
+ * Umbral Tone - Framework modular para generación de música
  * KISS: Separación de responsabilidades, fácil de extender
  * 
  * Punto de entrada centralizado - importa y exporta todos los módulos

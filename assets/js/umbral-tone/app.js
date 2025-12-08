@@ -1,9 +1,9 @@
 /**
- * Mixer App - Usa el Audio Framework para crear un mixer generativo
+ * Mixer App - Usa Umbral Tone para crear un mixer generativo
  * KISS: Configuración simple usando el framework modular
  */
 
-import { Channel, Mixer, Transport, Effects, Generators, PresetLoader, PatternEditor } from '../framework/index.js';
+import { Channel, Mixer, Transport, Effects, Generators, PresetLoader, PatternEditor } from './index.js';
 
   // === CONFIGURACIÓN ===
   // Usar ruta absoluta desde la raíz del sitio

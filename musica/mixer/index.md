@@ -327,5 +327,5 @@ nav_order: 5
 
 <script src="https://cdn.jsdelivr.net/npm/tone@14.7.77/build/Tone.js"></script>
 <!-- Mixer app - usa módulos ES6 -->
-<script type="module" src="{{ '/assets/js/features/mixer.js' | relative_url }}"></script>
+<script type="module" src="{{ '/assets/js/umbral-tone/app.js' | relative_url }}"></script>
 

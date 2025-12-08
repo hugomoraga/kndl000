@@ -12,13 +12,43 @@
   <body id="generator"  class="generator">
 
   <div id="controls">
-    <label>Count <input id="ellipseCount" type="range" min="10" max="300" value="100"></label>
-    <label>Spacing <input id="ellipseSpacing" type="range" min="1" max="20" value="10"></label>
-    <label>Speed <input id="angleIncrement" type="range" min="0.01" max="0.2" step="0.01" value="0.05"></label>
-    <label>Size Factor <input id="ellipseSizeFactor" type="range" min="0.5" max="2" step="0.1" value="1"></label>
+    <label style="display: block; margin-bottom: 0.5rem;">Efecto
+      <select id="effectSelect" style="width: 100%; padding: 6px; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.3); color: white; border-radius: 4px; margin-top: 4px;">
+        <option value="tunnel">🌀 Tunnel</option>
+        <option value="spiral">🌀 Spiral</option>
+        <option value="mandala">🌸 Mandala</option>
+        <option value="particles">✨ Partículas</option>
+        <option value="waves">🌊 Olas</option>
+        <option value="fractal">🌳 Fractal</option>
+        <option value="matrix">💚 Matrix</option>
+        <option value="glitch">⚡ Glitch</option>
+        <option value="melt">💧 Melt</option>
+        <option value="fractalGlitch">🌀 Fractal Glitch</option>
+        <option value="waveGlitch">🌊 Wave Glitch</option>
+        <option value="sacredGeometry">🔷 Sacred Geometry</option>
+        <option value="biomech">🦴 Biomech</option>
+        <option value="dune">🏜️ Dune</option>
+      </select>
+    </label>
+    <label style="display: block; margin-top: 10px;">
+      <input type="checkbox" id="autoTransition" style="margin-right: 6px;">
+      Transición Automática
+    </label>
+    <label style="display: block; margin-top: 6px;">Intervalo (seg)
+      <input id="transitionInterval" type="range" min="5" max="30" value="10" style="width: 100%; margin-top: 4px;">
+      <span id="transitionIntervalValue" style="font-size: 10px; color: #999;">10s</span>
+    </label>
+    <label style="display: block; margin-top: 10px;">Count <input id="ellipseCount" type="range" min="10" max="300" value="100"></label>
+    <label style="display: block; margin-top: 6px;">Spacing <input id="ellipseSpacing" type="range" min="1" max="20" value="10"></label>
+    <label style="display: block; margin-top: 6px;">Speed <input id="angleIncrement" type="range" min="0.01" max="0.2" step="0.01" value="0.05"></label>
+    <label style="display: block; margin-top: 6px;">Size Factor <input id="ellipseSizeFactor" type="range" min="0.5" max="2" step="0.1" value="1"></label>
+    <button id="micBtn" style="margin-top: 10px; padding: 8px 16px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: white; cursor: pointer; border-radius: 4px; display: block; width: 100%;">🎤 Mic: OFF</button>
+    <div id="audioLevel" style="margin-top: 8px; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; display: none;">
+      <div id="audioLevelBar" style="height: 100%; background: linear-gradient(90deg, #00ff00, #ffff00, #ff0000); width: 0%; transition: width 0.1s;"></div>
+    </div>
+    <button id="fullscreenBtn" style="margin-top: 10px; padding: 8px 16px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: white; cursor: pointer; border-radius: 4px; display: block; width: 100%;">⛶ Fullscreen</button>
   </div>
-    <main>
-      <script type="module" src="{{ '/assets/js/features/generator/main.js' | relative_url }}"></script>
-    </main>
+    <main></main>
+    <script type="module" src="{{ '/assets/js/umbral-vision/app.js' | relative_url }}"></script>
   </body>
 </html>

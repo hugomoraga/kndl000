@@ -1,12 +1,38 @@
 
-body#generator {
+html, body#generator {
   background: #000;
   color: #fff;
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  overflow: hidden !important;
   padding: 0;
   margin: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+html {
+  overflow: hidden !important;
+}
+
+body#generator {
+  overflow: hidden !important;
+}
+
+body#generator {
+  width: 100vw;
+  height: 100vh;
+}
+
+#generator > main {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
 }
 
 #generator > #controls {
@@ -21,7 +47,14 @@ body#generator {
   opacity: 0;
   transition: opacity 0.3s, background 0.3s;
   max-width: calc(100% - 20px);
-  overflow-x: auto;
+  max-height: calc(100vh - 20px);
+  overflow: hidden;
+  z-index: 1000;
+  pointer-events: auto;
+}
+
+#generator > #controls * {
+  pointer-events: auto;
 }
 
 @media (max-width: 768px) {
@@ -44,6 +77,19 @@ body#generator {
 #generator > #controls:hover {
   opacity: 1;
   background: rgba(0,0,0,0.6);
+}
+
+#generator > #controls button {
+  pointer-events: auto;
+  cursor: pointer;
+  z-index: 1001;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+#generator > #controls #audioLevel {
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 body {

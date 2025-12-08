@@ -1,6 +1,6 @@
-# Audio Framework
+# Umbral Tone
 
-Mini framework modular y extensible para generación de música con Tone.js.
+Framework modular y extensible para generación de música con Tone.js.
 
 ## Principios de Diseño
 
@@ -11,13 +11,19 @@ Mini framework modular y extensible para generación de música con Tone.js.
 ## Estructura
 
 ```
-framework/
-├── Channel.js      # Clase para manejar un canal individual
-├── Mixer.js       # Clase para manejar múltiples canales
-├── Transport.js   # Control de tempo y reproducción
-├── Effects.js     # Utilidades para efectos de audio
-├── Generators.js  # Utilidades para generar patrones
-└── index.js       # Punto de entrada del framework
+umbral-tone/
+├── index.js           # Framework - Punto de entrada (exporta todas las funciones)
+├── app.js             # Aplicación - Mixer con UI y controles (usa el framework)
+│
+├── Channel.js         # Clase para manejar un canal individual
+├── Mixer.js           # Clase para manejar múltiples canales
+├── Transport.js       # Control de tempo y reproducción
+├── Effects.js         # Utilidades para efectos de audio
+├── Generators.js      # Utilidades para generar patrones
+├── PresetLoader.js    # Cargador de presets
+├── PatternEditor.js   # Editor de patrones
+│
+└── README.md          # Documentación
 ```
 
 ## Uso Básico
@@ -36,14 +42,14 @@ El framework usa módulos ES6. Solo necesitas cargar Tone.js y tu script princip
 En tu script JavaScript, importa lo que necesites:
 
 ```javascript
-import { Channel, Mixer, Transport, Effects, Generators } from './framework/index.js';
+import { Channel, Mixer, Transport, Effects, Generators } from './umbral-tone/index.js';
 ```
 
 O importa módulos individuales:
 
 ```javascript
-import { Channel } from './framework/Channel.js';
-import { Effects } from './framework/Effects.js';
+import { Channel } from './umbral-tone/Channel.js';
+import { Effects } from './umbral-tone/Effects.js';
 ```
 
 ### 3. Crear un canal
@@ -148,5 +154,16 @@ mixer.startLoops();
 
 ## Ejemplo Completo
 
-Ver `assets/js/features/mixer.js` para un ejemplo completo de uso.
+Ver `app.js` para un ejemplo completo de uso del framework. Este archivo muestra cómo:
+- Crear canales de audio
+- Configurar un mixer
+- Usar transport y loops
+- Aplicar efectos
+- Cargar presets
+- Gestionar patrones
+
+## Estructura de Archivos
+
+- **`index.js`** - Framework puro, exporta todas las funciones. Úsalo cuando quieras importar el framework en otro proyecto.
+- **`app.js`** - Aplicación completa del Mixer. Se carga directamente en el HTML y maneja todos los controles de UI.
 
