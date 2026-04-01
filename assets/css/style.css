@@ -684,7 +684,7 @@ main {
 /* Poemas: misma familia que títulos (Cormorant); Kramdown "  " → <br> */
 .poem-body {
   font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
-  font-size: clamp(1.2rem, 2.6vw, 1.4rem);
+  font-size: clamp(1.1rem, 2.1vw, 1.1rem);
   font-weight: 400;
   color: #e6e0d8;
   letter-spacing: 0.03em;
