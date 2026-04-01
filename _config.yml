@@ -6,6 +6,10 @@ description: "Fragments on technology, art, culture, philosophy — and the quie
 author: "KNDL"
 baseurl: ""
 
+# Google Analytics 4 (ID en analytics.google.com → Administración → flujos de datos)
+analytics:
+  ga4_measurement_id: "G-2VWGMP1T5M"
+
 # Build settings
 markdown: kramdown
 kramdown:
