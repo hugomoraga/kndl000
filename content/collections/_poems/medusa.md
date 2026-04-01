@@ -2,35 +2,40 @@
 layout: poems
 title: Medusa
 image: /assets/media/images/medusa.png
-date: 2026-04-01
+date: 2026-01-01
 ---
 
 
 ## Medusa
 
-tu lengua que brota
-purpurina
-signos que no comprendo
+Medusa
 
-va y viene
-como no amarte
-como no enredarme
+tu lengua que brota purpurina  
+sobre signos que no decifro  
 
-hay un goce tenso
-algo que corta
+va y viene  
+como la marea de tus ojos  
 
-y yo
-que no quiero ser piedra
-porque ya cargo una
+como no amarte  
+como no enredarme  
 
-pensé que era un juego
-pero todo insiste
+hay un goce tenso  
+como el veneno que aún no despierta  
 
-y yo
-ignorante
+y yo  
+que no quiero ser piedra  
+porque ya cargo una  
 
-recojo restos
-de lo que alguna vez fui
+pensé que era un juego  
+pero todo se arrastra  
 
-¿es un error…
+y yo  
+ignorante  
+
+junto fragmentos  
+
+que no son míos  
+tampoco tuyos  
+
+¿es un error…  
 o ya estoy hechizado?

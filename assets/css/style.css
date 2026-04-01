@@ -681,6 +681,433 @@ main {
   overflow-x: hidden;
 }
 
+/* Poemas: misma familia que títulos (Cormorant); Kramdown "  " → <br> */
+.poem-body {
+  font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.2rem, 2.6vw, 1.4rem);
+  font-weight: 400;
+  color: #e6e0d8;
+  letter-spacing: 0.03em;
+}
+
+.poem-body p {
+  margin: 0 0 0.9em;
+  line-height: 1.85;
+}
+
+.poem-body p:last-child {
+  margin-bottom: 0;
+}
+
+.poem-body h2 {
+  margin: 0 0 0.75em;
+  font-family: inherit;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+/* Índice /poemas/ */
+.poemas-index {
+  margin-top: 0.25rem;
+}
+
+.poemas-index-lede {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.12rem;
+  font-style: italic;
+  color: #8a8278;
+  margin: 0 0 1.85rem;
+  letter-spacing: 0.03em;
+  line-height: 1.45;
+}
+
+.poemas-index__month {
+  margin-bottom: 1.85rem;
+}
+
+.poemas-index__month:not(:last-child) {
+  padding-bottom: 1.65rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+}
+
+.poemas-index__month-label {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(0.95rem, 2.4vw, 1.15rem);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #7d7368;
+  margin: 0 0 0.85rem;
+  padding: 0 0 0.35rem;
+  border: none;
+  border-bottom: 1px solid #2c2c2c;
+}
+
+.poemas-index__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.poemas-index__row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem 1rem;
+  padding: 0.42rem 0.4rem;
+  margin: 0 -0.4rem;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #d4ccc0;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+
+.poemas-index__row:hover {
+  background: rgba(255, 255, 255, 0.045);
+  color: #f0ebe4;
+}
+
+.poemas-index__thumb-wrap {
+  flex-shrink: 0;
+  line-height: 0;
+}
+
+.poemas-index__thumb {
+  display: block;
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+
+.poemas-index__day {
+  font-family: "Inter", sans-serif;
+  font-size: 0.76rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: #5a5755;
+  min-width: 1.75rem;
+  flex-shrink: 0;
+}
+
+.poemas-index__title-wrap {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 0.25rem;
+}
+
+.poemas-index__title {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.22rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.poemas-index__series {
+  font-family: "Inter", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #6d6560;
+}
+
+@media (max-width: 520px) {
+  .poemas-index__row {
+    gap: 0.5rem 0.75rem;
+  }
+
+  .poemas-index__title {
+    font-size: 1.12rem;
+  }
+}
+
+/* Smartphone: títulos de sección (y cabecera de página) centrados */
+@media (max-width: 768px) {
+  main > h1 {
+    text-align: center;
+  }
+
+  main h2 {
+    text-align: center;
+  }
+
+  .poemas-index-lede {
+    text-align: center;
+  }
+
+  .musica-page__masthead,
+  .musica-page__soon,
+  .musica-page__mixer-line {
+    text-align: center;
+  }
+}
+
+/* Música — índice alineado con Melange / Poemas */
+.musica-page {
+  max-width: 40rem;
+  margin: 0.20rem 0.25rem;
+  padding: 0 0.25rem;
+  font-family: "Crimson Text", "Georgia", serif;
+  font-size: 1.08rem;
+  line-height: 1.65;
+  color: #c9bdb0;
+}
+
+.musica-page__soon {
+  font-family: "Inter", sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: #9a8b78;
+  margin: 0 0 0.75rem;
+}
+
+.musica-page__soon strong {
+  color: #c8b8a4;
+  font-weight: 600;
+}
+
+.musica-page__mixer-line {
+  font-family: "Inter", sans-serif;
+  font-size: 0.85rem;
+  margin: 0 0 1.5rem;
+}
+
+.musica-page__mixer-line a {
+  color: #8a7d72;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(150, 130, 100, 0.35);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.musica-page__mixer-line a:hover {
+  color: #c4b5a2;
+  border-bottom-color: rgba(180, 160, 130, 0.55);
+}
+
+.musica-page__masthead {
+  margin-bottom: 2rem;
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid rgba(180, 160, 130, 0.22);
+}
+
+.musica-page__kicker {
+  font-family: "Cormorant Garamond", "Georgia", serif;
+  font-size: 1.65rem;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  color: #e4d9cc;
+  margin: 0 0 0.45rem;
+}
+
+.musica-page__tagline {
+  font-family: "Inter", sans-serif;
+  font-size: 0.88rem;
+  font-weight: 300;
+  font-style: italic;
+  color: #8a7d72;
+  margin: 0;
+  line-height: 1.55;
+}
+
+.musica-page__section {
+  margin: 0 0 2rem;
+  padding: 0 0 1.65rem;
+  border-bottom: 1px solid rgba(95, 88, 78, 0.32);
+}
+
+.musica-page__section--last {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.musica-page__section-title {
+  font-family: "Cormorant Garamond", "Georgia", serif;
+  font-size: clamp(0.95rem, 2.4vw, 1.12rem);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #7d7368;
+  margin: 0 0 0.75rem;
+  padding: 0 0 0.35rem;
+  border: none;
+  border-bottom: 1px solid #2c2c2c;
+}
+
+.musica-page__section-lead {
+  font-size: 1.02rem;
+  color: #b0a394;
+  margin: 0 0 1rem;
+  line-height: 1.6;
+}
+
+.musica-page__mixer-action {
+  margin: 0;
+}
+
+.musica-page__mixer-link {
+  display: inline-block;
+  font-family: "Inter", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #c4b5a2;
+  text-decoration: none;
+  padding: 0.55rem 1rem;
+  border: 1px solid rgba(150, 130, 100, 0.4);
+  border-radius: 6px;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.musica-page__mixer-link:hover {
+  color: #efe6dc;
+  border-color: rgba(180, 160, 130, 0.55);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.spotify-playlist {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.musica-page .spotify-playlist {
+  margin: 0;
+  padding: 0 0 2rem;
+  border-bottom: 1px solid rgba(95, 88, 78, 0.28);
+}
+
+.musica-page .spotify-playlist:not(:first-child) {
+  padding-top: 1.15rem;
+}
+
+.musica-page .spotify-playlist:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.spotify-playlist__title {
+  font-family: "Cormorant Garamond", "Georgia", serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #efe6dc;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.spotify-playlist__genre {
+  display: inline;
+  font-family: "Inter", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: #7a6c5e;
+}
+
+/* Evita el hueco de ~1–4px bajo el iframe (baseline + inline) */
+.spotify-playlist__embed-wrap {
+  line-height: 0;
+  font-size: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.spotify-playlist__embed {
+  display: block;
+  width: 100%;
+  height: 152px;
+  border: none;
+}
+
+/* Nota bajo el reproductor: no compite con el embed */
+.spotify-playlist__desc {
+  font-family: "Inter", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 400;
+  font-style: normal;
+  color: #5a534c;
+  margin: 0;
+  line-height: 1.4;
+  max-width: 38rem;
+}
+
+.youtube-setlist {
+  margin: 1.35rem 0 0;
+}
+
+.youtube-setlist:first-of-type {
+  margin-top: 0.5rem;
+}
+
+.youtube-setlist__head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.65rem;
+  margin-bottom: 0.4rem;
+}
+
+.youtube-setlist__title {
+  font-family: "Cormorant Garamond", "Georgia", serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #efe6dc;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.youtube-setlist__artist {
+  font-family: "Inter", sans-serif;
+  font-size: 0.85rem;
+  color: #8a7d72;
+}
+
+.youtube-setlist__event {
+  font-family: "Inter", sans-serif;
+  font-size: 0.86rem;
+  color: #7a6c5e;
+  margin: 0 0 0.85rem;
+  line-height: 1.45;
+}
+
+.youtube-setlist__frame {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+}
+
+.youtube-setlist__frame iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+@media (max-width: 500px) {
+  .musica-page {
+    font-size: 1.02rem;
+  }
+
+  .musica-page__kicker {
+    font-size: 1.4rem;
+  }
+}
+
 /* Ajustes para listas en móviles */
 ul, ol {
   padding-left: 1.5rem;

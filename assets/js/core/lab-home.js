@@ -121,6 +121,7 @@
     if (k === "CÓDIGO" || k === "CODIGO") return "COD/";
     if (k === "DIARIO") return "DIA/";
     if (k === "POEMA") return "POE/";
+    if (k === "REPORTE") return "REP/";
     return "ARC/";
   }
 

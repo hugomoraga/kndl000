@@ -14,6 +14,7 @@ lab:
   sample_count: 10
   # Máximo % de fragmentos en la muestra (30 = 30 %; también: 0.3)
   max_fragment_ratio: 30
-  # Cuántos posts/poemas entran al JSON del laboratorio (pool para el shuffle)
+  # Cuántos posts/poemas/reportes entran al JSON del laboratorio (pool para el shuffle)
   posts_pool_limit: 50
   poems_pool_limit: 50
+  melange_pool_limit: 50
