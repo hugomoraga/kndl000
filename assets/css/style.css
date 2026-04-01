@@ -368,10 +368,33 @@ nav {
   margin: 0;
 }
 
-.collage img {
-  width: 100%;
-  height: auto;
+/* Ventana de recorte: ratio variable + zoom sin deformar (object-fit: cover) */
+.collage .collage-crop {
+  display: block;
+  position: relative;
+  overflow: hidden;
   border-radius: 8px;
+  width: 100%;
+  aspect-ratio: var(--collage-ar, 1);
+  text-decoration: inherit;
+}
+
+.collage .collage-crop__inner {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-origin: center center;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.collage .collage-crop img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--collage-ox, 50%) var(--collage-oy, 50%);
+  transform: scale(var(--collage-zoom, 1.1));
+  transform-origin: center center;
+  border-radius: 0;
   display: block;
   position: relative;
   z-index: 0;
@@ -447,6 +470,12 @@ nav {
   font-size: 0.85rem;
   color: #888;
   margin-top: 0.4rem;
+}
+
+/* Inicio: misma galería que /visual/ (columnas + img); solo ritmo vertical */
+.collage--home-mini {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .init {
@@ -623,6 +652,57 @@ pre {
   -webkit-overflow-scrolling: touch;
 }
 
+/* Páginas de código: cuerpo como en el IDE (misma familia y color que el bloque pre) */
+main.codigo-page {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 0.9rem;
+  font-weight: 300;
+  line-height: 1.75;
+  color: #5fa8a0;
+}
+
+main.codigo-page h1,
+main.codigo-page h2,
+main.codigo-page h3 {
+  font-family: inherit;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+main.codigo-page h1 {
+  color: #e0e0e0;
+}
+
+main.codigo-page h2 {
+  color: #cccccc;
+}
+
+main.codigo-page h3 {
+  color: #bbbbbb;
+}
+
+main.codigo-page h1 .init a {
+  color: rgb(82, 82, 90);
+  font-weight: 300;
+}
+
+main.codigo-page h1 .init a:hover {
+  color: #aaa;
+}
+
+main.codigo-page em {
+  font-family: inherit;
+  font-weight: 300;
+}
+
+/* Reflexión final: prefijo _ (párrafo que solo contiene cursiva) */
+main.codigo-page p:has(> em:only-child)::before {
+  content: "_";
+  font-weight: 300;
+  margin-right: 0.15em;
+  opacity: 0.9;
+}
+
 /* Estilos artísticos para sección de código - Estética Giger */
 .codigo-page pre {
   background: rgba(0, 0, 0, 0.5);
@@ -633,6 +713,7 @@ pre {
   border-radius: 6px;
   font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', 'Courier New', monospace;
   font-size: 0.8rem;
+  font-weight: 300;
   line-height: 1.8;
   color: #5fa8a0;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(74, 155, 142, 0.05);
@@ -660,7 +741,7 @@ pre {
 /* Colores específicos para elementos del código - Paleta Giger */
 .codigo-page pre code .keyword {
   color: #6bb3a8;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .codigo-page pre code .string {
@@ -684,10 +765,12 @@ pre {
 /* Concepto filosófico como cita */
 .codigo-page .concept {
   font-style: italic;
-  color: #999;
+  font-weight: 300;
+  color: #5fa8a0;
+  opacity: 0.88;
   margin: 1rem 0;
   padding-left: 1rem;
-  border-left: 2px solid rgba(255, 255, 255, 0.1);
+  border-left: 2px solid rgba(95, 168, 160, 0.25);
 }
 
 /* Separador estético */
@@ -700,7 +783,8 @@ pre {
 /* Metadatos del código */
 .codigo-page .codigo-meta {
   font-size: 0.85rem;
-  color: #666;
+  font-weight: 300;
+  color: rgba(95, 168, 160, 0.55);
   margin-bottom: 1.5rem;
 }
 
@@ -1105,4 +1189,135 @@ table {
   .content-item h3 {
     font-size: 1rem !important;
   }
+}
+
+/* Línea tipo consola (inicio) */
+.home-terminal {
+  font-family: ui-monospace, "SF Mono", "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace;
+  font-size: clamp(0.62rem, 1.15vw, 0.72rem);
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  line-height: 1.45;
+  margin: 1.25rem 0 1.5rem;
+  padding: 0.5rem 0.7rem 0.55rem;
+  background: #0c0c0c;
+  color: #b8e0b8;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.4);
+  white-space: pre-wrap;
+  word-break: break-word;
+  -webkit-font-smoothing: antialiased;
+}
+
+.home-terminal-prompt {
+  color: #5fa8a0;
+  user-select: none;
+  margin-right: 0.45em;
+  font-weight: 300;
+  opacity: 0.9;
+}
+
+.home-terminal-text {
+  color: #9fdf9f;
+  font-weight: 300;
+}
+
+/* Laboratorio (inicio) */
+.lab {
+  margin: 2rem 0 2.5rem;
+  padding: 0;
+}
+
+.lab-intro {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  color: #777;
+  margin: 0 0 1.25rem;
+  line-height: 1.5;
+}
+
+.lab-toolbar {
+  margin-bottom: 1rem;
+}
+
+.lab-shuffle {
+  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid #444;
+  background: transparent;
+  color: #aaa;
+  cursor: pointer;
+  border-radius: 2px;
+  min-height: auto;
+  min-width: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lab-shuffle:hover {
+  color: #eee;
+  border-color: #666;
+}
+
+.lab-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.lab-specimen {
+  border: 1px solid #2a2a2a;
+  border-left: 3px solid #5fa8a0;
+  padding: 0.85rem 1rem 1rem;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.lab-specimen-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 0.65rem;
+  font-family: ui-monospace, 'Cascadia Code', Menlo, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: #5fa8a0;
+}
+
+.lab-num {
+  color: #555;
+  font-size: 0.62rem;
+  max-width: 58%;
+  min-width: 0;
+  text-align: right;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  font-family: ui-monospace, "Cascadia Code", Menlo, monospace;
+}
+
+.lab-text {
+  margin: 0;
+  font-family: 'Alegreya', serif;
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  line-height: 1.45;
+  color: #ccc;
+}
+
+.lab-text a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid #333;
+  min-height: unset;
+  min-width: unset;
+  display: inline;
+}
+
+.lab-text a:hover {
+  border-bottom-color: #5fa8a0;
+  color: #eee;
 }

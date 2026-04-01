@@ -345,7 +345,13 @@
   // CREACIÓN DE CAPAS RGB
   // ============================================================================
 
-  function createRGBLayer(imgSrc, className, preset, hueShift) {
+  function createRGBLayer(imgSrc, className, preset, hueShift, cropStyle) {
+    const bgPos = cropStyle
+      ? `${cropStyle.ox} ${cropStyle.oy}`
+      : 'center';
+    const bgSize = cropStyle && cropStyle.zoom
+      ? `${(cropStyle.zoom * 100).toFixed(2)}% ${(cropStyle.zoom * 100).toFixed(2)}%`
+      : 'cover';
     const layer = document.createElement('div');
     layer.className = `glitch-rgb-layer ${className}`;
     layer.style.cssText = `
@@ -355,8 +361,8 @@
       width: 100%;
       height: 100%;
       background-image: url(${imgSrc});
-      background-size: cover;
-      background-position: center;
+      background-size: ${bgSize};
+      background-position: ${bgPos};
       background-repeat: no-repeat;
       opacity: 0;
       pointer-events: none;
@@ -471,9 +477,35 @@
 
   const figureConfigs = new Map();
 
+  function getCollageHost(figure) {
+    return figure.querySelector('.collage-crop') || figure;
+  }
+
+  function getParallaxTarget(figure) {
+    return figure.querySelector('.collage-crop__inner') || figure.querySelector('img');
+  }
+
+  function applyCollageCrop(figure, img, index) {
+    if (!figure.querySelector('.collage-crop')) return;
+    const imgSrc = img.src || img.getAttribute('src') || '';
+    const seed = utils.generateUniqueSeed(imgSrc, index + 54321);
+    const rnd = utils.createSeededRandom(seed);
+    const ratios = [0.68, 0.78, 0.88, 1, 1.15, 1.28, 1.42];
+    const ar = ratios[Math.floor(rnd() * ratios.length)];
+    figure.style.setProperty('--collage-ar', String(ar));
+    const ox = 25 + rnd() * 50;
+    const oy = 25 + rnd() * 50;
+    figure.style.setProperty('--collage-ox', `${ox.toFixed(1)}%`);
+    figure.style.setProperty('--collage-oy', `${oy.toFixed(1)}%`);
+    const zoom = 1.05 + rnd() * 0.22;
+    figure.style.setProperty('--collage-zoom', zoom.toFixed(3));
+  }
+
   function setupRGBLayers(figure, img, index) {
     const imgSrc = img.src || img.getAttribute('src');
     if (!imgSrc) return;
+
+    applyCollageCrop(figure, img, index);
 
     const seed = utils.generateUniqueSeed(imgSrc, index);
     const getRandPreset = utils.createSeededRandom(seed);
@@ -515,13 +547,21 @@
     injectKeyframes(`${animationId}-blue`, blueKeyframes, blueMovementType);
     injectKeyframes(`${animationId}-main`, mainKeyframes, mainMovementTypeFinal);
 
-    // Crear capas RGB
-    const redLayer = createRGBLayer(imgSrc, 'glitch-red', redPreset, redPreset.redHue);
-    const blueLayer = createRGBLayer(imgSrc, 'glitch-blue', bluePreset, bluePreset.blueHue);
-    
-    // Siempre agregar las capas al DOM para que los estilos funcionen correctamente
-    figure.appendChild(redLayer);
-    figure.appendChild(blueLayer);
+    const hasCrop = figure.querySelector('.collage-crop');
+    const cropStyle = hasCrop
+      ? {
+          ox: figure.style.getPropertyValue('--collage-ox').trim() || '50%',
+          oy: figure.style.getPropertyValue('--collage-oy').trim() || '50%',
+          zoom: parseFloat(figure.style.getPropertyValue('--collage-zoom').trim()) || 1.1
+        }
+      : null;
+
+    const redLayer = createRGBLayer(imgSrc, 'glitch-red', redPreset, redPreset.redHue, cropStyle);
+    const blueLayer = createRGBLayer(imgSrc, 'glitch-blue', bluePreset, bluePreset.blueHue, cropStyle);
+
+    const layerHost = getCollageHost(figure);
+    layerHost.appendChild(redLayer);
+    layerHost.appendChild(blueLayer);
     
     if (!useRGB) {
       redLayer.style.display = 'none';
@@ -542,17 +582,18 @@
     // Event listeners para desktop
     if (!isMobile) {
       figure.addEventListener('mouseenter', () => {
-        // Resetear parallax antes de activar glitch
+        const parallaxTarget = getParallaxTarget(figure);
+        if (parallaxTarget) parallaxTarget.style.transform = '';
         img.style.transform = '';
         if (redLayer) redLayer.style.transform = '';
         if (blueLayer) blueLayer.style.transform = '';
-        // Activar glitch
         activateGlitch(redLayer, blueLayer, img, animationId, mainPreset, mainMovementTypeFinal, useRGB);
       });
 
       figure.addEventListener('mouseleave', () => {
         deactivateGlitch(redLayer, blueLayer, img);
-        // Asegurar que el transform se resetee
+        const parallaxTarget = getParallaxTarget(figure);
+        if (parallaxTarget) parallaxTarget.style.transform = '';
         img.style.transform = '';
         if (redLayer) redLayer.style.transform = '';
         if (blueLayer) blueLayer.style.transform = '';
@@ -597,14 +638,21 @@
 
       function applyParallaxTransform(figure, offset) {
         const img = figure.querySelector('img');
+        const inner = figure.querySelector('.collage-crop__inner');
         const config = figureGlitchConfigs.get(figure);
         
         // Solo aplicar parallax si NO hay animación activa (el glitch tiene prioridad)
         const hasGlitchAnimation = img && img.style.animation && img.style.animation !== 'none';
         if (hasGlitchAnimation) return; // No aplicar parallax si hay glitch activo
         
-        if (img) {
-          img.style.transform = `translate(${offset.x.toFixed(2)}px, ${offset.y.toFixed(2)}px) scale(${CONFIG.PARALLAX.SCALE})`;
+        const baseZoom = parseFloat(
+          getComputedStyle(figure).getPropertyValue('--collage-zoom').trim()
+        ) || 1.1;
+
+        if (inner) {
+          inner.style.transform = `translate(${offset.x.toFixed(2)}px, ${offset.y.toFixed(2)}px) scale(${CONFIG.PARALLAX.SCALE})`;
+        } else if (img) {
+          img.style.transform = `translate(${offset.x.toFixed(2)}px, ${offset.y.toFixed(2)}px) scale(${CONFIG.PARALLAX.SCALE * baseZoom})`;
         }
         
         if (config) {
@@ -622,11 +670,14 @@
 
       function resetTransforms(figure) {
         const img = figure.querySelector('img');
+        const inner = figure.querySelector('.collage-crop__inner');
         const config = figureGlitchConfigs.get(figure);
         
-        // Solo resetear si no hay animación activa
         if (img && (!img.style.animation || img.style.animation === 'none')) {
           img.style.transform = '';
+        }
+        if (inner && img && (!img.style.animation || img.style.animation === 'none')) {
+          inner.style.transform = '';
         }
         if (config) {
           if (config.redLayer && (!config.redLayer.style.animation || config.redLayer.style.animation === 'none')) {
@@ -825,10 +876,7 @@
   // INICIALIZACIÓN
   // ============================================================================
 
-  function init() {
-    const figures = document.querySelectorAll('.collage figure');
-    if (figures.length === 0) return;
-
+  function bindCollageFigures(figures) {
     figures.forEach((figure, index) => {
       const img = figure.querySelector('img');
       if (!img) return;
@@ -843,12 +891,33 @@
         }, index * 100);
       });
     });
+  }
 
-    setupParallax();
-    
-    if (isMobile) {
-      setupMobileGlitch();
+  function init() {
+    const figures = document.querySelectorAll('.collage figure');
+    if (figures.length > 0) {
+      bindCollageFigures(figures);
+      setupParallax();
+      if (isMobile) {
+        setupMobileGlitch();
+      }
+      return;
     }
+
+    const homeRoot = document.getElementById('home-collage-root');
+    if (!homeRoot) return;
+
+    const mo = new MutationObserver(() => {
+      const injected = homeRoot.querySelectorAll('figure');
+      if (injected.length === 0) return;
+      mo.disconnect();
+      bindCollageFigures(injected);
+      setupParallax();
+      if (isMobile) {
+        setupMobileGlitch();
+      }
+    });
+    mo.observe(homeRoot, { childList: true, subtree: true });
   }
 
   utils.ready(init);

@@ -1,0 +1,58 @@
+{%- comment -%}
+  Dataset JSON para lab-home.js: fragmentos, código, diario, poemas.
+  Campo ref: clave canónica; lab-home.js deriva prefijo + hex16 (FNV-1a), puntos cada 4 caracteres.
+{%- endcomment -%}
+{%- assign _post_lim = 50 -%}
+{%- assign _poem_lim = 50 -%}
+{%- assign _sample = 10 -%}
+{%- assign _mfr = 0.3 -%}
+{%- if site.data.home and site.data.home.lab -%}
+  {%- assign l = site.data.home.lab -%}
+  {%- assign _post_lim = l.posts_pool_limit | default: 50 -%}
+  {%- assign _poem_lim = l.poems_pool_limit | default: 50 -%}
+  {%- assign _sample = l.sample_count | default: 10 -%}
+  {%- assign _mfr = l.max_fragment_ratio | default: 0.3 -%}
+{%- endif -%}
+{%- assign frag_href = "/fragmentos/" | relative_url -%}
+<script type="application/json" id="lab-home-config">
+{"sample_count":{{ _sample }},"max_fragment_ratio":{{ _mfr }}}
+</script>
+<section class="lab" aria-label="Laboratorio textual">
+  <div class="lab-toolbar">
+    <button type="button" class="lab-shuffle" id="lab-shuffle">Sentir +</button>
+  </div>
+  <div class="lab-feed" id="lab-feed-root" aria-live="polite"></div>
+</section>
+<script type="application/json" id="lab-items">
+[
+{%- assign lab_first = true -%}
+{%- for f in site.fragmentos -%}
+  {%- if f.lineas -%}
+    {%- for row in f.lineas -%}
+      {%- assign t = row.linea -%}
+      {%- if t != nil and t != "" -%}
+        {%- assign _frag_slug = f.slug | default: f.name | replace: '.md', '' -%}
+        {%- assign _ref = 'FRAG/' | append: _frag_slug | append: '/L' | append: forloop.index -%}
+        {%- unless lab_first -%},{%- endunless -%}{%- assign lab_first = false -%}
+{"kind":"FRAGMENTO","text":{{ t | jsonify }},"href":{{ frag_href | jsonify }},"ref":{{ _ref | jsonify }}}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- for c in site.codigos -%}
+  {%- assign _ref = 'COD/' | append: c.slug -%}
+  {%- unless lab_first -%},{%- endunless -%}{%- assign lab_first = false -%}
+{"kind":"CÓDIGO","text":{{ c.title | jsonify }},"href":{{ c.url | relative_url | jsonify }},"ref":{{ _ref | jsonify }}}
+{%- endfor -%}
+{%- for post in site.posts limit: _post_lim -%}
+  {%- assign _ref = 'DIA/' | append: post.date | date: "%Y-%m-%d" | append: '/' | append: post.slug -%}
+  {%- unless lab_first -%},{%- endunless -%}{%- assign lab_first = false -%}
+{"kind":"DIARIO","text":{{ post.title | jsonify }},"href":{{ post.url | relative_url | jsonify }},"ref":{{ _ref | jsonify }}}
+{%- endfor -%}
+{%- for poem in site.poems limit: _poem_lim -%}
+  {%- assign _ref = 'POE/' | append: poem.slug -%}
+  {%- unless lab_first -%},{%- endunless -%}{%- assign lab_first = false -%}
+{"kind":"POEMA","text":{{ poem.title | jsonify }},"href":{{ poem.url | relative_url | jsonify }},"ref":{{ _ref | jsonify }}}
+{%- endfor -%}
+]
+</script>

@@ -1,0 +1,18 @@
+{%- comment -%}
+  Collage del inicio: pool = colección images; el cliente elige max_items al azar.
+{%- endcomment -%}
+{%- assign hc = site.data.home.collage -%}
+{%- assign _max = hc.max_items | default: 6 | plus: 0 -%}
+<script type="application/json" id="home-collage-config">
+{"max_items":{{ _max }}}
+</script>
+<script type="application/json" id="home-collage-items">
+[
+{%- assign cc_first = true -%}
+{%- for img in site.images -%}
+  {%- unless cc_first -%},{%- endunless -%}{%- assign cc_first = false -%}
+{"title":{{ img.title | jsonify }},"href":{{ img.url | relative_url | jsonify }},"src":{{ img.image | relative_url | jsonify }}}
+{%- endfor -%}
+]
+</script>
+<div id="home-collage-root" class="collage collage--home-mini" aria-live="polite"></div>

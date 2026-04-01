@@ -1,0 +1,19 @@
+# Configuración de la página de inicio (/)
+# Ajusta números aquí sin tocar JS ni Liquid salvo casos nuevos.
+
+collage:
+  # Si false, no se muestra el mini collage
+  enabled: true
+  # Cuántas imágenes mostrar en cada sorteo
+  max_items: 6
+  # true = aleatorio desde la colección Visual (site.images); false = lista manual en assemblage.yml
+  dynamic: true
+
+lab:
+  # Cuántas tarjetas "ARCHIVO_xx" se muestran en cada sorteo
+  sample_count: 10
+  # Tope de fragmentos en esa muestra (0.3 = 30 % como máximo)
+  max_fragment_ratio: 0.3
+  # Cuántos posts/poemas entran al JSON del laboratorio (pool para el shuffle)
+  posts_pool_limit: 50
+  poems_pool_limit: 50

@@ -1,8 +1,7 @@
 ---
 layout: default
 title: ✶ Diario ✶
-nav: true
-nav_order: 10
+nav: false
 ---
 
 {% for post in site.posts %}

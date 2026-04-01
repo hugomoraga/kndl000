@@ -4,10 +4,15 @@
 {%- endcomment -%}
 {% assign collection_map = site.data.assemblage %}
 {% assign type_to_collection = "poem:poems,post:posts,image:images,page:pages" | split: "," %}
+{% comment %} slice sobre arrays en Liquid es poco fiable; limit en for sí respeta max_items {% endcomment %}
+{% assign _asm_limit = 9999 %}
+{% if include.variant == 'home-mini' and site.data.home and site.data.home.collage.max_items != nil %}
+  {% assign _asm_limit = site.data.home.collage.max_items | plus: 0 %}
+{% endif %}
 
-<div class="collage">
+<div class="collage{% if include.variant %} collage--{{ include.variant }}{% endif %}">
 
-  {% for entry in site.data.assemblage %}
+  {% for entry in site.data.assemblage limit: _asm_limit %}
     {% assign item = nil %}
     {% assign target_collection = nil %}
 
@@ -39,44 +44,15 @@
 
       {% if image %}
         <figure class="image-effect">
-          <a href="{{ item.url | relative_url }}">
-            <img src="{{ image | relative_url }}" alt="{{ title }}" loading="lazy">
+          <a class="collage-crop" href="{{ item.url | relative_url }}">
+            <span class="collage-crop__inner">
+              <img src="{{ image | relative_url }}" alt="{{ title }}" loading="lazy">
+            </span>
           </a>
           <figcaption>{{ caption }}</figcaption>
         </figure>
       {% endif %}
     {% endif %}
-  {% endfor %}
-
-  {%- comment -%}
-  Render automático: todos los contenidos con imagen (posts + poems + images)
-  Carga dinámica con infinite scroll
-  {%- endcomment -%}
-
-  {% assign recent_posts = site.posts | where_exp: "p", "p.image" %}
-  {% assign recent_poems = site.poems | where_exp: "p", "p.image" %}
-  {% assign recent_images = site.images | where_exp: "p", "p.image" %}
-
-  {% assign combined = recent_posts | concat: recent_poems | concat: recent_images %}
-  {% assign sorted_auto = combined | sort: "date" | reverse %}
-
-  {% assign index = 0 %}
-  {% for item in sorted_auto %}
-    {% assign title = item.title %}
-    {% assign caption = item.title %}
-    {% assign is_visible = false %}
-    {% if index < 12 %}
-      {% assign is_visible = true %}
-    {% endif %}
-
-    <figure class="image-effect lazy-image" data-index="{{ index }}" {% unless is_visible %}style="display: none;"{% endunless %}>
-      <a href="{{ item.url | relative_url }}">
-        <img src="{{ item.image | relative_url }}" alt="{{ title }}" loading="lazy">
-      </a>
-      <figcaption>{{ caption }}</figcaption>
-    </figure>
-
-    {% assign index = index | plus: 1 %}
   {% endfor %}
 
 </div>
