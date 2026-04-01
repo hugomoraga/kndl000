@@ -248,10 +248,17 @@ function setupFullscreen() {
 /**
  * Inicializar aplicación
  */
+const DEFAULT_EFFECT = 'tunnel';
+
 function initialize() {
   console.log('Inicializando Umbral Vision...');
-  
-  startVisualizer('tunnel');
+
+  startVisualizer(DEFAULT_EFFECT);
+  const effectSelect = document.getElementById('effectSelect');
+  if (effectSelect) {
+    effectSelect.value = DEFAULT_EFFECT;
+  }
+
   setupFullscreen();
   setupMicrophone();
   setupEffectSelector();

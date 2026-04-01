@@ -883,6 +883,58 @@ export const Effects = {
         sketch.pop();
       }
     };
+  },
+
+  /**
+   * Efecto Yin Yang — símbolo ☯ que gira con velocidad creciente (tope suave)
+   */
+  yinYang: (sketch) => {
+    let rotation = 0;
+    let angularSpeed = 0.03;
+
+    return {
+      draw: () => {
+        const { enabled: audioEnabled, level: audioLevel } = getAudioState();
+        const audioBoost =
+          audioEnabled && audioLevel > 0.01 ? 1 + audioLevel * 0.6 : 1;
+
+        sketch.colorMode(sketch.RGB);
+        sketch.background(150, 150, 150);
+        sketch.colorMode(sketch.HSB, 360, 100, 100);
+        sketch.translate(sketch.width / 2, sketch.height / 2);
+        sketch.rotate(rotation);
+
+        const d = Math.min(sketch.width, sketch.height) * 0.62;
+        const r = d / 2;
+
+        sketch.noStroke();
+        // Blanco base
+        sketch.fill(0, 0, 100);
+        sketch.circle(0, 0, d);
+        // Mitad izquierda negra
+        sketch.fill(0, 0, 0);
+        sketch.arc(0, 0, d, d, sketch.HALF_PI, sketch.PI + sketch.HALF_PI, sketch.PIE);
+        // Cabeza blanca (arriba)
+        sketch.fill(0, 0, 100);
+        sketch.circle(0, -r / 2, r);
+        // Cabeza negra (abajo)
+        sketch.fill(0, 0, 0);
+        sketch.circle(0, r / 2, r);
+        // Punto negro en blanco
+        sketch.fill(0, 0, 0);
+        sketch.circle(0, -r / 2, r / 4);
+        // Punto blanco en negro
+        sketch.fill(0, 0, 100);
+        sketch.circle(0, r / 2, r / 4);
+
+        // Aceleración angular (~3× respecto a la versión base; tope también ×3)
+        const accel = 0.00033 * audioBoost;
+        angularSpeed += accel;
+        const maxSpeed = 0.84 * audioBoost;
+        if (angularSpeed > maxSpeed) angularSpeed = maxSpeed;
+        rotation += angularSpeed * audioBoost;
+      }
+    };
   }
 };
 
