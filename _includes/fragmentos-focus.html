@@ -1,0 +1,9 @@
+<script>
+(function () {
+  var h = decodeURIComponent(location.hash.slice(1));
+  if (!h) return;
+  var el = document.getElementById(h);
+  if (!el || !el.classList.contains("fragmento-linea")) return;
+  el.focus({ preventScroll: true });
+})();
+</script>

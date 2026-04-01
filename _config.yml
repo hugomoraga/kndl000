@@ -46,4 +46,13 @@ collections:
   codigos:
     output: true
     permalink: /codigo/:name/
-  
+
+defaults:
+  - scope:
+      path: "content/collections/_posts"
+    values:
+      published: true
+  - scope:
+      type: melange_reports
+    values:
+      layout: melange-report

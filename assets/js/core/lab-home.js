@@ -18,12 +18,21 @@
     typeof cfg.sample_count === "number" && cfg.sample_count > 0
       ? Math.floor(cfg.sample_count)
       : 10;
-  var MAX_FRAGMENT_RATIO =
-    typeof cfg.max_fragment_ratio === "number" &&
-    cfg.max_fragment_ratio >= 0 &&
-    cfg.max_fragment_ratio <= 1
-      ? cfg.max_fragment_ratio
-      : 0.3;
+
+  /** 0–1 (ej. 0.3) o 1–100 como porcentaje (ej. 30 → 0.3). */
+  function normalizeFragmentRatio(v) {
+    if (v === undefined || v === null) return 0.3;
+    var n =
+      typeof v === "number" && !isNaN(v)
+        ? v
+        : parseFloat(String(v).replace(",", "."));
+    if (isNaN(n) || n < 0) return 0;
+    if (n > 1 && n <= 100) return n / 100;
+    if (n > 100) return 1;
+    return Math.min(1, n);
+  }
+
+  var MAX_FRAGMENT_RATIO = normalizeFragmentRatio(cfg.max_fragment_ratio);
 
   var items;
   try {
@@ -50,6 +59,7 @@
     return d.innerHTML;
   }
 
+  /** Máximo de fragmentos permitidos con n ítems en total (≤ ratio × n). */
   function maxFragmentsForSize(n) {
     return Math.floor(n * MAX_FRAGMENT_RATIO);
   }
@@ -115,8 +125,9 @@
   }
 
   /**
-   * Hasta SAMPLE_COUNT ítems: como máximo ~30% FRAGMENTO (resto CÓDIGO, DIARIO, POEMA, …).
-   * Primero llena con no-fragmentos; luego añade fragmentos si el tope lo permite.
+   * Muestra de SAMPLE_COUNT ítems: hasta floor(ratio × SAMPLE_COUNT) fragmentos
+   * y el resto de CÓDIGO / DIARIO / POEMA cuando el pool lo permite (mezcla visible).
+   * Si no hay suficientes no-fragmentos, completa con fragmentos respetando el tope proporcional.
    */
   function pickWeighted() {
     var frags = [];
@@ -128,14 +139,11 @@
     var shF = shuffle(frags);
     var shR = shuffle(rest);
     var out = [];
+    var maxFr = Math.floor(SAMPLE_COUNT * MAX_FRAGMENT_RATIO);
     var i;
-    var fi = 0;
+    var fi;
 
-    for (i = 0; i < shR.length && out.length < SAMPLE_COUNT; i++) {
-      out.push(shR[i]);
-    }
-
-    if (out.length === 0 && shF.length > 0) {
+    if (shR.length === 0 && shF.length > 0) {
       var capOnly = Math.min(
         maxFragmentsForSize(SAMPLE_COUNT),
         SAMPLE_COUNT,
@@ -145,6 +153,17 @@
       return shuffle(out);
     }
 
+    var numFr = Math.min(maxFr, shF.length);
+    var numRest = SAMPLE_COUNT - numFr;
+
+    if (shR.length >= numRest) {
+      for (i = 0; i < numFr; i++) out.push(shF[i]);
+      for (i = 0; i < numRest; i++) out.push(shR[i]);
+      return shuffle(out);
+    }
+
+    for (i = 0; i < shR.length; i++) out.push(shR[i]);
+    fi = 0;
     while (fi < shF.length && out.length < SAMPLE_COUNT) {
       var n = out.length + 1;
       var currFr = countFragments(out);

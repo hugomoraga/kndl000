@@ -3,6 +3,7 @@ layout: default
 title: Manifiesto
 image: /assets/media/images/object-000.png
 date: 2025-06-24T00:00:00.000Z
+published: false
 ---
 
 No hay centro.\

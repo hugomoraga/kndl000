@@ -12,8 +12,8 @@ collage:
 lab:
   # Cuántas tarjetas "ARCHIVO_xx" se muestran en cada sorteo
   sample_count: 10
-  # Tope de fragmentos en esa muestra (0.3 = 30 % como máximo)
-  max_fragment_ratio: 0.3
+  # Máximo % de fragmentos en la muestra (30 = 30 %; también: 0.3)
+  max_fragment_ratio: 30
   # Cuántos posts/poemas entran al JSON del laboratorio (pool para el shuffle)
   posts_pool_limit: 50
   poems_pool_limit: 50

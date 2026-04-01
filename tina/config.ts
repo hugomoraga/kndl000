@@ -77,6 +77,12 @@ export default defineConfig({
             label: "Publish Date",
             required: true,
           },
+          {
+            type: "boolean" as const,
+            name: "published",
+            label:
+              "Visible en el sitio (desmarcar = archivado: no diario, lab ni RSS)",
+          },
         ],
       },
       {
@@ -109,9 +115,32 @@ export default defineConfig({
             type: "string" as const,
             name: "layout",
             label: "Layout",
-            options: ["poems", "default"],
+            options: ["melange-report", "default"],
           },
           ...createCommonFields(["title", "image", "date", "body"]),
+          {
+            type: "string" as const,
+            name: "subtitle",
+            label: "Subtítulo (lugar, año…)",
+          },
+          {
+            type: "string" as const,
+            name: "summary",
+            label: "Resumen (índice Melange, opcional)",
+            ui: {
+              component: "textarea",
+            },
+          },
+          {
+            type: "boolean" as const,
+            name: "wip",
+            label: "Borrador (sin texto aún)",
+          },
+          {
+            type: "string" as const,
+            name: "image_credit",
+            label: "Crédito de la foto",
+          },
           {
             type: "string" as const,
             name: "series",

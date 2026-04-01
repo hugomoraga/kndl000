@@ -32,9 +32,11 @@
       {%- assign t = row.linea -%}
       {%- if t != nil and t != "" -%}
         {%- assign _frag_slug = f.slug | default: f.name | replace: '.md', '' -%}
+        {%- assign _frag_id = _frag_slug | slugify -%}
+        {%- assign _frag_link = frag_href | append: '#frag-' | append: _frag_id | append: '-' | append: forloop.index -%}
         {%- assign _ref = 'FRAG/' | append: _frag_slug | append: '/L' | append: forloop.index -%}
         {%- unless lab_first -%},{%- endunless -%}{%- assign lab_first = false -%}
-{"kind":"FRAGMENTO","text":{{ t | jsonify }},"href":{{ frag_href | jsonify }},"ref":{{ _ref | jsonify }}}
+{"kind":"FRAGMENTO","text":{{ t | jsonify }},"href":{{ _frag_link | jsonify }},"ref":{{ _ref | jsonify }}}
       {%- endif -%}
     {%- endfor -%}
   {%- endif -%}
