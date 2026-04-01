@@ -1,24 +1,36 @@
-Magnética  
-tu lengua que brota  
-purpurina  
-sobre ángeles y demonios,  
-caos, orden, elemental, superfluo.  
+---
+layout: poems
+title: Medusa
+image: /assets/media/images/medusa.png
+date: 2026-04-01
+---
 
-Va y viene.  
-Quiero amarte  
-y agradezco que no.  
-No quiero ser piedra,  
-ya cargo una en mi espalda.  
 
-A veces solo es cuerpo,  
-es baile,  
-no hay más misterio.  
-Pero en ti son las señales  
-que te dan la vida.  
+## Medusa
 
-Para mí el sinsentido  
-me hizo quererla,  
-a mí y a tus astros.  
+tu lengua que brota
+purpurina
+signos que no comprendo
 
-¿Es un error o no...?  
-No me hechices otra vez.  
+va y viene
+como no amarte
+como no enredarme
+
+hay un goce tenso
+algo que corta
+
+y yo
+que no quiero ser piedra
+porque ya cargo una
+
+pensé que era un juego
+pero todo insiste
+
+y yo
+ignorante
+
+recojo restos
+de lo que alguna vez fui
+
+¿es un error…
+o ya estoy hechizado?

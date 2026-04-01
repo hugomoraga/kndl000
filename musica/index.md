@@ -26,10 +26,3 @@ nav_order: 4
 {% endfor %}
 
 ---
-
-## 🎧 Música Personal
-
-{% assign tracks = site.personal_music | sort: "date" | reverse %}
-{% for track in tracks %}
-  {% include personal-music-item.html track=track %}
-{% endfor %}
