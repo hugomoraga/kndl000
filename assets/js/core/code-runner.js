@@ -5,6 +5,14 @@
 (function() {
   'use strict';
 
+  /** Evita scroll del documento detrás del modal (sobre todo en móvil). */
+  function syncCodeModalScrollLock() {
+    var has =
+      document.querySelector('.code-output-modal.active') ||
+      document.querySelector('.code-input-modal.active');
+    document.body.classList.toggle('code-modal-open', !!has);
+  }
+
   // Interceptar console.log para capturar output
   const originalLog = console.log;
   const originalError = console.error;
@@ -92,12 +100,14 @@
     const closeBtn = modal.querySelector('.code-output-close');
     closeBtn.addEventListener('click', () => {
       modal.classList.remove('active');
+      syncCodeModalScrollLock();
     });
     
     // Cerrar al hacer click fuera
     modal.addEventListener('click', (e) => {
       if (e.target === modal) {
         modal.classList.remove('active');
+        syncCodeModalScrollLock();
       }
     });
     
@@ -129,6 +139,7 @@
     });
     
     modal.classList.add('active');
+    syncCodeModalScrollLock();
   }
   
   // Función para limpiar el output buffer (para actualizaciones dinámicas)
@@ -163,7 +174,11 @@
     
     function close() {
       inputModal.classList.remove('active');
-      setTimeout(() => inputModal.remove(), 300);
+      syncCodeModalScrollLock();
+      setTimeout(function () {
+        inputModal.remove();
+        syncCodeModalScrollLock();
+      }, 300);
     }
     
     closeBtn.addEventListener('click', close);
@@ -186,7 +201,10 @@
     });
     
     document.body.appendChild(inputModal);
-    setTimeout(() => inputModal.classList.add('active'), 10);
+    setTimeout(function () {
+      inputModal.classList.add('active');
+      syncCodeModalScrollLock();
+    }, 10);
     
     return inputModal;
   }
@@ -218,8 +236,10 @@
     
     function close() {
       warningModal.classList.remove('active');
+      syncCodeModalScrollLock();
       setTimeout(() => {
         warningModal.remove();
+        syncCodeModalScrollLock();
         if (onCancel) onCancel();
       }, 300);
     }
@@ -233,14 +253,19 @@
     
     submitBtn.addEventListener('click', () => {
       warningModal.classList.remove('active');
+      syncCodeModalScrollLock();
       setTimeout(() => {
         warningModal.remove();
+        syncCodeModalScrollLock();
         if (onConfirm) onConfirm();
       }, 300);
     });
     
     document.body.appendChild(warningModal);
-    setTimeout(() => warningModal.classList.add('active'), 10);
+    setTimeout(() => {
+      warningModal.classList.add('active');
+      syncCodeModalScrollLock();
+    }, 10);
     
     return warningModal;
   }
@@ -280,6 +305,7 @@
     
     const outputText = modal.querySelector('.code-output-text');
     modal.classList.add('active'); // Mostrar modal inmediatamente
+    syncCodeModalScrollLock();
     
     // Función para actualizar directamente el DOM
     function updateOutputDirectly(content) {

@@ -89,6 +89,8 @@ html body#generator {
 html {
   overflow-y: auto;
   overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -300,7 +302,10 @@ nav {
 /* Tablets y pantallas medianas */
 @media (max-width: 900px) {
   body {
-    padding: 1.5rem;
+    padding: max(1.5rem, env(safe-area-inset-top, 0px))
+      max(1.5rem, env(safe-area-inset-right, 0px))
+      max(1.5rem, env(safe-area-inset-bottom, 0px))
+      max(1.5rem, env(safe-area-inset-left, 0px));
   }
   
   .collage {
@@ -317,7 +322,10 @@ nav {
 /* Móviles grandes */
 @media (max-width: 768px) {
   body {
-    padding: 1rem;
+    padding: max(1rem, env(safe-area-inset-top, 0px))
+      max(1rem, env(safe-area-inset-right, 0px))
+      max(1rem, env(safe-area-inset-bottom, 0px))
+      max(1rem, env(safe-area-inset-left, 0px));
   }
   
   h1 {
@@ -344,12 +352,23 @@ nav {
     display: block;
     margin-bottom: 0.5rem;
   }
+
+  .nav a {
+    display: inline-block;
+    padding: 0.35rem 0.5rem;
+    min-height: 44px;
+    line-height: 1.4;
+    box-sizing: border-box;
+  }
 }
 
 /* Móviles pequeños */
 @media (max-width: 500px) {
   body {
-    padding: 0.75rem;
+    padding: max(0.75rem, env(safe-area-inset-top, 0px))
+      max(0.75rem, env(safe-area-inset-right, 0px))
+      max(0.75rem, env(safe-area-inset-bottom, 0px))
+      max(0.75rem, env(safe-area-inset-left, 0px));
   }
   
   .collage {
@@ -388,7 +407,10 @@ nav {
 /* Pantallas muy pequeñas */
 @media (max-width: 360px) {
   body {
-    padding: 0.5rem;
+    padding: max(0.5rem, env(safe-area-inset-top, 0px))
+      max(0.5rem, env(safe-area-inset-right, 0px))
+      max(0.5rem, env(safe-area-inset-bottom, 0px))
+      max(0.5rem, env(safe-area-inset-left, 0px));
   }
   
   .nube-de-palabras {
@@ -678,7 +700,33 @@ blockquote:hover .link-oculto {
 /* Mejoras adicionales de responsividad */
 main {
   width: 100%;
+  min-width: 0;
   overflow-x: hidden;
+}
+
+/* Imágenes de cabecera (poemas, etc.): antes con estilos inline; móvil sin altura mínima excesiva */
+.page-figure {
+  margin: 0;
+  padding: 0;
+}
+
+.page-figure img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  min-height: 300px;
+  max-height: 500px;
+  object-fit: cover;
+  object-position: center 85%;
+  border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  .page-figure img {
+    min-height: 140px;
+    max-height: min(48vh, 400px);
+  }
 }
 
 /* Poemas: misma familia que títulos (Cormorant); Kramdown "  " → <br> */
@@ -1575,6 +1623,94 @@ main.codigo-page p:has(> em:only-child)::before {
   border-color: rgba(255, 255, 255, 0.3);
 }
 
+/* Scroll del documento bloqueado mientras un modal de código está abierto (JS: body.code-modal-open) */
+html:has(body.code-modal-open) {
+  overflow: hidden !important;
+}
+
+body.code-modal-open {
+  overflow: hidden !important;
+}
+
+/* Modales Run / Input / Advertencia: pantalla completa en móvil — un solo scroll en el contenido */
+@media (max-width: 768px) {
+  .code-output-modal {
+    align-items: stretch;
+    justify-content: flex-start;
+    flex-direction: column;
+    padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px)
+      env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+    min-height: 100vh;
+    min-height: 100dvh;
+    min-height: -webkit-fill-available;
+    overflow: hidden;
+  }
+
+  .code-output-container {
+    width: 100%;
+    max-width: none;
+    max-height: none;
+    height: auto;
+    flex: 1 1 auto;
+    min-height: 0;
+    border-radius: 0;
+    margin: 0;
+  }
+
+  .code-output-content {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-x: auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  .code-input-modal {
+    align-items: stretch;
+    justify-content: flex-start;
+    flex-direction: column;
+    padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px)
+      env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+    min-height: 100vh;
+    min-height: 100dvh;
+    min-height: -webkit-fill-available;
+    overflow: hidden;
+  }
+
+  .code-input-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: none;
+    height: auto;
+    flex: 1 1 auto;
+    min-height: 0;
+    border-radius: 0;
+    margin: 0;
+  }
+
+  .code-input-header {
+    flex-shrink: 0;
+  }
+
+  .code-input-content {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  .code-input-footer {
+    flex-shrink: 0;
+  }
+
+  .code-output-header {
+    flex-shrink: 0;
+  }
+}
+
 /* Ficha técnica — lista de definición (más limpia que tabla) */
 .report-spec {
   margin: 0.75rem 0 1.75rem;
@@ -2313,5 +2449,100 @@ table {
     aspect-ratio: 1;
     height: auto;
     max-height: min(11rem, 45vw);
+  }
+}
+
+/* —— Móvil: refuerzo global (toques, medios, laboratorio, poemas) —— */
+@media (max-width: 768px) {
+  main img,
+  main video,
+  main iframe {
+    max-width: 100%;
+  }
+
+  #art {
+    max-width: 100%;
+    height: auto !important;
+    min-height: 200px;
+  }
+
+  .back-button a {
+    padding: 0.65rem 0;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .poem-nav {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+
+  .poem-nav a {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    padding: 0.35rem 0;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .fragmento-linea {
+    scroll-margin-top: 4.5rem;
+  }
+
+  .lab {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .lab-specimen {
+    padding: 0.75rem 0.85rem 0.9rem;
+  }
+
+  .lab-specimen-meta {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 0.5rem 0.75rem;
+  }
+
+  .lab-kind {
+    flex-shrink: 0;
+  }
+
+  .lab-num {
+    max-width: 100%;
+    text-align: left;
+    flex: 1 1 100%;
+  }
+
+  .lab-shuffle {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.5rem 1rem;
+    touch-action: manipulation;
+  }
+
+  .lab-text {
+    overflow-wrap: anywhere;
+  }
+
+  .poem-body {
+    padding-left: 0.15rem;
+    padding-right: 0.15rem;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: clamp(1.25rem, 6vw, 1.75rem);
+    line-height: 1.2;
+  }
+
+  .init a {
+    font-size: clamp(1rem, 4.5vw, 1.35rem);
   }
 }

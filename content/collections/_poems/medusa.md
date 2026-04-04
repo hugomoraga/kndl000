@@ -8,29 +8,29 @@ date: 2026-01-01
 
 ## Medusa
 
-Medusa
+tu lengua brota purpurina  
 
-tu lengua que brota purpurina  
-sobre algo que no descifro  
+caen en partículas  
+se adhieren  
+se acumulan  
 
-va y viene
-como la marea de tus ojos  
+en capas finas  
+que no dan espacio  
 
-que me ahoga desde adentro
+me sofoca desde adentro  
 inyectando barro  
+petrificando mi hiel  
 
-el veneno que aún no despierta  
+me dejo arrastrar  
+por la marea de tus ojos  
 
-y yo  
-que no quiero ser piedra  
-porque ya cargo una  
+en restos dispersos  
+empapados de un veneno  
+que aún no despierta  
 
-entré como si fuera un juego  
-pero todo se arrastra  
+porque sigo el juego  
 
-y yo  
-ignorante  
-
+deslizándome  
 lleno de residuos  
 
 que no son míos  
@@ -39,4 +39,6 @@ pero se quedan
 
 endurecen  
 
-hasta que dejan de responder
+y yo  
+que no quiero ser piedra  
+porque ya cargo una  
