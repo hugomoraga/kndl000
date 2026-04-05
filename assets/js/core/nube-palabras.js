@@ -4,6 +4,9 @@
   var root = document.querySelector(".nube-de-palabras");
   if (!root || root.getAttribute("data-no-nube-motion") != null) return;
 
+  /* En móvil el CSS ya deja la nube como lista; evitar transform inline y rAF */
+  if (window.matchMedia("(max-width: 768px)").matches) return;
+
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
   var links = root.querySelectorAll("a");

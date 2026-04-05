@@ -3,6 +3,8 @@ layout: default
 title: Inicio
 nav: true
 nav_order: 1
+# Sin image-effects en inicio: collage legible en móvil y carrusel más ligero
+effects: false
 ---
 
 # C . E . N . I . Z . A . S 

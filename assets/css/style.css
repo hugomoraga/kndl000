@@ -367,6 +367,33 @@ nav {
     line-height: 1.4;
     box-sizing: border-box;
   }
+
+  /* Menú del inicio: lista clara en lugar de nube animada (JS también se desactiva) */
+  .nube-de-palabras {
+    animation: none;
+    flex-direction: column;
+    align-items: stretch;
+    max-width: 20rem;
+    margin-left: auto;
+    margin-right: auto;
+    gap: 0.45rem;
+    padding: 1rem 0.75rem;
+    will-change: auto;
+  }
+
+  .nube-de-palabras a {
+    animation: none;
+    text-align: center;
+    padding: 0.55rem 0.85rem;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .nube-de-palabras a:hover,
+  .nube-de-palabras a:focus-visible {
+    color: #fff;
+  }
 }
 
 /* Móviles pequeños */
@@ -571,6 +598,7 @@ nav {
     overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
+    touch-action: pan-x pan-y;
     overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory;
     scroll-padding-inline: max(1rem, env(safe-area-inset-left, 0px));
@@ -780,6 +808,14 @@ main {
   width: 100%;
   min-width: 0;
   overflow-x: hidden;
+}
+
+/* iOS/WebKit: un antepasado con overflow-x:hidden puede anular el scroll horizontal
+   del carrusel del inicio; el body ya limita el desbordamiento horizontal. */
+@media (max-width: 768px) {
+  main:has(.collage--home-mini) {
+    overflow-x: visible;
+  }
 }
 
 /* Imágenes de cabecera (poemas, etc.): antes con estilos inline; móvil sin altura mínima excesiva */
@@ -2552,20 +2588,34 @@ table {
   }
 
   .poem-nav {
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    align-items: flex-start;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 0.85rem;
+    align-items: stretch;
+    justify-content: flex-start;
   }
 
   .poem-nav a {
-    flex: 1 1 auto;
+    flex: none;
     min-width: 0;
     max-width: 100%;
     overflow-wrap: anywhere;
-    padding: 0.35rem 0;
+    justify-content: center;
+    text-align: center;
+    padding: 0.55rem 0.75rem;
     min-height: 44px;
-    display: inline-flex;
+    display: flex;
     align-items: center;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    text-decoration: none;
+  }
+
+  .poem-nav a:hover,
+  .poem-nav a:focus-visible {
+    color: #9ec8ff;
+    background: rgba(255, 255, 255, 0.06);
   }
 
   .fragmento-linea {
