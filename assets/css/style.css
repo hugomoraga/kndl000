@@ -485,7 +485,7 @@ nav {
     transform: translateY(calc(-50% - 0.07em));
     z-index: 2;
     display: flex;
-    margin: 0;
+    margin: 0px -20px;
     flex-shrink: 0;
   }
 
@@ -2804,6 +2804,11 @@ table {
   .lab {
     margin-left: 0;
     margin-right: 0;
+  }
+
+  .lab-toolbar {
+    display: flex;
+    justify-content: center;
   }
 
   .lab-specimen {
