@@ -1,7 +1,8 @@
 {% unless page.url == "/" %}
-    <h1> {{ include.symbol }} {{ page.title }} {{ include.symbol }}
-        <span class="init">
-            <a href="{{ site.baseurl }}/">∅ INIT</a>
-        </span>
+    <h1 class="page-title">
+      <span class="page-title__text">{{ include.symbol }} {{ page.title }} {{ include.symbol }}</span>
+      <span class="init">
+        <a href="{{ site.baseurl }}/">∅ INIT</a>
+      </span>
     </h1>
 {% endunless %}

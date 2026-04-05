@@ -10,10 +10,12 @@
 </head>
 <body>
   <main>
-        <h1>~ {{ page.title }} ~       {% if page.series %}
+        <h1 class="page-title">
+          <span class="page-title__text">~ {{ page.title }} ~{% if page.series %}
         <span style="font-size: 0.9em; color: #999;"> ({{ page.series }} / part. {{ page.part }})</span>
-      {% endif %}
-       <span class="init"><a href="{{ site.baseurl }}/">∅ INIT</a></span></h1>
+      {% endif %}</span>
+          <span class="init"><a href="{{ site.baseurl }}/">∅ INIT</a></span>
+        </h1>
 
       {% include nav-poem.html %}
 
