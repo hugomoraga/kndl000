@@ -17,7 +17,7 @@ title: Código
     {% endfor %}
     {% assign binary = binary | prepend: "00000000" | slice: -8, 8 %}
     <li>
-      <span style="color:#5fa8a0; font-family: 'JetBrains Mono', monospace; font-size: 0.85em;">#{{ binary }}</span>
+      <span style="color:#5fa8a0; font-family: var(--font-mono); font-size: 0.85em;">#{{ binary }}</span>
       ~ <a href="{{ codigo.url | relative_url }}">[{{ codigo.title }}]</a>
       {% if codigo.language %}
         <span style="font-size: 0.9em; color: #999;"> ({{ codigo.language }})</span>

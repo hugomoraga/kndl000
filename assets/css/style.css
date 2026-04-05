@@ -96,7 +96,7 @@ html {
 body {
   background-color: #0e0e0e;
   color: #e0e0e0;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-sans);
   line-height: 1.7;
   max-width: 800px;
   margin: auto;
@@ -111,8 +111,15 @@ body {
   box-sizing: border-box;
 }
 
+:root {
+  --font-sans: "Lato", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-mono: "JetBrains Mono", "Fira Code", Consolas, Monaco, "Courier New", monospace;
+  --font-ui-mono: ui-monospace, "SF Mono", "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace;
+}
+
 h1, h2, h3, h4 {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-serif);
   font-weight: 700;
   color: #eee;
 }
@@ -230,7 +237,7 @@ nav {
   font-size: clamp(0.9rem, 2.5vw, 1.2rem);
   color: #aaa;
   text-decoration: none;
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-serif);
   transition: color 0.3s ease;
   display: inline-block;
   animation: orbitar 12s ease-in-out infinite alternate;
@@ -551,6 +558,77 @@ nav {
   margin-bottom: 0.5rem;
 }
 
+/* Inicio (móvil): carrusel horizontal con scroll-snap en lugar de columnas */
+@media (max-width: 768px) {
+  .collage--home-mini {
+    /* Ancho uniforme de cada slide + espacio entre tarjetas */
+    --home-slide-w: min(17rem, calc(100vw - 3.75rem));
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: max(1rem, env(safe-area-inset-left, 0px));
+    column-count: auto !important;
+    column-gap: 0 !important;
+    margin-top: 1rem;
+    margin-bottom: 0.75rem;
+    padding: 0.2rem max(1rem, env(safe-area-inset-right, 0px)) 0.6rem
+      max(1rem, env(safe-area-inset-left, 0px));
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.22) rgba(255, 255, 255, 0.06);
+  }
+
+  .collage--home-mini figure {
+    flex: 0 0 var(--home-slide-w);
+    width: var(--home-slide-w);
+    min-width: var(--home-slide-w);
+    max-width: var(--home-slide-w);
+    scroll-snap-align: center;
+    margin: 0;
+    animation: none;
+  }
+
+  /* Espacio entre slides: margen (más fiable que gap solo en scroll horizontal / WebKit) */
+  .collage--home-mini figure:not(:last-child) {
+    margin-inline-end: 2.75rem;
+  }
+
+  /* Misma altura de imagen en todos los slides (4:3); anula ratios dinámicos del efecto */
+  .collage--home-mini .collage-crop {
+    aspect-ratio: 4 / 3;
+    width: 100%;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+  }
+
+  .collage--home-mini figcaption {
+    font-size: 0.72rem;
+    margin-top: 0.4rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .collage--home-mini::-webkit-scrollbar {
+    height: 5px;
+  }
+
+  .collage--home-mini::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 3px;
+  }
+
+  .collage--home-mini::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 3px;
+  }
+}
+
 .init {
   float: right;
 }
@@ -565,7 +643,7 @@ nav {
 }
 
 .init a {
-  font-family: 'Alegreya', serif;
+  font-family: var(--font-serif);
   font-size: clamp(1.2rem, 3vw, 1.5rem);
   color: #bbb;
 } 
@@ -604,7 +682,7 @@ select, input, button {
 }
 
 .poem-nav a {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-sans);
   text-decoration: none;
   color: #444;
 }
@@ -632,7 +710,7 @@ select, input, button {
   color: #666;
   font-size: 1.2rem;
   text-decoration: none;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-sans);
   font-weight: 300;
   transition: color 0.2s ease;
   display: inline-block;
@@ -729,9 +807,9 @@ main {
   }
 }
 
-/* Poemas: misma familia que títulos (Cormorant); Kramdown "  " → <br> */
+/* Poemas: --font-serif; Kramdown "  " → <br> */
 .poem-body {
-  font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  font-family: var(--font-serif);
   font-size: clamp(1.1rem, 2.1vw, 1.1rem);
   font-weight: 400;
   color: #e6e0d8;
@@ -760,7 +838,7 @@ main {
 }
 
 .poemas-index-lede {
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: var(--font-serif);
   font-size: 1.12rem;
   font-style: italic;
   color: #8a8278;
@@ -779,7 +857,7 @@ main {
 }
 
 .poemas-index__month-label {
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: var(--font-serif);
   font-size: clamp(0.95rem, 2.4vw, 1.15rem);
   font-weight: 600;
   letter-spacing: 0.14em;
@@ -833,7 +911,7 @@ main {
 }
 
 .poemas-index__day {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.76rem;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
@@ -852,14 +930,14 @@ main {
 }
 
 .poemas-index__title {
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: var(--font-serif);
   font-size: 1.22rem;
   font-weight: 500;
   letter-spacing: 0.02em;
 }
 
 .poemas-index__series {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.8rem;
   font-weight: 400;
   color: #6d6560;
@@ -901,14 +979,14 @@ main {
   max-width: 40rem;
   margin: 0.20rem 0.25rem;
   padding: 0 0.25rem;
-  font-family: "Crimson Text", "Georgia", serif;
+  font-family: var(--font-serif);
   font-size: 1.08rem;
   line-height: 1.65;
   color: #c9bdb0;
 }
 
 .musica-page__soon {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.92rem;
   line-height: 1.55;
   color: #9a8b78;
@@ -921,7 +999,7 @@ main {
 }
 
 .musica-page__mixer-line {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.85rem;
   margin: 0 0 1.5rem;
 }
@@ -945,7 +1023,7 @@ main {
 }
 
 .musica-page__kicker {
-  font-family: "Cormorant Garamond", "Georgia", serif;
+  font-family: var(--font-serif);
   font-size: 1.65rem;
   font-weight: 400;
   letter-spacing: 0.03em;
@@ -954,7 +1032,7 @@ main {
 }
 
 .musica-page__tagline {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.88rem;
   font-weight: 300;
   font-style: italic;
@@ -976,7 +1054,7 @@ main {
 }
 
 .musica-page__section-title {
-  font-family: "Cormorant Garamond", "Georgia", serif;
+  font-family: var(--font-serif);
   font-size: clamp(0.95rem, 2.4vw, 1.12rem);
   font-weight: 600;
   letter-spacing: 0.14em;
@@ -1001,7 +1079,7 @@ main {
 
 .musica-page__mixer-link {
   display: inline-block;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.82rem;
   font-weight: 500;
   letter-spacing: 0.1em;
@@ -1042,7 +1120,7 @@ main {
 }
 
 .spotify-playlist__title {
-  font-family: "Cormorant Garamond", "Georgia", serif;
+  font-family: var(--font-serif);
   font-size: 1.35rem;
   font-weight: 600;
   color: #efe6dc;
@@ -1052,7 +1130,7 @@ main {
 
 .spotify-playlist__genre {
   display: inline;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.72rem;
   font-weight: 400;
   letter-spacing: 0.04em;
@@ -1077,7 +1155,7 @@ main {
 
 /* Nota bajo el reproductor: no compite con el embed */
 .spotify-playlist__desc {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.7rem;
   font-weight: 400;
   font-style: normal;
@@ -1104,7 +1182,7 @@ main {
 }
 
 .youtube-setlist__title {
-  font-family: "Cormorant Garamond", "Georgia", serif;
+  font-family: var(--font-serif);
   font-size: 1.35rem;
   font-weight: 600;
   color: #efe6dc;
@@ -1113,13 +1191,13 @@ main {
 }
 
 .youtube-setlist__artist {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.85rem;
   color: #8a7d72;
 }
 
 .youtube-setlist__event {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.86rem;
   color: #7a6c5e;
   margin: 0 0 0.85rem;
@@ -1180,7 +1258,7 @@ pre {
 
 /* Páginas de código: cuerpo como en el IDE (misma familia y color que el bloque pre) */
 main.codigo-page {
-  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-family: var(--font-mono);
   font-size: 0.9rem;
   font-weight: 300;
   line-height: 1.75;
@@ -1237,7 +1315,7 @@ main.codigo-page p:has(> em:only-child)::before {
   padding: 2rem;
   margin: 2.5rem 0;
   border-radius: 6px;
-  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-family: var(--font-mono);
   font-size: 0.8rem;
   font-weight: 300;
   line-height: 1.8;
@@ -1325,7 +1403,7 @@ main.codigo-page p:has(> em:only-child)::before {
   color: #5fa8a0;
   padding: 0.5rem 1rem;
   border-radius: 4px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.75rem;
   cursor: pointer;
   margin-bottom: 0.5rem;
@@ -1394,7 +1472,7 @@ main.codigo-page p:has(> em:only-child)::before {
 
 .code-output-title {
   color: #5fa8a0;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -1427,7 +1505,7 @@ main.codigo-page p:has(> em:only-child)::before {
 }
 
 .code-output-text {
-  font-family: 'Courier New', 'Consolas', 'Monaco', 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.9rem;
   line-height: 1.1;
   color: #5fa8a0;
@@ -1535,7 +1613,7 @@ main.codigo-page p:has(> em:only-child)::before {
 
 .code-input-title {
   color: #5fa8a0;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -1572,7 +1650,7 @@ main.codigo-page p:has(> em:only-child)::before {
   border: 1px solid rgba(74, 155, 142, 0.3);
   border-radius: 4px;
   color: #5fa8a0;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.9rem;
   box-sizing: border-box;
 }
@@ -1596,7 +1674,7 @@ main.codigo-page p:has(> em:only-child)::before {
   padding: 0.5rem 1rem;
   border: 1px solid rgba(74, 155, 142, 0.5);
   border-radius: 4px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.85rem;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -1729,7 +1807,7 @@ body.code-modal-open {
 .report-spec dt {
   margin: 0;
   padding: 0.06rem 0;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.65rem;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -1781,7 +1859,7 @@ body.code-modal-open {
   max-width: 42rem;
   margin: 0 auto 1.25rem;
   padding: 0 0.25rem;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.78rem;
   letter-spacing: 0.04em;
 }
@@ -1810,7 +1888,7 @@ body.code-modal-open {
 }
 
 .melange-report__eyebrow {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.2em;
@@ -1820,7 +1898,7 @@ body.code-modal-open {
 }
 
 .melange-report__title {
-  font-family: "Cormorant Garamond", "Georgia", serif;
+  font-family: var(--font-serif);
   font-size: clamp(1.85rem, 5vw, 2.45rem);
   font-weight: 600;
   line-height: 1.12;
@@ -1830,7 +1908,7 @@ body.code-modal-open {
 }
 
 .melange-report__subtitle {
-  font-family: "Crimson Text", "Georgia", serif;
+  font-family: var(--font-serif);
   font-size: 1.15rem;
   font-style: italic;
   color: #a89884;
@@ -1866,7 +1944,7 @@ body.code-modal-open {
 
 .melange-report__credit {
   margin: 0.55rem 0 0;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.72rem;
   color: #6d655c;
   text-align: center;
@@ -1874,7 +1952,7 @@ body.code-modal-open {
 }
 
 .melange-report__body {
-  font-family: "Crimson Text", "Georgia", serif;
+  font-family: var(--font-serif);
   font-size: 1.125rem;
   line-height: 1.72;
   color: #cfc3b4;
@@ -1887,7 +1965,7 @@ body.code-modal-open {
 }
 
 .melange-report__body h2 {
-  font-family: "Cormorant Garamond", "Georgia", serif;
+  font-family: var(--font-serif);
   font-size: 1.28rem;
   font-weight: 600;
   color: #e8dfd4;
@@ -1936,14 +2014,14 @@ body.code-modal-open {
 }
 
 .melange-report__wip-lead {
-  font-family: "Cormorant Garamond", "Georgia", serif;
+  font-family: var(--font-serif);
   font-size: 1.35rem;
   color: #ddd4c8;
   margin: 0 0 0.5rem;
 }
 
 .melange-report__wip-text {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.9rem;
   color: #8a7d72;
   margin: 0;
@@ -1965,7 +2043,7 @@ body.code-modal-open {
 }
 
 .melange-report__skeleton-hint {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.82rem;
   font-style: italic;
   font-weight: 300;
@@ -2070,7 +2148,7 @@ table {
 
 /* Línea tipo consola (inicio) */
 .home-terminal {
-  font-family: ui-monospace, "SF Mono", "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace;
+  font-family: var(--font-ui-mono);
   font-size: clamp(0.62rem, 1.15vw, 0.72rem);
   font-weight: 300;
   letter-spacing: 0.04em;
@@ -2154,7 +2232,7 @@ table {
 }
 
 .lab-intro {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.95rem;
   color: #777;
   margin: 0 0 1.25rem;
@@ -2166,7 +2244,7 @@ table {
 }
 
 .lab-shuffle {
-  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, monospace;
+  font-family: var(--font-ui-mono);
   font-size: 0.75rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -2207,7 +2285,7 @@ table {
   align-items: baseline;
   gap: 1rem;
   margin-bottom: 0.65rem;
-  font-family: ui-monospace, 'Cascadia Code', Menlo, monospace;
+  font-family: var(--font-ui-mono);
   font-size: 0.7rem;
   letter-spacing: 0.08em;
   color: #5fa8a0;
@@ -2222,12 +2300,12 @@ table {
   line-height: 1.25;
   overflow-wrap: anywhere;
   word-break: break-word;
-  font-family: ui-monospace, "Cascadia Code", Menlo, monospace;
+  font-family: var(--font-ui-mono);
 }
 
 .lab-text {
   margin: 0;
-  font-family: 'Alegreya', serif;
+  font-family: var(--font-serif);
   font-size: clamp(1rem, 2vw, 1.15rem);
   line-height: 1.45;
   color: #ccc;
@@ -2252,7 +2330,7 @@ table {
   max-width: 40rem;
   margin: 0.5rem;
   padding: 0 0.25rem;
-  font-family: "Crimson Text", "Georgia", serif;
+  font-family: var(--font-serif);
   font-size: 1.125rem;
   line-height: 1.65;
   color: #c9bdb0;
@@ -2265,7 +2343,7 @@ table {
 }
 
 .melange-journal__kicker {
-  font-family: "Cormorant Garamond", "Georgia", serif;
+  font-family: var(--font-serif);
   font-size: 1.85rem;
   font-weight: 400;
   letter-spacing: 0.02em;
@@ -2274,7 +2352,7 @@ table {
 }
 
 .melange-journal__tagline {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.88rem;
   font-weight: 300;
   font-style: italic;
@@ -2352,7 +2430,7 @@ table {
 }
 
 .melange-entry__date {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.14em;
@@ -2361,7 +2439,7 @@ table {
 }
 
 .melange-entry__title {
-  font-family: "Cormorant Garamond", "Georgia", serif;
+  font-family: var(--font-serif);
   font-size: 1.65rem;
   font-weight: 600;
   line-height: 1.25;
@@ -2395,7 +2473,7 @@ table {
 }
 
 .melange-entry__more {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.8rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;

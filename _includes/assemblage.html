@@ -10,7 +10,7 @@
   {% assign _asm_limit = site.data.home.collage.max_items | plus: 0 %}
 {% endif %}
 
-<div class="collage{% if include.variant %} collage--{{ include.variant }}{% endif %}">
+<div class="collage{% if include.variant %} collage--{{ include.variant }}{% endif %}"{% if include.variant == 'home-mini' %} role="region" aria-label="Imágenes destacadas"{% endif %}>
 
   {% for entry in site.data.assemblage limit: _asm_limit %}
     {% assign item = nil %}

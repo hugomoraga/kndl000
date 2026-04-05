@@ -5,7 +5,7 @@ nav: true
 nav_order: 1
 ---
 
-# C . E . N . I . Z . A . S <a href="{{ site.baseurl }}/vestigios/" class="link-oculto" title="Vestigios">... ⚙ ...</a>
+# C . E . N . I . Z . A . S 
 
 
 <div class="nube-de-palabras">
@@ -24,6 +24,8 @@ nav_order: 1
 <p class="home-terminal" translate="no"><span class="home-terminal-prompt" aria-hidden="true">kndl@archivo:~$</span> <span class="home-terminal-text"> Textos, código, experimento y ecos</span></p>
 
 {% include lab-feed.html %}
+
+<a href="{{ site.baseurl }}/vestigios/" class="link-oculto" title="Vestigios">... ⚙ ...</a>
 
 <script src="{{ '/assets/js/core/lab-home.js' | relative_url }}" defer></script>
 <script src="{{ '/assets/js/core/nube-palabras.js' | relative_url }}" defer></script>

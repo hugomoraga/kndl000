@@ -157,7 +157,7 @@
           <button class="code-input-close" aria-label="Cancelar">×</button>
         </div>
         <div class="code-input-content">
-          <label style="display: block; margin-bottom: 0.5rem; color: #5fa8a0; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;">${promptText}</label>
+          <label style="display: block; margin-bottom: 0.5rem; color: #5fa8a0; font-family: var(--font-mono); font-size: 0.9rem;">${promptText}</label>
           <input type="text" class="code-input-field" placeholder="Escribe aquí..." autofocus>
         </div>
         <div class="code-input-footer">
@@ -219,7 +219,7 @@
           <button class="code-input-close" aria-label="Cancelar">×</button>
         </div>
         <div class="code-input-content">
-          <div style="color: #8b7a4a; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; line-height: 1.6;">
+          <div style="color: #8b7a4a; font-family: var(--font-mono); font-size: 0.9rem; line-height: 1.6;">
             ${message}
           </div>
         </div>
