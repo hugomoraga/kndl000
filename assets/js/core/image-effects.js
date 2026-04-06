@@ -349,21 +349,21 @@
     const bgPos = cropStyle
       ? `${cropStyle.ox} ${cropStyle.oy}`
       : 'center';
-    const bgSize = cropStyle && cropStyle.zoom
-      ? `${(cropStyle.zoom * 100).toFixed(2)}% ${(cropStyle.zoom * 100).toFixed(2)}%`
-      : 'cover';
-    const layer = document.createElement('div');
-    layer.className = `glitch-rgb-layer ${className}`;
-    layer.style.cssText = `
+    /* cover + scale uniforme (como img: object-fit cover + transform scale); dos % en bg-size deformaba */
+    const zoom =
+      cropStyle && cropStyle.zoom != null && !Number.isNaN(Number(cropStyle.zoom))
+        ? Number(cropStyle.zoom)
+        : 1;
+
+    const outer = document.createElement('div');
+    outer.className = `glitch-rgb-layer ${className}`;
+    outer.style.cssText = `
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background-image: url(${imgSrc});
-      background-size: ${bgSize};
-      background-position: ${bgPos};
-      background-repeat: no-repeat;
+      overflow: hidden;
       opacity: 0;
       pointer-events: none;
       z-index: 2;
@@ -371,7 +371,26 @@
       filter: brightness(${(preset.intensity * 1.1).toFixed(2)}) contrast(${(preset.intensity * 1.1).toFixed(2)}) saturate(${(preset.saturation * 1.3).toFixed(2)}) hue-rotate(${hueShift}deg);
       transition: opacity 0.3s;
     `;
-    return layer;
+
+    const inner = document.createElement('div');
+    inner.className = 'glitch-rgb-layer__inner';
+    inner.setAttribute('aria-hidden', 'true');
+    inner.style.cssText = `
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      background-image: url(${imgSrc});
+      background-size: cover;
+      background-position: ${bgPos};
+      background-repeat: no-repeat;
+      transform: scale(${zoom.toFixed(4)});
+      transform-origin: center center;
+    `;
+    outer.appendChild(inner);
+    return outer;
   }
 
   // ============================================================================
