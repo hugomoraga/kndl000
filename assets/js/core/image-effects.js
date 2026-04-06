@@ -485,8 +485,58 @@
     return figure.querySelector('.collage-crop__inner') || figure.querySelector('img');
   }
 
+  function isHomeMiniSliderFigure(figure) {
+    return !!(
+      figure.closest &&
+      (figure.closest('#home-collage-root') || figure.closest('.collage--home-mini'))
+    );
+  }
+
+  /** Rejilla 3×3 (data-focal): nw,n,ne,w,c,e,sw,s,se o 1–9 → --collage-ox/oy */
+  const HOME_MINI_FOCAL_NUM = {
+    '1': 'nw',
+    '2': 'n',
+    '3': 'ne',
+    '4': 'w',
+    '5': 'c',
+    '6': 'e',
+    '7': 'sw',
+    '8': 's',
+    '9': 'se',
+  };
+  const HOME_MINI_FOCAL_POS = {
+    nw: { ox: '0%', oy: '0%' },
+    n: { ox: '50%', oy: '0%' },
+    ne: { ox: '100%', oy: '0%' },
+    w: { ox: '0%', oy: '50%' },
+    c: { ox: '50%', oy: '50%' },
+    e: { ox: '100%', oy: '50%' },
+    sw: { ox: '0%', oy: '100%' },
+    s: { ox: '50%', oy: '100%' },
+    se: { ox: '100%', oy: '100%' },
+  };
+
+  function resolveHomeMiniFocal(figure) {
+    const raw = figure.getAttribute('data-focal');
+    if (raw == null || raw === '') return null;
+    let s = String(raw).trim().toLowerCase();
+    if (!s) return null;
+    if (HOME_MINI_FOCAL_NUM[s]) s = HOME_MINI_FOCAL_NUM[s];
+    const pos = HOME_MINI_FOCAL_POS[s];
+    return pos || null;
+  }
+
   function applyCollageCrop(figure, img, index) {
     if (!figure.querySelector('.collage-crop')) return;
+    /* Carrusel del inicio: ratio fijo 4:3; encuadre opcional con data-focal */
+    if (isHomeMiniSliderFigure(figure)) {
+      figure.style.setProperty('--collage-ar', '4 / 3');
+      const pos = resolveHomeMiniFocal(figure);
+      figure.style.setProperty('--collage-ox', pos ? pos.ox : '50%');
+      figure.style.setProperty('--collage-oy', pos ? pos.oy : '50%');
+      figure.style.setProperty('--collage-zoom', '1.1');
+      return;
+    }
     const imgSrc = img.src || img.getAttribute('src') || '';
     const seed = utils.generateUniqueSeed(imgSrc, index + 54321);
     const rnd = utils.createSeededRandom(seed);

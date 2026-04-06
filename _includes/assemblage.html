@@ -43,7 +43,8 @@
       {% assign caption = entry.caption | default: title %}
 
       {% if image %}
-        <figure class="image-effect">
+        {% assign _slider_focal = entry.focal | default: item.slider_focal | default: item.focal %}
+        <figure class="image-effect"{% if include.variant == 'home-mini' and _slider_focal != blank %} data-focal="{{ _slider_focal | strip | downcase | escape }}"{% endif %}>
           <a class="collage-crop" href="{{ item.url | relative_url }}">
             <span class="collage-crop__inner">
               <img src="{{ image | relative_url }}" alt="{{ title }}" loading="lazy">

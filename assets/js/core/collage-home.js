@@ -42,6 +42,39 @@
     return d.innerHTML;
   }
 
+  /** Rejilla 3×3: claves nw,n,ne,w,c,e,sw,s,se o 1–9 (teclado numérico). */
+  var FOCAL_NUM = {
+    "1": "nw",
+    "2": "n",
+    "3": "ne",
+    "4": "w",
+    "5": "c",
+    "6": "e",
+    "7": "sw",
+    "8": "s",
+    "9": "se"
+  };
+  var FOCAL_WORD = {
+    nw: true,
+    n: true,
+    ne: true,
+    w: true,
+    c: true,
+    e: true,
+    sw: true,
+    s: true,
+    se: true
+  };
+
+  function canonicalSliderFocal(raw) {
+    if (raw == null || raw === "") return "";
+    var s = String(raw).trim().toLowerCase();
+    if (!s) return "";
+    if (FOCAL_NUM[s]) return FOCAL_NUM[s];
+    if (FOCAL_WORD[s]) return s;
+    return "";
+  }
+
   function render() {
     var pick = shuffle(pool).slice(0, maxItems);
     var html = pick
@@ -50,8 +83,12 @@
         var href = it.href != null ? String(it.href) : "#";
         var src = it.src != null ? String(it.src) : "";
         if (!src) return "";
+        var focal = canonicalSliderFocal(it.focal);
+        var dataFocal = focal ? ' data-focal="' + escapeHtml(focal) + '"' : "";
         return (
-          '<figure class="image-effect">' +
+          '<figure class="image-effect"' +
+          dataFocal +
+          ">" +
           '<a class="collage-crop" href="' +
           escapeHtml(href) +
           '">' +

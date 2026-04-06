@@ -11,7 +11,7 @@
 {%- assign cc_first = true -%}
 {%- for img in site.images -%}
   {%- unless cc_first -%},{%- endunless -%}{%- assign cc_first = false -%}
-{"title":{{ img.title | jsonify }},"href":{{ img.url | relative_url | jsonify }},"src":{{ img.image | relative_url | jsonify }}}
+{"title":{{ img.title | jsonify }},"href":{{ img.url | relative_url | jsonify }},"src":{{ img.image | relative_url | jsonify }},"focal":{{ img.slider_focal | default: img.focal | jsonify }}}
 {%- endfor -%}
 ]
 </script>

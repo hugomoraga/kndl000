@@ -794,6 +794,11 @@ nav {
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
+/* Misma lógica que .collage .collage-crop img: el JS fija --collage-ox/oy (p. ej. slider_focal) */
+.collage--home-mini .collage-crop img {
+  object-position: var(--collage-ox, 50%) var(--collage-oy, 50%);
+}
+
 .collage--home-mini::-webkit-scrollbar {
   height: 5px;
 }
@@ -809,6 +814,10 @@ nav {
 }
 
 @media (max-width: 768px) {
+  .collage--home-mini {
+    --home-slide-w: min(17rem, calc(100% - 2.25rem));
+  }
+
   .collage--home-mini figcaption {
     font-size: 0.72rem;
     margin-top: 0.4rem;
