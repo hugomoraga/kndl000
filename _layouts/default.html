@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>{{ page.title }} - {{ site.title }}</title>
+    <title>{% if page.seo_title %}{{ page.seo_title }}{% elsif page.url == '/' %}{{ site.title }}{% else %}{{ page.title }} – {{ site.title }}{% endif %}</title>
+    {% include seo.html %}
     <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>

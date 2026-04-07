@@ -5,6 +5,11 @@ title: "KNDL 000"
 description: "Fragments on technology, art, culture, philosophy — and the quiet noise of life."
 author: "KNDL"
 baseurl: ""
+# URL absoluta del sitio en producción (canonical, Open Graph, robots.txt). GitHub Pages:
+# url: "https://TU-USUARIO.github.io"   o dominio propio: https://ejemplo.com
+locale: es_ES
+# Imagen por defecto para redes (opcional; ruta bajo el sitio, ej. /assets/media/og.jpg)
+# seo_image:
 
 # Google Analytics 4 (ID en analytics.google.com → Administración → flujos de datos)
 analytics:

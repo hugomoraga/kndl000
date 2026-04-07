@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Inicio
+description: "Textos, código, arte y experimento — archivo creativo. Fragmentos, poemas, música, visual y código."
 nav: true
 nav_order: 1
 ---
