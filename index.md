@@ -21,15 +21,15 @@ nav_order: 1
       <a href="{{ site.baseurl }}/visual/">◉ Visual</a>
       <a href="{{ site.baseurl }}/melange">🜏 Melange </a>
       <a href="{{ site.baseurl }}/codigo/">◊ Código</a>
-      <a href="{{ site.baseurl }}/dispositivos/">◇ Dispositivos</a>
-      <a href="{{ site.baseurl }}/visual/generator">꩜</a>
+      <a href="{{ site.baseurl }}/dispositivos/">◇ Devices</a>
+      <a href="{{ site.baseurl }}/visual/generator">꩜ Generator</a>
     </div>
   </nav>
 </div>
 
 {% include home-collage.html %}
 
-<p class="home-terminal" translate="no"><span class="home-terminal-prompt" aria-hidden="true">kndl@archivo:~$</span> <span class="home-terminal-text"> Textos, código, experimento y ecos</span></p>
+<p class="home-terminal" translate="no"><span class="home-terminal-prompt" aria-hidden="true">kndl@archivo:~$</span><span class="home-terminal-text">cd /root/señales_en_estado_infinito </span></p>
 
 {% include lab-feed.html %}
 
