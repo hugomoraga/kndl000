@@ -21,6 +21,7 @@ nav_order: 1
       <a href="{{ site.baseurl }}/visual/">◉ Visual</a>
       <a href="{{ site.baseurl }}/melange">🜏 Melange </a>
       <a href="{{ site.baseurl }}/codigo/">◊ Código</a>
+      <a href="{{ site.baseurl }}/dispositivos/">◇ Dispositivos</a>
       <a href="{{ site.baseurl }}/visual/generator">꩜</a>
     </div>
   </nav>

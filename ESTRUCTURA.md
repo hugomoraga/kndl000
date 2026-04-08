@@ -19,7 +19,8 @@ kndl000/
 │           ├── _poems/      # ↂ Poemas
 │           ├── _images/     # ◉ Imágenes
 │           ├── _vestigios/  # ⚱ Vestigios
-│           └── _melange_reports/ # ☽ Melange Reports
+│           ├── _melange_reports/ # ☽ Melange Reports
+│           └── _dispositivos/ # ◇ Dispositivos (VST, apps, herramientas)
 │
 │   # Páginas en raíz (Jekyll las requiere aquí)
 │   ├── diario/index.md
@@ -28,7 +29,8 @@ kndl000/
 │   ├── musica/index.md
 │   ├── visual/index.md
 │   ├── melange/index.md
-│   └── vestigios/index.md
+│   ├── vestigios/index.md
+│   └── dispositivos/index.md
 │
 │   # Nota: Las páginas deben estar en la raíz para que Jekyll las procese
 │

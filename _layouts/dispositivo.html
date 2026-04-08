@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }} – {{ site.title }}{% endif %}</title>
+    {% include seo.html %}
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+    {% include analytics.html %}
+  </head>
+  <body>
+    <main class="dispositivo-page">
+      {% include title.html symbol="◇" %}
+
+      {% if page.description %}
+      <p class="dispositivo-page__lead">{{ page.description }}</p>
+      {% endif %}
+
+      {% if page.kind or page.date or page.tech or page.formats or page.platform or page.repo or page.demo_url %}
+      <div class="dispositivo-meta">
+        {% if page.kind %}
+        <span class="dispositivo-meta__badge dispositivo-meta__badge--{{ page.kind }}">{% case page.kind %}{% when 'vst' %}VST{% when 'app' %}App{% when 'tool' %}Herramienta{% else %}{{ page.kind }}{% endcase %}</span>
+        {% endif %}
+        {% if page.date %}
+        <span>{{ page.date | date: "%d %B %Y" }}</span>
+        {% endif %}
+        {% if page.tech %}
+        <span class="dispositivo-meta__tech">{{ page.tech }}</span>
+        {% endif %}
+        {% if page.formats %}
+        <span>{{ page.formats }}</span>
+        {% endif %}
+        {% if page.platform %}
+        <span>{{ page.platform }}</span>
+        {% endif %}
+        {% if page.repo %}
+        <span><a href="{{ page.repo }}" rel="noopener noreferrer" target="_blank">Repositorio</a></span>
+        {% endif %}
+        {% if page.demo_url %}
+        <span><a href="{{ page.demo_url }}" rel="noopener noreferrer" target="_blank">Web / demo</a></span>
+        {% endif %}
+      </div>
+      {% endif %}
+
+      <div class="dispositivo-page__body">
+        {{ content }}
+      </div>
+
+      {% include back-button.html %}
+    </main>
+  </body>
+</html>

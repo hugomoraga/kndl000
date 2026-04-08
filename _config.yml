@@ -54,6 +54,9 @@ collections:
   codigos:
     output: true
     permalink: /codigo/:name/
+  dispositivos:
+    output: true
+    permalink: /dispositivos/:name/
 
 defaults:
   - scope:
@@ -64,3 +67,7 @@ defaults:
       type: melange_reports
     values:
       layout: melange-report
+  - scope:
+      type: dispositivos
+    values:
+      layout: dispositivo

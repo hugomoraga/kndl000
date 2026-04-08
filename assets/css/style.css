@@ -223,6 +223,10 @@ nav {
 
 .home-header__top h1 {
   text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .home-nav {
@@ -233,15 +237,22 @@ nav {
   display: none;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
+  width: auto;
+  max-width: none;
   margin: 0;
-  padding: 0.4rem 0.6rem;
+  padding: 0.4rem 0.5rem;
   min-width: 44px;
   min-height: 44px;
   border: none;
   background: transparent;
   color: rgba(200, 195, 186, 0.7);
   cursor: pointer;
-  transition: color 0.28s ease, opacity 0.28s ease;
+  transition:
+    color 0.28s ease,
+    opacity 0.28s ease,
+    visibility 0.28s ease,
+    transform 0.28s ease;
 }
 
 .home-nav__toggle:hover {
@@ -458,14 +469,14 @@ nav {
     box-sizing: border-box;
   }
 
-  /* Menú inicio: glifo en la fila del h1 (centrado vertical con el título); panel debajo */
-  .home-header__top {
-    padding-inline-end: 2.75rem;
-  }
-
+  /* Menú inicio: h1 a todo el ancho; botón centrado en altura respecto al título + aire a la derecha */
   .home-header__top h1 {
     margin-top: 1rem;
     margin-bottom: 0;
+    /* Simetría visual: mismo aire a ambos lados; derecha reserva la zona del botón */
+    padding-inline-start: max(0.5rem, env(safe-area-inset-left, 0px));
+    /* padding-inline-end: max(3rem, calc(2.75rem + env(safe-area-inset-right, 0px))); */
+    box-sizing: border-box;
   }
 
   .home-nav {
@@ -479,14 +490,33 @@ nav {
 
   .home-nav__toggle {
     position: absolute;
-    right: 0;
-    top: 38%;
-    /* Centrado con la caja del título; leve corrección óptica respecto al trazo del glifo */
-    transform: translateY(calc(-50% - 0.07em));
-    z-index: 2;
-    display: flex;
-    margin: 0px -20px;
+    /* Centrado vertical con el bloque del h1 (misma caja que .home-header__top) */
+    top: 40%;
+    right: max(0.5rem, env(safe-area-inset-right, 0px));
+    z-index: 3;
+    display: inline-flex;
+    width: auto;
+    flex: 0 0 auto;
     flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    transform: translateY(-50%);
+    filter: drop-shadow(0 0 12px rgba(0, 0, 0, 0.55));
+  }
+
+  .home-header--scrolled .home-nav__toggle {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(calc(-50% - 6px));
+  }
+
+  .home-header--nav-open .home-nav__toggle {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(-50%);
   }
 
   .home-header:not(.home-header--nav-open) .home-nav__panel {
@@ -1613,6 +1643,117 @@ main.codigo-page p:has(> em:only-child)::before {
 
 .codigo-page .codigo-meta span {
   margin-right: 1rem;
+}
+
+/* Dispositivos: VST, apps, herramientas propias */
+main.dispositivo-page {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: #d0d0d0;
+}
+
+.dispositivo-page__lead {
+  font-style: italic;
+  color: rgba(200, 200, 200, 0.88);
+  margin: 0.5rem 0 1.25rem;
+  max-width: 42rem;
+}
+
+.dispositivo-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem 1rem;
+  font-size: 0.88rem;
+  color: rgba(160, 160, 170, 0.95);
+  margin-bottom: 2rem;
+  padding: 0.75rem 0 0.75rem 0.75rem;
+  border-left: 2px solid rgba(120, 140, 200, 0.35);
+}
+
+.dispositivo-meta a {
+  color: #8eb4e8;
+  text-decoration: none;
+}
+
+.dispositivo-meta a:hover {
+  text-decoration: underline;
+}
+
+.dispositivo-meta__badge {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  background: rgba(100, 120, 180, 0.2);
+  border: 1px solid rgba(120, 140, 200, 0.35);
+  color: #b8c8f0;
+}
+
+.dispositivo-meta__badge--vst {
+  background: rgba(140, 100, 160, 0.2);
+  border-color: rgba(160, 120, 180, 0.4);
+  color: #d8b8e8;
+}
+
+.dispositivo-meta__badge--app {
+  background: rgba(80, 140, 130, 0.2);
+  border-color: rgba(90, 150, 140, 0.35);
+  color: #9fd4cc;
+}
+
+.dispositivo-meta__tech {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: rgba(140, 180, 170, 0.9);
+}
+
+.dispositivo-page__body {
+  max-width: 46rem;
+}
+
+.dispositivo-page__body h2,
+.dispositivo-page__body h3 {
+  font-family: var(--font-serif);
+  color: #e8e8e8;
+  margin-top: 1.75rem;
+}
+
+.dispositivo-list {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+}
+
+.dispositivo-list li {
+  margin: 0.85rem 0;
+  padding-left: 0.25rem;
+}
+
+.dispositivo-list a {
+  color: #8eb4e8;
+  text-decoration: none;
+}
+
+.dispositivo-list a:hover {
+  text-decoration: underline;
+}
+
+.dispositivo-list__kind {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: rgba(150, 160, 190, 0.85);
+  margin-left: 0.35rem;
+}
+
+.dispositivo-index-lead {
+  font-style: italic;
+  color: rgba(180, 180, 190, 0.9);
+  margin: 0 0 1.5rem;
+  max-width: 40rem;
 }
 
 /* Botón Run para código ejecutable */
