@@ -26,13 +26,13 @@ jobs:
         id: changes
         uses: dorny/paths-filter@v3
         with:
-          filter: |
-            tina
-            package.json
-            package-lock.json
-            assets/js
-            .github/workflows
-          working-directory: .
+          filters: |
+            admin:
+              - 'tina/**'
+              - 'package.json'
+              - 'package-lock.json'
+              - 'assets/js/**'
+              - '.github/workflows/**'
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -53,7 +53,7 @@ jobs:
         run: npm ci
 
       - name: Build Tina CMS admin
-        if: steps.changes.outputs.changes == 'true'
+        if: steps.changes.outputs.admin == 'true'
         continue-on-error: true
         run: npm run build
         env:
