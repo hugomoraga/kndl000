@@ -18,6 +18,16 @@ Este repositorio contiene un blog minimalista basado en [Jekyll](https://jekyllr
 3. Instala las dependencias de Node (TinaCMS CLI): `npm install`.
 4. Inicia el servidor local con `npm run dev` (arranca Jekyll + TinaCMS) o solo Jekyll con `bundle exec jekyll serve`.
 
+## Estructura
+
+Ver [ESTRUCTURA.md](ESTRUCTURA.md) para el árbol de directorios completo.
+
+Notas rápidas:
+
+- El bundle de la página de inicio está en `assets/js/bundles/home.bundle.js` (7 módulos concatenados: nav, lab feed, nube de palabras, canvas, audio, collage, carrusel).
+- `package.json` declara solo `@tinacms/cli` y `@types/node` como devDependencies. El resto (~1000 paquetes) son dependencias transitivas resueltas por npm.
+- El CI (`.github/workflows/jekyll.yml`) usa `dorny/paths-filter` para saltar el build del admin de Tina cuando un push solo cambia contenido.
+
 ## Despliegue
 
 El sitio se construye automáticamente usando **GitHub Actions** cuando haces push a la rama `main`. 
