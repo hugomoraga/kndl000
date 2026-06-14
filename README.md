@@ -6,9 +6,17 @@ Este repositorio contiene un blog minimalista basado en [Jekyll](https://jekyllr
 
 ## Uso Local
 
+### Dependencias del sistema
+
+- **Ruby** (versión fijada en `.ruby-version`) + Bundler
+- **Node.js** ≥ 20 (para el build de TinaCMS)
+
+### Pasos
+
 1. Clona el repositorio y entra en la carpeta.
-2. Instala las dependencias ejecutando `bundle install` (requiere Ruby y Bundler).
-3. Inicia el servidor local con `bundle exec jekyll serve` para previsualizar los cambios.
+2. Instala las dependencias de Ruby: `bundle install`.
+3. Instala las dependencias de Node (TinaCMS CLI): `npm install`.
+4. Inicia el servidor local con `npm run dev` (arranca Jekyll + TinaCMS) o solo Jekyll con `bundle exec jekyll serve`.
 
 ## Despliegue
 
