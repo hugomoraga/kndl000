@@ -1,6 +1,10 @@
 {%- comment -%}
   Lógica del collage del inicio (dinámico desde site.images o manual desde assemblage.yml).
   Config: _data/home.yml → collage.enabled, collage.dynamic, collage.max_items
+
+  Los scripts collage-home.js y home-collage-carousel.js se sirven
+  consolidados en /assets/js/bundles/home.bundle.js (US4). Este include
+  solo emite el marcado HTML; el bundle se carga una sola vez en index.md.
 {%- endcomment -%}
 {% assign _collage_on = false %}
 {% assign _collage_dynamic = false %}
@@ -27,9 +31,7 @@
 {% if _collage_on %}
   {% if _collage_dynamic %}
 {% include collage-dynamic.html %}
-<script src="{{ '/assets/js/core/collage-home.js' | relative_url }}" defer></script>
   {% else %}
 {% include assemblage.html variant='home-mini' %}
   {% endif %}
-<script src="{{ '/assets/js/core/home-collage-carousel.js' | relative_url }}" defer></script>
 {% endif %}
