@@ -8,7 +8,7 @@ nav_order: 1
 
 <div class="home-header">
   <div class="home-header__top">
-    <h1 id="c--e--n--i--z--a--s">C . E . N . I . Z . A . S</h1>
+    <h1 id="cenizas" class="home-header__title">C.E.N.I.Z.A.S</h1>
     <button type="button" class="home-nav__toggle" id="home-nav-toggle" aria-expanded="false" aria-controls="home-nav-panel" aria-label="Secciones del sitio">
       <span class="home-nav__glyph" aria-hidden="true"></span>
     </button>
@@ -33,13 +33,13 @@ nav_order: 1
 
 {% include lab-feed.html %}
 
-<a href="{{ site.baseurl }}/vestigios/" class="link-oculto" title="Vestigios">... ⚙ ...</a>
+<a href="{{ site.baseurl }}/vestigios/" class="link-oculto" aria-label="Ir a Vestigios" title="Vestigios">... ⚙ ...</a>
 
 <script src="{{ '/assets/js/core/home-nav.js' | relative_url }}" defer></script>
 <script src="{{ '/assets/js/core/lab-home.js' | relative_url }}" defer></script>
 <script src="{{ '/assets/js/core/nube-palabras.js' | relative_url }}" defer></script>
 
-<canvas id="art" width="800" height="600" style="width: 100%; height:300px"></canvas>
+<canvas id="art" width="800" height="600" role="img" aria-label="Visual generativo de arte procedural" style="width: 100%; height:300px"></canvas>
 <script src="{{ '/assets/js/core/home-canvas.js' | relative_url }}" defer></script>
 
 <script src="{{ '/assets/js/core/home-audio.js' | relative_url }}" defer></script>
