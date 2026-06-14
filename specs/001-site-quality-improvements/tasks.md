@@ -137,23 +137,23 @@ description: "Task list for site quality improvements"
 
 ### Análisis
 
-- [ ] T070 [US4] Leer los 5 scripts del home (`home-nav.js`, `lab-home.js`, `nube-palabras.js`, `home-canvas.js`, `home-audio.js`) y mapear dependencias entre ellos
-- [ ] T071 [US4] Identificar si hay variables globales compartidas (config, helpers) y si es necesario un módulo coordinador
-- [ ] T072 [US4] Decidir estrategia: (a) concatenar manualmente con un build step, (b) usar esbuild/rollup ya disponibles en `node_modules`, (c) dejar como están pero cargarlos en el orden correcto con un único `<script>` que importe los demás
+- [x] T070 [US4] Leer los 5 scripts del home (`home-nav.js`, `lab-home.js`, `nube-palabras.js`, `home-canvas.js`, `home-audio.js`) y mapear dependencias entre ellos
+- [x] T071 [US4] Identificar si hay variables globales compartidas (config, helpers) y si es necesario un módulo coordinador
+- [x] T072 [US4] Decidir estrategia: (a) concatenar manualmente con un build step, (b) usar esbuild/rollup ya disponibles en `node_modules`, (c) dejar como están pero cargarlos en el orden correcto con un único `<script>` que importe los demás
 
 ### Implementación
 
-- [ ] T073 [US4] Crear `assets/js/bundles/home.bundle.js` (o `.entry.js` + build script) que encapsule la lógica de los 5 scripts
-- [ ] T074 [US4] Si se usa build step, añadir script `build:js` en `package.json` y ejecutarlo en CI antes de `jekyll build`
-- [ ] T075 [US4] Actualizar `index.md` para incluir solo el bundle (eliminar las 5 líneas `<script src="...home-*.js">`) y mantener p5/Tone del layout
-- [ ] T076 [P] [US4] Añadir `<noscript>` fallback al home: contenido textual alternativo para el canvas y aviso de que las interacciones JS están deshabilitadas
+- [x] T073 [US4] Crear `assets/js/bundles/home.bundle.js` (o `.entry.js` + build script) que encapsule la lógica de los 5 scripts
+- [x] T074 [US4] Si se usa build step, añadir script `build:js` en `package.json` y ejecutarlo en CI antes de `jekyll build`
+- [x] T075 [US4] Actualizar `index.md` para incluir solo el bundle (eliminar las 5 líneas `<script src="...home-*.js">`) y mantener p5/Tone del layout
+- [x] T076 [P] [US4] Añadir `<noscript>` fallback al home: contenido textual alternativo para el canvas y aviso de que las interacciones JS están deshabilitadas
 
 ### Verificación
 
-- [ ] T077 [US4] DevTools Network: ≤1 request de JS propio del home (excluyendo p5/Tone CDN)
-- [ ] T078 [US4] Verificación funcional: nube de palabras interactiva, canvas renderiza, audio responde a interacción, nav toggle abre/cierra
-- [ ] T079 [US4] Lighthouse Performance no empeora vs baseline T002
-- [ ] T080 [US4] Probar con JS deshabilitado (DevTools → Disable JavaScript): el feed de lab, los enlaces y el `<h1>` siguen visibles y navegables
+- [x] T077 [US4] DevTools Network: ≤1 request de JS propio del home (excluyendo p5/Tone CDN)
+- [x] T078 [US4] Verificación funcional: nube de palabras interactiva, canvas renderiza, audio responde a interacción, nav toggle abre/cierra
+- [x] T079 [US4] Lighthouse Performance no empeora vs baseline T002
+- [x] T080 [US4] Probar con JS deshabilitado (DevTools → Disable JavaScript): el feed de lab, los enlaces y el `<h1>` siguen visibles y navegables
 
 **Checkpoint**: US4 entregada independientemente. Home optimizado.
 

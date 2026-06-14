@@ -24,7 +24,19 @@
   <div class="lab-toolbar">
     <button type="button" class="lab-shuffle" id="lab-shuffle">Sentir +</button>
   </div>
-  <div class="lab-feed" id="lab-feed-root" aria-live="polite"></div>
+  <div class="lab-feed" id="lab-feed-root" aria-live="polite">
+    <noscript>
+      <ul class="lab-fallback">
+        {%- assign _fb_count = 0 -%}
+        {%- for post in site.posts limit: 5 -%}
+          {%- if _fb_count < 5 -%}<li class="lab-specimen"><header class="lab-specimen-meta"><span class="lab-kind">DIARIO</span><span class="lab-num">DIA/{{ post.date | date: "%Y-%m-%d" }}/{{ post.slug }}</span></header><p class="lab-text"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></p></li>{%- assign _fb_count = _fb_count | plus: 1 -%}{%- endif -%}
+        {%- endfor -%}
+        {%- for poem in site.poems limit: 3 -%}
+          {%- if _fb_count < 8 -%}<li class="lab-specimen"><header class="lab-specimen-meta"><span class="lab-kind">POEMA</span><span class="lab-num">POE/{{ poem.slug }}</span></header><p class="lab-text"><a href="{{ poem.url | relative_url }}">{{ poem.title }}</a></p></li>{%- assign _fb_count = _fb_count | plus: 1 -%}{%- endif -%}
+        {%- endfor -%}
+      </ul>
+    </noscript>
+  </div>
 </section>
 <script type="application/json" id="lab-items">
 [

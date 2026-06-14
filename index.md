@@ -35,11 +35,10 @@ nav_order: 1
 
 <a href="{{ site.baseurl }}/vestigios/" class="link-oculto" aria-label="Ir a Vestigios" title="Vestigios">... ⚙ ...</a>
 
-<script src="{{ '/assets/js/core/home-nav.js' | relative_url }}" defer></script>
-<script src="{{ '/assets/js/core/lab-home.js' | relative_url }}" defer></script>
-<script src="{{ '/assets/js/core/nube-palabras.js' | relative_url }}" defer></script>
-
 <canvas id="art" width="800" height="600" role="img" aria-label="Visual generativo de arte procedural" style="width: 100%; height:300px"></canvas>
-<script src="{{ '/assets/js/core/home-canvas.js' | relative_url }}" defer></script>
 
-<script src="{{ '/assets/js/core/home-audio.js' | relative_url }}" defer></script>
+<noscript>
+  <p class="noscript-note">Las animaciones (nube de secciones, canvas generativo y audio sintetizado) y el feed de laboratorio requieren JavaScript. La navegación, el collage y todos los enlaces del sitio siguen siendo accesibles sin él. Para activar el laboratorio, las nubes y el audio, habilita JavaScript.</p>
+</noscript>
+
+<script src="{{ '/assets/js/bundles/home.bundle.js' | relative_url }}" defer></script>
