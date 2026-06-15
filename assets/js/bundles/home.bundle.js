@@ -610,38 +610,69 @@
   })();
 
   /* ===== 6. home-collage-carousel.js =============================== */
-  /* Confiamos en scroll-snap CSS (scroll-snap-type: x mandatory +
-     scroll-snap-align: center en cada <figure>). Este módulo solo
-     hace scroll-into-view del slide medio en la carga inicial
-     para que el collage arranque centrado, sin interferir con el
-     snap durante el scroll del usuario. */
+  /* Scroll-snap CSS horizontal con loop infinito: cuando el usuario
+     llega al primer/último slide, el scroll vuelve al inicio/final
+     instantáneamente para que el collage se sienta circular. */
   (function () {
     var ROOT_ID = "home-collage-root";
+    var EDGE_PX = 4;
 
-    function centerInitial(root) {
+    function setup(root) {
       if (!root || root.id !== ROOT_ID) return;
       if (!root.classList.contains("collage--home-mini")) return;
-      var figures = root.querySelectorAll("figure");
-      if (figures.length === 0) return;
-      var mid = Math.floor((figures.length - 1) / 2);
-      var target = figures[mid];
-      if (!target || typeof target.scrollIntoView !== "function") return;
-      var prev = root.style.scrollSnapType;
-      root.style.scrollSnapType = "none";
-      target.scrollIntoView({ behavior: "auto", inline: "center", block: "nearest" });
-      root.style.scrollSnapType = prev || "";
+      if (root.dataset.loopReady === "1") return;
+      root.dataset.loopReady = "1";
+
+      function centerInitial() {
+        var figures = root.querySelectorAll("figure");
+        if (figures.length === 0) return;
+        var mid = Math.floor((figures.length - 1) / 2);
+        var target = figures[mid];
+        if (!target || typeof target.scrollIntoView !== "function") return;
+        var prevSnap = root.style.scrollSnapType;
+        root.style.scrollSnapType = "none";
+        target.scrollIntoView({ behavior: "auto", inline: "center", block: "nearest" });
+        root.style.scrollSnapType = prevSnap || "";
+      }
+
+      function jumpToStart() {
+        var prevSnap = root.style.scrollSnapType;
+        root.style.scrollSnapType = "none";
+        root.scrollLeft = 0;
+        root.style.scrollSnapType = prevSnap || "";
+      }
+
+      function jumpToEnd() {
+        var prevSnap = root.style.scrollSnapType;
+        root.style.scrollSnapType = "none";
+        root.scrollLeft = root.scrollWidth - root.clientWidth;
+        root.style.scrollSnapType = prevSnap || "";
+      }
+
+      function onScroll() {
+        var max = root.scrollWidth - root.clientWidth;
+        if (max <= 0) return;
+        if (root.scrollLeft <= EDGE_PX) {
+          jumpToEnd();
+        } else if (root.scrollLeft >= max - EDGE_PX) {
+          jumpToStart();
+        }
+      }
+
+      function run() {
+        centerInitial();
+        root.addEventListener("scroll", onScroll, { passive: true });
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", run);
+      } else {
+        run();
+      }
+      window.addEventListener("load", centerInitial);
     }
 
-    function run() {
-      centerInitial(document.getElementById(ROOT_ID));
-    }
-
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", run);
-    } else {
-      run();
-    }
-    window.addEventListener("load", run);
+    setup(document.getElementById(ROOT_ID));
   })();
 
   /* ===== 7. menu-char-glitch.js ===================================== */
