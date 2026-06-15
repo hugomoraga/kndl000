@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>{{ page.title }} – {{ site.title }}</title>
+    {% include seo.html %}
+    {% include head-css.html %}
+    {% include analytics.html %}
+  </head>
+  <body id="generator">
+    <main></main>
+
+    <div id="controls">
+      <label>Efecto:
+        <select id="effectSelect"></select>
+      </label>
+      <label>
+        <input type="checkbox" id="autoTransition"> Auto
+      </label>
+      <label>
+        <input type="range" id="transitionInterval" min="3" max="30" value="10">
+        <span id="transitionIntervalValue">10s</span>
+      </label>
+      <button id="micBtn">🎤 Mic: OFF</button>
+      <div id="audioLevel" style="display:none">
+        <div id="audioLevelBar" style="width:0;height:4px;background:#0f0"></div>
+      </div>
+      <button id="fullscreenBtn">⛶ Fullscreen</button>
+      <a href="{{ site.baseurl }}/" style="color:rgba(255,255,255,0.4);text-decoration:none;margin-left:0.5rem">↩</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
+    <script type="module" src="{{ '/assets/js/umbral-vision/app.js' | relative_url }}"></script>
+  </body>
+</html>

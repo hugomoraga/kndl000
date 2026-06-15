@@ -11,7 +11,7 @@
   </head>
   <body>
     <main class="dispositivo-page">
-      {% include title.html symbol="◇" %}
+      {% include title.html symbol="⚙" %}
 
       {% if page.description %}
       <p class="dispositivo-page__lead">{{ page.description }}</p>
@@ -20,7 +20,7 @@
       {% if page.kind or page.date or page.tech or page.formats or page.platform or page.repo or page.demo_url %}
       <div class="dispositivo-meta">
         {% if page.kind %}
-        <span class="dispositivo-meta__badge dispositivo-meta__badge--{{ page.kind }}">{% case page.kind %}{% when 'vst' %}VST{% when 'app' %}App{% when 'tool' %}Herramienta{% else %}{{ page.kind }}{% endcase %}</span>
+        <span class="dispositivo-meta__badge dispositivo-meta__badge--{{ page.kind }}">{% case page.kind %}{% when 'vst' %}🔌 VST{% when 'app' %}📱 App{% when 'tool' %}🛠️ Tool{% when 'visual' %}🎨 Visual{% when 'hardware' %}🔧 Hardware{% when 'plugin' %}🔌 Plugin{% else %}{{ page.kind }}{% endcase %}</span>
         {% endif %}
         {% if page.date %}
         <span>{{ page.date | date: "%d %B %Y" }}</span>

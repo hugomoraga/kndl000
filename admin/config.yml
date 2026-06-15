@@ -204,7 +204,7 @@ collections:
         name: kind
         widget: select
         required: false
-        options: [vst, app, tool]
+        options: [vst, app, tool, visual, hardware, plugin]
       - { label: Tech, name: tech, widget: string, required: false }
       - { label: "Demo URL", name: demo_url, widget: string, required: false }
       - { label: "Repo URL", name: repo, widget: string, required: false }
