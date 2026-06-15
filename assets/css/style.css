@@ -1280,6 +1280,53 @@ main {
   margin: 2.5rem 0;
 }
 
+/* 404 — error page */
+.error-page {
+  text-align: center;
+  margin: 3rem 0;
+}
+
+.error-page__message {
+  color: #888;
+  font-size: clamp(1rem, 3vw, 1.2rem);
+  line-height: 1.8;
+  margin: 0 0 4rem;
+}
+
+.error-page__home {
+  display: inline-block;
+  color: #7ab6f5;
+  font-family: var(--font-serif);
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  text-decoration: none;
+  padding: 0.5rem 1.5rem;
+  border: 1px solid #444;
+  border-radius: 4px;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.error-page__home:hover,
+.error-page__home:focus {
+  color: #fff;
+  border-color: #7ab6f5;
+}
+
+.error-page__sep {
+  border: none;
+  border-top: 1px solid #333;
+  margin: 4rem 0;
+}
+
+.error-page__explore {
+  color: #666;
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.error-page__explore p {
+  margin: 0 0 1rem;
+}
+
 .vestigio__image {
   display: block;
   max-width: 100%;
