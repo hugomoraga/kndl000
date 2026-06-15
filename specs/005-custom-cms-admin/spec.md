@@ -53,21 +53,25 @@
 
 ---
 
-### User Story 3 - Autenticación GitHub OAuth o PAT (Priority: P1)
+### User Story 3 - Autenticación con Personal Access Token (Priority: P1)
 
-[Como autor, quiero autenticarme contra el repo de GitHub sin depender de Tina Cloud. Las opciones son: (a) OAuth App con callback al worker, (b) Personal Access Token pegado en el formulario.]
+[Como único autor del blog, quiero autenticarme en `/admin/` pegando mi Personal Access Token (PAT) de GitHub con scope `repo`, que se guarda en `sessionStorage` y se envía en cada request como `Authorization: Bearer <token>`, sin necesidad de OAuth Apps, workers, ni infraestructura extra.]
 
-**Why this priority**: El CMS debe ser seguro. No exponer el token en el bundle del frontend.
+**Why this priority**: Es la decisión de auth. Para un solo autor con 1 commit/día, PAT es la opción más simple: 0 infraestructura (sin OAuth App, sin Cloudflare Worker, sin callback URL), 0 mantenimiento, y el token solo vive en `sessionStorage` (se borra al cerrar la pestaña).
 
-**Independent Test**: Limpiar cookies → entrar a `/admin/` → OAuth redirige a `github.com/login/oauth/...` → autorizar → callback al worker → callback al `/admin/` con cookie de sesión.
+**Independent Test**: Limpiar `sessionStorage` → entrar a `/admin/` → aparece formulario con input "GitHub Personal Access Token" y link a `github.com/settings/tokens/new?scopes=repo&description=KNDL+CMS` → pegar PAT → el editor carga la lista de colecciones.
 
 **Acceptance Scenarios**:
 
-1. **Given** usuario no autenticado, **When** hace click en "Login con GitHub", **Then** redirige a GitHub OAuth con scopes `repo` y `read:user`.
-2. **Given** usuario autorizado en GitHub, **When** el callback llega al worker, **Then** el worker intercambia el code por un access_token, lo guarda en KV con TTL 24h, y redirige a `/admin/?session=<id>`.
-3. **Given** sesión válida, **When** el frontend llama al backend, **Then** el worker lee la sesión de KV y la usa para autenticar las llamadas a GitHub.
-4. **Given** sesión expirada (TTL 24h), **When** el frontend llama al backend, **Then** el worker responde 401 y el frontend redirige a login.
-5. **Given** la opción PAT (alternativa), **When** usuario pega el token, **Then** se guarda en `sessionStorage` (no localStorage) y se envía en cada request; nunca se persiste en el backend.
+1. **Given** usuario no autenticado, **When** entra a `/admin/`, **Then** aparece un formulario con: (a) input de PAT (type="password"), (b) link a GitHub para generar un token nuevo, (c) botón "Guardar y entrar".
+2. **Given** usuario pega un PAT, **When** hace click en "Guardar y entrar", **Then** el editor valida el token haciendo `GET https://api.github.com/user` con `Authorization: Bearer <token>`.
+3. **Given** token válido (200), **When** se valida, **Then** se guarda en `sessionStorage` bajo la key `kndl-cms-pat` y se redirige a la vista principal del editor.
+4. **Given** token inválido (401), **When** se valida, **Then** aparece un error claro: "Token inválido. Verifica que tenga scope `repo` y que no haya expirado."
+5. **Given** token guardado, **When** el usuario cierra y reabre la pestaña, **Then** el token ya no está (sessionStorage se limpia al cerrar la pestaña).
+6. **Given** token guardado, **When** el usuario navega a otra pestaña y vuelve, **Then** el token sigue (mientras sea la misma sesión de la pestaña).
+7. **Given** usuario quiere cerrar sesión, **When** hace click en "Logout", **Then** se limpia `sessionStorage.kndl-cms-pat` y se vuelve al formulario de login.
+8. **Given** cualquier request a la API de GitHub, **When** se hace, **Then** el header `Authorization: Bearer <token>` se añade automáticamente desde sessionStorage.
+9. **Given** rate limit de GitHub (5000 req/h con token), **When** el usuario edita mucho, **Then** un contador visible muestra "Quedan X requests" basado en `X-RateLimit-Remaining`.
 
 ---
 
@@ -113,13 +117,13 @@
 ### Functional Requirements
 
 - **FR-001**: El editor MUST servir en `/admin/` del sitio Jekyll (mismo path que Tina tenía).
-- **FR-002**: El editor MUST autenticar contra GitHub (OAuth o PAT), no contra Tina Cloud ni ningún servicio externo de auth.
+- **FR-002**: El editor MUST autenticar usando un Personal Access Token (PAT) de GitHub con scope `repo`, guardado en `sessionStorage` bajo la key `kndl-cms-pat`.
 - **FR-003**: El editor MUST soportar las 11 colecciones del schema actual.
 - **FR-004**: El editor MUST permitir listar, crear, editar y eliminar documentos de cada colección.
 - **FR-005**: El editor MUST mostrar un preview live del markdown mientras se escribe.
-- **FR-006**: El editor MUST guardar via GitHub Contents API (PUT `/repos/:owner/:repo/contents/:path`).
+- **FR-006**: El editor MUST guardar via GitHub Contents API (PUT `/repos/:owner/:repo/contents/:path`) con `Authorization: Bearer <token>`.
 - **FR-007**: El editor MUST mostrar mensajes de error claros (rate limit, 404, 409 conflict, sin permisos).
-- **FR-008**: El editor MUST NO persistir tokens en `localStorage` (usar `sessionStorage` o cookies httpOnly del worker).
+- **FR-008**: El editor MUST NO persistir el token en `localStorage` ni en cookies persistentes. Solo `sessionStorage` (se borra al cerrar pestaña).
 - **FR-009**: El backend MUST ser un Cloudflare Worker (free tier).
 - **FR-010**: El backend MUST leer/escribir via GitHub API con un token de un `wrangler secret`.
 - **FR-011**: El backend MUST manejar rate limiting de GitHub con cache en KV (TTL 60s para listados).
@@ -129,11 +133,10 @@
 
 ### Key Entities *(include if feature involves data)*
 
-- **Editor (frontend)**: SPA en `/admin/` con login, sidebar de colecciones, lista, formulario de edición con preview.
-- **Worker (backend)**: Cloudflare Worker con rutas `/api/auth/*`, `/api/contents/*`, `/api/schema`.
-- **Schema (parser)**: lógica que parsea `tina/config.ts` y genera los formularios. **OJO**: este spec se construye ANTES de eliminar Tina, así que el schema se mantiene. Tras la migración, se convierte a un formato JSON propio.
-- **Session store**: KV namespace de Workers con sesiones OAuth (TTL 24h).
-- **GitHub client**: helper que envuelve la GitHub REST API (Contents, Trees, Commits).
+- **Editor (frontend)**: SPA en `/admin/` con login por PAT, sidebar de colecciones, lista, formulario de edición con preview.
+- **GitHub client**: helper en el frontend que envuelve la GitHub REST API (Contents, Trees, Commits) y añade automáticamente el header `Authorization: Bearer <pat>`.
+- **Schema (parser)**: lógica que parsea `tina/config.ts` (o un `cms/schema.json` propio) y genera los formularios. Mientras Tina esté presente, parsea el `.ts`; tras la migración, usa el JSON.
+- **PAT session**: string en `sessionStorage.kndl-cms-pat`, validado contra `GET /user` al login, limpiado al logout o al cerrar pestaña.
 
 ## Success Criteria *(mandatory)*
 
@@ -150,14 +153,15 @@
 
 ## Assumptions
 
-- El usuario ya tiene una GitHub OAuth App creada (o la creará). El callback URL será `https://admin.kundala000.com/callback` o `https://kundala000.com/admin/callback` (un subdominio o ruta del worker).
-- El usuario tiene un Cloudflare account con un Worker habilitado y acceso a KV (incluido en free tier).
-- El usuario acepta tener 2 deploys: (a) el sitio Jekyll en GitHub Pages, (b) el worker en Cloudflare. Ambos con secretos separados.
-- El CMS propio se construye con HTML/CSS/JS vanilla o un framework ligero (preferiblemente **sin build step**, o build mínimo con esbuild/rollup local, sin npm runtime en producción). Alternativamente, **Sveltia CMS** (fork moderno de Decap CMS) es una opción drop-in que se sirve como bundle estático desde `/admin/` y se conecta a GitHub directamente — sin backend propio. Esta es la opción más simple si se relaja "backend en Workers".
+- **Decisión de auth: PAT** (Personal Access Token). Sin OAuth App, sin Cloudflare Worker, sin callback URL. El usuario genera un PAT con scope `repo` en `github.com/settings/tokens/new` y lo pega en el formulario de login.
+- El CMS se sirve como bundle estático en `/admin/` del sitio Jekyll. Sin backend propio: el frontend habla directo con la API de GitHub usando el PAT.
+- El PAT se guarda en `sessionStorage` (clave `kndl-cms-pat`), se envía en cada request como `Authorization: Bearer <token>`, y se borra al cerrar la pestaña o al hacer logout.
+- La opción "stack" es **Sveltia CMS** (fork moderno de Decap CMS, sin deuda técnica, se sirve como bundle estático). Justificación: para un solo autor con 1 commit/día, Sveltia cubre 100% del caso de uso sin código propio.
 - La colección `_dispositivos` requiere "config" además de frontmatter; ese caso se cubre con un campo `object` nested.
-- Las imágenes se suben a `assets/media/images/` vía GitHub API (PUT file). Máximo 25MB por archivo (límite de Contents API en archivos >1MB via blob; usar uploadit en su lugar si se sube imágenes grandes).
+- Las imágenes se suben a `assets/media/images/` vía GitHub Contents API (PUT file). Máximo 25MB por archivo (límite de Contents API en archivos >1MB via blob; usar uploadit en su lugar si se sube imágenes grandes).
 - El editor NO reemplaza el contenido de un archivo si el `sha` no coincide (optimistic locking, evita pisar commits concurrentes).
-- El worker NO ejecuta builds de Jekyll; solo escribe archivos y deja que el CI de GitHub Actions despliegue.
+- El CMS NO ejecuta builds de Jekyll; solo escribe archivos y deja que el CI de GitHub Actions despliegue.
+- **NO hay Cloudflare Worker** (decisión por simplicidad: PAT en frontend es suficiente para 1 autor). Si en el futuro se quiere multi-autor, se migra a OAuth.
 
 ## Out of Scope
 
@@ -167,3 +171,4 @@
 - Soporte de medios grandes (videos, audio). Solo imágenes.
 - Internacionalización del editor.
 - Tematización del editor.
+- Multi-autor con OAuth / cuentas individuales (cubierto por PAT único, suficiente para 1 autor).
