@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Dispositivos
-description: "Plugins, VST, aplicaciones y herramientas para mentes creativas."
+description: "Plugins, VST, aplicaciones y herramientas para mentes creativas — KNDL 000."
 ---
 
 <p class="dispositivo-index-lead">Herramientas propias: audio, software y experimentos empaquetados. Cada entrada es un dispositivo en el archivo.</p>
