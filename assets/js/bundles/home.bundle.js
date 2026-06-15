@@ -610,42 +610,36 @@
   })();
 
   /* ===== 6. home-collage-carousel.js =============================== */
+  /* Confiamos en scroll-snap CSS (scroll-snap-type: x mandatory +
+     scroll-snap-align: center en cada <figure>). Este módulo solo
+     hace scroll-into-view del slide medio en la carga inicial
+     para que el collage arranque centrado, sin interferir con el
+     snap durante el scroll del usuario. */
   (function () {
     var ROOT_ID = "home-collage-root";
 
-    function centerMiddleSlide(root) {
-      if (!root || root.id !== ROOT_ID || !root.classList.contains("collage--home-mini")) {
-        return;
-      }
-      if (!window.matchMedia("(max-width: 768px)").matches) return;
+    function centerInitial(root) {
+      if (!root || root.id !== ROOT_ID) return;
+      if (!root.classList.contains("collage--home-mini")) return;
       var figures = root.querySelectorAll("figure");
       if (figures.length === 0) return;
       var mid = Math.floor((figures.length - 1) / 2);
       var target = figures[mid];
-      if (!target) return;
-      var rootRect = root.getBoundingClientRect();
-      var targetRect = target.getBoundingClientRect();
-      var centerTarget = targetRect.left + targetRect.width / 2;
-      var centerViewport = rootRect.left + root.clientWidth / 2;
-      var delta = centerTarget - centerViewport;
-      var maxScroll = Math.max(0, root.scrollWidth - root.clientWidth);
-      var next = root.scrollLeft + delta;
-      root.scrollLeft = Math.max(0, Math.min(next, maxScroll));
+      if (!target || typeof target.scrollIntoView !== "function") return;
+      var prev = root.style.scrollSnapType;
+      root.style.scrollSnapType = "none";
+      target.scrollIntoView({ behavior: "auto", inline: "center", block: "nearest" });
+      root.style.scrollSnapType = prev || "";
     }
 
     function run() {
-      var root = document.getElementById(ROOT_ID);
-      centerMiddleSlide(root);
-    }
-
-    function runAfterLayout() {
-      requestAnimationFrame(function () { requestAnimationFrame(run); });
+      centerInitial(document.getElementById(ROOT_ID));
     }
 
     if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", runAfterLayout);
+      document.addEventListener("DOMContentLoaded", run);
     } else {
-      runAfterLayout();
+      run();
     }
     window.addEventListener("load", run);
   })();
@@ -730,8 +724,8 @@
     if (reduced.matches) return;
 
     var POOL = "▒▓█░▄▀■□◊◈◉○ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    var CYCLE_MS = 1000;
-    var INTERVAL_MS = 3000;
+    var CYCLE_MS = 1500;
+    var INTERVAL_MS = 5000;
     var SETTLE_MS = 500;
 
     var parts = [];
