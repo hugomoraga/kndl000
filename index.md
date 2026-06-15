@@ -8,7 +8,7 @@ nav_order: 1
 
 <div class="home-header">
   <div class="home-header__top">
-    <h1 id="cenizas" class="home-header__title">C.E.N.I.Z.A.S</h1>
+    <h1 id="cenizas" class="home-header__title">C . E . N . I . Z . A . S</h1>
     <button type="button" class="home-nav__toggle" id="home-nav-toggle" aria-expanded="false" aria-controls="home-nav-panel" aria-label="Secciones del sitio">
       <span class="home-nav__glyph" aria-hidden="true"></span>
     </button>
