@@ -1,6 +1,7 @@
 ---
 layout: default
 title:  ☽ Melange ☾
+description: "Cuaderno de campo. Notas sueltas, fechas aproximadas, reportes de travesía — sicodélica. KNDL 000."
 nav: true
 nav_order: 6
 ---
