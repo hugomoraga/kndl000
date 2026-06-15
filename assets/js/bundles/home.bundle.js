@@ -730,13 +730,14 @@
     if (reduced.matches) return;
 
     var POOL = "▒▓█░▄▀■□◊◈◉○ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    var CYCLE_MS = 1800;
-    var INTERVAL_MS = 5000;
-    var SETTLE_MS = 800;
+    var CYCLE_MS = 1000;
+    var INTERVAL_MS = 3000;
+    var SETTLE_MS = 500;
 
     var parts = [];
     for (var i = 0; i < original.length; i++) {
-      parts.push({ fixed: original[i] === ".", ch: original[i] });
+      var ch = original[i];
+      parts.push({ fixed: ch === "." || ch === " ", ch: ch });
     }
     var letterCount = parts.length - parts.filter(function (p) { return p.fixed; }).length;
 
@@ -756,7 +757,7 @@
         var letterIdx = 0;
         for (var j = 0; j < parts.length; j++) {
           if (parts[j].fixed) {
-            out += ".";
+            out += parts[j].ch;
           } else if (letterIdx < settleCount) {
             out += parts[j].ch;
             letterIdx++;
