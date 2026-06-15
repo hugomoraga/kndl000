@@ -1165,6 +1165,58 @@ main {
   color: #6d6560;
 }
 
+/* Vestigios — refactor de estilos inline de vestigios/index.md */
+.vestigio {
+  margin: 3rem 0;
+  padding: 1.5rem;
+  border-left: 1px solid #333;
+}
+
+.vestigio__title-link {
+  text-decoration: none;
+}
+
+.vestigio__title {
+  margin-top: 0;
+  color: #888;
+  font-size: 1rem;
+  font-weight: normal;
+}
+
+.vestigio__date {
+  color: #444;
+  font-size: 0.85rem;
+}
+
+.vestigio__image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1rem 0;
+  opacity: 0.7;
+  border-radius: 4px;
+}
+
+.vestigio__body {
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.vestigio__more {
+  color: #444;
+  font-size: 0.85rem;
+  text-decoration: none;
+  margin-top: 0.5rem;
+  display: inline-block;
+}
+
+.vestigio__sep {
+  border: none;
+  border-top: 1px solid #222;
+  margin: 2rem 0;
+}
+
 @media (max-width: 520px) {
   .poemas-index__row {
     gap: 0.5rem 0.75rem;
