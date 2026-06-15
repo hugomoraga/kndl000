@@ -280,7 +280,7 @@
         article.setAttribute("data-lab-hash", hex);
         article.innerHTML =
           '<header class="lab-specimen-meta">' +
-          '<span class="lab-kind">' + escapeHtml(kind) + "</span>" +
+          '<span class="lab-kind" data-kind="' + escapeHtml(kind) + '">' + escapeHtml(kind) + "</span>" +
           '<span class="lab-num" title="' + escapeHtml(tip) + '">' +
           escapeHtml(label) + "</span>" +
           "</header>" +
