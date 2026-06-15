@@ -86,6 +86,58 @@ export default defineConfig({
         ],
       },
       {
+        name: "dispositivos",
+        label: "◇ Dispositivos",
+        path: "content/collections/_dispositivos",
+        format: "md",
+        fields: [
+          {
+            type: "string" as const,
+            name: "layout",
+            label: "Layout",
+            options: ["dispositivo", "default"],
+          },
+          ...createCommonFields(["title", "image", "date", "body"]),
+          {
+            type: "string" as const,
+            name: "kind",
+            label: "Tipo",
+            description: "Categoría del dispositivo (vst, app, tool).",
+            options: ["vst", "app", "tool"],
+          },
+          {
+            type: "string" as const,
+            name: "tech",
+            label: "Tech",
+            description: "Stack técnico principal (TypeScript, C++, JUCE, etc.).",
+          },
+          {
+            type: "string" as const,
+            name: "demo_url",
+            label: "Demo URL",
+            description: "Enlace a demo, web del proyecto, o video.",
+          },
+          {
+            type: "string" as const,
+            name: "repo",
+            label: "Repo URL",
+            description: "URL del repositorio (GitHub, GitLab, etc.).",
+          },
+          {
+            type: "string" as const,
+            name: "formats",
+            label: "Formatos",
+            description: "Formatos soportados (VST3, AU, LV2, standalone, ...).",
+          },
+          {
+            type: "string" as const,
+            name: "platform",
+            label: "Plataforma",
+            description: "Sistemas operativos soportados (macOS · Windows · Linux).",
+          },
+        ],
+      },
+      {
         name: "codigos",
         label: "◊ Código",
         path: "content/collections/_codigos",
