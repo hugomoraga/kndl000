@@ -4,11 +4,11 @@
  * Concatenación de los 7 scripts específicos de `index.md` y sus includes:
  *   1. home-nav.js               — toggle de nav móvil + scroll-hide
  *   2. lab-home.js               — feed de laboratorio (shuffle + hash FNV-1a)
- *   3. nube-palabras.js          — animación rAF de la nube de secciones
- *   4. home-canvas.js            — canvas#art (línea sinusoidal vibrátil)
- *   5. home-audio.js             — sintetizador generativo con Tone.js
- *   6. collage-home.js           — render del collage dinámico (incluido en home-collage.html)
- *   7. home-collage-carousel.js  — centrado del slide medio en móvil
+ *   3. home-canvas.js            — canvas#art (línea sinusoidal vibrátil)
+ *   4. home-audio.js             — sintetizador generativo con Tone.js
+ *   5. collage-home.js           — render del collage dinámico (incluido en home-collage.html)
+ *   6. home-collage-carousel.js  — centrado del slide medio en móvil
+ *   7. menu-glitch.js            — glitch RGB split en hover/focus del menú
  *
  * Cada módulo sigue siendo IIFE autocontenido; no comparten estado.
  * Se sirven como un solo recurso `defer` para reducir peticiones HTTP
@@ -295,68 +295,7 @@
     if (elBtn) elBtn.addEventListener("click", render);
   })();
 
-  /* ===== 3. nube-palabras.js ======================================= */
-  (function () {
-    var root = document.querySelector(".nube-de-palabras");
-    if (!root || root.getAttribute("data-no-nube-motion") != null) return;
-    if (window.matchMedia("(max-width: 768px)").matches) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    var links = root.querySelectorAll("a");
-    if (!links.length) return;
-
-    root.classList.add("nube-de-palabras--js");
-
-    var start = performance.now();
-    var CYCLE_MS = 28000;
-
-    function intensity(now) {
-      var t = (((now - start) % CYCLE_MS) + CYCLE_MS) % CYCLE_MS;
-      var u = t / CYCLE_MS;
-      var s = Math.sin(Math.PI * u);
-      return s * s * s * s;
-    }
-
-    links.forEach(function (a) {
-      a.addEventListener("mouseenter", function () {
-        a.classList.add("nube-de-palabras__link--hover");
-      });
-      a.addEventListener("mouseleave", function () {
-        a.classList.remove("nube-de-palabras__link--hover");
-      });
-    });
-
-    function loop(now) {
-      var I = intensity(now);
-      var drift = 1.2 + I * 12;
-      var rotC = Math.sin(now / 16000) * (0.1 + I * 0.65);
-      root.style.transform =
-        "translate(" + Math.sin(now / 7800) * drift + "px, " +
-        Math.cos(now / 9000) * drift * 0.85 + "px) rotate(" + rotC + "deg)";
-
-      links.forEach(function (a, i) {
-        var seed = i * 1.73 + 0.41;
-        var speed = 0.26 + I * 0.55;
-        var phase = now * 0.001 * speed + seed;
-        var amp = 2.5 + I * 12;
-        var rot = 1 + I * 3.8;
-        var hover = a.classList.contains("nube-de-palabras__link--hover");
-        var sc = hover ? 1.18 : 1;
-        a.style.transform =
-          "translateY(" + Math.sin(phase) * amp + "px) rotate(" +
-          Math.cos(phase * 0.64) * rot + "deg) scale(" + sc + ")";
-        var glow = I * 6;
-        var glowA = 0.04 + I * 0.18;
-        a.style.filter =
-          "brightness(" + (1 + I * 0.2) + ") drop-shadow(0 0 " + glow +
-          "px rgba(255, 255, 255, " + glowA + "))";
-      });
-      requestAnimationFrame(loop);
-    }
-    requestAnimationFrame(loop);
-  })();
-
-  /* ===== 4. home-canvas.js ========================================= */
+  /* ===== 3. home-canvas.js ========================================= */
   (function () {
     var canvas = document.getElementById("art");
     if (!canvas) return;
@@ -378,7 +317,7 @@
     draw();
   })();
 
-  /* ===== 5. home-audio.js ========================================== */
+  /* ===== 4. home-audio.js ========================================== */
   (function () {
     "use strict";
 
@@ -597,7 +536,7 @@
     });
   })();
 
-  /* ===== 6. collage-home.js ======================================== */
+  /* ===== 5. collage-home.js ======================================== */
   (function () {
     var elRoot = document.getElementById("home-collage-root");
     var elItems = document.getElementById("home-collage-items");
@@ -669,7 +608,7 @@
     render();
   })();
 
-  /* ===== 7. home-collage-carousel.js =============================== */
+  /* ===== 6. home-collage-carousel.js =============================== */
   (function () {
     var ROOT_ID = "home-collage-root";
 
@@ -708,5 +647,60 @@
       runAfterLayout();
     }
     window.addEventListener("load", run);
+  })();
+
+  /* ===== 7. menu-glitch.js ========================================= */
+  (function () {
+    var root = document.querySelector(".nube-de-palabras");
+    if (!root) return;
+    var links = root.querySelectorAll("a");
+    if (!links.length) return;
+
+    var reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    var coarse = window.matchMedia("(pointer: coarse)");
+    if (reduced.matches || coarse.matches) return;
+
+    var MAX_DUR = 420;
+    var MAX_OFFSET = 2.5;
+
+    function attach(el) {
+      var rafId = 0;
+      var startTime = 0;
+
+      function stop() {
+        if (rafId) cancelAnimationFrame(rafId);
+        rafId = 0;
+        el.classList.remove("is-glitching");
+        el.style.textShadow = "";
+      }
+
+      function tick(now) {
+        if (now - startTime >= MAX_DUR) { stop(); return; }
+        var ox = (Math.random() * 2 - 1) * MAX_OFFSET;
+        var oy = (Math.random() * 2 - 1) * (MAX_OFFSET * 0.4);
+        var oy2 = (Math.random() * 2 - 1) * (MAX_OFFSET * 0.6);
+        el.style.textShadow =
+          ox.toFixed(2) + "px 0 0 #0ff, " +
+          (-ox).toFixed(2) + "px 0 0 #f0f, " +
+          "0 " + oy.toFixed(2) + "px 0 rgba(255,255,255,0.7), " +
+          "0 " + (-oy2).toFixed(2) + "px 0 rgba(0,0,0,0.4)";
+        rafId = requestAnimationFrame(tick);
+      }
+
+      function start() {
+        if (rafId) return;
+        if (reduced.matches || coarse.matches) return;
+        startTime = performance.now();
+        el.classList.add("is-glitching");
+        rafId = requestAnimationFrame(tick);
+      }
+
+      el.addEventListener("mouseenter", start);
+      el.addEventListener("mouseleave", stop);
+      el.addEventListener("focus", start);
+      el.addEventListener("blur", stop);
+    }
+
+    links.forEach(attach);
   })();
 })();
