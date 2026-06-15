@@ -9,6 +9,7 @@
  *   5. collage-home.js           — render del collage dinámico (incluido en home-collage.html)
  *   6. home-collage-carousel.js  — centrado del slide medio en móvil
  *   7. menu-char-glitch.js      — glitch de caracteres random en hover/focus del menú
+ *   8. title-decoder.js          — scramble cíclico cada 10s del <h1 id="cenizas">
  *
  * Cada módulo sigue siendo IIFE autocontenido; no comparten estado.
  * Se sirven como un solo recurso `defer` para reducir peticiones HTTP
@@ -716,5 +717,60 @@
     }
 
     links.forEach(attach);
+  })();
+
+  /* ===== 8. title-decoder.js ======================================= */
+  (function () {
+    var h1 = document.getElementById("cenizas");
+    if (!h1) return;
+    var original = h1.textContent;
+    h1.dataset.originalText = original;
+
+    var reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (reduced.matches) return;
+
+    var POOL = "▒▓█░▄▀■□◊◈◉○ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var CYCLE_MS = 1200;
+    var INTERVAL_MS = 10000;
+    var SETTLE_MS = 500;
+
+    var parts = [];
+    for (var i = 0; i < original.length; i++) {
+      parts.push({ fixed: original[i] === ".", ch: original[i] });
+    }
+    var letterCount = parts.length - parts.filter(function (p) { return p.fixed; }).length;
+
+    function runCycle() {
+      var start = performance.now();
+
+      function tick(now) {
+        var elapsed = now - start;
+        if (elapsed >= CYCLE_MS) {
+          h1.textContent = original;
+          setTimeout(runCycle, INTERVAL_MS);
+          return;
+        }
+        var settleProgress = Math.max(0, (elapsed - (CYCLE_MS - SETTLE_MS)) / SETTLE_MS);
+        var settleCount = Math.floor(settleProgress * letterCount);
+        var out = "";
+        var letterIdx = 0;
+        for (var j = 0; j < parts.length; j++) {
+          if (parts[j].fixed) {
+            out += ".";
+          } else if (letterIdx < settleCount) {
+            out += parts[j].ch;
+            letterIdx++;
+          } else {
+            out += POOL.charAt(Math.floor(Math.random() * POOL.length));
+            letterIdx++;
+          }
+        }
+        h1.textContent = out;
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    setTimeout(runCycle, INTERVAL_MS);
   })();
 })();
