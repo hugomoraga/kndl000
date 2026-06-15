@@ -1,5 +1,5 @@
 {% if page.image_fit or page.image_position or page.image_ratio %}{% capture img_style %}{% if page.image_fit %}object-fit: {{ page.image_fit }};{% endif %}{% if page.image_position %} object-position: {{ page.image_position }};{% endif %}{% if page.image_ratio %} aspect-ratio: {{ page.image_ratio }}; width: 100%;{% endif %}{% endcapture %}{% endif %}
 <figure class="page-figure">
     <img src="{{ site.baseurl }}{{ page.image }}" alt="{{ page.alt | default: page.title }}" loading="eager" decoding="async"{% if img_style %} style="{{ img_style | strip }}"{% endif %} />
-    {% if page.caption %}<figcaption style="text-align:center; font-size:0.9rem; color:#666; margin-top:0.5rem;">{{ page.caption }}</figcaption>{% endif %}
+    {% if page.caption %}<figcaption class="page-figure__caption">{{ page.caption }}</figcaption>{% endif %}
 </figure>

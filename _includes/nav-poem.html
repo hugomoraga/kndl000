@@ -12,7 +12,7 @@
   {% assign prev_index = index | minus: 1 %}
   {% assign next_index = index | plus: 1 %}
 
-  <nav class="poem-nav" style="margin-top: 3rem; display: flex; justify-content: space-between;">
+  <nav class="poem-nav">
     {% if index > 0 %}
       {% assign prev_poem = poem_series[prev_index] %}
       <a href="{{ prev_poem.url | relative_url }}">⟵ {{ prev_poem.title }}</a>
