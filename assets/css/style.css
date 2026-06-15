@@ -1236,10 +1236,18 @@ main {
 }
 
 .codigo-list__binary {
+  display: inline-block;
   color: #5fa8a0;
   font-family: var(--font-mono);
-  font-size: 0.85em;
-  margin-right: 0.5em;
+  font-size: 0.78em;
+  letter-spacing: 0.08em;
+  padding: 0.1em 0.55em 0.15em;
+  margin-right: 0.7em;
+  border: 1px solid rgba(95, 168, 160, 0.4);
+  border-radius: 3px;
+  background: rgba(95, 168, 160, 0.04);
+  font-weight: 500;
+  vertical-align: 0.05em;
 }
 
 .codigo-list__title {
