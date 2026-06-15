@@ -12,7 +12,7 @@ description: "Lo que queda después. Objetos encontrados. Textos incompletos. Ar
 <article class="vestigio">
   <a class="vestigio__title-link" href="{{ vestigio.url | relative_url }}">
     <h3 class="vestigio__title">
-      {{ vestigio.title }}
+      {% if vestigio.hermes == true %}<span class="vestigio__sigil" title="Firmado por Hermes (∴)">∴</span> {% endif %}{{ vestigio.title }}
       {% if vestigio.date %}
         <span class="vestigio__date">({{ vestigio.date | date: "%Y-%m-%d" }})</span>
       {% endif %}

@@ -190,6 +190,12 @@ export default defineConfig({
             options: ["default"],
           },
           ...createCommonFields(["title", "image", "date", "body"]),
+          {
+            type: "boolean" as const,
+            name: "hermes",
+            label: "∴ Hermes",
+            description: "Marca este contenido como firmado por Hermes (alter-ego del autor). Cuando está activo, la plantilla muestra el glifo ∴ junto al título.",
+          },
         ],
       },
       {
