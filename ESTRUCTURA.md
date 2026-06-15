@@ -35,9 +35,7 @@ kndl000/
 │   │       └── _youtube_setlists/   # Setlists de YouTube
 │   │
 │   ├── diario/index.md      # ✶ Diario (página)
-│   ├── fragmentos/index.md  # ☍ Fragmentos
 │   ├── poemas/index.md      # ↂ Poemas
-│   ├── musica/index.md      # 𝄞 Música
 │   ├── visual/index.md      # ◉ Visual
 │   ├── melange/index.md     # 🜏 Melange
 │   ├── vestigios/index.md   # ⚱ Vestigios
