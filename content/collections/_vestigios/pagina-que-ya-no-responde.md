@@ -2,6 +2,7 @@
 layout: default
 title: "Página que ya no responde"
 date: 2026-06-15
+hermes: true
 ---
 
 <!-- ∴ HERMES · primer vestigio firmado · 2026-06-15 -->

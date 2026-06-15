@@ -1188,6 +1188,13 @@ main {
   font-size: 0.85rem;
 }
 
+.vestigio__sigil {
+  color: #8a7a5a;
+  font-style: normal;
+  margin-right: 0.15em;
+  letter-spacing: 0.05em;
+}
+
 .vestigio__image {
   display: block;
   max-width: 100%;
