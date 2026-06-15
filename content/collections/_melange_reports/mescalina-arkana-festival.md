@@ -1,10 +1,12 @@
 ---
 title: Mescalina en Arkana Festival
-subtitle: San Pedro · Ollantaytambo, Valle Sagrado
-date: 2017-04-29T00:00:00.000Z
 image: /assets/media/images/mescalina-arkana-festival.png
-alt: Festival Arkana, baile al aire libre entre árboles y carpas
+date: 2017-04-29T00:00:00.000Z
+subtitle: San Pedro · Ollantaytambo, Valle Sagrado
+summary: ''
 image_credit: © alexis suarez / arkana 2017
+series: ''
+alt: Festival Arkana, baile al aire libre entre árboles y carpas
 ---
 
 ## Ficha
@@ -27,7 +29,7 @@ image_credit: © alexis suarez / arkana 2017
   <dt>Resultado</dt><dd>Insight emocional + integración positiva</dd>
 </dl>
 
----
+***
 
 ## Relato
 
@@ -35,7 +37,7 @@ Estaba en un momento caótico, venía con penas de amor y una necesidad fuerte d
 
 Decidí mochilear: partí por Bolivia y después pasé a Perú. Mirándolo ahora, ese viaje fue una especie de preparación, aunque en ese momento no lo veía así; me estaba abriendo, pero también estaba inestable. Es raro, porque hoy lo siento difuso, pero sé que fue importante.
 
-En Cusco me pasó algo clave. Fui al mercado de las brujas y me sorprendió lo abierto que era todo: ahí vendían Echinopsis pachanoi (San Pedro) como si fuera cualquier cosa. Venía deshidratado, en polvo, y decía que era de Chavín de Huántar.
+En Cusco me pasó algo clave. Fui al mercado central de san pedro  y me sorprendió lo abierto que era todo: ahí vendían Echinopsis pachanoi (San Pedro) como si fuera cualquier cosa. Venía deshidratado, en polvo, y decía que era de Chavín de Huántar.
 
 No tenía idea de la dosis, nada… solo sabía, de forma general, lo que era.
 
@@ -47,7 +49,7 @@ En ese momento tampoco tenía completamente claro lo del Arkana; no recuerdo si 
 
 Estaba recién entrando al psytrance, me gustaba, pero no era algo central en mi vida todavía.
 
----
+***
 
 Luego de tener la entrada en mano ya estaba decidido, no lo pensé dos veces. La mescalina iba a ser en el Arkana Festival.
 
@@ -59,7 +61,7 @@ Había mucha gente de distintos países, se sentía diverso, con una mezcla cult
 
 No recuerdo bien si fue el mismo día o al siguiente, pero preparé la mescalina mezclando todo el polvo con agua en una botella, sin medir, sin mucha ciencia.
 
----
+***
 
 El viaje comenzó lento, difuso, sin un golpe inmediato.
 
@@ -67,7 +69,7 @@ Me encontré con un chileno que vio la botella y me preguntó qué era; le dije 
 
 No lo cuestioné. Sentí que no era quien para interceder en procesos ajenos; si alguien sentía ese llamado, yo compartía.
 
----
+***
 
 Estaba con un grupo más retirado de la pista. Era un espacio de conversación, donde la música se escuchaba de fondo.
 
@@ -81,7 +83,7 @@ No sabía quién estaba tocando. Eso dejó de importar.
 
 Ahí ya estaba sintiendo los efectos con claridad. Las cosas empezaron a brillar. No era solo visual, era como si todo tuviera más presencia… y cayó la noche.
 
----
+***
 
 La música se intensificó, o quizás era yo el que ya estaba percibiendo todo más profundo. Era como si cada capa del sonido tuviera más significado.
 
@@ -93,7 +95,7 @@ Se transformaban en arquetipos. Algunos parecían bufones del baile, exagerando 
 
 Vi a una mujer en trance que me evocaba una bruja antigua.
 
----
+***
 
 Había mucho incienso en el aire. Un sahumerio constante que le daba al ambiente una sensación ritual.
 
@@ -107,7 +109,7 @@ Y se volcó hacia mí.
 
 Empecé a preguntarme quién era yo dentro de todo eso. Qué hacía ahí. En medio de esa escena que ya no parecía solo un festival, sino una especie de locura organizada.
 
----
+***
 
 En medio de todo eso, el viaje mental comenzó con algo simple.
 
@@ -121,7 +123,7 @@ Y bastaba esa conexión con la música.
 
 Pero luego el pensamiento se bifurcó...
 
----
+***
 
 Como contexto: habían sido muchos días caminando solo, comunicándome lo justo y necesario.
 
@@ -143,7 +145,7 @@ Después de toda esa carga emocional, me quebré.
 
 Se me cayeron las lágrimas.
 
----
+***
 
 Pero estaba encapuchado, bailando. Nadie lo notó. Y tampoco era necesario.
 
@@ -153,7 +155,7 @@ En algún punto aparecieron los patrones. La emoción se transformó en brillos,
 
 No recuerdo exactamente cómo ocurrió, pero en algún momento ya estaba amaneciendo.
 
----
+***
 
 Al día siguiente seguí bailando, pero ya no había cuestionamiento.
 
