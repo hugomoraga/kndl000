@@ -8,39 +8,23 @@ noindex: true
 
 > "Lo que buscas no está aquí. O tal vez nunca estuvo."
 
-<div style="text-align: center; margin: 3rem 0;">
-  <p style="color: #888; font-size: clamp(1rem, 3vw, 1.2rem); line-height: 1.8;">
+<div class="error-page">
+  <p class="error-page__message">
     La página que intentas encontrar se ha desvanecido.<br>
     Como un fragmento que se pierde en el tiempo.
   </p>
-</div>
 
-<div style="text-align: center; margin: 4rem 0;">
-  <a href="{{ '/' | relative_url }}" style="
-    color: #7ab6f5;
-    font-family: var(--font-serif);
-    font-size: clamp(1.2rem, 3vw, 1.5rem);
-    text-decoration: none;
-    padding: 0.5rem 1.5rem;
-    border: 1px solid #444;
-    border-radius: 4px;
-    display: inline-block;
-    transition: all 0.3s ease;
-  " onmouseover="this.style.borderColor='#7ab6f5'; this.style.color='#fff';" 
-     onmouseout="this.style.borderColor='#444'; this.style.color='#7ab6f5';">
-    ← Volver al inicio
-  </a>
-</div>
+  <a href="{{ '/' | relative_url }}" class="error-page__home">← Volver al inicio</a>
 
-<hr style="margin: 4rem 0; border-color: #333;">
+  <hr class="error-page__sep">
 
-<div style="text-align: center; color: #666; font-size: 0.9rem; font-style: italic;">
-  <p>O explora:</p>
-  <div class="nube-de-palabras" data-no-nube-motion style="padding: 1rem 0;">
-    <a href="{{ '/fragmentos/' | relative_url }}">☍ Fragmentos</a>
-    <a href="{{ '/poemas/' | relative_url }}">ↂ Poemas</a>
-    <a href="{{ '/visual/' | relative_url }}">◉ Visual</a>
-    <a href="{{ '/melange/' | relative_url }}">🜏 Melange</a>
+  <div class="error-page__explore">
+    <p>O explora:</p>
+    <div class="nube-de-palabras" data-no-nube-motion>
+      <a href="{{ '/fragmentos/' | relative_url }}">☍ Fragmentos</a>
+      <a href="{{ '/poemas/' | relative_url }}">ↂ Poemas</a>
+      <a href="{{ '/visual/' | relative_url }}">◉ Visual</a>
+      <a href="{{ '/melange/' | relative_url }}">🜏 Melange</a>
+    </div>
   </div>
 </div>
-
