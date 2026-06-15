@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Poemas
+description: "Archivo de poemas — KNDL 000. Versos breves, simbólicos, fragmentarios. Voz que se deshace."
 ---
 
 {% assign sorted_poems = site.poems | sort: "date" | reverse %}
