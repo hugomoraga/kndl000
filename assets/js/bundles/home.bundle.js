@@ -730,9 +730,9 @@
     if (reduced.matches) return;
 
     var POOL = "▒▓█░▄▀■□◊◈◉○ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    var CYCLE_MS = 1200;
-    var INTERVAL_MS = 10000;
-    var SETTLE_MS = 500;
+    var CYCLE_MS = 1800;
+    var INTERVAL_MS = 5000;
+    var SETTLE_MS = 800;
 
     var parts = [];
     for (var i = 0; i < original.length; i++) {
