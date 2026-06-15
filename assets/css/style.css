@@ -1196,10 +1196,17 @@ main {
 }
 
 .vestigio__sigil {
-  color: #8a7a5a;
+  color: #c9a86b;
   font-style: normal;
-  margin-right: 0.15em;
+  font-weight: 500;
+  margin-right: 0.35em;
   letter-spacing: 0.05em;
+  transition: color 0.2s ease;
+}
+
+.vestigio__title-link:hover .vestigio__sigil,
+.vestigio__title-link:focus .vestigio__sigil {
+  color: #e0c08a;
 }
 
 /* Código — listado en /codigo/ */
