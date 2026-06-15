@@ -15,15 +15,18 @@
   root.classList.add("nube-de-palabras--js");
 
   var start = performance.now();
-  /** Un ciclo: calma → intensidad máx. → calma (ms). */
-  var CYCLE_MS = 15000;
+  /** Un ciclo: calma → subida suave → pico moderado → calma (ms). */
+  var CYCLE_MS = 28000;
 
-  /** 0 en t≈0 y t≈fin de ciclo, 1 en el centro (sin² sobre medio periodo). */
+  /**
+   * 0 en calma al inicio/fin de ciclo, ~1 en el centro.
+   * sin⁴ deja más tiempo cerca de 0 (más respiración, menos tiempo “fuerte”).
+   */
   function intensity(now) {
     var t = (((now - start) % CYCLE_MS) + CYCLE_MS) % CYCLE_MS;
     var u = t / CYCLE_MS;
     var s = Math.sin(Math.PI * u);
-    return s * s;
+    return s * s * s * s;
   }
 
   links.forEach(function (a) {
@@ -37,25 +40,26 @@
 
   function loop(now) {
     var I = intensity(now);
-    var drift = 3 + I * 22;
-    var rotC = Math.sin(now / 13000) * (0.25 + I * 1.4);
+    /* Calma: deriva mínima; pico: aún moderado */
+    var drift = 1.2 + I * 12;
+    var rotC = Math.sin(now / 16000) * (0.1 + I * 0.65);
     root.style.transform =
       "translate(" +
-      Math.sin(now / 6200) * drift +
+      Math.sin(now / 7800) * drift +
       "px, " +
-      Math.cos(now / 7100) * drift * 0.88 +
+      Math.cos(now / 9000) * drift * 0.85 +
       "px) rotate(" +
       rotC +
       "deg)";
 
     links.forEach(function (a, i) {
       var seed = i * 1.73 + 0.41;
-      var speed = 0.38 + I * 1.05;
+      var speed = 0.26 + I * 0.55;
       var phase = now * 0.001 * speed + seed;
-      var amp = 5 + I * 30;
-      var rot = 2.2 + I * 7.5;
+      var amp = 2.5 + I * 12;
+      var rot = 1 + I * 3.8;
       var hover = a.classList.contains("nube-de-palabras__link--hover");
-      var sc = hover ? 1.22 : 1;
+      var sc = hover ? 1.18 : 1;
       a.style.transform =
         "translateY(" +
         Math.sin(phase) * amp +
@@ -64,11 +68,11 @@
         "deg) scale(" +
         sc +
         ")";
-      var glow = I * 14;
-      var glowA = 0.08 + I * 0.42;
+      var glow = I * 6;
+      var glowA = 0.04 + I * 0.18;
       a.style.filter =
         "brightness(" +
-        (1 + I * 0.42) +
+        (1 + I * 0.2) +
         ") drop-shadow(0 0 " +
         glow +
         "px rgba(255, 255, 255, " +
