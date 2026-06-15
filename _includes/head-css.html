@@ -1,0 +1,7 @@
+{%- comment -%}
+  Cache-buster for the main stylesheet.
+  Fastly (GH Pages CDN) caches style.css for 4h. Appending a build-time
+  version token makes the URL unique per deploy, bypassing the cache.
+{%- endcomment -%}
+{%- assign css_ts = site.time | date: '%s%N' -%}
+<link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: css_ts | relative_url }}">
