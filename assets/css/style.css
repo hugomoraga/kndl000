@@ -1195,6 +1195,44 @@ main {
   letter-spacing: 0.05em;
 }
 
+/* Código — listado en /codigo/ */
+.codigo-list {
+  list-style: none;
+  margin: 2rem 0;
+  padding: 0;
+}
+
+.codigo-list__item {
+  margin: 0 0 1.5rem;
+  padding: 0 0 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.codigo-list__binary {
+  color: #5fa8a0;
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  margin-right: 0.5em;
+}
+
+.codigo-list__title {
+  text-decoration: none;
+}
+
+.codigo-list__lang {
+  font-size: 0.9em;
+  color: #999;
+  margin-left: 0.3em;
+}
+
+.codigo-list__concept {
+  margin: 0.5em 0 0 2.4em;
+  font-size: 0.85em;
+  font-style: italic;
+  color: #7d7368;
+  line-height: 1.5;
+}
+
 .vestigio__image {
   display: block;
   max-width: 100%;

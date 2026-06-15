@@ -86,6 +86,36 @@ export default defineConfig({
         ],
       },
       {
+        name: "codigos",
+        label: "◊ Código",
+        path: "content/collections/_codigos",
+        format: "md",
+        fields: [
+          {
+            type: "string" as const,
+            name: "layout",
+            label: "Layout",
+            options: ["codigo", "default"],
+          },
+          ...createCommonFields(["title", "image", "date", "body"]),
+          {
+            type: "string" as const,
+            name: "language",
+            label: "Lenguaje",
+            description: "Lenguaje de programación del código (JavaScript, Python, C, etc.).",
+          },
+          {
+            type: "string" as const,
+            name: "concept",
+            label: "Concepto",
+            description: "Bajada poética o conceptual. Aparece en la página de detalle arriba del código; también en el índice si lo expones ahí.",
+            ui: {
+              component: "textarea",
+            },
+          },
+        ],
+      },
+      {
         name: "poemas",
         label: "ↂ Poemas",
         path: "content/collections/_poems",
