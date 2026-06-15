@@ -22,45 +22,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Detect admin-relevant changes
-        id: changes
-        uses: dorny/paths-filter@v4
-        with:
-          filters: |
-            admin:
-              - 'tina/**'
-              - 'package.json'
-              - 'package-lock.json'
-              - 'assets/js/**'
-              - '.github/workflows/**'
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: '20'
-
-      - name: Cache node_modules
-        id: cache-npm
-        uses: actions/cache@v5
-        with:
-          path: node_modules
-          key: npm-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            npm-${{ runner.os }}-
-
-      - name: Install npm dependencies
-        if: steps.cache-npm.outputs.cache-hit != 'true'
-        run: npm ci
-
-      - name: Build Tina CMS admin
-        if: steps.changes.outputs.admin == 'true'
-        continue-on-error: true
-        run: npm run build
-        env:
-          NEXT_PUBLIC_TINA_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_TINA_CLIENT_ID }}
-          TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
-          GITHUB_BRANCH: main
-
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:

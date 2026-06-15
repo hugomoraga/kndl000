@@ -14,8 +14,8 @@ vendor/
 .env.local
 .env.*.local
 
-# TinaCMS generated
-config/tina/__generated__/
+# Admin — local dev files
+admin/assets/
 
 # OS files
 .DS_Store
