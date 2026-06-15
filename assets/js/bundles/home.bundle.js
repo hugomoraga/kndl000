@@ -8,7 +8,7 @@
  *   4. home-audio.js             — sintetizador generativo con Tone.js
  *   5. collage-home.js           — render del collage dinámico (incluido en home-collage.html)
  *   6. home-collage-carousel.js  — centrado del slide medio en móvil
- *   7. menu-glitch.js            — glitch RGB split en hover/focus del menú
+ *   7. menu-char-glitch.js      — glitch de caracteres random en hover/focus del menú
  *
  * Cada módulo sigue siendo IIFE autocontenido; no comparten estado.
  * Se sirven como un solo recurso `defer` para reducir peticiones HTTP
@@ -649,7 +649,7 @@
     window.addEventListener("load", run);
   })();
 
-  /* ===== 7. menu-glitch.js ========================================= */
+  /* ===== 7. menu-char-glitch.js ===================================== */
   (function () {
     var root = document.querySelector(".nube-de-palabras");
     if (!root) return;
@@ -660,30 +660,44 @@
     var coarse = window.matchMedia("(pointer: coarse)");
     if (reduced.matches || coarse.matches) return;
 
-    var MAX_DUR = 420;
-    var MAX_OFFSET = 2.5;
+    var GLYPHS = "▒▓█░▄▀■□◊◈◉○";
+    var MAX_DUR = 600;
+    var FRAME_INTERVAL = 70;
+    var REPLACE_PROB = 0.22;
+    var EMOJI_RE = /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{2300}-\u{23FF}]/u;
 
     function attach(el) {
+      if (!el.dataset.originalText) el.dataset.originalText = el.textContent;
+      var original = el.dataset.originalText;
       var rafId = 0;
       var startTime = 0;
+      var lastFrameTime = 0;
 
       function stop() {
         if (rafId) cancelAnimationFrame(rafId);
         rafId = 0;
-        el.classList.remove("is-glitching");
-        el.style.textShadow = "";
+        el.textContent = original;
       }
 
       function tick(now) {
         if (now - startTime >= MAX_DUR) { stop(); return; }
-        var ox = (Math.random() * 2 - 1) * MAX_OFFSET;
-        var oy = (Math.random() * 2 - 1) * (MAX_OFFSET * 0.4);
-        var oy2 = (Math.random() * 2 - 1) * (MAX_OFFSET * 0.6);
-        el.style.textShadow =
-          ox.toFixed(2) + "px 0 0 #0ff, " +
-          (-ox).toFixed(2) + "px 0 0 #f0f, " +
-          "0 " + oy.toFixed(2) + "px 0 rgba(255,255,255,0.7), " +
-          "0 " + (-oy2).toFixed(2) + "px 0 rgba(0,0,0,0.4)";
+        if (now - lastFrameTime < FRAME_INTERVAL) {
+          rafId = requestAnimationFrame(tick);
+          return;
+        }
+        lastFrameTime = now;
+        var out = "";
+        for (var i = 0; i < original.length; i++) {
+          var ch = original[i];
+          if (ch === " " || EMOJI_RE.test(ch)) {
+            out += ch;
+          } else if (Math.random() < REPLACE_PROB) {
+            out += GLYPHS.charAt(Math.floor(Math.random() * GLYPHS.length));
+          } else {
+            out += ch;
+          }
+        }
+        el.textContent = out;
         rafId = requestAnimationFrame(tick);
       }
 
@@ -691,7 +705,7 @@
         if (rafId) return;
         if (reduced.matches || coarse.matches) return;
         startTime = performance.now();
-        el.classList.add("is-glitching");
+        lastFrameTime = startTime;
         rafId = requestAnimationFrame(tick);
       }
 
