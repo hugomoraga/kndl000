@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Código
+description: "Código como expresión. Programación desfasada y algo inútil — KNDL 000."
 ---
 
 {% assign sorted_codigos = site.codigos | sort: "date" %}

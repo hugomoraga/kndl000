@@ -1,6 +1,7 @@
 ---
 layout: default
 title: ⊙
+description: "Imágenes — grabados, litografías, símbolos. Archivo visual de KNDL 000."
 ---
 
 
