@@ -9,14 +9,12 @@ description: "Imágenes — grabados, litografías, símbolos. Archivo visual de
 
 {% for image in site.images %}
   <figure class="image-effect">
-    <a class="collage-crop" href="{{ site.baseurl }}{{ image.url }}" style="text-decoration: none;">
+    <a class="collage-crop collage__link" href="{{ site.baseurl }}{{ image.url }}">
       <span class="collage-crop__inner">
         <img src="{{ site.baseurl }}{{ image.image }}" alt="{{ image.title }}" loading="lazy" />
       </span>
     </a>
-    <figcaption style="text-align: center; font-size: 0.9rem; color: #666; margin-top: 0.3rem;">
-      {{ image.title }}
-    </figcaption>
+    <figcaption class="collage__caption">{{ image.title }}</figcaption>
   </figure>
 {% endfor %}
 
