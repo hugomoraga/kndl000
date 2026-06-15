@@ -13,7 +13,7 @@ nav: false
       <span class="diario-entry__date">({{ post.date | date: "%Y-%m-%d" }})</span>
     </h2>
     <div class="diario-entry__excerpt">
-      {{ post.content | strip_html | newline_to_br }}
+      {{ post.content | strip_html | truncatewords: 40 }}
     </div>
     <a href="{{ post.url | relative_url }}" class="diario-entry__more">↳ Ver más</a>
   </article>
