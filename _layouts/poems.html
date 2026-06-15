@@ -13,7 +13,7 @@
   <main>
         <h1 class="page-title">
           <span class="page-title__text">~ {{ page.title }} ~{% if page.series %}
-        <span style="font-size: 0.9em; color: #999;"> ({{ page.series }} / part. {{ page.part }})</span>
+        <span class="page-title__series"> ({{ page.series }} / part. {{ page.part }})</span>
       {% endif %}</span>
           <span class="init"><a href="{{ site.baseurl }}/">∅ INIT</a></span>
         </h1>
@@ -23,7 +23,7 @@
       {% if page.image %}
       {% include figure.html %}
       {% endif %}
-      <div class="poem-body" style="margin-top: 2rem;">
+      <div class="poem-body">
          {{ content }}
       </div>
 

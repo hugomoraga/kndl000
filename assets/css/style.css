@@ -1010,6 +1010,13 @@ main {
   padding: 0;
 }
 
+.page-figure__caption {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 0.5rem;
+}
+
 .page-figure img {
   display: block;
   width: 100%;
@@ -1325,6 +1332,147 @@ main {
 
 .error-page__explore p {
   margin: 0 0 1rem;
+}
+
+/* Personal music item — usado por /musica/ */
+.personal-music-item {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  border-left: 2px solid #333;
+}
+
+.personal-music-item__head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.personal-music-item__icon {
+  color: #888;
+}
+
+.personal-music-item__title {
+  color: #ccc;
+  font-weight: 700;
+}
+
+.personal-music-item__links {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.personal-music-item__link {
+  color: #7ab6f5;
+  text-decoration: none;
+  font-size: 0.9em;
+}
+
+/* Related poem — al pie de un poema cuando hay serie */
+.related-poem {
+  margin-top: 4rem;
+}
+
+.related-poem__title {
+  font-family: var(--font-serif);
+}
+
+.related-poem__list {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+}
+
+.related-poem__item {
+  margin: 0.25rem 0;
+}
+
+.related-poem__date {
+  color: #999;
+  margin-left: 0.4em;
+}
+
+/* Poem nav — prev/next dentro de una serie */
+.poem-nav {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Page title series — sub-texto en el H1 de un poema con serie */
+.page-title__series {
+  font-size: 0.9em;
+  color: #999;
+}
+
+/* Content item — include genérico */
+.content-item {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  border-left: 1px solid #333;
+}
+
+.content-item__title-link {
+  text-decoration: none;
+}
+
+.content-item__title {
+  margin-top: 0;
+  color: #888;
+  font-size: clamp(1rem, 3vw, 1.1rem);
+  word-wrap: break-word;
+}
+
+.content-item__date {
+  color: #444;
+  font-size: 0.85rem;
+}
+
+.content-item__image {
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+  margin: 1rem 0;
+  opacity: 0.7;
+  border-radius: 4px;
+  display: block;
+}
+
+.content-item__excerpt {
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.content-item__more {
+  color: #444;
+  font-size: 0.85rem;
+  text-decoration: none;
+  margin-top: 0.5rem;
+  display: inline-block;
+}
+
+/* Imagen page — layout para _images */
+.imagen-page__figure {
+  margin: 0;
+}
+
+.imagen-page__image {
+  width: 100%;
+  height: auto;
+}
+
+.imagen-page__caption {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 0.5rem;
+}
+
+.imagen-page__body {
+  margin-top: 2rem;
 }
 
 .vestigio__image {

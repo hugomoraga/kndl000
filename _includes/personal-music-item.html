@@ -4,32 +4,31 @@
     - track: objeto de la colección personal_music
 {%- endcomment -%}
 
-<div class="personal-music-item" style="margin: 1.5rem 0; padding: 1rem; border-left: 2px solid #333;">
-  <div style="display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.5rem;">
+<div class="personal-music-item">
+  <div class="personal-music-item__head">
     {% if include.track.type == "videoclip" %}
-      <span style="color: #888;">📼</span>
+      <span class="personal-music-item__icon">📼</span>
     {% else %}
-      <span style="color: #888;">🎧</span>
+      <span class="personal-music-item__icon">🎧</span>
     {% endif %}
-    <strong style="color: #ccc;">
+    <strong class="personal-music-item__title">
       {% if include.track.artist %}
-        {{ include.track.artist }} – 
+        {{ include.track.artist }} –
       {% endif %}
       {{ include.track.title }}
     </strong>
   </div>
 
-  <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+  <div class="personal-music-item__links">
     {% if include.track.spotify_url %}
-      <a href="{{ include.track.spotify_url }}" target="_blank" rel="noopener noreferrer" style="color: #7ab6f5; text-decoration: none; font-size: 0.9em;">
+      <a href="{{ include.track.spotify_url }}" target="_blank" rel="noopener noreferrer" class="personal-music-item__link">
         Spotify →
       </a>
     {% endif %}
     {% if include.track.youtube_url %}
-      <a href="{{ include.track.youtube_url }}" target="_blank" rel="noopener noreferrer" style="color: #7ab6f5; text-decoration: none; font-size: 0.9em;">
+      <a href="{{ include.track.youtube_url }}" target="_blank" rel="noopener noreferrer" class="personal-music-item__link">
         YouTube →
       </a>
     {% endif %}
   </div>
 </div>
-
