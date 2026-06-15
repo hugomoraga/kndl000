@@ -320,7 +320,7 @@ nav {
   gap: clamp(0.5rem, 2vw, 1.2rem);
   padding: clamp(1rem, 4vw, 2rem);
   text-align: center;
-  animation: flotar 22s ease-in-out infinite;
+  animation: flotar 48s ease-in-out infinite;
   transform-origin: center center;
   will-change: transform;
 }
@@ -330,37 +330,25 @@ nav {
   will-change: auto;
 }
 
-.nube-de-palabras--js {
-  animation: none;
-}
-
 .nube-de-palabras a {
   font-size: clamp(0.9rem, 2.5vw, 1.2rem);
   color: #aaa;
   text-decoration: none;
   font-family: var(--font-serif);
-  transition: color 0.3s ease;
+  transition: color 0.2s ease, text-shadow 0.05s steps(1);
   display: inline-block;
-  animation: orbitar 12s ease-in-out infinite alternate;
   padding: 0.25rem;
-  transform-origin: center center;
+  position: relative;
+  will-change: text-shadow;
 }
 
-.nube-de-palabras[data-no-nube-motion] a {
-  animation: none;
-}
-
-.nube-de-palabras--js a {
-  animation: none;
-  will-change: transform, filter;
-}
-
-.nube-de-palabras:not(.nube-de-palabras--js) a:hover {
+.nube-de-palabras a:hover,
+.nube-de-palabras a:focus-visible {
   color: #fff;
-  transform: scale(1.2) rotate(2deg);
+  outline: none;
 }
 
-.nube-de-palabras--js a:hover {
+.nube-de-palabras a.is-glitching {
   color: #fff;
 }
 
@@ -370,22 +358,13 @@ nav {
     transform: translate(0, 0) rotate(0deg);
   }
   25% {
-    transform: translate(1.2%, -0.8%) rotate(0.25deg);
+    transform: translate(0.25%, -0.15%) rotate(0.05deg);
   }
   50% {
-    transform: translate(-0.9%, 0.9%) rotate(-0.2deg);
+    transform: translate(-0.2%, 0.2%) rotate(-0.04deg);
   }
   75% {
-    transform: translate(0.7%, 0.4%) rotate(0.15deg);
-  }
-}
-
-@keyframes orbitar {
-  from {
-    transform: translateY(0px) rotate(-3deg);
-  }
-  to {
-    transform: translateY(-18px) rotate(6deg);
+    transform: translate(0.15%, 0.1%) rotate(0.03deg);
   }
 }
 
@@ -394,8 +373,10 @@ nav {
     animation: none;
   }
 
-  .nube-de-palabras a {
-    animation: none;
+  .nube-de-palabras a:hover,
+  .nube-de-palabras a:focus-visible {
+    color: #fff;
+    text-shadow: 0 0 4px rgba(0, 255, 255, 0.6);
   }
 }
 
