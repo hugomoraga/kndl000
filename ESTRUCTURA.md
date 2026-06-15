@@ -8,8 +8,8 @@ kndl000/
 ├── 📄 Configuración (Raíz)
 │   ├── _config.yml          # Configuración Jekyll
 │   ├── Gemfile              # Dependencias Ruby
-│   ├── package.json         # Dependencias Node.js (TinaCMS CLI)
-│   ├── package-lock.json    # Lockfile de npm
+│   ├── package.json         # Metadatos del proyecto (sin dependencias Node)
+│   ├── package-lock.json    # Lockfile de npm (vacío, sin dependencias)
 │   ├── CNAME                # Configuración dominio
 │   ├── .gitignore           # Archivos ignorados por Git
 │   ├── .ruby-version        # Versión de Ruby
@@ -133,14 +133,9 @@ kndl000/
 │       ├── home.yml
 │       └── navigation.yml
 │
-├── ⚙️ Configuración
-│   └── tina/                # Configuración TinaCMS
-│       ├── config.ts        # Esquema de contenido
-│       ├── tina-lock.json   # Lockfile de Tina
-│       └── __generated__/   # Archivos generados (no editar)
-│
 ├── 🔧 Admin
-│   └── admin/               # Panel admin TinaCMS (generado, ignorado en git)
+│   ├── admin/config.yml  # Configuración Sveltia CMS (11 colecciones)
+│   └── admin/index.html  # Panel admin Sveltia CMS (CDN)
 │
 ├── 🛠️ Spec Kit
 │   ├── .specify/            # Configuración de GitHub Spec Kit
@@ -181,16 +176,16 @@ kndl000/
 
 ## 🎯 Ventajas de esta Estructura
 
-- **Separación clara**: Contenido fuente vs archivos generados (`_site/`, `admin/`, `tina/__generated__/`).
+- **Separación clara**: Contenido fuente vs archivos generados (`_site/`).
 - **Organización lógica**: `core/`, `utils/`, `umbral-tone/`, `umbral-vision/` agrupan por responsabilidad.
 - **Escalabilidad**: Módulos `umbral-*` se pueden cargar como bundles independientes.
 - **Mantenibilidad**: Cada módulo tiene su `README.md` interno y entry point claro.
-- **Compatibilidad**: Funciona con Jekyll (Ruby), TinaCMS (Node) y GitHub Pages sin configuración extra.
+- **Compatibilidad**: Funciona con Jekyll (Ruby) y GitHub Pages sin configuración extra.
 
 ## 📝 Notas Importantes
 
 - Las páginas (`diario/`, `poemas/`, etc.) están en la raíz para que Jekyll las procese con `permalink: /`.
 - Las colecciones viven en `content/collections/<_nombre>/` por la config `collections_dir`.
 - `assets/js/umbral-tone/` y `assets/js/umbral-vision/` son módulos autocontenidos con su propio `app.js` (entry) y `index.js` (API pública).
-- `_site/`, `node_modules/`, `admin/`, `vendor/` y `tina/__generated__/` son generados — no editar manualmente.
-- `package.json` declara solo `@tinacms/cli` y `@types/node` (US1); el resto son dependencias transitivas de TinaCMS.
+- `_site/`, `node_modules/` y `vendor/` son generados — no editar manualmente.
+- `admin/config.yml` define las 11 colecciones del CMS (Sveltia CMS).

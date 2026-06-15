@@ -1,0 +1,263 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+
+backend:
+  name: github
+  repo: hugomoraga/kndl000
+  branch: main
+
+media_folder: assets/media/images
+public_folder: /assets/media/images
+site_url: https://kundala000.com
+
+collections:
+  - name: diario
+    label: "✶ Diario"
+    label_singular: Entrada
+    folder: content/collections/_posts
+    create: true
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: Layout, name: layout, widget: hidden, default: default }
+      - { label: Title, name: title, widget: string }
+      - { label: Image, name: image, widget: image, required: false }
+      - { label: Body, name: body, widget: markdown }
+      - { label: "Publish Date", name: date, widget: datetime }
+      - { label: Published, name: published, widget: boolean, default: true, required: false }
+
+  - name: poemas
+    label: "ↂ Poemas"
+    label_singular: Poema
+    folder: content/collections/_poems
+    create: true
+    format: frontmatter
+    slug: "{{slug}}"
+    fields:
+      - { label: Layout, name: layout, widget: hidden, default: poems }
+      - { label: Title, name: title, widget: string }
+      - { label: Image, name: image, widget: image, required: false }
+      - { label: Date, name: date, widget: datetime, required: false }
+      - { label: Body, name: body, widget: markdown }
+      - { label: Series, name: series, widget: string, required: false }
+      - { label: Caption, name: caption, widget: string, required: false }
+      - label: "Image Position"
+        name: image_position
+        widget: select
+        required: false
+        options:
+          - center
+          - top
+          - bottom
+          - left
+          - right
+          - top left
+          - top right
+          - bottom left
+          - bottom right
+      - label: "Image Fit"
+        name: image_fit
+        widget: select
+        required: false
+        options: [cover, contain]
+      - label: "Image Ratio"
+        name: image_ratio
+        widget: select
+        required: false
+        options:
+          - 4/3
+          - 3/2
+          - 16/9
+          - 1/1
+          - 21/9
+          - 9/16
+          - 2/3
+          - 3/4
+
+  - name: vestigios
+    label: "⚱ Vestigios"
+    label_singular: Vestigio
+    folder: content/collections/_vestigios
+    create: true
+    format: frontmatter
+    slug: "{{slug}}"
+    fields:
+      - { label: Layout, name: layout, widget: hidden, default: default }
+      - { label: Title, name: title, widget: string }
+      - { label: Image, name: image, widget: image, required: false }
+      - { label: Date, name: date, widget: datetime, required: false }
+      - { label: Body, name: body, widget: markdown }
+      - { label: "∴ Hermes", name: hermes, widget: boolean, default: false, required: false }
+
+  - name: melange_reports
+    label: "☽ Melange Reports"
+    label_singular: Reporte
+    folder: content/collections/_melange_reports
+    create: true
+    format: frontmatter
+    slug: "{{slug}}"
+    fields:
+      - { label: Layout, name: layout, widget: hidden, default: melange-report }
+      - { label: Title, name: title, widget: string }
+      - { label: Image, name: image, widget: image, required: false }
+      - { label: Date, name: date, widget: datetime, required: false }
+      - { label: Body, name: body, widget: markdown }
+      - { label: Subtitle, name: subtitle, widget: string, required: false }
+      - { label: Summary, name: summary, widget: text, required: false }
+      - { label: "Borrador (WIP)", name: wip, widget: boolean, default: false, required: false }
+      - { label: "Image Credit", name: image_credit, widget: string, required: false }
+      - { label: Series, name: series, widget: string, required: false }
+
+  - name: codigos
+    label: "◊ Código"
+    label_singular: Código
+    folder: content/collections/_codigos
+    create: true
+    format: frontmatter
+    slug: "{{slug}}"
+    fields:
+      - { label: Layout, name: layout, widget: hidden, default: codigo }
+      - { label: Title, name: title, widget: string }
+      - { label: Image, name: image, widget: image, required: false }
+      - { label: Date, name: date, widget: datetime, required: false }
+      - { label: Body, name: body, widget: markdown }
+      - { label: Language, name: language, widget: string, required: false }
+      - { label: Concept, name: concept, widget: text, required: false }
+
+  - name: imagenes
+    label: "◉ Imágenes"
+    label_singular: Imagen
+    folder: content/collections/_images
+    create: true
+    format: frontmatter
+    slug: "{{slug}}"
+    fields:
+      - { label: Layout, name: layout, widget: hidden, default: imagen }
+      - { label: Title, name: title, widget: string }
+      - { label: Image, name: image, widget: image }
+      - { label: Caption, name: caption, widget: string, required: false }
+      - { label: "Alt Text", name: alt, widget: string, required: false }
+      - label: "Image Position"
+        name: image_position
+        widget: select
+        required: false
+        options:
+          - center
+          - top
+          - bottom
+          - left
+          - right
+          - top left
+          - top right
+          - bottom left
+          - bottom right
+      - label: "Image Fit"
+        name: image_fit
+        widget: select
+        required: false
+        options: [cover, contain]
+      - label: "Image Ratio"
+        name: image_ratio
+        widget: select
+        required: false
+        options:
+          - 4/3
+          - 3/2
+          - 16/9
+          - 1/1
+          - 21/9
+          - 9/16
+          - 2/3
+          - 3/4
+      - { label: Body, name: body, widget: markdown, required: false }
+
+  - name: fragmentos
+    label: "☍ Fragmentos"
+    label_singular: Fragmento
+    folder: content/collections/_fragmentos
+    create: true
+    format: frontmatter
+    slug: "fragmento-{{year}}{{month}}{{day}}-{{hour}}{{minute}}{{second}}"
+    fields:
+      - { label: Layout, name: layout, widget: hidden, default: default }
+      - label: "Líneas"
+        name: lineas
+        widget: list
+        summary: "{{fields.linea}}"
+        fields:
+          - { label: "Línea", name: linea, widget: string }
+      - { label: Date, name: date, widget: datetime, required: false }
+
+  - name: dispositivos
+    label: "◇ Dispositivos"
+    label_singular: Dispositivo
+    folder: content/collections/_dispositivos
+    create: true
+    format: frontmatter
+    slug: "{{slug}}"
+    fields:
+      - { label: Layout, name: layout, widget: select, options: [dispositivo, default], default: dispositivo }
+      - { label: Title, name: title, widget: string }
+      - { label: Image, name: image, widget: image, required: false }
+      - { label: Date, name: date, widget: datetime, required: false }
+      - { label: Body, name: body, widget: markdown }
+      - label: Kind
+        name: kind
+        widget: select
+        required: false
+        options: [vst, app, tool]
+      - { label: Tech, name: tech, widget: string, required: false }
+      - { label: "Demo URL", name: demo_url, widget: string, required: false }
+      - { label: "Repo URL", name: repo, widget: string, required: false }
+      - { label: Formats, name: formats, widget: string, required: false }
+      - { label: Platform, name: platform, widget: string, required: false }
+
+  - name: spotify_playlists
+    label: "🎵 Spotify Playlists"
+    label_singular: Playlist
+    folder: content/collections/_spotify_playlists
+    create: true
+    format: frontmatter
+    slug: "{{slug}}"
+    fields:
+      - { label: Layout, name: layout, widget: hidden, default: default }
+      - { label: Title, name: title, widget: string }
+      - { label: Description, name: description, widget: text, required: false }
+      - { label: "Spotify ID", name: spotify_id, widget: string }
+      - { label: Genre, name: genre, widget: string, required: false }
+      - { label: Date, name: date, widget: datetime, required: false }
+
+  - name: youtube_setlists
+    label: "🎛️ YouTube Setlists"
+    label_singular: Setlist
+    folder: content/collections/_youtube_setlists
+    create: true
+    format: frontmatter
+    slug: "{{slug}}"
+    fields:
+      - { label: Layout, name: layout, widget: hidden, default: default }
+      - { label: Title, name: title, widget: string }
+      - { label: Artist, name: artist, widget: string, required: false }
+      - { label: "YouTube ID", name: youtube_id, widget: string }
+      - { label: Event, name: event, widget: string, required: false }
+      - { label: Date, name: date, widget: datetime, required: false }
+
+  - name: personal_music
+    label: "🎧 Música Personal"
+    label_singular: Track
+    folder: content/collections/_personal_music
+    create: true
+    format: frontmatter
+    slug: "{{slug}}"
+    fields:
+      - { label: Layout, name: layout, widget: hidden, default: default }
+      - { label: Title, name: title, widget: string }
+      - { label: Artist, name: artist, widget: string, required: false }
+      - { label: "Spotify URL", name: spotify_url, widget: string, required: false }
+      - { label: "YouTube URL", name: youtube_url, widget: string, required: false }
+      - label: Type
+        name: type
+        widget: select
+        required: false
+        options: [track, videoclip]
+        default: track
+      - { label: Date, name: date, widget: datetime, required: false }

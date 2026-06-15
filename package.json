@@ -1,21 +1,14 @@
 {
   "name": "kndl000",
   "version": "1.0.0",
-  "description": "Bitácora KNDL 000 — blog minimalista en Jekyll con TinaCMS para GitHub Pages.",
+  "description": "Bitácora KNDL 000 — blog minimalista en Jekyll con CMS propio.",
   "private": true,
   "scripts": {
-    "dev": "tinacms dev -c \"bundle exec jekyll serve\"",
-    "build": "tinacms build",
-    "build:jekyll": "bundle exec jekyll build",
+    "build": "bundle exec jekyll build",
     "serve": "bundle exec jekyll serve",
-    "clean": "rm -rf _site .jekyll-cache .sass-cache",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rm -rf _site .jekyll-cache .sass-cache"
   },
   "keywords": [],
   "author": "KNDL",
-  "license": "ISC",
-  "devDependencies": {
-    "@tinacms/cli": "^1.12.2",
-    "@types/node": "^24.10.1"
-  }
+  "license": "ISC"
 }
