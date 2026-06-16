@@ -46,11 +46,39 @@ function changeEffectHandler(effectName) {
 }
 
 /**
+ * Nombres legibles para cada efecto
+ */
+const EFFECT_LABELS = {
+  tunnel: 'Túnel',
+  spiral: 'Espiral',
+  mandala: 'Mándala',
+  particles: 'Partículas',
+  waves: 'Olas',
+  fractal: 'Fractal',
+  matrix: 'Matrix',
+  glitch: 'Glitch',
+  melt: 'Melt',
+  fractalGlitch: 'Fractal Glitch',
+  waveGlitch: 'Wave Glitch',
+  sacredGeometry: 'Geometría Sagrada',
+  biomech: 'Biomech',
+  dune: 'Duna',
+  yinYang: 'Yin Yang'
+};
+
+/**
  * Configurar selector de efectos
  */
 function setupEffectSelector() {
   const effectSelect = document.getElementById('effectSelect');
   if (!effectSelect) return;
+
+  effectNames.forEach(name => {
+    const opt = document.createElement('option');
+    opt.value = name;
+    opt.textContent = EFFECT_LABELS[name] || name;
+    effectSelect.appendChild(opt);
+  });
 
   effectSelect.addEventListener('change', (e) => {
     changeEffectHandler(e.target.value);
