@@ -2939,7 +2939,8 @@ main.fragmentos-archive {
 .rastros-lead {
   font-style: italic;
   color: rgba(180, 180, 200, 0.55);
-  font-size: 0.95rem;
+  font-size: 1.25rem;
+  line-height: 1.55;
   margin: 0 0 3.5rem;
   max-width: 32rem;
 }
