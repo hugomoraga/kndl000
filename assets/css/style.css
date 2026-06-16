@@ -3026,12 +3026,13 @@ main.fragmentos-archive .rastro-linea + .rastro-linea {
 }
 
 main.fragmentos-archive .rastro-firma {
-  text-align: center;
-  color: rgba(200, 170, 130, 0.35);
+  display: inline-block;
+  color: rgba(200, 170, 130, 0.4);
   font-family: var(--font-mono);
-  font-size: 0.85rem;
-  margin-top: 0.8rem;
-  letter-spacing: 0.3em;
+  font-size: 0.8em;
+  margin-left: 0.35em;
+  letter-spacing: 0.2em;
+  vertical-align: 0.05em;
 }
 
 @media (max-width: 600px) {
