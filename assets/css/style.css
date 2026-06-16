@@ -2902,17 +2902,100 @@ table {
 }
 
 /* === Rastros (ex-Fragmentos) — archivo continuo, sin clicks ============ */
+/* Scope: solo aplica a main.fragmentos-archive. El layout default provee
+   max-width, padding y body — nosotros añadimos el feel editorial:
+   serif, line-height generoso, charcoal, separador por año, hover. */
 
 main.fragmentos-archive {
-  max-width: 38rem;
-  margin: 0 auto;
-  padding: 4rem 1.5rem 6rem;
   background: #0c0c0e;
   color: rgba(200, 200, 210, 0.82);
   font-family: var(--font-serif);
-  font-size: 1.05rem;
-  line-height: 1.75;
+  font-size: var(--fs-body);
+  line-height: var(--lh-loose);
   letter-spacing: 0.005em;
+}
+
+main.fragmentos-archive .rastros-lead {
+  font-style: italic;
+  color: rgba(180, 180, 200, 0.6);
+  font-size: var(--fs-lead);
+  line-height: var(--lh-snug);
+  margin: 0 0 3.5rem;
+  max-width: 32rem;
+}
+
+main.fragmentos-archive .rastros-year {
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  letter-spacing: 0.18em;
+  color: rgba(160, 160, 180, 0.4);
+  margin: 3.5rem 0 1.5rem;
+  text-transform: uppercase;
+}
+
+main.fragmentos-archive .rastros-year-sep {
+  display: none;
+}
+
+main.fragmentos-archive .rastro-bloque {
+  margin: 0 0 2.2rem;
+  padding: 0.6rem 0 0.6rem 0.9rem;
+  border-left: 1px solid rgba(200, 170, 130, 0.08);
+  background: rgba(255, 255, 255, 0.008);
+  border-radius: 0 2px 2px 0;
+  transition: border-color 0.4s ease, background 0.4s ease, transform 0.4s ease;
+}
+
+main.fragmentos-archive .rastro-bloque:hover,
+main.fragmentos-archive .rastro-bloque:focus-within {
+  border-left-color: rgba(200, 170, 130, 0.35);
+  background: rgba(255, 255, 255, 0.018);
+  transform: translateX(2px);
+}
+
+main.fragmentos-archive .rastro-linea {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: rgba(210, 210, 220, 0.85);
+}
+
+main.fragmentos-archive .rastro-linea + .rastro-linea {
+  margin-top: 0.7rem;
+  color: rgba(195, 195, 205, 0.78);
+}
+
+main.fragmentos-archive .rastro-marca {
+  display: inline-block;
+  color: rgba(200, 170, 130, 0.6);
+  font-family: var(--font-mono);
+  margin-right: 0.4rem;
+  transition: color 0.4s ease;
+}
+
+main.fragmentos-archive .rastro-bloque:hover .rastro-marca,
+main.fragmentos-archive .rastro-bloque:focus-within .rastro-marca {
+  color: rgba(200, 170, 130, 0.85);
+}
+
+@media (max-width: 600px) {
+  main.fragmentos-archive {
+    line-height: var(--lh-base);
+  }
+  main.fragmentos-archive .rastros-year {
+    margin-top: 2.5rem;
+  }
+  main.fragmentos-archive .rastro-bloque {
+    margin-bottom: 1.3rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main.fragmentos-archive .rastro-bloque {
+    transition: none;
+  }
 }
 
 .rastros-header {

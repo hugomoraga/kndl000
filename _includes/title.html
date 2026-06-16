@@ -1,6 +1,7 @@
+{%- assign _sym = include.symbol | default: page.symbol -%}
 {% unless page.url == "/" %}
     <h1 class="page-title">
-      <span class="page-title__text">{{ include.symbol }} {{ page.title }} {{ include.symbol }}</span>
+      <span class="page-title__text">{{ _sym }} {{ page.title }} {{ _sym }}</span>
       <span class="init">
         <a href="{{ site.baseurl }}/">∅ INIT</a>
       </span>

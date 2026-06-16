@@ -1,13 +1,10 @@
 ---
-layout: fragmentos-archive
-title: ⟡ Rastros
+layout: default
+title: Rastros
+main_class: fragmentos-archive
+symbol: ⟡
 description: "Pensamiento continuo. Acumulación. Memoria. Lenguaje latiendo."
 ---
-
-<header class="rastros-header">
-  <span class="rastros-glyph" aria-hidden="true">⟡</span>
-  <span class="rastros-label">Rastros</span>
-</header>
 
 <p class="rastros-lead">Pensamiento continuo. Acumulación. Memoria. Lenguaje latiendo.</p>
 
