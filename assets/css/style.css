@@ -2960,13 +2960,13 @@ main.fragmentos-archive .rastro-linea + .rastro-linea {
   color: rgba(200, 200, 210, 0.8);
 }
 
-main.fragmentos-archive .rastro-marca {
-  display: inline-block;
-  color: rgba(200, 170, 130, 0.4);
+main.fragmentos-archive .rastro-firma {
+  text-align: center;
+  color: rgba(200, 170, 130, 0.35);
   font-family: var(--font-mono);
-  font-size: 0.85em;
-  margin: 0 0.6em 0 0;
-  vertical-align: 0.05em;
+  font-size: 0.85rem;
+  margin-top: 0.8rem;
+  letter-spacing: 0.3em;
 }
 
 @media (max-width: 600px) {
