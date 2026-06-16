@@ -89,19 +89,19 @@
 
 ### Measurable Outcomes
 
-- **SC-001**: 4 candidatas caracterizadas en el spec.
+- **SC-001**: 9 candidatas caracterizadas en el spec.
 - **SC-002**: 1 recomendación explícita con justificación.
 - **SC-003**: El mecanismo de preview funciona (verificable navegando a `?font=fraunces` y viendo el cambio).
 - **SC-004**: El sitio sin query param se ve igual que antes (no regresión).
 - **SC-005**: El sitio con `?font=fraunces` carga Fraunces, mantiene el resto de tokens (--fs-*, --lh-*, etc.) intactos.
 - **SC-006**: El sitio con override navega entre páginas (poemas, melange, fragmentos) sin perder el override.
 - **SC-007**: `bundle exec jekyll build` sigue limpio (sin warnings nuevos).
-- **SC-008**: La página `/specs/008-typeface-exploration/preview.html` (si se crea) permite ver las 4 fuentes en el mismo contexto, lado a lado.
+- **SC-008**: La página `/specs/008-typeface-exploration/preview.html` (si se crea) permite ver las 9 fuentes en el mismo contexto, lado a lado.
 
 ## Assumptions
 
 - El usuario quiere explorar, no está casado con ninguna fuente específica todavía.
-- Las 4 fuentes candidatas son las que recomiendo después de evaluar el espacio — no son las únicas opciones, pero son las mejor calibradas para el brief "aire moderno + serif editorial + feel del sitio".
+- Las 9 fuentes candidatas (Cormorant + 8) son las que recomiendo después de evaluar el espacio — no son las únicas opciones, pero cubren el cuadrante "más moderno que Cormorant" con perfiles distintos entre sí.
 - Google Fonts es la fuente de las fuentes (CDN gratuito, fácil de cambiar, mismo mecanismo que el sitio ya usa para Cormorant). No descargo las fuentes localmente.
 - Cormorant sigue siendo la default. Si al final se cambia, va en spec 009.
 - El preview NO requiere rebuild — el sitio se sirve con Cormorant por default, el JS inline aplica override al cargar.
@@ -170,6 +170,51 @@
 - **Contras para KNDL**: la slab es disruptiva — cambia el "aire moderno" por "aire industrial/artesanal". Si el usuario quiere "más aire" NO quiere slab.
 - **Incluida como contraste**: para que el usuario vea que la decisión es entre *cuál serif humanista*, no entre *serif o no serif*.
 
+### 6. **Recoleta** ⭐
+
+- **Link**: https://fonts.google.com/specimen/Recoleta
+- **Weights cargados**: 300-900 + italics
+- **Origen**: Latinotype, 2018 (Google Fonts, 2023)
+- **Tipo**: Didona-humanista con raíces en tipografía argentina de los 70s (Rustic, Verdad). Remates suaves, contraste medio-alto, mucha personalidad.
+- **Pros para KNDL**: la "hermana emotiva" de Cormorant — mismo linaje didona pero más cálida, menos formal, más "ensayo personal". Excelente para el feel KNDL.
+- **Contras para KNDL**: relativamente nueva en Google Fonts (2023), menos probada. Italic limitado en Google Fonts.
+
+### 7. **DM Serif Display**
+
+- **Link**: https://fonts.google.com/specimen/DM+Serif+Display
+- **Weights cargados**: solo 400, no italic
+- **Origen**: Colophon Foundry, 2015
+- **Tipo**: Display puro. Dramática para H1, pésima como body. Remates altos, alto contraste.
+- **Pros para KNDL**: muestra el extremo "display" del espacio. Útil para ver el contraste con body neutro.
+- **Contras para KNDL**: NO sirve para párrafos. Solo display. Italic no existe. La "g" es genérica. Inutilizable como `--font-serif` global.
+
+### 8. **Source Serif 4** ⭐
+
+- **Link**: https://fonts.google.com/specimen/Source+Serif+4
+- **Weights cargados**: variable 200-900 + italics (opsz axis: 8-60pt)
+- **Origen**: Frank Grießhammer (Adobe), 2021
+- **Tipo**: Transitional moderno. El "Helvetica del serif" — neutral pero con peso. Excelente para body largo.
+- **Pros para KNDL**: si Spectral te pareció "neutro en exceso", Source Serif 4 es similar pero con más "humanidad". Diseño de Adobe, leído y refinado. Variable font con opsz.
+- **Contras para KNDL**: puede sentirse "tool" más que "obra". Menos carácter que Fraunces/Recoleta.
+
+### 9. **Inknut Antiqua**
+
+- **Link**: https://fonts.google.com/specimen/Inknut+Antiqua
+- **Weights cargados**: 300-900, NO italic
+- **Origen**: Andrew Paglinawan, 2014
+- **Tipo**: Serif humanista con raíces caligráficas, diseñada para texto de India. Remates pronunciados, mucho "cuerpo".
+- **Pros para KNDL**: ruptura total con el linaje Occidental. Te muestra que el espacio "serif moderno" no es solo europeo. Feel de manuscrito, de "archivo".
+- **Contras para KNDL**: muy personalidad, puede no ser lo que querés. Sin italic. Si Cormorant es "didona Occidental", Inknut es "didona India" — totalmente distinto.
+
+### 10. **EB Garamond** ⭐
+
+- **Link**: https://fonts.google.com/specimen/EB+Garamond
+- **Weights cargados**: variable 400-800 + italics
+- **Origen**: Georg Duffner, 2011-2017
+- **Tipo**: Digital revival directo del Garamond de Claude Garamont (1530s). Old Style clásico, no reinterpretación.
+- **Pros para KNDL**: el "lateral opuesto" a Cormorant — Cormorant es Old Style reinterpretada con sabor Windsor; EB Garamond es el Old Style clásico. Más delicada, más cuerpo, italic hermosa. Si te cansaste de la "moderna" Cormorant, EB Garamond es el respiro.
+- **Contras para KNDL**: puede sentirse "vieja" si lo que querías es aire moderno (en el sentido de "actual", no "histórico"). Menos variable, menos tooling moderno.
+
 ---
 
 ## Recomendación: **Fraunces**
@@ -192,12 +237,17 @@
 
 6. **Mismo color emocional, mejor tecnología**: Cormorant era "el didona que el sitio merecía en 2015". Fraunces es "el didona que el sitio merece en 2025".
 
-**Por qué NO las otras:**
+**Por qué NO las otras (resumen rápido — la sección de Candidatas tiene los detalles):**
 
 - **Cormorant (mantener)**: si el usuario dice "le falta aire moderno", el spec lo escuchó. Mantenerla es ignorar el brief.
 - **Spectral**: buena para cuerpo largo pero le falta personalidad. KNDL no es "blog de tecnología limpio" — es un archivo alquímico. Spectral lo neutralizaría.
 - **Newsreader**: similar a Spectral, hermana, sin la chispa. Mismo argumento.
 - **Bitter**: slab es disruptiva. Si el usuario quería "más aire" no quería "más peso". Se incluye como contraste, no como candidata seria.
+- **Recoleta**: ⭐ segunda opción. Mismo linaje que Cormorant pero más emotiva. Si después de probar Fraunces no convence, Recoleta es el siguiente paso natural.
+- **DM Serif Display**: display puro, inutilizable como `--font-serif` global. Solo display, no italic, no body.
+- **Source Serif 4**: ⭐ segunda opción para "cuerpo de texto largo moderno". Si lo que querés es "el Atlantic/NYT feel", es esta. Menos carácter que Fraunces/Recoleta.
+- **Inknut Antiqua**: ruptura total con el linaje Occidental. Personalidad excesiva, sin italic. Incluida para mostrar que el espacio es más amplio de lo que parece.
+- **EB Garamond**: ⭐ segunda opción para "el respiro opuesto" — si te cansaste de la "moderna" Cormorant y querés el Old Style clásico. Puede sentirse "vieja" si lo que querías era "aire actual".
 
 ---
 
