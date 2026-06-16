@@ -2958,16 +2958,19 @@ main.fragmentos-archive {
 }
 
 .rastro-bloque {
-  margin: 0 0 1.6rem;
-  padding: 0.2rem 0 0.2rem 0.6rem;
-  border-left: 1px solid transparent;
-  transition: border-color 0.4s ease, background 0.4s ease;
+  margin: 0 0 2.2rem;
+  padding: 0.6rem 0 0.6rem 0.9rem;
+  border-left: 1px solid rgba(200, 170, 130, 0.08);
+  background: rgba(255, 255, 255, 0.008);
+  border-radius: 0 2px 2px 0;
+  transition: border-color 0.4s ease, background 0.4s ease, transform 0.4s ease;
 }
 
 .rastro-bloque:hover,
 .rastro-bloque:focus-within {
-  border-left-color: rgba(200, 170, 130, 0.25);
-  background: rgba(255, 255, 255, 0.012);
+  border-left-color: rgba(200, 170, 130, 0.35);
+  background: rgba(255, 255, 255, 0.018);
+  transform: translateX(2px);
 }
 
 .rastro-linea {
@@ -2980,8 +2983,21 @@ main.fragmentos-archive {
 }
 
 .rastro-linea + .rastro-linea {
-  margin-top: 0.4rem;
+  margin-top: 0.7rem;
   color: rgba(195, 195, 205, 0.78);
+}
+
+.rastro-marca {
+  display: inline-block;
+  color: rgba(200, 170, 130, 0.6);
+  font-family: var(--font-mono);
+  margin-right: 0.4rem;
+  transition: color 0.4s ease;
+}
+
+.rastro-bloque:hover .rastro-marca,
+.rastro-bloque:focus-within .rastro-marca {
+  color: rgba(200, 170, 130, 0.85);
 }
 
 @media (max-width: 600px) {

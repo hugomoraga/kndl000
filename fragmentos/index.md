@@ -25,7 +25,7 @@ description: "Pensamiento continuo. Acumulación. Memoria. Lenguaje latiendo."
       {%- for row in f.lineas -%}
         {%- assign t = row.linea -%}
         {%- if t != nil and t != "" -%}
-          <p class="rastro-linea">{{ t | escape }}</p>
+          <p class="rastro-linea"><span class="rastro-marca" aria-hidden="true">※</span> {{ t | escape }}</p>
         {%- endif -%}
       {%- endfor -%}
     </article>
