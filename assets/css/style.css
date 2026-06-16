@@ -772,9 +772,9 @@ nav {
   mix-blend-mode: screen;
 }
 
-/* Efectos hover simplificados */
+/* Efectos hover: solo z-index, sin zoom (el zoom interfiere con la
+   lectura del slider — el usuario no quiere que se mueva la imagen). */
 .collage figure:hover {
-  transform: translateY(-5px) scale(1.02);
   z-index: 10;
 }
 

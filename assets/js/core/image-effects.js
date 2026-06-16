@@ -34,7 +34,7 @@
     PARALLAX: {
       MAX_OFFSET: 8,
       MAX_INTENSITY: 1.5,
-      SCALE: 1.02,
+      SCALE: 1,        // sin zoom — solo translate (el zoom interfería con la lectura)
       RGB_SEPARATION: 0.5
     },
     
