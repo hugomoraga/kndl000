@@ -3004,18 +3004,11 @@ main.fragmentos-archive .rastros-year-sep {
 }
 
 main.fragmentos-archive .rastro-bloque {
-  /* Cuaderno: sin card-feel. Sin border, sin background, sin radius.
-     El texto flota como escrito a mano en página limpia. */
+  /* Cuaderno: el bloque no reacciona. El texto está, no se mueve,
+     no cambia de color al pasar el mouse. Como página escrita. */
   margin: 0 0 2.6rem;
   padding: 0;
-  transition: color 0.4s ease;
   cursor: text;
-}
-
-main.fragmentos-archive .rastro-bloque:hover,
-main.fragmentos-archive .rastro-bloque:focus-within {
-  /* Hover = solo color shift. El papel no se mueve. */
-  color: rgba(225, 220, 210, 0.95);
 }
 
 main.fragmentos-archive .rastro-linea {
@@ -3037,12 +3030,6 @@ main.fragmentos-archive .rastro-marca {
   color: rgba(200, 170, 130, 0.55);
   font-family: var(--font-mono);
   margin-right: 0.45rem;
-  transition: color 0.4s ease;
-}
-
-main.fragmentos-archive .rastro-bloque:hover .rastro-marca,
-main.fragmentos-archive .rastro-bloque:focus-within .rastro-marca {
-  color: rgba(220, 190, 150, 0.95);
 }
 
 @media (max-width: 600px) {
@@ -3061,9 +3048,7 @@ main.fragmentos-archive .rastro-bloque:focus-within .rastro-marca {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  main.fragmentos-archive .rastro-bloque {
-    transition: none;
-  }
+  /* No hay transiciones que apagar — el bloque es completamente estático. */
 }
 
 .rastros-header {
