@@ -38,7 +38,7 @@ Las 11 colecciones configuradas en `admin/config.yml`:
 - ☽ Melange Reports (`_melange_reports`)
 - ⚱ Vestigios (`_vestigios`)
 - ◉ Imágenes (`_images`)
-- ☍ Fragmentos (`_fragmentos`)
+- ⟡ Rastros (`_fragmentos`)
 - ◊ Código (`_codigos`)
 - ◇ Dispositivos (`_dispositivos`)
 - 🎵 Spotify Playlists (`_spotify_playlists`)

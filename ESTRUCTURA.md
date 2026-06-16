@@ -24,7 +24,7 @@ kndl000/
 │   │   └── collections/     # Colecciones Jekyll (contenido fuente)
 │   │       ├── _codigos/        # ◇ Código
 │   │       ├── _dispositivos/   # ◇ Dispositivos
-│   │       ├── _fragmentos/     # ☍ Fragmentos
+│   │       ├── _fragmentos/     # ⟡ Rastros
 │   │       ├── _images/         # ◉ Imágenes
 │   │       ├── _melange_reports/# ☽ Melange Reports
 │   │       ├── _personal_music/ # ♪ Música personal
@@ -115,7 +115,7 @@ kndl000/
 │   │   ├── collage-dynamic.html
 │   │   ├── content-item.html
 │   │   ├── figure.html
-│   │   ├── fragmentos-focus.html
+│   │   ├── fragmentos-focus.html (eliminado en 006)
 │   │   ├── home-collage.html
 │   │   ├── lab-feed.html
 │   │   ├── melange-report-placeholder.html
@@ -129,7 +129,6 @@ kndl000/
 │   │
 │   └── _data/               # Datos YAML
 │       ├── assemblage.yml
-│       ├── fragmentos.yml
 │       ├── home.yml
 │       └── navigation.yml
 │

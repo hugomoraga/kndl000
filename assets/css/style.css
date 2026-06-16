@@ -2901,51 +2901,106 @@ table {
   font-weight: 300;
 }
 
-/* Fragmentos — ancla: brillo desde las letras (text-shadow), sin caja ni aspecto botón */
-.fragmento-linea-wrap {
-  margin: 0.5rem 0;
+/* === Rastros (ex-Fragmentos) — archivo continuo, sin clicks ============ */
+
+main.fragmentos-archive {
+  max-width: 38rem;
+  margin: 0 auto;
+  padding: 4rem 1.5rem 6rem;
+  background: #0c0c0e;
+  color: rgba(200, 200, 210, 0.82);
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  line-height: 1.75;
+  letter-spacing: 0.005em;
+}
+
+.rastros-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin: 0 0 0.5rem;
+  color: rgba(180, 180, 200, 0.65);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+}
+
+.rastros-glyph {
+  font-size: 1.1rem;
+  color: rgba(200, 170, 130, 0.7);
+}
+
+.rastros-label {
+  letter-spacing: 0.12em;
+}
+
+.rastros-lead {
+  font-style: italic;
+  color: rgba(180, 180, 200, 0.55);
+  font-size: 0.95rem;
+  margin: 0 0 3.5rem;
+  max-width: 32rem;
+}
+
+.rastros-year {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  color: rgba(160, 160, 180, 0.4);
+  margin: 3.5rem 0 1.5rem;
+  text-transform: uppercase;
+}
+
+.rastros-year-sep {
+  display: none;
+}
+
+.rastro-bloque {
+  margin: 0 0 1.6rem;
+  padding: 0.2rem 0 0.2rem 0.6rem;
+  border-left: 1px solid transparent;
+  transition: border-color 0.4s ease, background 0.4s ease;
+}
+
+.rastro-bloque:hover,
+.rastro-bloque:focus-within {
+  border-left-color: rgba(200, 170, 130, 0.25);
+  background: rgba(255, 255, 255, 0.012);
+}
+
+.rastro-linea {
+  margin: 0;
   padding: 0;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: rgba(210, 210, 220, 0.85);
 }
 
-.fragmento-linea {
-  display: inline;
-  scroll-margin-top: 5rem;
-  transition: text-shadow 0.5s ease;
+.rastro-linea + .rastro-linea {
+  margin-top: 0.4rem;
+  color: rgba(195, 195, 205, 0.78);
 }
 
-.fragmento-linea:target {
-  outline: none;
-  text-shadow:
-    0 0 18px rgba(210, 190, 162, 0.92),
-    0 0 38px rgba(160, 138, 110, 0.58),
-    0 0 68px rgba(112, 92, 72, 0.38),
-    0 0 105px rgba(82, 68, 54, 0.2),
-    0 0 145px rgba(58, 48, 38, 0.1);
-  animation: fragmento-halo 0.95s ease-out 1;
-}
-
-@keyframes fragmento-halo {
-  0% {
-    text-shadow:
-      0 0 24px rgba(235, 215, 185, 0.98),
-      0 0 52px rgba(180, 155, 125, 0.72),
-      0 0 92px rgba(125, 102, 80, 0.45),
-      0 0 135px rgba(88, 72, 58, 0.26),
-      0 0 185px rgba(62, 52, 42, 0.14);
+@media (max-width: 600px) {
+  main.fragmentos-archive {
+    padding: 2.5rem 1.1rem 4rem;
+    font-size: 1rem;
+    line-height: 1.7;
   }
-  100% {
-    text-shadow:
-      0 0 18px rgba(210, 190, 162, 0.92),
-      0 0 38px rgba(160, 138, 110, 0.58),
-      0 0 68px rgba(112, 92, 72, 0.38),
-      0 0 105px rgba(82, 68, 54, 0.2),
-      0 0 145px rgba(58, 48, 38, 0.1);
+  .rastros-year {
+    margin-top: 2.5rem;
+  }
+  .rastro-bloque {
+    margin-bottom: 1.3rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .fragmento-linea:target {
-    animation: none;
+  .rastro-bloque {
+    transition: none;
   }
 }
 
@@ -3309,10 +3364,6 @@ table {
   .poem-nav a:focus-visible {
     color: #9ec8ff;
     background: rgba(255, 255, 255, 0.06);
-  }
-
-  .fragmento-linea {
-    scroll-margin-top: 4.5rem;
   }
 
   .lab {

@@ -17,9 +17,10 @@ nav_order: 1
     <div id="home-nav-panel" class="home-nav__panel nube-de-palabras">
       <a href="{{ site.baseurl }}/poemas/">ↂ Poemas</a>
       <a href="{{ site.baseurl }}/visual/">◉ Visual</a>
+      <a href="{{ site.baseurl }}/fragmentos/">⟡ Rastros</a>
       <a href="{{ site.baseurl }}/melange/">🜏 Melange</a>
       <a href="{{ site.baseurl }}/codigo/">◊ Código</a>
-      <a href="{{ site.baseurl }}/dispositivos/">◇ Devices</a>
+      <a href="{{ site.baseurl }}/dispositivos/">⏣ Devices</a>
     </div>
   </nav>
 </div>

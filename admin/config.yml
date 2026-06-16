@@ -171,8 +171,8 @@ collections:
       - { label: Body, name: body, widget: markdown, required: false }
 
   - name: fragmentos
-    label: "☍ Fragmentos"
-    label_singular: Fragmento
+    label: "⟡ Rastros"
+    label_singular: Rastro
     folder: content/collections/_fragmentos
     create: true
     format: frontmatter
