@@ -3025,13 +3025,12 @@ main.fragmentos-archive .rastro-linea + .rastro-linea {
   color: rgba(200, 200, 210, 0.8);
 }
 
-main.fragmentos-archive .rastro-firma {
+main.fragmentos-archive .rastro-marca {
   display: inline-block;
-  color: rgba(200, 170, 130, 0.4);
+  color: rgba(200, 170, 130, 0.45);
   font-family: var(--font-mono);
   font-size: 0.8em;
-  margin-left: 0.35em;
-  letter-spacing: 0.2em;
+  margin-right: 0.5em;
   vertical-align: 0.05em;
 }
 
