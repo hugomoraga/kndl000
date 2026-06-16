@@ -2962,9 +2962,11 @@ main.fragmentos-archive .rastro-linea + .rastro-linea {
 
 main.fragmentos-archive .rastro-marca {
   display: inline-block;
-  color: rgba(200, 170, 130, 0.55);
+  color: rgba(200, 170, 130, 0.4);
   font-family: var(--font-mono);
-  margin-right: 0.45rem;
+  font-size: 0.85em;
+  margin: 0 0.6em 0 0;
+  vertical-align: 0.05em;
 }
 
 @media (max-width: 600px) {
