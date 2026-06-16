@@ -3,6 +3,7 @@ layout: default
 title: Rastros
 main_class: fragmentos-archive
 symbol: ⟡
+symbol_suffix: false
 description: "Pensamiento continuo. Acumulación. Memoria. Lenguaje latiendo."
 ---
 
