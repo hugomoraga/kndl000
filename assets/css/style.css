@@ -3004,46 +3004,45 @@ main.fragmentos-archive .rastros-year-sep {
 }
 
 main.fragmentos-archive .rastro-bloque {
-  margin: 0 0 2.2rem;
-  padding: 0.6rem 0 0.6rem 0.9rem;
-  border-left: 1px solid rgba(200, 170, 130, 0.08);
-  background: rgba(255, 255, 255, 0.008);
-  border-radius: 0 2px 2px 0;
-  transition: border-color 0.4s ease, background 0.4s ease, transform 0.4s ease;
+  /* Cuaderno: sin card-feel. Sin border, sin background, sin radius.
+     El texto flota como escrito a mano en página limpia. */
+  margin: 0 0 2.6rem;
+  padding: 0;
+  transition: color 0.4s ease;
+  cursor: text;
 }
 
 main.fragmentos-archive .rastro-bloque:hover,
 main.fragmentos-archive .rastro-bloque:focus-within {
-  border-left-color: rgba(200, 170, 130, 0.35);
-  background: rgba(255, 255, 255, 0.018);
-  transform: translateX(2px);
+  /* Hover = solo color shift. El papel no se mueve. */
+  color: rgba(225, 220, 210, 0.95);
 }
 
 main.fragmentos-archive .rastro-linea {
   margin: 0;
   padding: 0;
   font-family: var(--font-serif);
-  font-size: 1.05rem;
-  line-height: 1.7;
+  font-size: 1.1rem;
+  line-height: 1.75;
   color: rgba(210, 210, 220, 0.85);
 }
 
 main.fragmentos-archive .rastro-linea + .rastro-linea {
-  margin-top: 0.7rem;
-  color: rgba(195, 195, 205, 0.78);
+  margin-top: 0.5rem;
+  color: rgba(200, 200, 210, 0.8);
 }
 
 main.fragmentos-archive .rastro-marca {
   display: inline-block;
-  color: rgba(200, 170, 130, 0.6);
+  color: rgba(200, 170, 130, 0.55);
   font-family: var(--font-mono);
-  margin-right: 0.4rem;
+  margin-right: 0.45rem;
   transition: color 0.4s ease;
 }
 
 main.fragmentos-archive .rastro-bloque:hover .rastro-marca,
 main.fragmentos-archive .rastro-bloque:focus-within .rastro-marca {
-  color: rgba(200, 170, 130, 0.85);
+  color: rgba(220, 190, 150, 0.95);
 }
 
 @media (max-width: 600px) {
@@ -3054,7 +3053,10 @@ main.fragmentos-archive .rastro-bloque:focus-within .rastro-marca {
     margin-top: 2.5rem;
   }
   main.fragmentos-archive .rastro-bloque {
-    margin-bottom: 1.3rem;
+    margin-bottom: 1.8rem;
+  }
+  main.fragmentos-archive .rastro-linea {
+    font-size: 1.05rem;
   }
 }
 
