@@ -1,24 +1,21 @@
 {%- comment -%}
-  Dataset JSON para lab-home.js: fragmentos, código, diario, poemas, reportes Melange (sin wip).
-  Campo ref: clave canónica; lab-home.js deriva prefijo + hex16 (FNV-1a), puntos cada 4 caracteres.
+  Dataset JSON para lab-home.js: código, diario, poemas, reportes Melange (sin wip).
+  Los rastros (ex-fragmentos) viven en /rastros/ y NO entran al feed.
 {%- endcomment -%}
 {%- assign _post_lim = 50 -%}
 {%- assign _poem_lim = 50 -%}
 {%- assign _melange_lim = 50 -%}
 {%- assign _sample = 10 -%}
-{%- assign _mfr = 0.3 -%}
 {%- if site.data.home and site.data.home.lab -%}
   {%- assign l = site.data.home.lab -%}
   {%- assign _post_lim = l.posts_pool_limit | default: 50 -%}
   {%- assign _poem_lim = l.poems_pool_limit | default: 50 -%}
   {%- assign _melange_lim = l.melange_pool_limit | default: 50 -%}
   {%- assign _sample = l.sample_count | default: 10 -%}
-  {%- assign _mfr = l.max_fragment_ratio | default: 0.3 -%}
 {%- endif -%}
 {%- assign lab_melange_ok = site.melange_reports | where_exp: "item", "item.wip != true" | sort: "date" | reverse -%}
-{%- assign frag_href = "/fragmentos/" | relative_url -%}
 <script type="application/json" id="lab-home-config">
-{"sample_count":{{ _sample }},"max_fragment_ratio":{{ _mfr }}}
+{"sample_count":{{ _sample }}}
 </script>
 <section class="lab" aria-label="Laboratorio textual">
   <div class="lab-toolbar">
@@ -41,21 +38,6 @@
 <script type="application/json" id="lab-items">
 [
 {%- assign lab_first = true -%}
-{%- for f in site.fragmentos -%}
-  {%- if f.lineas -%}
-    {%- for row in f.lineas -%}
-      {%- assign t = row.linea -%}
-      {%- if t != nil and t != "" -%}
-        {%- assign _frag_slug = f.slug | default: f.name | replace: '.md', '' -%}
-        {%- assign _frag_id = _frag_slug | slugify -%}
-        {%- assign _frag_link = frag_href | append: '#frag-' | append: _frag_id | append: '-' | append: forloop.index -%}
-        {%- assign _ref = 'FRAG/' | append: _frag_slug | append: '/L' | append: forloop.index -%}
-        {%- unless lab_first -%},{%- endunless -%}{%- assign lab_first = false -%}
-{"kind":"FRAGMENTO","text":{{ t | jsonify }},"href":{{ _frag_link | jsonify }},"ref":{{ _ref | jsonify }}}
-      {%- endif -%}
-    {%- endfor -%}
-  {%- endif -%}
-{%- endfor -%}
 {%- for c in site.codigos -%}
   {%- assign _ref = 'COD/' | append: c.slug -%}
   {%- unless lab_first -%},{%- endunless -%}{%- assign lab_first = false -%}

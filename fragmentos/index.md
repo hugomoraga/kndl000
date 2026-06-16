@@ -1,23 +1,35 @@
 ---
 layout: default
-title: 🜂
+title: Rastros
+main_class: fragmentos-archive
+symbol: ⟡
+symbol_suffix: false
+description: "Pensamiento continuo. Acumulación. Memoria. Lenguaje latiendo."
 ---
 
-{% assign fragmentos = site.fragmentos | sort: 'path' | reverse %}
-{% assign count = fragmentos.size %}
+<p class="rastros-lead">Pensamiento continuo. Acumulación. Memoria. Lenguaje latiendo.</p>
 
-{% for fragmento in fragmentos %}
-## ...{{ count | minus: forloop.index0 }}
-
-{% assign _frag_id = fragmento.slug | default: fragmento.name | replace: '.md', '' | slugify %}
-{% for item in fragmento.lineas %}
-<p class="fragmento-linea-wrap"><span class="fragmento-linea" id="frag-{{ _frag_id }}-{{ forloop.index }}" tabindex="-1">~ "{{ item.linea | escape }}"</span></p>
-{% endfor %}
-
-{% endfor %}
-
-{% include fragmentos-focus.html %}
+{%- assign rastros = site.fragmentos | sort: "date" | reverse -%}
+{%- assign _year_prev = "" -%}
+{%- for f in rastros -%}
+  {%- if f.lineas -%}
+    {%- assign _year_cur = f.date | date: "%Y" -%}
+    {%- if _year_cur != _year_prev -%}
+      {%- unless forloop.first -%}<hr class="rastros-year-sep" aria-hidden="true">{%- endunless -%}
+      <div class="rastros-year">{{ _year_cur }}</div>
+      {%- assign _year_prev = _year_cur -%}
+    {%- endif -%}
+    <article class="rastro-bloque">
+      {%- for row in f.lineas -%}
+        {%- assign t = row.linea -%}
+        {%- if t != nil and t != "" -%}
+          <p class="rastro-linea"><span class="rastro-marca" aria-hidden="true">※</span> {{ t | escape }}</p>
+        {%- endif -%}
+      {%- endfor -%}
+    </article>
+  {%- endif -%}
+{%- endfor -%}
 
 ---
 
-_Fragmentos sin explicación. Solo lenguaje latiendo._
+_Archivo de pensamiento en curso. No son publicaciones. Son rastros._

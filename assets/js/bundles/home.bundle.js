@@ -117,7 +117,6 @@
 
   /* ===== 2. lab-home.js ============================================ */
   (function () {
-    var FRAGMENT_KIND = "FRAGMENTO";
     var elScript = document.getElementById("lab-items");
     var elRoot = document.getElementById("lab-feed-root");
     var elBtn = document.getElementById("lab-shuffle");
@@ -132,20 +131,6 @@
       typeof cfg.sample_count === "number" && cfg.sample_count > 0
         ? Math.floor(cfg.sample_count)
         : 10;
-
-    function normalizeFragmentRatio(v) {
-      if (v === undefined || v === null) return 0.3;
-      var n =
-        typeof v === "number" && !isNaN(v)
-          ? v
-          : parseFloat(String(v).replace(",", "."));
-      if (isNaN(n) || n < 0) return 0;
-      if (n > 1 && n <= 100) return n / 100;
-      if (n > 100) return 1;
-      return Math.min(1, n);
-    }
-
-    var MAX_FRAGMENT_RATIO = normalizeFragmentRatio(cfg.max_fragment_ratio);
 
     var items;
     try { items = JSON.parse(elScript.textContent); } catch (e) { return; }
@@ -164,16 +149,6 @@
       var d = document.createElement("div");
       d.textContent = s;
       return d.innerHTML;
-    }
-
-    function maxFragmentsForSize(n) { return Math.floor(n * MAX_FRAGMENT_RATIO); }
-
-    function countFragments(arr) {
-      var c = 0;
-      for (var j = 0; j < arr.length; j++) {
-        if (String(arr[j].kind || "") === FRAGMENT_KIND) c++;
-      }
-      return c;
     }
 
     function fnv1a32(str) {
@@ -210,7 +185,6 @@
 
     function kindPrefix(kind) {
       var k = String(kind || "").toUpperCase().replace(/\s/g, "");
-      if (k === "FRAGMENTO") return "FRAG/";
       if (k === "CÓDIGO" || k === "CODIGO") return "COD/";
       if (k === "DIARIO") return "DIA/";
       if (k === "POEMA") return "POE/";
@@ -219,45 +193,7 @@
     }
 
     function pickWeighted() {
-      var frags = [];
-      var rest = [];
-      items.forEach(function (item) {
-        if (String(item.kind || "") === FRAGMENT_KIND) frags.push(item);
-        else rest.push(item);
-      });
-      var shF = shuffle(frags);
-      var shR = shuffle(rest);
-      var out = [];
-      var maxFr = Math.floor(SAMPLE_COUNT * MAX_FRAGMENT_RATIO);
-      var i, fi;
-
-      if (shR.length === 0 && shF.length > 0) {
-        var capOnly = Math.min(
-          maxFragmentsForSize(SAMPLE_COUNT), SAMPLE_COUNT, shF.length
-        );
-        for (i = 0; i < capOnly; i++) out.push(shF[i]);
-        return shuffle(out);
-      }
-
-      var numFr = Math.min(maxFr, shF.length);
-      var numRest = SAMPLE_COUNT - numFr;
-
-      if (shR.length >= numRest) {
-        for (i = 0; i < numFr; i++) out.push(shF[i]);
-        for (i = 0; i < numRest; i++) out.push(shR[i]);
-        return shuffle(out);
-      }
-
-      for (i = 0; i < shR.length; i++) out.push(shR[i]);
-      fi = 0;
-      while (fi < shF.length && out.length < SAMPLE_COUNT) {
-        var n = out.length + 1;
-        var currFr = countFragments(out);
-        if (currFr + 1 > maxFragmentsForSize(n)) break;
-        out.push(shF[fi]);
-        fi++;
-      }
-      return shuffle(out);
+      return shuffle(items).slice(0, Math.min(SAMPLE_COUNT, items.length));
     }
 
     function render() {

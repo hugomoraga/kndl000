@@ -23,9 +23,26 @@ plugins:
   - jekyll-feed
   - jekyll-sitemap
 
-# Include admin directory for Tina CMS
+# Include admin directory for Sveltia CMS
 include:
   - admin
+
+# Exclude non-site directories from build
+exclude:
+  - specs
+  - .specify
+  - .github
+  - .vscode
+  - node_modules
+  - package.json
+  - package-lock.json
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - ESTRUCTURA.md
+  - .ruby-version
+  - vendor
+  - .bundle
 
 # Collections configuration
 collections_dir: content/collections
@@ -44,6 +61,8 @@ collections:
     output: true
     permalink: /melange-reports/:name/
   fragmentos:
+    # Los fragmentos no son publicaciones: viven solo en /fragmentos/index.md
+    # No se generan páginas individuales. Ver specs/006-fragmentos-refactor.
     output: false
   spotify_playlists:
     output: false

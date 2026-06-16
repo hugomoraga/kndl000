@@ -16,7 +16,7 @@
   diseñado para impresionar. Negro sobre papel cálido, mucho espacio, una
   nota de color por vista.
 - **Glifos antes que palabras.** Las secciones del nav y las firmas de autor
-  usan glifos alquímicos (ↂ ◉ 🜏 ◊ ◇ ✶ ⚱ ☍ ☽) en vez de iconos. Los glifos
+  usan glifos alquímicos (ↂ ◉ 🜏 ◊ ◇ ✶ ⚱ ⟡ ☽) en vez de iconos. Los glifos
   son del dominio público, no se licencian, no se rompen en updates.
 - **Sistema, no librería.** Cada color, cada tipografía, cada animación tiene
   *una* razón de estar documentada. Si algo no encaja con la paleta, no entra.
@@ -126,7 +126,7 @@ Catalogados de la Style Bible accent catalog, en orden de aparición:
 |---|---|---|
 | `✶` | Diario | estrella, en el H1 del listado |
 | `⚱` | Vestigios | urna funeraria, contenedor de lo que queda |
-| `☍` | Fragmentos | ascendente nodal, conexión |
+| `⟡` | Rastros (ex-Fragmentos) | bowtie alquímico, mercurio, lo volátil |
 | `☽` | Melange Reports | luna, ciclo, traversal |
 | `∴` | **Firma Hermes** (alter-ego del autor) | triple therefore, "por lo tanto" |
 | `↳` | "ver más" en entradas | flecha de continuación |
@@ -236,7 +236,7 @@ NAV (5 entradas)
   ↂ Poemas          ◉ Visual          🜏 Melange         ◊ Código          ◇ Devices
 
 LISTADOS (5 secciones)
-  ✶ Diario          ⚱ Vestigios       ☍ Fragmentos       ☽ Melange Reports
+  ✶ Diario          ⚱ Vestigios       ⟡ Rastros       ☽ Melange Reports
 
 FIRMAS
   ∴  (Hermes)

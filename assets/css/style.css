@@ -120,7 +120,7 @@ body {
 
 h1, h2, h3, h4 {
   font-family: var(--font-serif);
-  font-weight: 700;
+  font-weight: 400;
   color: #eee;
 }
 a {
@@ -160,13 +160,14 @@ h2 {
   margin-top: 1.5rem;
   font-size: clamp(1.25rem, 3.5vw, 1.5rem);
   word-wrap: break-word;
+  font-weight: 400;
 }
 
 h3 {
   color: #bbbbbb;
   margin-top: 1.2rem;
   font-size: clamp(1rem, 3vw, 1.2rem);
-  font-weight: normal;
+  font-weight: 400;
   font-style: italic;
 }
 
@@ -1070,7 +1071,7 @@ main {
 .poem-body h2 {
   margin: 0 0 0.75em;
   font-family: inherit;
-  font-weight: 700;
+  font-weight: 400;
   letter-spacing: 0.04em;
 }
 
@@ -2624,7 +2625,7 @@ body.code-modal-open {
 .melange-report__title {
   font-family: var(--font-serif);
   font-size: clamp(1.85rem, 5vw, 2.45rem);
-  font-weight: 600;
+  font-weight: 400;
   line-height: 1.12;
   color: #f0e8de;
   margin: 0 0 0.5rem;
@@ -2901,51 +2902,206 @@ table {
   font-weight: 300;
 }
 
-/* Fragmentos — ancla: brillo desde las letras (text-shadow), sin caja ni aspecto botón */
-.fragmento-linea-wrap {
-  margin: 0.5rem 0;
+/* === Rastros (ex-Fragmentos) — archivo continuo, sin clicks ============ */
+/* Scope: solo aplica a main.fragmentos-archive. El layout default provee
+   max-width, padding y body — nosotros añadimos el feel editorial:
+   serif, line-height generoso, charcoal, separador por año, hover. */
+
+main.fragmentos-archive {
+  background: #0c0c0e;
+  color: rgba(200, 200, 210, 0.82);
+  font-family: var(--font-serif);
+  font-size: var(--fs-body);
+  line-height: var(--lh-loose);
+  letter-spacing: 0.005em;
+}
+
+main.fragmentos-archive .rastros-lead {
+  font-style: italic;
+  color: rgba(180, 180, 200, 0.6);
+  font-size: var(--fs-lead);
+  line-height: var(--lh-snug);
+  margin: 0 0 3.5rem;
+  max-width: 32rem;
+}
+
+main.fragmentos-archive .rastros-year {
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  letter-spacing: 0.18em;
+  color: rgba(160, 160, 180, 0.4);
+  margin: 3.5rem 0 1.5rem;
+  text-transform: uppercase;
+}
+
+main.fragmentos-archive .rastros-year-sep {
+  display: none;
+}
+
+main.fragmentos-archive .rastro-bloque {
+  margin: 0 0 2.2rem;
+  padding: 0.6rem 0 0.6rem 0.9rem;
+  border-left: 1px solid rgba(200, 170, 130, 0.08);
+  background: rgba(255, 255, 255, 0.008);
+  border-radius: 0 2px 2px 0;
+  transition: border-color 0.4s ease, background 0.4s ease, transform 0.4s ease;
+}
+
+main.fragmentos-archive .rastro-bloque:hover,
+main.fragmentos-archive .rastro-bloque:focus-within {
+  border-left-color: rgba(200, 170, 130, 0.35);
+  background: rgba(255, 255, 255, 0.018);
+  transform: translateX(2px);
+}
+
+main.fragmentos-archive .rastro-linea {
+  margin: 0;
   padding: 0;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: rgba(210, 210, 220, 0.85);
 }
 
-.fragmento-linea {
-  display: inline;
-  scroll-margin-top: 5rem;
-  transition: text-shadow 0.5s ease;
+main.fragmentos-archive .rastro-linea + .rastro-linea {
+  margin-top: 0.7rem;
+  color: rgba(195, 195, 205, 0.78);
 }
 
-.fragmento-linea:target {
-  outline: none;
-  text-shadow:
-    0 0 18px rgba(210, 190, 162, 0.92),
-    0 0 38px rgba(160, 138, 110, 0.58),
-    0 0 68px rgba(112, 92, 72, 0.38),
-    0 0 105px rgba(82, 68, 54, 0.2),
-    0 0 145px rgba(58, 48, 38, 0.1);
-  animation: fragmento-halo 0.95s ease-out 1;
+main.fragmentos-archive .rastro-marca {
+  display: inline-block;
+  color: rgba(200, 170, 130, 0.6);
+  font-family: var(--font-mono);
+  margin-right: 0.4rem;
+  transition: color 0.4s ease;
 }
 
-@keyframes fragmento-halo {
-  0% {
-    text-shadow:
-      0 0 24px rgba(235, 215, 185, 0.98),
-      0 0 52px rgba(180, 155, 125, 0.72),
-      0 0 92px rgba(125, 102, 80, 0.45),
-      0 0 135px rgba(88, 72, 58, 0.26),
-      0 0 185px rgba(62, 52, 42, 0.14);
+main.fragmentos-archive .rastro-bloque:hover .rastro-marca,
+main.fragmentos-archive .rastro-bloque:focus-within .rastro-marca {
+  color: rgba(200, 170, 130, 0.85);
+}
+
+@media (max-width: 600px) {
+  main.fragmentos-archive {
+    line-height: var(--lh-base);
   }
-  100% {
-    text-shadow:
-      0 0 18px rgba(210, 190, 162, 0.92),
-      0 0 38px rgba(160, 138, 110, 0.58),
-      0 0 68px rgba(112, 92, 72, 0.38),
-      0 0 105px rgba(82, 68, 54, 0.2),
-      0 0 145px rgba(58, 48, 38, 0.1);
+  main.fragmentos-archive .rastros-year {
+    margin-top: 2.5rem;
+  }
+  main.fragmentos-archive .rastro-bloque {
+    margin-bottom: 1.3rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .fragmento-linea:target {
-    animation: none;
+  main.fragmentos-archive .rastro-bloque {
+    transition: none;
+  }
+}
+
+.rastros-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin: 0 0 0.5rem;
+  color: rgba(180, 180, 200, 0.65);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+}
+
+.rastros-glyph {
+  font-size: 1.1rem;
+  color: rgba(200, 170, 130, 0.7);
+}
+
+.rastros-label {
+  letter-spacing: 0.12em;
+}
+
+.rastros-lead {
+  font-style: italic;
+  color: rgba(180, 180, 200, 0.55);
+  font-size: 1.25rem;
+  line-height: 1.55;
+  margin: 0 0 3.5rem;
+  max-width: 32rem;
+}
+
+.rastros-year {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  color: rgba(160, 160, 180, 0.4);
+  margin: 3.5rem 0 1.5rem;
+  text-transform: uppercase;
+}
+
+.rastros-year-sep {
+  display: none;
+}
+
+.rastro-bloque {
+  margin: 0 0 2.2rem;
+  padding: 0.6rem 0 0.6rem 0.9rem;
+  border-left: 1px solid rgba(200, 170, 130, 0.08);
+  background: rgba(255, 255, 255, 0.008);
+  border-radius: 0 2px 2px 0;
+  transition: border-color 0.4s ease, background 0.4s ease, transform 0.4s ease;
+}
+
+.rastro-bloque:hover,
+.rastro-bloque:focus-within {
+  border-left-color: rgba(200, 170, 130, 0.35);
+  background: rgba(255, 255, 255, 0.018);
+  transform: translateX(2px);
+}
+
+.rastro-linea {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: rgba(210, 210, 220, 0.85);
+}
+
+.rastro-linea + .rastro-linea {
+  margin-top: 0.7rem;
+  color: rgba(195, 195, 205, 0.78);
+}
+
+.rastro-marca {
+  display: inline-block;
+  color: rgba(200, 170, 130, 0.6);
+  font-family: var(--font-mono);
+  margin-right: 0.4rem;
+  transition: color 0.4s ease;
+}
+
+.rastro-bloque:hover .rastro-marca,
+.rastro-bloque:focus-within .rastro-marca {
+  color: rgba(200, 170, 130, 0.85);
+}
+
+@media (max-width: 600px) {
+  main.fragmentos-archive {
+    padding: 2.5rem 1.1rem 4rem;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+  .rastros-year {
+    margin-top: 2.5rem;
+  }
+  .rastro-bloque {
+    margin-bottom: 1.3rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rastro-bloque {
+    transition: none;
   }
 }
 
@@ -3311,10 +3467,6 @@ table {
     background: rgba(255, 255, 255, 0.06);
   }
 
-  .fragmento-linea {
-    scroll-margin-top: 4.5rem;
-  }
-
   .lab {
     margin-left: 0;
     margin-right: 0;
@@ -3363,10 +3515,11 @@ table {
 }
 
 @media (max-width: 480px) {
-  h1 {
-    font-size: clamp(1.25rem, 6vw, 1.75rem);
-    line-height: 1.2;
-  }
+h1 {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  word-wrap: break-word;
+  font-weight: 400;
+}
 
   .init a {
     font-size: clamp(1rem, 4.5vw, 1.35rem);
