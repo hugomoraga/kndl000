@@ -42,8 +42,7 @@ description: "Pensamiento continuo. Acumulación. Memoria. Lenguaje latiendo."
       {%- assign _lineas = f.lineas | where_exp: "row", "row.linea != nil and row.linea != ''" -%}
       {%- for row in _lineas -%}
         {%- assign t = row.linea -%}
-        {%- assign _is_last = forloop.last -%}
-        <p class="rastro-linea">{{ t | escape }}{%- if _is_last -%} <span class="rastro-firma" aria-hidden="true">※</span>{%- endif -%}</p>
+        <p class="rastro-linea">{%- if forloop.first -%}<span class="rastro-marca" aria-hidden="true">※</span> {%- endif -%}{{ t | escape }}</p>
       {%- endfor -%}
     </article>
   {%- endif -%}
