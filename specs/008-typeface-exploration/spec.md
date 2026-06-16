@@ -299,3 +299,11 @@
 - **El `g` de Fraunces es controversial**: hay gente que la ama, gente que la odia. Si al verla live no convence, Newsreader es la siguiente mejor opción.
 - **Bundle size**: agregar las 4 fuentes en Google Fonts via `<link>` cuando se activan suma ~50-100KB total (las 4 variable fonts). Solo se cargan si el usuario hace `?font=`. Default sigue siendo Cormorant sin cambio.
 - **CORS / CSP**: el sitio no usa CSP estricta, así que `<link>` cross-origin a Google Fonts está OK.
+
+---
+
+## Decisión final (resuelta en spec 009)
+
+Después de probar las 9 candidatas en contexto real con el switch, el usuario eligió **Newsreader**. La implementación del cambio definitivo (--font-serif default = Newsreader, update del <link> a Google Fonts, update de docs) está en .
+
+**Nota sobre Fraunces**: era la recomendación del agente. El usuario la vio en contexto y prefirió Newsreader — decisión del usuario, respetada.
