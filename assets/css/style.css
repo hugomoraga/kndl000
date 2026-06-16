@@ -2961,12 +2961,43 @@ main.fragmentos-archive .rastro-linea + .rastro-linea {
 }
 
 main.fragmentos-archive .rastro-marca {
-  display: inline-block;
+  display: block;
   color: rgba(200, 170, 130, 0.45);
   font-family: var(--font-mono);
-  font-size: 0.8em;
-  margin-right: 0.5em;
-  vertical-align: 0.05em;
+  font-size: 0.85rem;
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.3em;
+  padding-left: 0.2rem;
+}
+
+main.fragmentos-archive .rastro-lista {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0 1.4rem;
+}
+
+main.fragmentos-archive .rastro-lista li {
+  position: relative;
+  padding: 0.2rem 0 0.2rem 0.9rem;
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  line-height: 1.75;
+  color: rgba(210, 210, 220, 0.85);
+}
+
+main.fragmentos-archive .rastro-lista li::before {
+  content: "·";
+  position: absolute;
+  left: 0;
+  top: 0.4rem;
+  color: rgba(200, 170, 130, 0.55);
+  font-family: var(--font-mono);
+  font-size: 1.1em;
+  line-height: 1;
+}
+
+main.fragmentos-archive .rastro-lista li + li {
+  color: rgba(200, 200, 210, 0.8);
 }
 
 @media (max-width: 600px) {
