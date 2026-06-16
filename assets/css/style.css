@@ -112,25 +112,58 @@ body {
 }
 
 :root {
+  /* Families (regla del sitio: Cormorant serif editorial, Lato sans UI, JetBrains mono) */
   --font-sans: "Lato", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
   --font-mono: "JetBrains Mono", "Fira Code", Consolas, Monaco, "Courier New", monospace;
   --font-ui-mono: ui-monospace, "SF Mono", "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace;
+
+  /* Type scale — 1 = display (más grande), 6 = meta (más chico).
+     Los clamp() son los "anclas"; los demás valores en style.css deben referenciar estos tokens. */
+  --fs-1: clamp(2.2rem, 5.5vw, 3rem);       /* display (melange-report__title) */
+  --fs-2: clamp(1.85rem, 4.5vw, 2.4rem);    /* h1 page-title, home-header */
+  --fs-3: clamp(1.4rem, 3.5vw, 1.7rem);     /* h2 */
+  --fs-4: clamp(1.1rem, 2.8vw, 1.3rem);     /* h3 */
+  --fs-5: clamp(0.95rem, 2.2vw, 1.1rem);    /* h4 */
+  --fs-6: 0.85rem;                           /* h5, h6 */
+  --fs-body: clamp(0.95rem, 1.6vw, 1.05rem); /* p base */
+  --fs-lead: clamp(1.15rem, 2vw, 1.3rem);    /* lede / paragraphs destacados */
+  --fs-small: 0.78rem;                       /* meta, eyebrow, lab-specimen */
+  --fs-mono: 0.72rem;                        /* hashes, hex, micro mono */
+
+  /* Line heights */
+  --lh-tight: 1.1;     /* display titles */
+  --lh-snug: 1.25;    /* h2/h3 */
+  --lh-base: 1.55;    /* p base */
+  --lh-loose: 1.75;   /* editorial body, fragmentos */
+  --lh-meta: 1.4;     /* meta, ui */
+
+  /* Weights (Cormorant solo carga 400/600/700 + italics; techo = 700) */
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
 }
 
-h1, h2, h3, h4 {
+/* Headings — base compartida para h1-h6. H4+ rara vez se usan; quedan
+   definidos para que un autor que los escriba tenga un estilo predecible. */
+h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-serif);
-  font-weight: 400;
-  color: #eee;
-}
-a {
-  color:rgb(82, 82, 90);
-  text-decoration: none;
+  font-weight: var(--fw-bold);
+  color: #e0e0e0;
+  letter-spacing: 0;
+  word-wrap: break-word;
 }
 
+/* Anchor dentro de headings (links inline, ej. el ∅ INIT de page-title) */
 h1 > span > a {
-    color:rgb(82, 82, 90);
-    font-size: 1.5rem;
+  color: rgb(82, 82, 90);
+  font-size: var(--fs-5);
+}
+
+a {
+  color: rgb(82, 82, 90);
+  text-decoration: none;
 }
 a:hover {
   text-decoration: underline;
@@ -144,31 +177,62 @@ blockquote {
   font-style: italic;
 }
 
+/* h1 — page title, home header. Border-bottom tenue + serif bold. */
 h1 {
+  font-size: var(--fs-2);
+  line-height: var(--lh-tight);
   color: #e0e0e0;
   border-bottom: 1px solid #333;
   padding-bottom: 0.3rem;
   margin-top: 2rem;
-  font-size: clamp(1.5rem, 4vw, 2rem);
-  word-wrap: break-word;
 }
 
+/* h2 — section header dentro de un documento. Misma familia + weight que h1,
+   tamaño menor y border más tenue para marcar jerarquía. */
 h2 {
+  font-size: var(--fs-3);
+  line-height: var(--lh-snug);
   color: #cccccc;
   border-bottom: 1px solid #222;
   padding-bottom: 0.2rem;
   margin-top: 1.5rem;
-  font-size: clamp(1.25rem, 3.5vw, 1.5rem);
-  word-wrap: break-word;
-  font-weight: 400;
 }
 
+/* h3 — sub-sección. Sin border (rompe ritmo), italic para diferenciar. */
 h3 {
+  font-size: var(--fs-4);
+  line-height: var(--lh-snug);
   color: #bbbbbb;
-  margin-top: 1.2rem;
-  font-size: clamp(1rem, 3vw, 1.2rem);
-  font-weight: 400;
+  font-weight: var(--fw-regular);
   font-style: italic;
+  margin-top: 1.2rem;
+}
+
+/* h4+ — fallback. No usados en el contenido actual, pero definidos para
+   que un autor que los escriba no termine con un bloque sin estilo. */
+h4 {
+  font-size: var(--fs-5);
+  line-height: var(--lh-snug);
+  color: #b8b8b8;
+  margin-top: 1rem;
+}
+
+h5, h6 {
+  font-size: var(--fs-6);
+  line-height: var(--lh-snug);
+  color: #a8a8a8;
+  font-weight: var(--fw-semibold);
+  margin-top: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* p — regla global. Antes no existía; cada layout heredaba valores por defecto. */
+p {
+  font-size: var(--fs-body);
+  line-height: var(--lh-base);
+  margin: 0 0 1em;
+  color: inherit;
 }
 
 hr {
@@ -417,7 +481,7 @@ nav {
   h1 {
     margin-top: 1rem;
   }
-  
+
   h2 {
     margin-top: 1rem;
   }
@@ -880,7 +944,7 @@ nav {
 
 .init a {
   font-family: var(--font-serif);
-  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  font-size: var(--fs-3);
   color: #bbb;
 } 
 
@@ -1061,7 +1125,7 @@ main {
 
 .poem-body p {
   margin: 0 0 0.9em;
-  line-height: 1.85;
+  line-height: var(--lh-loose);
 }
 
 .poem-body p:last-child {
@@ -1071,7 +1135,7 @@ main {
 .poem-body h2 {
   margin: 0 0 0.75em;
   font-family: inherit;
-  font-weight: 400;
+  font-weight: var(--fw-bold);
   letter-spacing: 0.04em;
 }
 
@@ -2624,9 +2688,9 @@ body.code-modal-open {
 
 .melange-report__title {
   font-family: var(--font-serif);
-  font-size: clamp(1.85rem, 5vw, 2.45rem);
-  font-weight: 400;
-  line-height: 1.12;
+  font-size: var(--fs-1);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
   color: #f0e8de;
   margin: 0 0 0.5rem;
   letter-spacing: -0.02em;
@@ -2634,7 +2698,7 @@ body.code-modal-open {
 
 .melange-report__subtitle {
   font-family: var(--font-serif);
-  font-size: 1.15rem;
+  font-size: var(--fs-lead);
   font-style: italic;
   color: #a89884;
   margin: 0;
@@ -2691,8 +2755,9 @@ body.code-modal-open {
 
 .melange-report__body h2 {
   font-family: var(--font-serif);
-  font-size: 1.28rem;
-  font-weight: 600;
+  font-size: var(--fs-4);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
   color: #e8dfd4;
   margin: 1.85rem 0 0.85rem;
   padding-bottom: 0.35rem;
@@ -3004,34 +3069,35 @@ main.fragmentos-archive .rastro-bloque:focus-within .rastro-marca {
   align-items: baseline;
   gap: 0.6rem;
   margin: 0 0 0.5rem;
-  color: rgba(180, 180, 200, 0.65);
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  letter-spacing: 0.08em;
-  text-transform: lowercase;
+  color: rgba(180, 180, 200, 0.78);
+  font-family: var(--font-serif);
+  font-size: var(--fs-3);
+  font-weight: var(--fw-bold);
+  letter-spacing: 0;
+  line-height: var(--lh-tight);
 }
 
 .rastros-glyph {
-  font-size: 1.1rem;
-  color: rgba(200, 170, 130, 0.7);
+  font-size: 1em;
+  color: rgba(200, 170, 130, 0.85);
 }
 
 .rastros-label {
-  letter-spacing: 0.12em;
+  letter-spacing: 0.02em;
 }
 
 .rastros-lead {
   font-style: italic;
-  color: rgba(180, 180, 200, 0.55);
-  font-size: 1.25rem;
-  line-height: 1.55;
+  color: rgba(180, 180, 200, 0.6);
+  font-size: var(--fs-lead);
+  line-height: var(--lh-snug);
   margin: 0 0 3.5rem;
   max-width: 32rem;
 }
 
 .rastros-year {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: var(--fs-small);
   letter-spacing: 0.18em;
   color: rgba(160, 160, 180, 0.4);
   margin: 3.5rem 0 1.5rem;
@@ -3088,8 +3154,8 @@ main.fragmentos-archive .rastro-bloque:focus-within .rastro-marca {
 @media (max-width: 600px) {
   main.fragmentos-archive {
     padding: 2.5rem 1.1rem 4rem;
-    font-size: 1rem;
-    line-height: 1.7;
+    font-size: var(--fs-body);
+    line-height: var(--lh-base);
   }
   .rastros-year {
     margin-top: 2.5rem;
@@ -3515,11 +3581,7 @@ main.fragmentos-archive .rastro-bloque:focus-within .rastro-marca {
 }
 
 @media (max-width: 480px) {
-h1 {
-  font-size: clamp(1.5rem, 4vw, 2rem);
-  word-wrap: break-word;
-  font-weight: 400;
-}
+  /* h1 ya escala via --fs-2 (clamp(1.85rem, 4.5vw, 2.4rem)); ningún override necesario. */
 
   .init a {
     font-size: clamp(1rem, 4.5vw, 1.35rem);
