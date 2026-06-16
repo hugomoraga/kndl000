@@ -114,7 +114,7 @@ body {
 :root {
   /* Families (regla del sitio: Cormorant serif editorial, Lato sans UI, JetBrains mono) */
   --font-sans: "Lato", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-serif: "Newsreader", Georgia, "Times New Roman", serif;
   --font-mono: "JetBrains Mono", "Fira Code", Consolas, Monaco, "Courier New", monospace;
   --font-ui-mono: ui-monospace, "SF Mono", "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace;
 

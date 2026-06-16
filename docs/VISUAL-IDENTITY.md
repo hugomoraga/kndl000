@@ -27,10 +27,17 @@
 
 | Uso | Familia | Variable CSS | Pesos en uso |
 |---|---|---|---|
-| Títulos, body editorial | **Cormorant Garamond** | `--font-serif` | 400, 600, 700 + itálicas |
+| Títulos, body editorial | **Newsreader** | `--font-serif` | variable 200-800 + itálicas, opsz 6-72 |
 | UI, meta, navegación | **Lato** | `--font-sans` | 300, 400, 700 + itálicas |
 | Código, hashes, lab-feed | **JetBrains Mono** | `--font-mono` | 300, 400, 500 + itálicas |
 | Meta del lab-feed | **ui-monospace** del sistema | `--font-ui-mono` | (sistema) |
+
+> **Cambio 2026-06-15**: Cormorant Garamond → Newsreader (specs 008 + 009).
+> Cormorant era didona soft-serif (Windsor/Souvenir/Cooper family), display con
+> contraste alto. Newsreader es transitional moderno de Production Type, con
+> optical sizing variable (opsz 6-72), italics expresivas, y feel "moderno-newspaper".
+> Decisión después de explorar 9 candidatas via `?font=` switch.
+> Cormorant sigue siendo una opción válida del preview switch para comparaciones futuras.
 
 **Reglas:**
 - **Nunca** usar `system-ui` para títulos: el sitio debe verse igual en todos
