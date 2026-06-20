@@ -6,7 +6,11 @@
   "scripts": {
     "build": "bundle exec jekyll build",
     "serve": "bundle exec jekyll serve",
-    "clean": "rm -rf _site .jekyll-cache .sass-cache"
+    "clean": "rm -rf _site .jekyll-cache .sass-cache",
+    "umbral:update": "git submodule update --remote assets/js/umbral-vision"
+  },
+  "dependencies": {
+    "@kndl/umbral-vision": "^0.3.0"
   },
   "keywords": [],
   "author": "KNDL",

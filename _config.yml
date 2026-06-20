@@ -36,6 +36,17 @@ exclude:
   - node_modules
   - package.json
   - package-lock.json
+  - assets/js/umbral-vision/package.json
+  - assets/js/umbral-vision/package-lock.json
+  - assets/js/umbral-vision/esbuild.config.mjs
+  - assets/js/umbral-vision/eslint.config.mjs
+  - assets/js/umbral-vision/vitest.config.mjs
+  - assets/js/umbral-vision/tests
+  - assets/js/umbral-vision/CHANGELOG.md
+  - assets/js/umbral-vision/README.md
+  - assets/js/umbral-vision/LICENSE
+  - package.json
+  - package-lock.json
   - Gemfile
   - Gemfile.lock
   - README.md
