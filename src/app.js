@@ -3,13 +3,12 @@
  * Inicializa la UI y conecta el framework con los controles HTML
  */
 
-import { 
-  Effects, 
-  startVisualizer, 
-  changeEffect, 
+import {
+  startVisualizer,
+  changeEffect,
   getAvailableEffects,
-  initAudio, 
-  stopAudio, 
+  initAudio,
+  stopAudio,
   getAudioState,
   startAutoTransition, 
   stopAutoTransition,

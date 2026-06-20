@@ -1,94 +1,59 @@
 # Umbral Vision
 
-Framework modular y extensible para generación de visuales psicodélicos con p5.js.
+[![npm version](https://badge.fury.io/js/%40hugomoraga%2Fumbral-vision.svg)](https://www.npmjs.com/package/@hugomoraga/umbral-vision)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Principios de Diseño
+Framework modular para generación de visuales psicodélicos en tiempo real con [p5.js](https://p5js.org/).
 
-- **KISS**: Keep It Simple, Stupid - Cada módulo tiene una responsabilidad clara
-- **Modular**: Componentes independientes que se pueden combinar
-- **Extensible**: Fácil de añadir nuevos efectos visuales
+## Install
 
-## Estructura
-
-```
-umbral-vision/
-├── Effects.js         # Efectos visuales psicodélicos
-├── Visualizer.js      # Gestor principal del canvas y p5.js
-├── AudioReactive.js   # Manejo de reactividad al audio
-├── Transition.js      # Sistema de transiciones automáticas
-├── Utils.js           # Utilidades y funciones helper
-├── index.js           # Framework - Punto de entrada (exporta todas las funciones)
-├── app.js             # Aplicación - UI y controles (usa el framework)
-└── README.md          # Esta documentación
+```bash
+npm install @hugomoraga/umbral-vision
 ```
 
-## Uso Básico
+> **Peer dependency**: este paquete requiere [`p5`](https://www.npmjs.com/package/p5) v1.x o v2.x. El consumidor debe proveerlo (típicamente vía CDN).
 
-### 1. Cargar el framework
+## Usage
 
-El framework usa módulos ES6. Solo necesitas cargar p5.js y tu script principal:
-
-```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/2.0.3/p5.min.js"></script>
-<script type="module" src="tu-script.js"></script>
-```
-
-### 2. Importar el framework
-
-En tu script JavaScript, importa lo que necesites:
+### Browser (con bundler)
 
 ```javascript
-import { Effects, Visualizer, AudioReactive } from './umbral-vision/index.js';
-```
+import { startVisualizer, Effects } from '@hugomoraga/umbral-vision';
 
-O importa módulos individuales:
-
-```javascript
-import { Effects } from './umbral-vision/Effects.js';
-import { startVisualizer } from './umbral-vision/Visualizer.js';
-```
-
-### 3. Iniciar un visualizador
-
-```javascript
-import { startVisualizer } from './umbral-vision/index.js';
-
-// Iniciar con un efecto específico
+// Iniciar visualizador con un efecto
 startVisualizer('tunnel');
-```
 
-### 4. Cambiar efecto
-
-```javascript
-import { changeEffect } from './umbral-vision/index.js';
-
+// Cambiar efecto
+import { changeEffect } from '@hugomoraga/umbral-vision';
 changeEffect('spiral');
 ```
 
-### 5. Activar reactividad al audio
+### Browser (sin bundler, con CDN)
+
+```html
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.2/p5.min.js"></script>
+<script type="module">
+  import { startVisualizer } from 'https://cdn.jsdelivr.net/npm/@hugomoraga/umbral-vision/dist/index.mjs';
+  startVisualizer('tunnel');
+</script>
+```
+
+### Activar reactividad al audio
 
 ```javascript
-import { initAudio, stopAudio, getAudioState } from './umbral-vision/index.js';
+import { initAudio, getAudioState, stopAudio } from '@hugomoraga/umbral-vision';
 
-// Iniciar micrófono
 await initAudio();
-
-// Obtener estado
 const { enabled, level } = getAudioState();
-
-// Detener
 stopAudio();
 ```
 
-### 6. Transiciones automáticas
+### Auto-transición
 
 ```javascript
-import { startAutoTransition, stopAutoTransition } from './umbral-vision/index.js';
+import { startAutoTransition, stopAutoTransition, changeEffect } from '@hugomoraga/umbral-vision';
 
-const effectNames = ['tunnel', 'spiral', 'mandala'];
-const interval = 10000; // 10 segundos
-
-startAutoTransition(interval, effectNames, (effectName) => {
+startAutoTransition(10000, ['tunnel', 'spiral', 'mandala'], (effectName) => {
   changeEffect(effectName);
 });
 ```
@@ -97,79 +62,59 @@ startAutoTransition(interval, effectNames, (effectName) => {
 
 ### Visualizer
 
-- `startVisualizer(effectName, container)` - Inicia visualizador con un efecto
-- `changeEffect(effectName)` - Cambia el efecto actual
-- `getCurrentEffect()` - Obtiene el efecto actual
-- `getAvailableEffects()` - Lista de efectos disponibles
-- `stopVisualizer()` - Detiene el visualizador
+- `startVisualizer(effectName, container?)` — Inicia visualizador con un efecto
+- `changeEffect(effectName)` — Cambia el efecto actual
+- `getCurrentEffect()` — Obtiene el nombre del efecto activo
+- `getAvailableEffects()` — Lista de efectos disponibles
+- `stopVisualizer()` — Detiene y limpia el canvas
 
 ### AudioReactive
 
-- `initAudio()` - Inicializa análisis de audio del micrófono
-- `stopAudio()` - Detiene análisis de audio
-- `getAudioState()` - Obtiene estado del audio `{ enabled, level }`
-- `getFrequencyData()` - Obtiene datos de frecuencia (array)
+- `initAudio()` — Inicializa análisis de audio del micrófono (async)
+- `stopAudio()` — Detiene análisis y libera recursos
+- `getAudioState()` — Retorna `{ enabled, level }`
+- `getFrequencyData()` — Retorna `Uint8Array` con datos FFT crudos
 
 ### Transition
 
-- `startAutoTransition(interval, effectNames, callback)` - Inicia transiciones automáticas
-- `stopAutoTransition()` - Detiene transiciones
-- `isAutoTransitionEnabled()` - Verifica si están activas
+- `startAutoTransition(intervalMs, effectNames[], onChange)` — Inicia transiciones automáticas
+- `stopAutoTransition()` — Detiene transiciones
+- `isAutoTransitionEnabled()` — Booleano
 
 ### Effects
 
-- `Effects.tunnel(sketch)` - Efecto túnel
-- `Effects.spiral(sketch)` - Espiral psicodélico
-- `Effects.mandala(sketch)` - Mandala rotativo
-- `Effects.particles(sketch)` - Partículas reactivas
-- `Effects.waves(sketch)` - Olas de audio
-- `Effects.fractal(sketch)` - Árbol fractal
-- `Effects.matrix(sketch)` - Lluvia Matrix
+- `Effects.tunnel(sketch)` — Túnel de elipses concéntricas
+- `Effects.spiral(sketch)` — Espiral psicodélico con colores cambiantes
+- `Effects.mandala(sketch)` — Mandala rotativo
+- `Effects.particles(sketch)` — Partículas reactivas
+- `Effects.waves(sketch)` — Olas de audio
+- `Effects.fractal(sketch)` — Árbol fractal
+- `Effects.matrix(sketch)` — Lluvia Matrix
+- `Effects.glitch(sketch)` — Glitch art
+- `Effects.melt(sketch)` — Efecto melt/drip
+- `Effects.fractalGlitch(sketch)` — Fractal con glitches aleatorios
+- `Effects.waveGlitch(sketch)` — Olas con bandas de glitch horizontales
+- `Effects.sacredGeometry(sketch)` — Geometría sagrada (Flower of Life)
+- `Effects.biomech(sketch)` — Biomechánico orgánico
+- `Effects.dune(sketch)` — Dunas suaves
+- `Effects.yinYang(sketch)` — Símbolo Yin-Yang audio-reactivo
 
-### Utils
+## Peer Dependencies
 
-- `getInputValue(id, defaultValue, parser)` - Obtiene valor de input
-- `normalize(value, min, max)` - Normaliza valor
-- `map(value, inMin, inMax, outMin, outMax)` - Mapea valor
-- `constrain(value, min, max)` - Limita valor
-- `lerp(start, end, t)` - Interpola entre valores
+- `p5`: `^1.0.0 || ^2.0.0`
 
-## Crear Nuevos Efectos
+## Browser support
 
-Para crear un nuevo efecto, agrégalo a `Effects.js`:
+- Chrome / Edge / Firefox / Safari evergreen (ES2022)
+- Mobile Safari iOS 14+
+- Chrome Android 90+
 
-```javascript
-export const Effects = {
-  // ... efectos existentes ...
-  
-  miEfecto: (sketch) => {
-    let t = 0;
-    
-    return {
-      draw: () => {
-        const { enabled: audioEnabled, level: audioLevel } = getAudioState();
-        
-        sketch.background(0, 10);
-        // Tu código de dibujo aquí
-        
-        t += 0.01;
-      }
-    };
-  }
-};
-```
+## License
 
-## Ejemplo Completo
+MIT © 2026 hugomoraga
 
-Ver `app.js` para un ejemplo completo de uso del framework. Este archivo muestra cómo:
-- Inicializar el visualizador
-- Configurar controles de UI
-- Manejar el micrófono
-- Implementar transiciones automáticas
-- Gestionar fullscreen
+## Links
 
-## Estructura de Archivos
-
-- **`index.js`** - Framework puro, exporta todas las funciones. Úsalo cuando quieras importar el framework en otro proyecto.
-- **`app.js`** - Aplicación completa con UI. Se carga directamente en el HTML y maneja todos los controles.
-
+- [Repository](https://github.com/hugomoraga/umbral-vision)
+- [Issues](https://github.com/hugomoraga/umbral-vision/issues)
+- [Origin repo (kndl000)](https://github.com/hugomoraga/kndl000)

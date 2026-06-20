@@ -172,7 +172,7 @@ export const Effects = {
    * Efecto Particles - Partículas reactivas conectadas
    */
   particles: (sketch) => {
-    let particles = [];
+    const particles = [];
     let initialized = false;
     
     return {
@@ -254,7 +254,7 @@ export const Effects = {
         for (let w = 0; w < waveCount; w++) {
           const waveHeight = 40 + w * 25;
           const frequency = 0.015 + w * 0.008;
-          const speed = 0.04 + w * 0.015;
+          const speed = 0.04 + w * 0.015; // eslint-disable-line no-unused-vars
           
           sketch.beginShape();
           sketch.noFill();
@@ -337,7 +337,7 @@ export const Effects = {
    */
   matrix: (sketch) => {
     const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
-    let drops = [];
+    const drops = [];
     let initialized = false;
     const fontSize = 20;
     
@@ -364,7 +364,7 @@ export const Effects = {
         sketch.textSize(fontSize);
         sketch.textAlign(sketch.CENTER);
         
-        for (let drop of drops) {
+        for (const drop of drops) {
           drop.y += drop.speed * audioBoost;
           if (drop.y > sketch.height + drop.length * fontSize) {
             drop.y = -drop.length * fontSize;
@@ -402,7 +402,7 @@ export const Effects = {
         sketch.background(0, 5);
         time += 0.05;
         
-        const audioBoost = audioEnabled && audioLevel > 0.01 ? audioLevel : 0.1;
+        const audioBoost = audioEnabled && audioLevel > 0.01 ? audioLevel : 0.1; // eslint-disable-line no-unused-vars
         glitchIntensity = audioLevel * 30;
         
         // Efecto de scanlines y glitch - tipo Giger biomecánico
@@ -451,7 +451,7 @@ export const Effects = {
    */
   melt: (sketch) => {
     let time = 0;
-    let particles = [];
+    const particles = [];
     let initialized = false;
     
     return {
@@ -477,7 +477,7 @@ export const Effects = {
         time += 0.02;
         const audioBoost = audioEnabled && audioLevel > 0.01 ? 1 + audioLevel * 2 : 1;
         
-        for (let p of particles) {
+        for (const p of particles) {
           // Efecto de derretimiento
           const melt = meltEffect(p.y, time, audioLevel + 0.3);
           p.x += p.vx * audioBoost + melt * 0.1;
@@ -600,8 +600,8 @@ export const Effects = {
    */
   waveGlitch: (sketch) => {
     let time = 0;
-    let wavePhases = []; // Fase inicial de cada onda
-    let modulationPhases = []; // Fase de modulación para cada onda
+    const wavePhases = []; // Fase inicial de cada onda
+    const modulationPhases = []; // Fase de modulación para cada onda
     let initialized = false;
     
     return {
@@ -742,7 +742,7 @@ export const Effects = {
    */
   biomech: (sketch) => {
     let time = 0;
-    let structures = [];
+    const structures = [];
     let initialized = false;
     
     return {
@@ -766,7 +766,7 @@ export const Effects = {
         time += 0.02;
         const audioBoost = audioEnabled && audioLevel > 0.01 ? 1 + audioLevel * 1.3 : 1;
         
-        for (let s of structures) {
+        for (const s of structures) {
           s.rotation += 0.003 * audioBoost;
           
           sketch.push();

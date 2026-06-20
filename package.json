@@ -1,0 +1,66 @@
+{
+  "name": "@hugomoraga/umbral-vision",
+  "version": "0.1.0",
+  "description": "Framework modular para generación de visuales psicodélicos con p5.js",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.mjs"
+    },
+    "./package.json": "./package.json",
+    "./README.md": "./README.md"
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "node esbuild.config.mjs",
+    "lint": "eslint src/ tests/",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepack": "npm run lint && npm test && npm run build"
+  },
+  "peerDependencies": {
+    "p5": "^1.0.0 || ^2.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.10.0",
+    "esbuild": "^0.21.5",
+    "eslint": "^9.10.0",
+    "jsdom": "^25.0.0",
+    "vitest": "^2.1.1"
+  },
+  "keywords": [
+    "p5js",
+    "visuals",
+    "generative",
+    "psychedelic",
+    "audio-reactive",
+    "framework"
+  ],
+  "license": "MIT",
+  "author": "hugomoraga",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hugomoraga/umbral-vision.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hugomoraga/umbral-vision/issues"
+  },
+  "homepage": "https://github.com/hugomoraga/umbral-vision#readme",
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
+}
