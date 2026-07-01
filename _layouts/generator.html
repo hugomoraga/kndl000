@@ -6,31 +6,73 @@
     <title>{{ page.title }} – {{ site.title }}</title>
     {% include seo.html %}
     {% include head-css.html %}
+    {%- assign uv_css_ts = site.time | date: '%s%N' -%}
+    <link rel="stylesheet" href="{{ '/assets/css/generator.css?v=' | append: uv_css_ts | relative_url }}">
     {% include analytics.html %}
   </head>
   <body id="generator">
     <main></main>
 
-    <div id="controls">
-      <label>Efecto:
-        <select id="effectSelect"></select>
-      </label>
-      <label>
-        <input type="checkbox" id="autoTransition"> Auto
-      </label>
-      <label>
-        <input type="range" id="transitionInterval" min="3" max="30" value="10">
-        <span id="transitionIntervalValue">10s</span>
-      </label>
-      <button id="micBtn">🎤 Mic: OFF</button>
-      <div id="audioLevel" style="display:none">
-        <div id="audioLevelBar" style="width:0;height:4px;background:#0f0"></div>
+    <nav id="panel" role="region" aria-label="Controles del generador">
+      <header class="panel-header">
+        <h1 class="panel-title">Umbral Vision</h1>
+        <button class="panel-toggle" type="button" aria-expanded="true" aria-label="Ocultar controles">▾</button>
+      </header>
+      <div class="panel-body">
+        <section>
+          <span class="panel-section-label">Efectos</span>
+          <div id="thumbnails"></div>
+        </section>
+
+        <section>
+          <span class="panel-section-label">Auto-transición</span>
+          <div class="panel-row">
+            <input type="checkbox" id="autoTransition">
+            <label for="autoTransition">Activar</label>
+          </div>
+          <div class="panel-row">
+            <label for="transitionInterval">Intervalo</label>
+            <input type="range" id="transitionInterval" min="3" max="30" value="10">
+            <span id="transitionIntervalValue" class="panel-section-label">10s</span>
+          </div>
+        </section>
+
+        <section>
+          <span class="panel-section-label">Audio</span>
+          <div id="audio-indicator"></div>
+          <div class="panel-row">
+            <button id="micBtn" type="button" class="btn">🎤 Mic: OFF</button>
+          </div>
+        </section>
+
+        <section>
+          <span class="panel-section-label">Presets</span>
+          <div id="presets">
+            <select id="preset-select"></select>
+            <button id="preset-save" type="button" class="btn">💾</button>
+          </div>
+        </section>
+
+        <section>
+          <span class="panel-section-label">Capturar</span>
+          <div id="share-row">
+            <button id="capture-btn" type="button" class="btn">📸 PNG</button>
+            <button id="share-btn" type="button" class="btn">🔗 URL</button>
+            <button id="fullscreenBtn" type="button" class="btn">⛶</button>
+          </div>
+        </section>
+
+        <section>
+          <span class="panel-section-label">Rendimiento</span>
+          <button id="lite-mode-btn" type="button" class="btn">🌙 Lite</button>
+          <span style="font-size:0.7rem;opacity:0.5;display:block;margin-top:0.3rem">Shift+F: ver FPS</span>
+        </section>
+
+        <a href="{{ site.baseurl }}/" class="uv-back" style="color:rgba(255,255,255,0.4);text-decoration:none;font-size:0.78rem;display:inline-block;margin-top:0.4rem">↩ volver al blog</a>
       </div>
-      <button id="fullscreenBtn">⛶ Fullscreen</button>
-      <a href="{{ site.baseurl }}/" style="color:rgba(255,255,255,0.4);text-decoration:none;margin-left:0.5rem">↩</a>
-    </div>
+    </nav>
 
     <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
-    <script type="module" src="{{ '/assets/js/umbral-vision/app.js' | relative_url }}"></script>
+    <script type="module" src="{{ '/assets/js/umbral-vision/src/ui/index.js' | relative_url }}"></script>
   </body>
 </html>

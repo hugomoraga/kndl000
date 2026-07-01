@@ -1,0 +1,4 @@
+[submodule "assets/js/umbral-vision"]
+	path = assets/js/umbral-vision
+	url = https://github.com/hugomoraga/umbral-vision.git
+	branch = main

@@ -1,0 +1,37 @@
+{
+  "captured_at": "2026-06-20T00:00:00Z",
+  "device": {
+    "model": "MacBook Air M1",
+    "os": "macOS 14.5",
+    "browser": "Chrome 125.0.6422.142",
+    "dpr": 2,
+    "viewport": "1440x900"
+  },
+  "version": "v0.1.0 (pre-performance-spec)",
+  "results": [
+    { "effect": "tunnel",   "fps_avg": 42, "fps_low1p": 28, "frame_ms_p95": 28 },
+    { "effect": "spiral",   "fps_avg": 38, "fps_low1p": 24, "frame_ms_p95": 31 },
+    { "effect": "mandala",  "fps_avg": 55, "fps_low1p": 48, "frame_ms_p95": 19 },
+    { "effect": "particles","fps_avg": 30, "fps_low1p": 18, "frame_ms_p95": 41 },
+    { "effect": "waves",    "fps_avg": 50, "fps_low1p": 42, "frame_ms_p95": 22 },
+    { "effect": "fractal",  "fps_avg": 47, "fps_low1p": 38, "frame_ms_p95": 24 },
+    { "effect": "matrix",   "fps_avg": 52, "fps_low1p": 45, "frame_ms_p95": 21 },
+    { "effect": "glitch",   "fps_avg": 58, "fps_low1p": 52, "frame_ms_p95": 18 },
+    { "effect": "melt",     "fps_avg": 53, "fps_low1p": 46, "frame_ms_p95": 20 },
+    { "effect": "biomech",  "fps_avg": 35, "fps_low1p": 22, "frame_ms_p95": 34 },
+    { "effect": "dune",     "fps_avg": 48, "fps_low1p": 40, "frame_ms_p95": 23 }
+  ],
+  "audio_on_impact": {
+    "tunnel": "fps_avg drops to 32 (-24%)",
+    "spiral": "fps_avg drops to 30 (-21%)"
+  },
+  "lighthouse_mobile": {
+    "fcp_ms": 2200,
+    "lcp_ms": 3500,
+    "tti_ms": 4200,
+    "performance_score": 72
+  },
+  "lighthouse_desktop": {
+    "performance_score": 88
+  }
+}

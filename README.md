@@ -13,8 +13,12 @@ Este repositorio contiene un blog minimalista basado en [Jekyll](https://jekyllr
 ### Pasos
 
 1. Clona el repositorio y entra en la carpeta.
-2. Instala las dependencias de Ruby: `bundle install`.
-3. Inicia el servidor local: `bundle exec jekyll serve`.
+2. Inicializa los submódulos: `git submodule update --init --recursive`.
+3. Instala las dependencias de Ruby: `bundle install`.
+4. (Opcional) Instala dependencias npm: `npm install` — declara `@kndl/umbral-vision` para consumidores externos al blog.
+5. Inicia el servidor local: `bundle exec jekyll serve`.
+
+> **Sobre Umbral Vision**: vive como submodule git en `assets/js/umbral-vision/` pinned al tag [`v0.1.0`](https://github.com/hugomoraga/umbral-vision/releases/tag/v0.1.0) del repo [`hugomoraga/umbral-vision`](https://github.com/hugomoraga/umbral-vision). El blog lo consume directo desde ese path. Para actualizar: `git -C assets/js/umbral-vision pull --tags` + bumpear `package.json` y bumpear el gitlink.
 
 ## Admin CMS
 
