@@ -2592,6 +2592,17 @@ main.codigo-page p:has(> em:only-child)::before {
   .term--fullscreen .term__label {
     padding: 0.5rem 1.25rem 0.35rem;
   }
+  .term--fullscreen .term__fs-bar {
+    padding: 0.3rem 0.6rem;
+  }
+  .term--fullscreen .term__fs-close {
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+  .term--fullscreen .term__fs-close svg {
+    width: 9px;
+    height: 9px;
+  }
 }
 
 @media (max-width: 480px) {
