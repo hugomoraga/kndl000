@@ -7,6 +7,24 @@
     {% include seo.html %}
     {% include head-css.html %}
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://cdn.jsdelivr.net/gh/microsoft/cascadia-code@latest/CascadiaCode-Light.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="https://cdn.jsdelivr.net/gh/microsoft/cascadia-code@latest/CascadiaCode.ttf" as="font" type="font/ttf" crossorigin>
+    <style>
+      @font-face {
+        font-family: 'Cascadia Code';
+        src: url('https://cdn.jsdelivr.net/gh/microsoft/cascadia-code@latest/CascadiaCode-Light.ttf') format('truetype');
+        font-weight: 300;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'Cascadia Code';
+        src: url('https://cdn.jsdelivr.net/gh/microsoft/cascadia-code@latest/CascadiaCode.ttf') format('truetype');
+        font-weight: 400 700;
+        font-style: normal;
+        font-display: swap;
+      }
+    </style>
     {% include analytics.html %}
   </head>
   <body>
@@ -21,12 +39,8 @@
 
       {% if page.language or page.date %}
       <div class="codigo-meta">
-        {% if page.language %}
-        <span>Lenguaje: {{ page.language }}</span>
-        {% endif %}
-        {% if page.date %}
-        <span>{{ page.date | date: "%d %B %Y" }}</span>
-        {% endif %}
+        {% if page.language %}<span>[{{ page.language | downcase }}]</span>{% endif %}
+        {% if page.date %}<span>{{ page.date | date: "%Y-%m-%d" }}</span>{% endif %}
       </div>
       {% endif %}
 

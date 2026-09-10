@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 # Ruby standard library gems (required for Ruby 3.4+)
 gem 'csv'
+gem 'erb'
 gem 'logger'
 gem 'base64'
 gem 'bigdecimal'
