@@ -11,24 +11,44 @@
 
   const PROMPT = '$';
   const CMD_PROMPT = '›';
-  const LANG_CLASS = /language-(javascript|js)|lang-(javascript|js)/i;
 
+  /*
+   * Detecta si un bloque de código es JavaScript ejecutable.
+   * - Si el markdown declara lenguaje explícito (language-c, language-python, etc.),
+   *   solo es ejecutable cuando es javascript/js. C, Python, Ruby, etc. no.
+   * - Si no hay clase de lenguaje, busca patrones estrictos que sólo aparecen
+   *   en JS: `console.log`, `const/let/var =`, `=>`, `.map()`, `function name(`,
+   *   `async/await`, `require(`, `import`, `document.`.
+   *   Evita falsos positivos con `return`, `if`, `for`, `while` que se
+   *   comparten con C/Python.
+   */
   function isJavaScript(codeEl) {
-    if (LANG_CLASS.test(codeEl.className || '')) return true;
-    const text = (codeEl.textContent || '').trim();
+    const cls = codeEl.className || '';
+
+    const langMatch = cls.match(/(?:language|lang)-(\w+)/);
+    if (langMatch) {
+      const lang = langMatch[1].toLowerCase();
+      return lang === 'javascript' || lang === 'js';
+    }
+
+    return looksLikeJavaScript((codeEl.textContent || '').trim());
+  }
+
+  function looksLikeJavaScript(text) {
     if (!text) return false;
-    const patterns = [
+    const strictPatterns = [
       /console\.(log|error|warn)/,
-      /function\s+\w+\s*\(/,
       /\b(const|let|var)\s+\w+\s*=/,
       /=>/,
-      /\.(map|filter|reduce|forEach)\s*\(/,
-      /\bif\s*\(/,
-      /\bwhile\s*\(/,
-      /\bfor\s*\(/,
-      /\breturn\s+/,
+      /\.(map|filter|reduce|forEach|then)\s*\(/,
+      /\bfunction\s+\w+\s*\(/,
+      /\basync\s+/,
+      /\bawait\s+/,
+      /\brequire\s*\(/,
+      /\bimport\s+/,
+      /\bdocument\./,
     ];
-    return patterns.some((p) => p.test(text));
+    return strictPatterns.some((p) => p.test(text));
   }
 
   function detectLang(codeEl) {
@@ -129,6 +149,27 @@
     return { wrapper, editor, inputSection, inputForm, output, originalCode, originalHtml };
   }
 
+  /*
+   * Auto-follow inteligente: solo scrollea al fondo si el usuario YA estaba
+   * cerca del fondo antes de agregar la línea. Así:
+   *   - Si el user está leyendo arriba o en el medio, el output aparece
+   *     abajo pero la vista NO se mueve — puede seguir leyendo tranquilo.
+   *   - Si el user está al fondo, sigue automáticamente el output nuevo.
+   * El threshold de 30px cubre el "casi al fondo" (caso Langton, donde
+   * podés estar a unos pixeles del borde sin estar exactamente encima).
+   */
+  const AUTO_FOLLOW_THRESHOLD = 30;
+
+  function isNearBottom(el) {
+    // Si el contenido entra entero en el viewport, no hay scroll posible:
+    // devolvemos false para que no se active apenas abre el fullscreen.
+    if (el.scrollHeight <= el.clientHeight) return false;
+    // Si el user no ha scrolleado todavía (scrollTop = 0), no lo seguimos.
+    // Es la señal explícita de "estoy leyendo desde el principio, no me muevas".
+    if (el.scrollTop <= 0) return false;
+    return el.scrollHeight - el.scrollTop - el.clientHeight < AUTO_FOLLOW_THRESHOLD;
+  }
+
   function appendLine(output, text, kind) {
     const line = document.createElement('div');
     line.className = 'term__line';
@@ -138,8 +179,11 @@
       return;
     }
     line.innerHTML = escapeHtml(text).replace(/\n/g, '<br>');
+    const wasAtBottom = isNearBottom(output);
     output.appendChild(line);
-    output.scrollTop = output.scrollHeight;
+    if (wasAtBottom) {
+      output.scrollTop = output.scrollHeight;
+    }
   }
 
   function appendPrompt(output, label) {
@@ -230,6 +274,47 @@
     });
   }
 
+  /*
+   * Fullscreen mode: cuando arranca el run, el terminal se expande a un overlay
+   * mostrando solo el output. Click en cualquier lado lo cierra.
+   * El objetivo es darle al output el espacio que necesita sin restringirlo
+   * al max-height inline de la sección.
+   */
+  function enterFullscreen(term) {
+    if (term.wrapper.classList.contains('term--fullscreen')) return;
+    term.wrapper.classList.add('term--fullscreen');
+
+    const bar = document.createElement('div');
+    bar.className = 'term__fs-bar';
+    bar.innerHTML = `
+      <button type="button" class="term__fs-close" data-action="close-fs" aria-label="cerrar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+        </svg>
+      </button>
+    `;
+
+    // Insertar el bar ANTES del output para que aparezca arriba en el flex column
+    const outputSection = term.wrapper.querySelector('.term__section--output');
+    if (outputSection) {
+      term.wrapper.insertBefore(bar, outputSection);
+    } else {
+      term.wrapper.appendChild(bar);
+    }
+
+    // Empezar arriba: el user decide si scrollear hacia abajo. Si llega al
+    // fondo, el auto-follow de appendLine se activa solo.
+    requestAnimationFrame(() => term.output.scrollTop = 0);
+  }
+
+  function exitFullscreen(term) {
+    if (!term.wrapper.classList.contains('term--fullscreen')) return;
+    term.wrapper.classList.remove('term--fullscreen');
+    const bar = term.wrapper.querySelector('.term__fs-bar');
+    if (bar) bar.remove();
+  }
+
   function runCode(term) {
     const { wrapper, editor, inputSection, inputForm, output, originalCode } = term;
     const code = editor.innerText.replace(/\u00a0/g, ' ');
@@ -271,7 +356,10 @@
         showConfirm(
           output,
           msg,
-          () => execute(code, output, values, () => setState(wrapper, 'idle')),
+          () => {
+            enterFullscreen(term);
+            execute(code, output, values, () => setState(wrapper, 'idle'));
+          },
           () => {
             appendLine(output, '— cancelado', 'meta');
             setState(wrapper, 'idle');
@@ -280,6 +368,7 @@
         return;
       }
 
+      enterFullscreen(term);
       execute(code, output, values, () => setState(wrapper, 'idle'));
     };
 
@@ -419,6 +508,9 @@
   }
 
   function resetCode(term) {
+    if (term.wrapper.classList.contains('term--fullscreen')) {
+      exitFullscreen(term);
+    }
     term.editor.innerHTML = term.originalHtml;
     term.inputForm.innerHTML = '';
     term.inputSection.hidden = true;
@@ -432,10 +524,25 @@
 
     wrapper.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-action]');
-      if (!btn) return;
-      const action = btn.dataset.action;
-      if (action === 'run') runCode(term);
-      if (action === 'reset') resetCode(term);
+      if (btn) {
+        const action = btn.dataset.action;
+        if (action === 'run') runCode(term);
+        if (action === 'reset') resetCode(term);
+        if (action === 'close-fs') {
+          exitFullscreen(term);
+          return;
+        }
+        return;
+      }
+
+      // En fullscreen, solo cierra si el click es sobre el bar (no sobre el output).
+      // Así el user puede leer, hacer scroll y seleccionar texto sin cerrar.
+      if (
+        wrapper.classList.contains('term--fullscreen') &&
+        e.target.closest('.term__fs-bar')
+      ) {
+        exitFullscreen(term);
+      }
     });
 
     editor.addEventListener('keydown', (e) => {
@@ -446,6 +553,10 @@
       if (e.key === 'Tab') {
         e.preventDefault();
         document.execCommand('insertText', false, '  ');
+      }
+      if (e.key === 'Escape' && wrapper.classList.contains('term--fullscreen')) {
+        e.preventDefault();
+        exitFullscreen(term);
       }
     });
 
