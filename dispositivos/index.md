@@ -16,12 +16,12 @@ description: "Plugins, VST, aplicaciones, visuales y herramientas para mentes cr
       {% if d.kind %}
         <span class="dispositivo-list__kind">
           {% case d.kind %}
-            {% when "vst" %}🔌 VST
-            {% when "app" %}📱 app
-            {% when "tool" %}🛠️ herramienta
-            {% when "visual" %}🎨 visual
-            {% when "hardware" %}🔧 hardware
-            {% when "plugin" %}🔌 plugin
+            {% when "vst" %}VST
+            {% when "app" %}APP
+            {% when "tool" %}HERRAMIENTA
+            {% when "visual" %}VISUAL
+            {% when "hardware" %}HARDWARE
+            {% when "plugin" %}PLUGIN
             {% else %}· {{ d.kind }}
           {% endcase %}
         </span>

@@ -1,0 +1,29 @@
+/* Ficha de dispositivo: lectura y enlaces con contraste AA.
+   Se carga solo en el layout dispositivo.html. */
+
+.dispositivo-page__body {
+  max-width: 46rem;
+  font-family: var(--font-serif);
+  font-size: 1.02rem;
+  line-height: 1.68;
+}
+
+.dispositivo-page__body a {
+  color: var(--umbral-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--umbral-rule);
+  text-underline-offset: 3px;
+}
+
+.dispositivo-page__body a:hover {
+  color: var(--umbral-trace);
+  text-decoration-color: var(--umbral-trace);
+}
+
+.dispositivo-page__body strong {
+  color: var(--umbral-ink);
+}
+
+.dispositivo-page__body code {
+  color: var(--umbral-ink);
+}

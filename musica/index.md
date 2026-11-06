@@ -9,7 +9,7 @@ nav_order: 4
 
 <p class="musica-page__soon">Próximamente: <strong>plugins VST</strong> y Tracks propios</p>
 
-<p class="musica-page__mixer-line"><a href="{{ '/musica/mixer/' | relative_url }}">Mixer generativo</a></p>
+<p class="musica-page__mixer-line"><a href="{{ '/dispositivos/espiral/' | relative_url }}">Espiral — instrumento generativo</a></p>
 
 <section class="musica-page__section musica-page__section--last" aria-labelledby="musica-playlists">
   <h2 id="musica-playlists" class="musica-page__section-title">Playlists</h2>
