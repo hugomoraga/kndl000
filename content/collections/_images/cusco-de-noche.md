@@ -7,4 +7,5 @@ alt: ''
 image_position: ''
 image_fit: cover
 image_ratio: ''
+place: 'Cusco'
 ---

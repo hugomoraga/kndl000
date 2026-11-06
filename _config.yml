@@ -51,6 +51,11 @@ exclude:
   - Gemfile.lock
   - README.md
   - ESTRUCTURA.md
+  - DESIGN.md
+  - PRODUCT.md
+  - openspec
+  - scripts
+  - docs
   - .ruby-version
   - vendor
   - .bundle
@@ -61,7 +66,7 @@ collections_dir: content/collections
 collections:
   images:
     output: true
-    permalink: /imagenes/:name/
+    permalink: /imaginario/:name/
   poems:
     output: true
     permalink: /poemas/:name/

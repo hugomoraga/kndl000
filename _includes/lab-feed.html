@@ -17,11 +17,17 @@
 <script type="application/json" id="lab-home-config">
 {"sample_count":{{ _sample }}}
 </script>
-<section class="lab" aria-label="Laboratorio textual">
-  <div class="lab-toolbar">
-    <button type="button" class="lab-shuffle" id="lab-shuffle">Sentir +</button>
-  </div>
-  <div class="lab-feed" id="lab-feed-root" aria-live="polite">
+<section class="lab" id="laboratorio" aria-labelledby="lab-title">
+  <header class="lab__head">
+    <div class="lab__intro">
+      <h2 id="lab-title">Laboratorio</h2>
+      <p>Muestras del archivo, sorteadas. La cámara condensa una selección distinta cada vez.</p>
+    </div>
+    <div class="lab-toolbar">
+      <button type="button" class="lab-shuffle" id="lab-shuffle">Nueva muestra</button>
+    </div>
+  </header>
+  <div class="lab-feed" id="lab-feed-root">
     <noscript>
       <ul class="lab-fallback">
         {%- assign _fb_count = 0 -%}
@@ -34,6 +40,7 @@
       </ul>
     </noscript>
   </div>
+  <p class="sr-only" id="lab-status" role="status" aria-live="polite"></p>
 </section>
 <script type="application/json" id="lab-items">
 [

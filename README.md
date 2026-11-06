@@ -38,13 +38,13 @@ Accede al panel de administración en `/admin/` para gestionar el contenido usan
 
 Las 11 colecciones configuradas en `admin/config.yml`:
 - ✶ Diario (`_posts`)
-- ↂ Poemas (`_poems`)
-- ☽ Melange Reports (`_melange_reports`)
-- ⚱ Vestigios (`_vestigios`)
+- ⁂ Poemas (`_poems`)
+- 🜏 Melange Reports (`_melange_reports`)
+- ⏚ Vestigios (`_vestigios`)
 - ◉ Imágenes (`_images`)
 - ⟡ Rastros (`_fragmentos`)
 - ◊ Código (`_codigos`)
-- ◇ Dispositivos (`_dispositivos`)
+- ⎔ Dispositivos (`_dispositivos`)
 - 🎵 Spotify Playlists (`_spotify_playlists`)
 - 🎛️ YouTube Setlists (`_youtube_setlists`)
 - 🎧 Música Personal (`_personal_music`)

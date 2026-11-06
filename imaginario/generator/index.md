@@ -1,5 +1,5 @@
 ---
 layout: generator
-title: Visual Generativo
+title: Generativo
 ---
 

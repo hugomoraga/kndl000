@@ -4,7 +4,10 @@
   var elScript = document.getElementById("lab-items");
   var elRoot = document.getElementById("lab-feed-root");
   var elBtn = document.getElementById("lab-shuffle");
+  var elStatus = document.getElementById("lab-status");
   var elCfg = document.getElementById("lab-home-config");
+  var reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var shuffling = false;
   if (!elScript || !elRoot) return;
 
   var cfg = {};
@@ -134,6 +137,34 @@
     elRoot.appendChild(frag);
   }
 
+  function swap() {
+    render();
+    if (elStatus) elStatus.textContent = "Muestra renovada.";
+  }
+
+  function shuffleWithMotion() {
+    if (shuffling) return;
+    if (reducedMotion || !elRoot.classList) {
+      swap();
+      return;
+    }
+
+    shuffling = true;
+    elRoot.setAttribute("aria-busy", "true");
+    elRoot.classList.add("is-condensing");
+
+    window.setTimeout(function () {
+      swap();
+      window.requestAnimationFrame(function () {
+        elRoot.classList.remove("is-condensing");
+        window.setTimeout(function () {
+          elRoot.removeAttribute("aria-busy");
+          shuffling = false;
+        }, 240);
+      });
+    }, 180);
+  }
+
   render();
-  if (elBtn) elBtn.addEventListener("click", render);
+  if (elBtn) elBtn.addEventListener("click", shuffleWithMotion);
 })();

@@ -7,6 +7,7 @@ alt: Sobre Nubes hasta las Montañas
 image_position: ''
 image_fit: cover
 image_ratio: 4/3
+place: 'Mirador Capuliyoc'
 ---
 
 Despues de todo contemplo

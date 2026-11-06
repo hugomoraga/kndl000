@@ -6,30 +6,118 @@
   <title>{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }} · {{ site.title }}{% endif %}</title>
   {% include seo.html %}
   {% include head-css.html %}
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Lato:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
   {% include analytics.html %}
 </head>
-<body>
-  <main>
+<body class="imaginario-detail">
+  <main class="imaginario-detail__main">
+    {% assign media_type = page.media_type | default: "foto" %}
+    {% assign media_label = media_type | downcase %}
+    {% assign media_src = page.media_src | default: page.image %}
+    {% assign media_poster = page.poster | default: page.image %}
+    {% assign media_src_url = media_src %}
+    {% unless media_src_url contains "://" %}{% assign media_src_url = media_src_url | relative_url %}{% endunless %}
+    {% assign video_src_url = page.media_src %}
+    {% unless video_src_url contains "://" %}{% assign video_src_url = video_src_url | relative_url %}{% endunless %}
+
+    <nav class="imaginario-breadcrumb" aria-label="Ruta">
+      <a href="{{ '/imaginario/' | relative_url }}">← Imaginario</a>
+    </nav>
+
     {% include title.html %}
 
-    <article class="imagen-page">
-      <figure class="imagen-page__figure">
-        {% if page.image_fit or page.image_position or page.image_ratio %}{% capture img_style %}{% if page.image_fit %}object-fit: {{ page.image_fit }};{% endif %}{% if page.image_position %} object-position: {{ page.image_position }};{% endif %}{% if page.image_ratio %} aspect-ratio: {{ page.image_ratio }};{% endif %}{% endcapture %}{% endif %}
-        <img src="{{ site.baseurl }}{{ page.image }}" alt="{{ page.alt | default: page.title }}" class="imagen-page__image"{% if img_style %} style="{{ img_style | strip }}"{% endif %} />
+    <p class="imaginario-detail__meta">
+      <span class="imaginario-detail__format">{{ media_label }}</span>
+      {% if page.captured %}<span>{{ page.captured }}</span>{% endif %}
+      {% if page.place %}<span>{{ page.place }}</span>{% endif %}
+      {% if page.medium %}<span>{{ page.medium }}</span>{% endif %}
+    </p>
+
+    <article class="imaginario-viewer">
+      <figure class="imaginario-viewer__figure">
+        {% if media_type == "video" %}
+          {% if page.media_embed %}
+            <div class="imaginario-viewer__embed">{{ page.media_embed }}</div>
+          {% elsif page.media_src %}
+            <video class="imaginario-viewer__media" controls playsinline preload="metadata"{% if media_poster %} poster="{{ media_poster | relative_url }}"{% endif %}>
+              <source src="{{ video_src_url }}">
+              Tu navegador no reproduce este video.
+            </video>
+          {% else %}
+            <img src="{{ page.image | relative_url }}" alt="{{ page.alt | default: page.title | escape }}" class="imaginario-viewer__media" />
+          {% endif %}
+        {% elsif media_type == "generativo" %}
+          {% if page.media_embed %}
+            <div class="imaginario-viewer__embed">{{ page.media_embed }}</div>
+          {% elsif page.media_src %}
+            <iframe class="imaginario-viewer__frame" src="{{ video_src_url }}" title="{{ page.title | escape }}" loading="lazy"></iframe>
+          {% else %}
+            <img src="{{ page.image | relative_url }}" alt="{{ page.alt | default: page.title | escape }}" class="imaginario-viewer__media" />
+          {% endif %}
+        {% else %}
+          {% capture img_style %}{% if page.image_fit %}object-fit: {{ page.image_fit }};{% endif %}{% if page.image_position %} object-position: {{ page.image_position }};{% endif %}{% if page.image_ratio %} aspect-ratio: {{ page.image_ratio }};{% endif %}{% endcapture %}
+          <img
+            src="{{ media_src_url }}"
+            alt="{{ page.alt | default: page.title | escape }}"
+            class="imaginario-viewer__media"
+            {% if img_style != "" %}style="{{ img_style | strip }}"{% endif %}
+          />
+        {% endif %}
         {% if page.caption %}
-        <figcaption class="imagen-page__caption">
-          {{ page.caption }}
-        </figcaption>
+          <figcaption class="imaginario-viewer__caption">{{ page.caption }}</figcaption>
+        {% endif %}
+        {% if media_type == "foto" or media_type == "gif" or media_type == "escaneo" %}
+          <p class="imaginario-viewer__loupe-hint">Mover para inspeccionar</p>
         {% endif %}
       </figure>
-      <div class="imagen-page__body">
-         {{ content }}
+
+      <div class="imaginario-detail__note">
+        {{ content }}
       </div>
-
-      {% include back-button.html %}
     </article>
-  </main>
 
+    {% assign plates = site.images %}
+    {% assign plate_total = plates | size %}
+    {% assign plate_index = 0 %}
+    {% for plate in plates %}
+      {% if plate.url == page.url %}{% assign plate_index = forloop.index0 %}{% endif %}
+    {% endfor %}
+    {% assign prev_i = plate_index | minus: 1 %}
+    {% assign next_i = plate_index | plus: 1 %}
+
+    <nav class="imaginario-pager" aria-label="Otras placas">
+      {% if prev_i >= 0 %}
+        {% assign prev = plates[prev_i] %}
+        <a class="imaginario-pager__link" href="{{ prev.url | relative_url }}" data-pager="prev">← {{ prev.title }}</a>
+      {% else %}
+        <span aria-hidden="true"></span>
+      {% endif %}
+      <span class="imaginario-pager__count">{{ plate_index | plus: 1 }} / {{ plate_total }}</span>
+      {% if next_i < plate_total %}
+        {% assign next = plates[next_i] %}
+        <a class="imaginario-pager__link" href="{{ next.url | relative_url }}" data-pager="next">{{ next.title }} →</a>
+      {% else %}
+        <span aria-hidden="true"></span>
+      {% endif %}
+    </nav>
+
+    {% include back-button.html %}
+    {% include section-rail.html %}
+
+    <script>
+      (function () {
+        var prev = document.querySelector('[data-pager="prev"]');
+        var next = document.querySelector('[data-pager="next"]');
+        document.addEventListener('keydown', function (event) {
+          if (event.metaKey || event.ctrlKey || event.altKey) return;
+          var target = event.target;
+          if (target && target.closest && target.closest('input, textarea, select, button, a, [contenteditable]')) return;
+          if (event.key === 'ArrowLeft' && prev) window.location.assign(prev.href);
+          if (event.key === 'ArrowRight' && next) window.location.assign(next.href);
+        });
+      })();
+    </script>
+  </main>
+  <script src="{{ '/assets/js/core/imaginario-loupe.js' | relative_url }}" defer></script>
 </body>
 </html>

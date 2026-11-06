@@ -1,0 +1,10 @@
+{%- comment -%}
+  Enlace de regreso a una sección, resuelto desde _data/navigation.yml.
+  Uso: {% include section-link.html url="/poemas/" %}
+{%- endcomment -%}
+{%- assign _section = site.data.navigation | where: "url", include.url | first -%}
+{%- if _section -%}
+  <a href="{{ _section.url | relative_url }}">← {{ _section.name }}</a>
+{%- else -%}
+  <a href="{{ '/' | relative_url }}">← Volver</a>
+{%- endif -%}

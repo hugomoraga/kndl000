@@ -1,0 +1,93 @@
+# Fuente única de navegación. El orden de esta lista es el orden visible.
+# primary: aparece en el hero de la home, en "Umbrales" y como subconjunto en el 404.
+# detail_prefixes: prefijos de URL que resuelven el botón "volver" a esta sección.
+
+- name: Poemas
+  url: /poemas/
+  glyph: "⁂"
+  sigil: poemas
+  description: "Verso breve, simbólico, fragmentario."
+  primary: true
+  detail_prefixes:
+    - /poemas/
+
+- name: Imaginario
+  url: /imaginario/
+  glyph: "◉"
+  sigil: imaginario
+  description: "Fotografía, imagen latente y otros formatos."
+  primary: true
+  detail_prefixes:
+    - /imaginario/
+
+- name: Rastros
+  url: /fragmentos/
+  glyph: "⟡"
+  sigil: rastros
+  description: "Pensamiento continuo. Memoria. Lenguaje latiendo."
+  primary: true
+  detail_prefixes:
+    - /fragmentos/
+    - /rastros/
+
+- name: Melange
+  url: /melange/
+  glyph: "🜏\uFE0E"
+  sigil: melange
+  description: "Cuaderno de campo. Notas de travesía."
+  primary: true
+  detail_prefixes:
+    - /melange/
+    - /melange-reports/
+
+- name: Código
+  url: /codigo/
+  glyph: "◊"
+  sigil: codigo
+  description: "Código como expresión, desfasado y algo inútil."
+  primary: true
+  detail_prefixes:
+    - /codigo/
+
+- name: Dispositivos
+  url: /dispositivos/
+  glyph: "⎔"
+  sigil: dispositivos
+  description: "Plugins, VST, visuales y herramientas."
+  primary: true
+  detail_prefixes:
+    - /dispositivos/
+
+- name: Diario
+  url: /diario/
+  glyph: "✶"
+  sigil: diario
+  description: "Anotaciones, recorridos, pensamientos sueltos."
+  primary: false
+  detail_prefixes:
+    - /diario/
+    - /2024/
+    - /2025/
+    - /2026/
+    - /2027/
+    - /2028/
+    - /2029/
+    - /2030/
+
+- name: Vestigios
+  url: /vestigios/
+  glyph: "⏚"
+  sigil: vestigios
+  description: "Lo que queda después. Objetos encontrados."
+  primary: false
+  detail_prefixes:
+    - /vestigios/
+
+- name: Música
+  url: /musica/
+  glyph: "∿"
+  sigil: musica
+  description: "Ecos, mezclas y dispositivos sonoros."
+  primary: false
+  detail_prefixes:
+    - /musica/

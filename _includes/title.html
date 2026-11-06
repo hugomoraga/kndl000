@@ -1,19 +1,15 @@
 {%- assign _sym = include.symbol | default: page.symbol -%}
-{%- comment -%}
-  Por defecto el símbolo se renderiza como prefijo + sufijo (formato
-  clásico del sitio, ej "ↂ Poemas ↂ"). Si la página define
-  symbol_suffix: false en su frontmatter, solo va como prefijo.
-  Esto se usa en páginas que quieren un look más limpio (Rastros).
-{%- endcomment -%}
-{%- assign _show_suffix = true -%}
-{%- if page.symbol_suffix == false or include.symbol_suffix == false -%}
-  {%- assign _show_suffix = false -%}
-{%- endif -%}
+{%- assign _sigil = include.sigil | default: page.sigil | default: "default" -%}
 {% unless page.url == "/" %}
-    <h1 class="page-title">
-      <span class="page-title__text">{% if _sym %}{{ _sym }} {% endif %}{{ page.title }}{% if _sym and _show_suffix %} {{ _sym }}{% endif %}</span>
+    <h1 class="page-title" aria-label="{{ page.title | escape }}">
+      <span class="page-title__text">
+        {%- if _sym -%}
+          <span class="sigil sigil--{{ _sigil }}" aria-hidden="true"><span class="sigil__glyph">{{ _sym }}</span></span>
+        {%- endif -%}
+        {{ page.title }}
+      </span>
       <span class="init">
-        <a href="{{ site.baseurl }}/">∅ INIT</a>
+        <a href="{{ site.baseurl }}/" aria-label="Inicio">∅ INIT</a>
       </span>
     </h1>
 {% endunless %}

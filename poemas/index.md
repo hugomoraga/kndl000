@@ -1,6 +1,11 @@
 ---
 layout: default
 title: Poemas
+symbol: "⁂"
+sigil: poemas
+body_class: reading-poemas
+main_class: reading-main
+back: false
 description: "Archivo de poemas — KNDL 000. Versos breves, simbólicos, fragmentarios. Voz que se deshace."
 ---
 
@@ -9,6 +14,10 @@ description: "Archivo de poemas — KNDL 000. Versos breves, simbólicos, fragme
 
 <div class="poemas-index">
   <p class="poemas-index-lede">Archivo de versos, ordenado por fecha.</p>
+
+  {% if sorted_poems.size == 0 %}
+  <p class="reading-empty">Todavía no hay poemas publicados.</p>
+  {% endif %}
 
   {% for group in grouped_poems %}
   {% assign month_num = group.items.first.date | date: "%m" %}
@@ -34,11 +43,6 @@ description: "Archivo de poemas — KNDL 000. Versos breves, simbólicos, fragme
       {% for poem in group.items %}
       <li>
         <a class="poemas-index__row" href="{{ poem.url | relative_url }}">
-          {% if poem.image %}
-          <span class="poemas-index__thumb-wrap">
-            <img class="poemas-index__thumb" src="{{ poem.image | relative_url }}" alt="" width="48" height="48" loading="lazy" decoding="async">
-          </span>
-          {% endif %}
           <time class="poemas-index__day" datetime="{{ poem.date | date_to_xmlschema }}">{{ poem.date | date: "%d" }}</time>
           <span class="poemas-index__title-wrap">
             <span class="poemas-index__title">{{ poem.title }}</span>

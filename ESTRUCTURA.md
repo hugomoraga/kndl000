@@ -22,25 +22,25 @@ kndl000/
 ├── 📝 Contenido
 │   ├── content/
 │   │   └── collections/     # Colecciones Jekyll (contenido fuente)
-│   │       ├── _codigos/        # ◇ Código
-│   │       ├── _dispositivos/   # ◇ Dispositivos
+│   │       ├── _codigos/        # ◊ Código
+│   │       ├── _dispositivos/   # ⎔ Dispositivos
 │   │       ├── _fragmentos/     # ⟡ Rastros
 │   │       ├── _images/         # ◉ Imágenes
-│   │       ├── _melange_reports/# ☽ Melange Reports
+│   │       ├── _melange_reports/# 🜏 Melange Reports
 │   │       ├── _personal_music/ # ♪ Música personal
-│   │       ├── _poems/          # ↂ Poemas
+│   │       ├── _poems/          # ⁂ Poemas
 │   │       ├── _posts/          # ✶ Diario
 │   │       ├── _spotify_playlists/ # Listas de Spotify
-│   │       ├── _vestigios/      # ⚱ Vestigios
+│   │       ├── _vestigios/      # ⏚ Vestigios
 │   │       └── _youtube_setlists/   # Setlists de YouTube
 │   │
 │   ├── diario/index.md      # ✶ Diario (página)
-│   ├── poemas/index.md      # ↂ Poemas
-│   ├── visual/index.md      # ◉ Visual
+│   ├── poemas/index.md      # ⁂ Poemas
+│   ├── imaginario/index.md   # ◉ Imaginario
 │   ├── melange/index.md     # 🜏 Melange
-│   ├── vestigios/index.md   # ⚱ Vestigios
+│   ├── vestigios/index.md   # ⏚ Vestigios
 │   ├── codigo/index.md      # ◊ Código
-│   └── dispositivos/index.md# ◇ Devices
+│   └── dispositivos/index.md# ⎔ Dispositivos
 │
 │   # Las páginas viven en la raíz para que Jekyll las procese
 │
@@ -71,27 +71,15 @@ kndl000/
 │       │   │   └── components/
 │       │   │       └── control-panel.js
 │       │   │
-│       │   ├── umbral-tone/   # Módulo de audio generativo
+│       │   ├── umbral-vision/# Módulo de visual generativo
 │       │   │   ├── index.js
 │       │   │   ├── app.js
-│       │   │   ├── Channel.js
+│       │   │   ├── AudioReactive.js
 │       │   │   ├── Effects.js
-│       │   │   ├── Generators.js
-│       │   │   ├── Mixer.js
-│       │   │   ├── PatternEditor.js
-│       │   │   ├── PresetLoader.js
-│       │   │   ├── Transport.js
+│       │   │   ├── Transition.js
+│       │   │   ├── Utils.js
+│       │   │   ├── Visualizer.js
 │       │   │   └── README.md
-│       │   │
-│       │   └── umbral-vision/# Módulo de visual generativo
-│       │       ├── index.js
-│       │       ├── app.js
-│       │       ├── AudioReactive.js
-│       │       ├── Effects.js
-│       │       ├── Transition.js
-│       │       ├── Utils.js
-│       │       ├── Visualizer.js
-│       │       └── README.md
 │       │
 │       └── media/
 │           ├── images/      # Imágenes del sitio
@@ -132,6 +120,11 @@ kndl000/
 │       ├── home.yml
 │       └── navigation.yml
 │
+├── 🧪 Calidad
+│   └── scripts/
+│       ├── build-image-variants.sh  # WebP 480w/960w de Imaginario
+│       └── check-links.mjs          # Chequeo de enlaces internos en _site
+│
 ├── 🔧 Admin
 │   ├── admin/config.yml  # Configuración Sveltia CMS (11 colecciones)
 │   └── admin/index.html  # Panel admin Sveltia CMS (CDN)
@@ -160,13 +153,13 @@ kndl000/
 
 - **`core/`**: Código principal y helpers base. Audio, visualización, efectos de imagen, navegación, collage, nube de palabras, lab feed, infinite scroll y code runner. Carga vía `<script defer>` en layouts/pages.
 - **`utils/`**: Utilidades y componentes UI reutilizables. `control-panel.js` y `components/control-panel.js` (módulo y componente).
-- **`umbral-tone/`**: Módulo de audio generativo. Transport, Mixer, Channel, Effects, Generators, PatternEditor, PresetLoader, orquestados desde `app.js` (entry point).
 - **`umbral-vision/`**: Módulo de visual generativo. AudioReactive, Effects, Transition, Visualizer, Utils, orquestados desde `app.js` (entry point).
+- **Módulos externos:** el motor de audio vive en [`quicio/umbral-tone`](https://github.com/quicio/umbral-tone) y el instrumento **Espiral** en [`quicio/espiral`](https://github.com/quicio/espiral). El sitio los consume como dispositivos, no como código embebido.
 
 ### Media (`assets/media/`)
 
 - **`images/`**: Imágenes del sitio (JPEG/PNG) organizadas por fecha/UUID.
-- **`audio/`**: Samples de audio (WAV) usados por `umbral-tone` y la home.
+- **`audio/`**: Samples de audio (WAV) usados por la home y copiados a Espiral.
 
 ### Contenido (`content/`)
 
@@ -176,7 +169,7 @@ kndl000/
 ## 🎯 Ventajas de esta Estructura
 
 - **Separación clara**: Contenido fuente vs archivos generados (`_site/`).
-- **Organización lógica**: `core/`, `utils/`, `umbral-tone/`, `umbral-vision/` agrupan por responsabilidad.
+- **Organización lógica**: `core/`, `utils/` y `umbral-vision/` agrupan por responsabilidad; los instrumentos autónomos viven en repositorios de Quicio.
 - **Escalabilidad**: Módulos `umbral-*` se pueden cargar como bundles independientes.
 - **Mantenibilidad**: Cada módulo tiene su `README.md` interno y entry point claro.
 - **Compatibilidad**: Funciona con Jekyll (Ruby) y GitHub Pages sin configuración extra.
@@ -184,7 +177,13 @@ kndl000/
 ## 📝 Notas Importantes
 
 - Las páginas (`diario/`, `poemas/`, etc.) están en la raíz para que Jekyll las procese con `permalink: /`.
+- Imaginario vive en `imaginario/index.md`. Las rutas antiguas `/visual/` y `/imagenes/` se conservan como redirects estáticos hacia `/imaginario/` y `/imaginario/:name/`; la colección fuente sigue siendo `content/collections/_images`.
+- `_data/navigation.yml` es la fuente única de nombres, URLs, glifos, descripciones, visibilidad primaria y prefijos de vuelta de las secciones.
+- Después de agregar una placa nueva, ejecutar `scripts/build-image-variants.sh` para generar sus derivados WebP.
+- El workflow de GitHub Actions corre `scripts/check-links.mjs` después del build y antes del deploy.
+
 - Las colecciones viven en `content/collections/<_nombre>/` por la config `collections_dir`.
-- `assets/js/umbral-tone/` y `assets/js/umbral-vision/` son módulos autocontenidos con su propio `app.js` (entry) y `index.js` (API pública).
+- `assets/js/umbral-vision/` es un módulo autocontenido con su propio `app.js` (entry) e `index.js` (API pública).
+- `quicio/umbral-tone` y `quicio/espiral` son repositorios independientes; el sitio enlaza el instrumento desde `/dispositivos/espiral/`.
 - `_site/`, `node_modules/` y `vendor/` son generados — no editar manualmente.
 - `admin/config.yml` define las 11 colecciones del CMS (Sveltia CMS).

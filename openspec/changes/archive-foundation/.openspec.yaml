@@ -1,0 +1,4 @@
+schema: spec-driven
+created: 2026-11-06
+goal: Make the archive easier to evolve without route/link drift, finish the
+  Imaginario archive experience, and reduce image weight.

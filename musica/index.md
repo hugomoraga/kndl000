@@ -1,8 +1,12 @@
 ---
 layout: default
-title: ((( Ecos )))
+title: Música
+symbol: "∿"
+sigil: musica
+body_class: interior-page section-index
 nav: true
 nav_order: 4
+back: false
 ---
 
 <div class="musica-page" markdown="0">

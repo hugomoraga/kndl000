@@ -7,17 +7,19 @@
     {% include seo.html %}
     {% include head-css.html %}
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
-    <script src="https://unpkg.com/tone"></script>
     {% unless page.effects == false %}
     <script src="{{ '/assets/js/core/image-effects.js' | relative_url }}" defer></script>
     {% endunless %}
     {% include analytics.html %}
 
   </head>
-  <body>
+  <body class="{{ page.body_class | default: 'interior-page' }}{% if page.collection == 'posts' %} diario-surface{% elsif page.collection == 'vestigios' %} vestigios-page{% endif %}">
     <main{% if page.main_class %} class="{{ page.main_class }}"{% endif %}>
       {% include title.html %}
+
+      {% if page.date and page.collection %}
+      <p class="page-meta"><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y-%m-%d" }}</time></p>
+      {% endif %}
 
       {% if page.image %}
       {% include figure.html %}
@@ -25,7 +27,13 @@
 
       {{ content }}
 
+      {% unless page.back == false %}
       {% include back-button.html %}
+      {% endunless %}
+
+      {% unless page.url == "/" %}
+      {% include section-rail.html %}
+      {% endunless %}
     </main>
   </body>
 </html>

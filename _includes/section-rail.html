@@ -1,0 +1,30 @@
+{%- assign _here = page.url -%}
+<nav class="archive-rail" aria-label="Secciones del archivo">
+  <ul class="archive-rail__list">
+    {%- for item in site.data.navigation -%}
+      {%- assign _active = false -%}
+      {%- assign _current_attr = "" -%}
+      {%- if _here == item.url -%}
+        {%- assign _active = true -%}
+        {%- assign _current_attr = "page" -%}
+      {%- elsif item.detail_prefixes -%}
+        {%- for prefix in item.detail_prefixes -%}
+          {%- if _here contains prefix -%}
+            {%- assign _active = true -%}
+            {%- assign _current_attr = "true" -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+      <li>
+        <a class="archive-rail__link{% if _active %} is-active{% endif %}"
+           href="{{ item.url | relative_url }}"
+           data-label="{{ item.name | escape }}"
+           aria-label="{{ item.name | escape }}"
+           {%- if _current_attr != "" %} aria-current="{{ _current_attr }}"{% endif %}>
+          <span class="sigil sigil--{{ item.sigil }}" aria-hidden="true"><span class="sigil__glyph">{{ item.glyph }}</span></span>
+          <span class="archive-rail__name">{{ item.name }}</span>
+        </a>
+      </li>
+    {%- endfor -%}
+  </ul>
+</nav>

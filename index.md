@@ -1,42 +1,82 @@
 ---
 layout: default
 title: Inicio
-description: "Textos, código, arte y experimento — archivo creativo. Fragmentos, poemas, música, visual y código."
+description: "Archivo creativo de KNDL 000: poemas, imágenes, rastros, código y dispositivos en estado umbral."
 nav: true
 nav_order: 1
+body_class: umbral-page
+main_class: umbral-main
 ---
 
-<div class="home-header">
-  <div class="home-header__top">
-    <h1 id="cenizas" class="home-header__title">C . E . N . I . Z . A . S</h1>
-    <button type="button" class="home-nav__toggle" id="home-nav-toggle" aria-expanded="false" aria-controls="home-nav-panel" aria-label="Secciones del sitio">
-      <span class="home-nav__glyph" aria-hidden="true"></span>
-    </button>
-  </div>
-  <nav class="home-nav" aria-label="Secciones del sitio">
-    <div id="home-nav-panel" class="home-nav__panel nube-de-palabras">
-      <a href="{{ site.baseurl }}/poemas/">ↂ Poemas</a>
-      <a href="{{ site.baseurl }}/visual/">◉ Visual</a>
-      <a href="{{ site.baseurl }}/fragmentos/">⟡ Rastros</a>
-      <a href="{{ site.baseurl }}/melange/">🜏 Melange</a>
-      <a href="{{ site.baseurl }}/codigo/">◊ Código</a>
-      <a href="{{ site.baseurl }}/dispositivos/">⏣ Devices</a>
-    </div>
-  </nav>
+{% assign primary_nav = site.data.navigation | where: "primary", true %}
+
+<div markdown="0">
+  <a class="umbral-skip" href="#laboratorio">Saltar al contenido</a>
 </div>
 
-{% include home-collage.html %}
+<div class="umbral" id="umbral">
+  <canvas id="art" class="umbral__chamber" role="img" aria-label="Cámara de niebla generativa: trazas de partículas que se condensan en la oscuridad"></canvas>
+  <div class="umbral__veil" aria-hidden="true"></div>
 
-<p class="home-terminal" translate="no"><span class="home-terminal-prompt" aria-hidden="true">kndl@archivo:~$</span><span class="home-terminal-text">cd /root/señales_en_estado_infinito </span></p>
+  <header class="umbral__bar">
+    <a class="umbral__mark" href="{{ site.baseurl }}/" aria-label="KNDL 000, inicio">KNDL 000</a>
+    <p class="umbral__state" translate="no">Estado umbral</p>
+  </header>
+
+  <div class="umbral__stage">
+    <h1 class="umbral__title" aria-label="Cenizas">
+      <span class="umbral__title-top" aria-hidden="true">CENIZAS</span>
+      <span class="umbral__title-bottom" aria-hidden="true">CENIZAS</span>
+      <span class="umbral__threshold" aria-hidden="true"></span>
+    </h1>
+    <p class="umbral__sub">Texto, imagen y código se condensan en el mismo lugar.</p>
+  </div>
+
+  <div class="umbral__foot">
+    <nav class="umbral__nav" aria-label="Secciones del sitio">
+      {% for item in primary_nav %}
+        <a href="{{ item.url | relative_url }}">{{ item.name }}</a>
+      {% endfor %}
+    </nav>
+    <a class="umbral__descent" href="#laboratorio">
+      <span>Descender</span>
+      <svg width="12" height="26" viewBox="0 0 12 26" fill="none" aria-hidden="true" focusable="false">
+        <path d="M6 0v24M1 19l5 5 5-5" stroke="currentColor" stroke-width="1"/>
+      </svg>
+    </a>
+  </div>
+</div>
+
+<section class="umbral-quote" aria-label="Rastro del archivo">
+  <p class="umbral-quote__label" translate="no">Rastro</p>
+  <blockquote class="umbral-quote__text">Tanto ruido sin tono, tanto color sin trazo...</blockquote>
+  <p class="umbral-quote__meta" translate="no">2025</p>
+</section>
 
 {% include lab-feed.html %}
 
-<a href="{{ site.baseurl }}/vestigios/" class="link-oculto" aria-label="Ir a Vestigios" title="Vestigios">... ⚙ ...</a>
+<section class="umbral-exits" aria-labelledby="umbral-exits-title">
+  <h2 id="umbral-exits-title">Umbrales</h2>
+  <ul class="umbral-exits__list">
+    {% for item in primary_nav %}
+      <li class="umbral-exits__item">
+        <a href="{{ item.url | relative_url }}">
+          <span class="umbral-exits__glyph sigil sigil--{{ item.sigil }}" aria-hidden="true"><span class="sigil__glyph">{{ item.glyph }}</span></span>
+          <span class="umbral-exits__name">{{ item.name }}</span>
+          <span class="umbral-exits__desc">{{ item.description }}</span>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</section>
 
-<canvas id="art" width="800" height="600" role="img" aria-label="Visual generativo de arte procedural" style="width: 100%; height:300px"></canvas>
+<footer class="umbral-foot">
+  <p>KNDL 000 · <span translate="no">archivo en estado umbral</span></p>
+  <a href="{{ site.baseurl }}/vestigios/" class="umbral-foot__vestigio">Vestigios</a>
+</footer>
 
 <noscript>
-  <p class="noscript-note">Las animaciones (nube de secciones, canvas generativo y audio sintetizado) y el feed de laboratorio requieren JavaScript. La navegación, el collage y todos los enlaces del sitio siguen siendo accesibles sin él. Para activar el laboratorio, las nubes y el audio, habilita JavaScript.</p>
+  <p class="umbral-noscript">La cámara generativa y el laboratorio requieren JavaScript. La navegación, los poemas, las imágenes y el archivo completo siguen disponibles sin él.</p>
 </noscript>
 
 <script src="{{ '/assets/js/bundles/home.bundle.js' | relative_url }}" defer></script>

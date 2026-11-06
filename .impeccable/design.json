@@ -1,0 +1,662 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-06T00:00:00.000Z",
+  "title": "Design System: KNDL 000",
+  "extensions": {
+    "colorMeta": {
+      "chamber-black": {
+        "role": "neutral",
+        "displayName": "Chamber Black",
+        "canonical": "#060708",
+        "tonalRamp": [
+          "#000000",
+          "#060708",
+          "#111314",
+          "#1c2021",
+          "#2a2f30",
+          "#3b4142",
+          "#555c5d",
+          "#7a8282"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Archive Ink",
+        "canonical": "#e9e6dc",
+        "tonalRamp": [
+          "#171613",
+          "#2b2924",
+          "#454239",
+          "#635f53",
+          "#847f71",
+          "#a8a294",
+          "#cdc7b9",
+          "#e9e6dc"
+        ]
+      },
+      "ink-dim": {
+        "role": "neutral",
+        "displayName": "Dim Ink",
+        "canonical": "#9aa3a1",
+        "tonalRamp": [
+          "#101312",
+          "#1c211f",
+          "#2c3331",
+          "#404846",
+          "#58615f",
+          "#747d7b",
+          "#9aa3a1",
+          "#c7cfcd"
+        ]
+      },
+      "ink-muted": {
+        "role": "neutral",
+        "displayName": "Muted Measurement",
+        "canonical": "#7f8a88",
+        "tonalRamp": [
+          "#0b0e0d",
+          "#161a19",
+          "#242a28",
+          "#343b39",
+          "#4a5250",
+          "#626b69",
+          "#7f8a88",
+          "#adb6b4"
+        ]
+      },
+      "trace-cyan": {
+        "role": "primary",
+        "displayName": "Trace Cyan",
+        "canonical": "#9fc6c9",
+        "tonalRamp": [
+          "#071012",
+          "#0d2022",
+          "#153436",
+          "#1f4b4e",
+          "#2c6669",
+          "#4b8b8e",
+          "#79b0b3",
+          "#c4e2e4"
+        ]
+      },
+      "event-amber": {
+        "role": "secondary",
+        "displayName": "Event Amber",
+        "canonical": "#c7a466",
+        "tonalRamp": [
+          "#160f06",
+          "#2a1e0c",
+          "#453214",
+          "#63481d",
+          "#836228",
+          "#a17c3d",
+          "#c7a466",
+          "#ead3a7"
+        ]
+      },
+      "code-teal": {
+        "role": "tertiary",
+        "displayName": "Code Teal",
+        "canonical": "#8fbfc0",
+        "tonalRamp": [
+          "#061011",
+          "#0c2021",
+          "#153435",
+          "#1f4a4b",
+          "#2d6667",
+          "#4d8c8d",
+          "#73b2b3",
+          "#b9dfe0"
+        ]
+      },
+      "diary-amber": {
+        "role": "tertiary",
+        "displayName": "Diary Amber",
+        "canonical": "#c2a06a",
+        "tonalRamp": [
+          "#150f07",
+          "#291e0d",
+          "#433116",
+          "#604820",
+          "#80612c",
+          "#a17e42",
+          "#c2a06a",
+          "#ead4ab"
+        ]
+      },
+      "poem-cinnabar": {
+        "role": "tertiary",
+        "displayName": "Poem Cinnabar",
+        "canonical": "#c0816e",
+        "tonalRamp": [
+          "#160a07",
+          "#2a150f",
+          "#46251b",
+          "#653629",
+          "#854b3a",
+          "#a56654",
+          "#c0816e",
+          "#e8b8a8"
+        ]
+      },
+      "report-cobalt": {
+        "role": "tertiary",
+        "displayName": "Report Cobalt",
+        "canonical": "#8fa4bd",
+        "tonalRamp": [
+          "#080d13",
+          "#111c27",
+          "#1c2f40",
+          "#2a455c",
+          "#3d6080",
+          "#5b82a2",
+          "#8fa4bd",
+          "#c8d6e4"
+        ]
+      },
+      "syntax-number": {
+        "role": "tertiary",
+        "displayName": "Syntax Number",
+        "canonical": "#a9bfa0",
+        "tonalRamp": [
+          "#0d120c",
+          "#182016",
+          "#273324",
+          "#3a4a34",
+          "#506449",
+          "#6c8064",
+          "#8fa886",
+          "#c0d2b7"
+        ]
+      },
+      "syntax-function": {
+        "role": "tertiary",
+        "displayName": "Syntax Function",
+        "canonical": "#d8d2c0",
+        "tonalRamp": [
+          "#15140f",
+          "#29261c",
+          "#45402f",
+          "#635c45",
+          "#837a5e",
+          "#a59a7a",
+          "#c8bd9d",
+          "#eee7d4"
+        ]
+      },
+      "syntax-type": {
+        "role": "tertiary",
+        "displayName": "Syntax Type",
+        "canonical": "#b7c9a9",
+        "tonalRamp": [
+          "#0f130c",
+          "#1b2316",
+          "#2d3824",
+          "#435238",
+          "#5b6d4e",
+          "#788c68",
+          "#9bb184",
+          "#c8d8b9"
+        ]
+      },
+      "syntax-variable": {
+        "role": "tertiary",
+        "displayName": "Syntax Variable",
+        "canonical": "#c6d2d0",
+        "tonalRamp": [
+          "#101514",
+          "#1c2423",
+          "#2d3836",
+          "#42504e",
+          "#5a6a68",
+          "#768684",
+          "#9aa9a7",
+          "#d2dedc"
+        ]
+      },
+      "viewer-black": {
+        "role": "neutral",
+        "displayName": "Viewer Black",
+        "canonical": "#0a0c0d",
+        "tonalRamp": [
+          "#000000",
+          "#050607",
+          "#0a0c0d",
+          "#121617",
+          "#1c2223",
+          "#2a3031",
+          "#3d4445",
+          "#5c6465"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Threshold Display",
+        "purpose": "Solo el título CENIZAS de la portada; nunca en páginas internas."
+      },
+      "quote": {
+        "displayName": "Archive Quote",
+        "purpose": "Cita editorial a gran escala, máximo 24ch."
+      },
+      "headline": {
+        "displayName": "Section Headline",
+        "purpose": "Laboratorio, Umbrales y encabezados de banda."
+      },
+      "title": {
+        "displayName": "Specimen Title",
+        "purpose": "Títulos de muestras y nombres de sección en listas."
+      },
+      "body": {
+        "displayName": "Editorial Body",
+        "purpose": "Lectura y navegación; dentro del contenedor de 1000px."
+      },
+      "label": {
+        "displayName": "Instrument Label",
+        "purpose": "Fechas, hashes, estados, botones y medidas; nunca menor a 11px."
+      },
+      "sans": {
+        "displayName": "UI Sans",
+        "purpose": "Descripciones de laboratorio y salidas; nunca títulos ni cuerpo largo."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "ease-out-expo",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Subrayados, desplazamientos y líneas que crecen."
+      },
+      {
+        "name": "threshold-breathe",
+        "value": "11s ease-in-out infinite",
+        "purpose": "Respiración lenta de la línea umbral; se desactiva con movimiento reducido."
+      },
+      {
+        "name": "condensation",
+        "value": "requestAnimationFrame",
+        "purpose": "Trazas del canvas; exposición fija con prefers-reduced-motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "520px"
+      },
+      {
+        "name": "md",
+        "value": "700px"
+      },
+      {
+        "name": "lg",
+        "value": "900px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Nav Link",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Enlace de sección sobre el hero; subrayado cian que crece desde la izquierda.",
+      "html": "<a class=\"ds-nav-link\" href=\"/poemas/\">Poemas</a>",
+      "css": ".ds-nav-link { position: relative; display: inline-block; padding: 0.3rem 0; font-family: Newsreader, Georgia, serif; font-size: 0.98rem; letter-spacing: 0.05em; color: #c3c8c4; text-decoration: none; } .ds-nav-link::after { content: \"\"; position: absolute; right: 0; bottom: 0; left: 0; height: 1px; background: #9fc6c9; transform: scaleX(0); transform-origin: left center; transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1); } .ds-nav-link:hover::after, .ds-nav-link:focus-visible::after { transform: scaleX(1); } .ds-nav-link:focus-visible { outline: 1px solid #9fc6c9; outline-offset: 4px; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Acción secundaria del laboratorio; rectángulo sin radio, borde capilar y label mono.",
+      "html": "<button class=\"ds-btn-secondary\" type=\"button\">Nueva muestra</button>",
+      "css": ".ds-btn-secondary { padding: 0.68rem 1rem; border: 1px solid rgba(233, 230, 220, 0.22); border-radius: 0; background: transparent; color: #9aa3a1; font-family: JetBrains Mono, Fira Code, monospace; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: color 0.3s ease, border-color 0.3s ease; } .ds-btn-secondary:hover { border-color: rgba(159, 198, 201, 0.62); color: #e9e6dc; } .ds-btn-secondary:focus-visible { outline: 1px solid #9fc6c9; outline-offset: 4px; }"
+    },
+    {
+      "name": "Lab Row",
+      "kind": "card",
+      "refersTo": "lab-row",
+      "description": "Fila del laboratorio: tipo y hash a la izquierda, título a la derecha, regla capilar y traza al hover.",
+      "html": "<article class=\"ds-lab-row\"><header class=\"ds-lab-meta\"><span class=\"ds-lab-kind\">CÓDIGO</span><span class=\"ds-lab-hash\">COD/767f.3c78.4499.f933</span></header><p class=\"ds-lab-text\"><a href=\"#\">Objeto vacío</a></p></article>",
+      "css": ".ds-lab-row { position: relative; display: grid; grid-template-columns: minmax(7rem, 10rem) minmax(0, 1fr); gap: 2.5rem; align-items: baseline; padding: 1.15rem 0; border-top: 1px solid rgba(233, 230, 220, 0.07); } .ds-lab-row::after { content: \"\"; position: absolute; right: 0; bottom: -1px; left: 0; height: 1px; background: #9fc6c9; opacity: 0.5; transform: scaleX(0); transform-origin: left center; transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1); } .ds-lab-row:hover::after { transform: scaleX(1); } .ds-lab-meta { display: flex; flex-direction: column; gap: 0.32rem; font-family: JetBrains Mono, Fira Code, monospace; font-size: 0.7rem; letter-spacing: 0.1em; line-height: 1.4; } .ds-lab-kind { color: #8fbfc0; text-transform: uppercase; } .ds-lab-kind::before { content: \"\"; display: inline-block; width: 5px; height: 5px; margin-right: 0.55rem; border-radius: 50%; background: currentColor; vertical-align: middle; opacity: 0.8; } .ds-lab-hash { color: #7f8a88; letter-spacing: 0.03em; } .ds-lab-text { margin: 0; font-family: Newsreader, Georgia, serif; font-size: 1.35rem; line-height: 1.35; color: #cfd3cc; } .ds-lab-text a { color: inherit; text-decoration: none; background-image: linear-gradient(currentColor, currentColor); background-repeat: no-repeat; background-position: 0 100%; background-size: 0 1px; transition: background-size 0.4s cubic-bezier(0.16, 1, 0.3, 1); } .ds-lab-text a:hover { color: #e9e6dc; background-size: 100% 1px; }"
+    },
+    {
+      "name": "Exit Link",
+      "kind": "nav",
+      "refersTo": "exit-link",
+      "description": "Puerta del índice Umbrales: sigilo tipográfico, nombre serif y descripción breve.",
+      "html": "<a class=\"ds-exit\" href=\"/poemas/\"><span class=\"ds-exit-glyph\" aria-hidden=\"true\">ↂ</span><span class=\"ds-exit-name\">Poemas</span><span class=\"ds-exit-desc\">Verso breve, simbólico, fragmentario.</span></a>",
+      "css": ".ds-exit { display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); grid-template-rows: auto auto; gap: 0.3rem 1rem; padding: 1.3rem 0; border-top: 1px solid rgba(233, 230, 220, 0.07); color: #e9e6dc; text-decoration: none; } .ds-exit-glyph { grid-row: 1 / span 2; font-family: Newsreader, Georgia, serif; font-size: 1.25rem; line-height: 1.2; color: #7f8a88; transition: color 0.3s ease; } .ds-exit-name { font-family: Newsreader, Georgia, serif; font-size: 1.22rem; line-height: 1.2; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); } .ds-exit-desc { font-family: Lato, system-ui, sans-serif; font-size: 0.8rem; line-height: 1.45; color: #9aa3a1; } .ds-exit:hover .ds-exit-glyph { color: #9fc6c9; } .ds-exit:hover .ds-exit-name { transform: translateX(3px); } .ds-exit:focus-visible { outline: 1px solid #9fc6c9; outline-offset: 4px; }"
+    },
+    {
+      "name": "Threshold Title",
+      "kind": "custom",
+      "description": "Firma de la portada: dos copias del título recortadas al 50%, separadas por una línea de 1px que respira. Solo en la home.",
+      "html": "<h1 class=\"ds-threshold\"><span class=\"ds-threshold-top\">CENIZAS</span><span class=\"ds-threshold-bottom\" aria-hidden=\"true\">CENIZAS</span><span class=\"ds-threshold-line\" aria-hidden=\"true\"></span></h1>",
+      "css": ".ds-threshold { position: relative; display: inline-block; margin: 0; border: 0; font-family: Newsreader, Georgia, serif; font-size: clamp(3.2rem, 9vw, 6rem); font-weight: 250; font-variation-settings: \"opsz\" 72; line-height: 0.82; letter-spacing: 0.06em; color: #e9e6dc; text-transform: uppercase; } .ds-threshold-top { display: block; clip-path: inset(0 0 50% 0); } .ds-threshold-bottom { position: absolute; inset: 0; clip-path: inset(50% 0 0 0); color: #8f9a97; transform: translateY(1px); } .ds-threshold-line { position: absolute; top: 50%; left: 50%; display: block; width: 100vw; height: 1px; transform: translate(-50%, -50%); background: linear-gradient(90deg, transparent 0%, rgba(224, 234, 234, 0.62) 50%, transparent 100%); animation: ds-breathe 11s ease-in-out infinite; pointer-events: none; } @keyframes ds-breathe { 0%, 100% { opacity: 0.72; } 50% { opacity: 1; } } @media (prefers-reduced-motion: reduce) { .ds-threshold-line { animation: none; opacity: 1; } }"
+    },
+    {
+      "name": "Code Rack",
+      "kind": "nav",
+      "refersTo": "code-module",
+      "description": "Fila del índice de Código sobre un bus vertical; dirección, nodo, título/concepto y lenguaje/estado. La leyenda todos/ejecutable/lectura filtra el rack por estado.",
+      "html": "<ol class=\"ds-rack\"><li><a class=\"ds-rack-row\" href=\"#\"><span class=\"ds-rack-address\">#00000000</span><span class=\"ds-rack-node\" aria-hidden=\"true\"></span><span class=\"ds-rack-body\"><span class=\"ds-rack-title\">Autómata de Energía</span><span class=\"ds-rack-concept\">La energía busca equilibrio. Las anomalías emergen.</span></span><span class=\"ds-rack-meta\"><span>javascript</span><span class=\"ds-rack-state\">● ejecutable</span></span></a></li></ol>",
+      "css": ".ds-rack { position: relative; margin: 0; padding: 0; list-style: none; } .ds-rack::before { content: \"\"; position: absolute; top: 0; bottom: 0; left: calc(7rem + 1rem + 0.75rem); width: 1px; background: rgba(233,230,220,0.12); } .ds-rack-row { position: relative; display: grid; grid-template-columns: 7rem 1.5rem minmax(0,1fr) auto; gap: 1rem; align-items: start; padding: 1.15rem 0; border-top: 1px solid rgba(233,230,220,0.07); color: #e9e6dc; text-decoration: none; } .ds-rack-row::after { content: \"\"; position: absolute; top: -1px; right: 0; left: 0; height: 1px; background: #9fc6c9; opacity: 0.65; transform: scaleX(0); transform-origin: left center; transition: transform 0.45s cubic-bezier(0.16,1,0.3,1); } .ds-rack-row:hover::after, .ds-rack-row:focus-visible::after { transform: scaleX(1); } .ds-rack-address { padding-top: 0.2rem; color: #7f8a88; font-family: JetBrains Mono, monospace; font-size: 0.7rem; } .ds-rack-node { position: relative; min-height: 1.4rem; } .ds-rack-node::before { content: \"\"; position: absolute; top: 0.45rem; left: 50%; width: 7px; height: 7px; transform: translateX(-50%); border-radius: 50%; background: #7f8a88; } .ds-rack-row:hover .ds-rack-node::before { background: #9fc6c9; transform: translateX(-50%) scale(1.3); } .ds-rack-body { display: flex; flex-direction: column; gap: 0.35rem; } .ds-rack-title { font-family: Newsreader, Georgia, serif; font-size: 1.3rem; line-height: 1.2; } .ds-rack-concept { max-width: 65ch; color: #9aa3a1; font-family: Newsreader, Georgia, serif; font-size: 0.95rem; font-style: italic; line-height: 1.5; } .ds-rack-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 0.35rem; color: #7f8a88; font-family: JetBrains Mono, monospace; font-size: 0.7rem; } .ds-rack-state { color: #9fc6c9; text-transform: uppercase; }"
+    },
+    {
+      "name": "Test Bench",
+      "kind": "custom",
+      "refersTo": "code-bench",
+      "description": "Banco de pruebas del detalle: flujo por pasos Código → Entrada → Salida, fullscreen automático al ejecutar, barra de tres zonas, un solo panel, salida al inicio con inicio/fin, API estructurada text/grid/trace/metric/error.",
+      "html": "<div class=\"ds-bench\"><div class=\"ds-bench-bar\"><span class=\"ds-bench-lang\">JS</span><span class=\"ds-bench-actions\"><button type=\"button\" class=\"ds-bench-run\">ejecutar</button><button type=\"button\" class=\"ds-bench-reset\">reiniciar</button></span></div><div class=\"ds-bench-label\">código</div><pre class=\"ds-bench-code\">const vacio = {};</pre><div class=\"ds-bench-label\">salida</div><pre class=\"ds-bench-output\">$ ejecutar\nClaves del objeto: []</pre></div>",
+      "css": ".ds-bench { border: 1px solid rgba(233,230,220,0.12); border-radius: 0; background: rgba(0,0,0,0.26); color: #e9e6dc; font-family: JetBrains Mono, monospace; } .ds-bench-bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.55rem 0.9rem; border-bottom: 1px solid rgba(233,230,220,0.07); } .ds-bench-lang { color: #7f8a88; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; } .ds-bench-actions { display: inline-flex; gap: 0.5rem; } .ds-bench-run, .ds-bench-reset { padding: 0.2rem 0.55rem; border: 1px solid transparent; border-radius: 0; background: transparent; color: #9aa3a1; font-family: JetBrains Mono, monospace; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; } .ds-bench-run { border-color: rgba(159,198,201,0.35); color: #9fc6c9; } .ds-bench-run:hover { border-color: rgba(159,198,201,0.7); background: rgba(159,198,201,0.08); color: #e9e6dc; } .ds-bench-reset:hover { color: #e9e6dc; } .ds-bench-label { padding: 0.65rem 1.25rem 0.35rem; color: #7f8a88; font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; } .ds-bench-code, .ds-bench-output { margin: 0; padding: 0.75rem 1.25rem 1.5rem; font: inherit; font-size: 0.82rem; line-height: 1.7; white-space: pre-wrap; color: #e9e6dc; } .ds-bench-output { color: #9fc6c9; }"
+    },
+    {
+      "name": "Imaginario Contact Sheet",
+      "kind": "card",
+      "refersTo": "plate",
+      "description": "Hoja de contactos de Imaginario: placas 4:3, gutters de 1px, índice, título serif, formato y caption.",
+      "html": "<a class=\"ds-plate\" href=\"#\"><figure><span class=\"ds-plate-media\"><img src=\"/assets/media/images/IMG_6076.jpg\" alt=\"Placa\"></span><figcaption><span class=\"ds-plate-index\">01</span><span class=\"ds-plate-title\">Ascenso</span><span class=\"ds-plate-format\">foto</span><span class=\"ds-plate-caption\">Mirador Capuliyoc</span></figcaption></figure></a>",
+      "css": ".ds-plate { display:block; background:#060708; color:#e9e6dc; text-decoration:none; } .ds-plate figure { margin:0; } .ds-plate-media { display:block; aspect-ratio:4/3; overflow:hidden; background:#0a0c0d; } .ds-plate-media img { display:block; width:100%; height:100%; object-fit:cover; transition:transform 0.6s cubic-bezier(0.16,1,0.3,1); } .ds-plate:hover .ds-plate-media img { transform:scale(1.025); } .ds-plate figcaption { display:grid; grid-template-columns:2rem minmax(0,1fr) auto; gap:0.2rem 0.75rem; align-items:baseline; padding:0.8rem 1rem 1rem; } .ds-plate-index, .ds-plate-format { font-family:JetBrains Mono, monospace; font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:#7f8a88; } .ds-plate-title { font-family:Newsreader, Georgia, serif; font-size:1rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; } .ds-plate-caption { grid-column:2 / -1; font-family:Newsreader, Georgia, serif; font-size:0.82rem; font-style:italic; color:#9aa3a1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }"
+    },
+    {
+      "name": "Imaginario Light Table",
+      "kind": "custom",
+      "refersTo": "light-table",
+      "description": "Visor de medios de Imaginario: imagen, video, gif o embed generativo, metadata, anterior/siguiente con contador y flechas de teclado.",
+      "html": "<article class=\"ds-light\"><p class=\"ds-light-meta\"><span>foto</span><span>2025-06-20</span><span>Mirador Capuliyoc</span></p><figure><img src=\"/assets/media/images/IMG_6076.jpg\" alt=\"Ascenso\"><figcaption>Mirador Capuliyoc</figcaption></figure></article>",
+      "css": ".ds-light { color:#e9e6dc; } .ds-light-meta { display:flex; flex-wrap:wrap; gap:0.5rem 1rem; margin:0 0 2rem; font-family:JetBrains Mono, monospace; font-size:0.7rem; letter-spacing:0.1em; text-transform:lowercase; color:#7f8a88; } .ds-light-meta span:first-child { color:#9fc6c9; text-transform:uppercase; } .ds-light figure { margin:0; border:1px solid rgba(233,230,220,0.12); background:#0a0c0d; overflow:hidden; } .ds-light img { display:block; width:100%; height:auto; } .ds-light figcaption { margin:0; padding:0.9rem 1rem 1rem; border-top:1px solid rgba(233,230,220,0.07); font-family:Newsreader, Georgia, serif; font-size:0.9rem; font-style:italic; color:#9aa3a1; }"
+    },
+    {
+      "name": "Reading Frame",
+      "kind": "custom",
+      "refersTo": "reading-frame",
+      "description": "Marco compartido: shell de 1100px, contenedor de 1000px centrado y prosa de 75ch alineada al borde izquierdo del contenedor.",
+      "html": "<main class=\"reading-main\"><nav class=\"reading-breadcrumb\"><a href=\"/poemas/\">← Poemas</a><a href=\"/\">∅ INIT</a></nav><header class=\"reading-detail-head\"><h1 class=\"reading-detail__title\"><span class=\"reading-detail__mark\">~</span> Cae</h1><p class=\"reading-detail__meta\"><span>Mal Necesario · parte 2</span><span>2025-06-22</span></p></header><div class=\"reading-body\"><p>Agotado... Enquistado de tanto significado...</p></div></main>",
+      "css": ".reading-main { --reading-measure: 1000px; --prose-measure: 75ch; max-width:1100px; margin:0 auto; padding:clamp(1.5rem,4vw,3rem) clamp(1.25rem,4vw,2rem) clamp(4rem,8vw,7rem); background:#060708; color:#e9e6dc; } .reading-breadcrumb { display:flex; justify-content:space-between; gap:1.5rem; width:100%; max-width:var(--reading-measure); margin:0 auto 1.5rem; font-family:JetBrains Mono, monospace; font-size:0.7rem; color:#9aa3a1; } .reading-detail-head { width:100%; max-width:var(--reading-measure); margin:0 auto clamp(2rem,5vw,3.25rem); } .reading-detail__title { margin:0 0 1rem; padding:0 0 1.1rem; border-bottom:1px solid rgba(233,230,220,0.12); font-family:Newsreader, Georgia, serif; font-size:clamp(2.6rem,5vw,4rem); font-weight:300; line-height:1.02; } .reading-detail__meta { display:flex; flex-wrap:wrap; gap:0.5rem 1rem; font-family:JetBrains Mono, monospace; font-size:0.7rem; letter-spacing:0.04em; color:#7f8a88; } .reading-body { max-width:var(--prose-measure); margin:0; font-family:Newsreader, Georgia, serif; font-size:clamp(1.05rem,1.8vw,1.2rem); line-height:1.8; } .reading-main a:focus-visible { outline:1px solid #9fc6c9; outline-offset:3px; }"
+    },
+    {
+      "name": "Rastro Block",
+      "kind": "custom",
+      "refersTo": "rastro-block",
+      "description": "Entrada continua de Rastros: marca ※, año en mono y líneas sin enlace, sin tarjeta ni paginación.",
+      "html": "<div class=\"rastros-year\">2026</div><article class=\"rastro-bloque\"><span class=\"rastro-marca\" aria-hidden=\"true\">※</span><ul class=\"rastro-lista\"><li>El alfabeto se gasta al repetirlo.</li><li>Las palabras también.</li></ul></article>",
+      "css": ".rastros-year { margin:3rem 0 1rem; font-family:JetBrains Mono, monospace; font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase; color:#9aa3a1; } .rastro-bloque { max-width:1000px; margin:0 auto 2rem; } .rastro-marca { display:block; margin-bottom:0.45rem; font-family:JetBrains Mono, monospace; font-size:0.85rem; color:#5f6a68; } .rastro-lista { margin:0; padding:0 0 0 1.4rem; list-style:none; } .rastro-lista li { position:relative; padding:0.15rem 0; font-family:Newsreader, Georgia, serif; font-size:clamp(1.1rem,2vw,1.35rem); line-height:1.65; color:#e9e6dc; } .rastro-lista li::before { content:\"·\"; position:absolute; left:-1rem; color:#9fc6c9; }"
+    },
+    {
+      "name": "Poem Index Row",
+      "kind": "custom",
+      "refersTo": "poem-row",
+      "description": "Fila del índice de Poemas: día en mono, título serif y serie en itálica sobre una regla capilar.",
+      "html": "<a class=\"poemas-index__row\" href=\"/poemas/cae/\"><time class=\"poemas-index__day\" datetime=\"2025-06-22\">22</time><span class=\"poemas-index__title-wrap\"><span class=\"poemas-index__title\">Cae</span><span class=\"poemas-index__series\"> · Mal Necesario</span></span></a>",
+      "css": ".poemas-index { max-width:70ch; } .poemas-index__month-label { margin:0 0 0.75rem; border:0; font-family:JetBrains Mono, monospace; font-size:0.7rem; letter-spacing:0.16em; text-transform:uppercase; color:#7f8a88; } .poemas-index__list { margin:0; padding:0; list-style:none; border-top:1px solid rgba(233,230,220,0.07); } .poemas-index__row { display:grid; grid-template-columns:3rem minmax(0,1fr); gap:1rem; align-items:baseline; padding:1rem 0; border-bottom:1px solid rgba(233,230,220,0.07); border-radius:0; color:inherit; text-decoration:none; } .poemas-index__day { font-family:JetBrains Mono, monospace; font-size:0.7rem; color:#7f8a88; } .poemas-index__title { font-family:Newsreader, Georgia, serif; font-size:clamp(1.1rem,1.8vw,1.3rem); font-weight:400; color:#e9e6dc; } .poemas-index__series { font-family:Newsreader, Georgia, serif; font-style:italic; color:#9aa3a1; }"
+    },
+    {
+      "name": "Poem Pager",
+      "kind": "custom",
+      "refersTo": "poem-pager",
+      "description": "Navegación anterior/siguiente del poema en orden de colección, con contador n / total.",
+      "html": "<nav class=\"reading-pager\" aria-label=\"Poemas\"><a class=\"reading-pager__link\" href=\"/poemas/persistencias-del-algo/\">← Persistencias del Algo</a><span class=\"reading-pager__count\">6 / 7</span><a class=\"reading-pager__link reading-pager__link--next\" href=\"/poemas/script-el-verbo/\">Script el verbo →</a></nav>",
+      "css": ".reading-pager { display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); gap:1rem; align-items:baseline; max-width:1000px; margin:3rem auto 2rem; padding-top:1.25rem; border-top:1px solid rgba(233,230,220,0.12); font-family:JetBrains Mono, monospace; font-size:0.7rem; color:#7f8a88; } .reading-pager__link { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#9aa3a1; text-decoration:none; } .reading-pager__link--next { text-align:right; } .reading-pager__count { text-align:center; white-space:nowrap; }"
+    },
+    {
+      "name": "Melange Entry",
+      "kind": "custom",
+      "refersTo": "melange-entry",
+      "description": "Entrada del cuaderno de campo: fecha mono, título serif, lead o estado `en curso`, y una sola puerta (el título).",
+      "html": "<article class=\"melange-item\"><time class=\"melange-item__date\" datetime=\"2017-04-29\">29 · 04 · 2017</time><div class=\"melange-item__body\"><h2 class=\"melange-item__title\"><a href=\"/melange-reports/mescalina-arkana-festival/\">Mescalina en Arkana Festival</a></h2><p class=\"melange-item__lead\">Estaba en un momento caótico, venía con penas de amor...</p><a class=\"melange-item__more\" href=\"/melange-reports/mescalina-arkana-festival/\">Leer reporte →</a></div></article>",
+      "css": ".melange-index { max-width:1000px; margin:0 auto; border-top:1px solid rgba(233,230,220,0.07); } .melange-item { display:grid; grid-template-columns:8rem minmax(0,1fr); gap:clamp(1rem,3vw,2.5rem); padding:1.5rem 0; border-bottom:1px solid rgba(233,230,220,0.07); } .melange-item__date { padding-top:0.25rem; font-family:JetBrains Mono, monospace; font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:#7f8a88; } .melange-item__title { margin:0 0 0.6rem; border:0; font-family:Newsreader, Georgia, serif; font-size:clamp(1.4rem,2.6vw,1.9rem); font-weight:400; line-height:1.15; } .melange-item__title a { color:inherit; text-decoration:none; } .melange-item__lead { max-width:65ch; margin:0 0 0.8rem; font-family:Newsreader, Georgia, serif; font-size:1rem; line-height:1.6; color:#9aa3a1; } .melange-item__status { margin:0; font-family:JetBrains Mono, monospace; font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase; color:#9fc6c9; }"
+    },
+    {
+      "name": "Melange Report",
+      "kind": "custom",
+      "refersTo": "melange-report",
+      "description": "Reporte de Melange: título y subtítulo, meta mono, portada de 1000px sin radio ni sombra, ficha plana y cuerpo largo en el contenedor de lectura.",
+      "html": "<article class=\"melange-report\"><header class=\"reading-detail-head\"><h1 class=\"reading-detail__title\">Mescalina en Arkana Festival</h1><p class=\"melange-report__subtitle\">San Pedro · Ollantaytambo, Valle Sagrado</p><p class=\"reading-detail__meta\"><span>reporte</span><span>2017</span></p></header><figure class=\"melange-report__cover\"><div class=\"melange-report__cover-frame\"><img src=\"/assets/media/images/mescalina-arkana-festival.png\" alt=\"Festival Arkana\"></div><figcaption class=\"melange-report__credit\">© alexis suarez / arkana 2017</figcaption></figure><div class=\"reading-body melange-report__body\"><h2>Ficha</h2><dl class=\"report-spec\"><dt>Sustancia</dt><dd>Mescalina</dd></dl><h2>Relato</h2><p>Estaba en un momento caótico...</p></div></article>",
+      "css": ".melange-report__subtitle { max-width:62ch; margin:0 0 0.9rem; font-family:Newsreader, Georgia, serif; font-size:clamp(1.1rem,2vw,1.3rem); font-style:italic; color:#9aa3a1; } .melange-report__cover { max-width:1000px; margin:0 auto 2.5rem; border:1px solid rgba(233,230,220,0.12); background:#0a0c0d; } .melange-report__cover-frame { border-radius:0; box-shadow:none; } .melange-report__cover-frame img { display:block; width:100%; height:auto; max-height:none; object-fit:contain; } .melange-report__credit { margin:0; padding:0.85rem 1rem; border-top:1px solid rgba(233,230,220,0.07); font-family:JetBrains Mono, monospace; font-size:0.7rem; color:#7f8a88; } .report-spec { display:grid; grid-template-columns:9rem minmax(0,1fr); gap:0.55rem 1.5rem; margin:1.5rem 0 2.5rem; padding:1.25rem 0; border:0; border-top:1px solid rgba(233,230,220,0.12); border-bottom:1px solid rgba(233,230,220,0.12); border-radius:0; background:transparent; } .report-spec dt { font-family:JetBrains Mono, monospace; font-size:0.7rem; text-transform:uppercase; color:#7f8a88; } .report-spec dd { margin:0; font-family:Newsreader, Georgia, serif; color:#e9e6dc; }"
+    },
+    {
+      "name": "Interior Grid",
+      "kind": "custom",
+      "refersTo": "interior-frame",
+      "description": "Retícula de interiores: shell 1100px, contenedor 1000px centrado, prosa 75ch alineada a la izquierda del contenedor.",
+      "html": "<main><h1 class=\"page-title\"><span class=\"page-title__text\">Diario</span><span class=\"init\"><a href=\"/\">∅ INIT</a></span></h1><div class=\"diario-index\"><article class=\"diario-entry\">...</article></div><figure class=\"page-figure\"><img src=\"/assets/media/images/IMG_6076.jpg\" alt=\"Ascenso\"></figure></main>",
+      "css": ":root { --interior-measure:1000px; --interior-media:1000px; --interior-wide:1000px; } body.interior-page { max-width:1100px; margin:0 auto; padding:clamp(1.25rem,4vw,2rem); } body.interior-page main > * { width:100%; max-width:var(--interior-measure); margin-right:auto; margin-left:auto; } body.interior-page main > img, body.interior-page main > figure { max-width:var(--interior-media); } body.interior-page .page-title { display:flex; align-items:baseline; justify-content:space-between; gap:1rem; max-width:var(--interior-measure); margin:0 auto clamp(2rem,5vw,3.5rem); padding:0 0 1.1rem; border-bottom:1px solid rgba(233,230,220,0.12); } body.instrument-page main > *, body.instrument-page .page-title { max-width:var(--interior-wide); }"
+    },
+    {
+      "name": "Section Sigil",
+      "kind": "custom",
+      "refersTo": "sigil",
+      "description": "Sigilo tipográfico de sección: un glifo como prefijo, normalizado a 0.68em de tinta; Melange conserva 🜏 y el resto usa ⁂ ◉ ⟡ ◊ ⎔ ✶ ⏚ ∿.",
+      "html": "<h1 class=\"page-title\"><span class=\"page-title__text\"><span class=\"sigil sigil--poemas\" aria-hidden=\"true\"><span class=\"sigil__glyph\">⁂</span></span> Poemas</span><span class=\"init\"><a href=\"/\">∅ INIT</a></span></h1>",
+      "css": ".page-title__text { display:inline-flex; align-items:center; gap:0.14em; min-width:0; } .sigil { display:inline-grid; place-items:center; flex:none; width:1em; height:1em; font-family:Newsreader, Georgia, serif; font-size:1em; line-height:1; vertical-align:-0.06em; font-variant-emoji:text; text-rendering:geometricPrecision; } .sigil__glyph { display:block; line-height:1; transform:scale(var(--sigil-scale,1)); transform-origin:center; font-variant-emoji:text; } .sigil--poemas { --sigil-scale:1.10; } .sigil--imaginario { --sigil-scale:0.773; } .sigil--rastros { --sigil-scale:1.182; } .sigil--melange { --sigil-scale:1.027; } .sigil--codigo { --sigil-scale:1.212; } .sigil--dispositivos { --sigil-scale:1.13; } .sigil--diario { --sigil-scale:0.950; } .sigil--vestigios { --sigil-scale:1.20; } .sigil--musica { --sigil-scale:1.2; width:1em; } .umbral-exits__glyph.sigil { width:1em; font-size:1.55rem; color:#7f8a88; } .nube-de-palabras .sigil { margin-right:0.16em; font-size:1.45em; }"
+    },
+    {
+      "name": "Section Rail",
+      "kind": "nav",
+      "refersTo": "section-rail",
+      "description": "Puerta lateral de las interiores: 9 sigilos, fija a la derecha en escritorio y como índice al pie por debajo de 1280px; sección activa en Trace Cyan y aria-current.",
+      "html": "<nav class=\"archive-rail\" aria-label=\"Secciones del archivo\"><ul class=\"archive-rail__list\"><li><a class=\"archive-rail__link is-active\" href=\"/poemas/\" aria-label=\"Poemas\" aria-current=\"page\"><span class=\"sigil sigil--poemas\" aria-hidden=\"true\"><span class=\"sigil__glyph\">⁂</span></span><span class=\"archive-rail__name\">Poemas</span></a></li></ul></nav>",
+      "css": ".archive-rail { width:100%; max-width:1000px; margin:clamp(3rem,7vw,5rem) auto 0; } .archive-rail__list { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.1rem 1.5rem; margin:0; padding:1.25rem 0 0; list-style:none; border-top:1px solid rgba(233,230,220,.07); } .archive-rail__link { display:flex; align-items:center; gap:.55rem; min-height:44px; padding:.35rem 0; color:#9aa3a1; font-family:Newsreader, Georgia, serif; font-size:.95rem; text-decoration:none; } .archive-rail__link .sigil { font-size:1rem; color:#7f8a88; } .archive-rail__link.is-active, .archive-rail__link.is-active .sigil { color:#9fc6c9; } @media (min-width:1280px) { .archive-rail { position:fixed; top:50%; right:clamp(1rem,2.2vw,2.5rem); z-index:30; width:auto; max-width:none; margin:0; transform:translateY(-50%); } body.interior-page main > .archive-rail { width:auto; max-width:none; margin:0; } .archive-rail__list { display:flex; flex-direction:column; padding:0; border:0; } .archive-rail__link { position:relative; min-height:0; padding:.22rem 0; color:#5f6a68; } .archive-rail__name { position:absolute; top:50%; right:calc(100% + .7rem); padding:.18rem .35rem; background:rgba(6,7,8,.86); color:#7f8a88; font-family:\"JetBrains Mono\", monospace; font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; white-space:nowrap; opacity:0; pointer-events:none; transform:translateY(-50%) translateX(4px); transition:opacity .22s ease, transform .22s ease; } .archive-rail__link:hover .archive-rail__name, .archive-rail__link:focus-visible .archive-rail__name { opacity:1; transform:translateY(-50%) translateX(0); } }"
+    },
+    {
+      "name": "Descender Drip",
+      "kind": "custom",
+      "refersTo": "descender-drip",
+      "description": "Anomalía semántica de Cae: una descendente determinista por estrofa cae de su línea y se acumula en una línea de sedimento; clon aria-hidden, texto original intacto y reduced-motion sin efecto.",
+      "html": "<div class=\"poem-body\"><p>y yo simplemente caigo...</p><div class=\"descender-layer\" aria-hidden=\"true\"><span class=\"descender descender--falling\">g</span></div></div>",
+      "css": "body.has-descender-drip .poem-body { position:relative; padding-bottom:4.75rem; } body.has-descender-drip .poem-body::after { content:\"\"; position:absolute; right:0; bottom:2.4rem; left:0; height:1px; background:rgba(233,230,220,.07); } .descender-layer { position:absolute; inset:0; z-index:2; overflow:visible; pointer-events:none; } .descender { display:inline-block; position:relative; } .descender--ghost { opacity:.22; } .descender--falling { position:absolute; margin:0; color:#9aa3a1; font:inherit; line-height:1; white-space:nowrap; opacity:.7; }"
+    },
+    {
+      "name": "Diario Entry",
+      "kind": "custom",
+      "refersTo": "diario-entry",
+      "description": "Fila de Diario: fecha mono, título serif como única puerta y extracto en itálica; sin Ver más, tarjeta ni borde ámbar.",
+      "html": "<article class=\"diario-entry\"><time class=\"diario-entry__date\" datetime=\"2025-07-11\">2025-07-11</time><div class=\"diario-entry__body\"><h2 class=\"diario-entry__title\"><a href=\"/2025/07/11/camino.html\">camino</a></h2><p class=\"diario-entry__excerpt\">Hoy morí en los brazos de mí mismo...</p></div></article>",
+      "css": ".diario-entry { display:grid; grid-template-columns:7rem minmax(0,1fr); gap:clamp(1rem,3vw,2.5rem); margin:0; padding:1.5rem 0; border-bottom:1px solid rgba(233,230,220,.07); } .diario-entry__date { padding-top:.25rem; font-family:\"JetBrains Mono\", monospace; font-size:.7rem; letter-spacing:.08em; color:#7f8a88; } .diario-entry__title { margin:0 0 .55rem; padding:0; border:0; font-family:Newsreader, Georgia, serif; font-size:clamp(1.3rem,2.4vw,1.7rem); font-weight:400; line-height:1.2; color:#e9e6dc; } .diario-entry__title a { color:inherit; text-decoration:none; } .diario-entry__excerpt { max-width:65ch; margin:0; padding:0; border:0; color:#9aa3a1; font-family:Newsreader, Georgia, serif; font-size:1rem; font-style:italic; line-height:1.6; }"
+    },
+    {
+      "name": "Vestigio Entry",
+      "kind": "custom",
+      "refersTo": "vestigio-entry",
+      "description": "Entrada de Vestigios: h2, fecha mono, cuerpo dim y una sola puerta; sin borde ámbar ni radio de imagen.",
+      "html": "<article class=\"vestigio\"><a class=\"vestigio__title-link\" href=\"#\"><h2 class=\"vestigio__title\">Página que ya no responde <span class=\"vestigio__date\">2026-06-15</span></h2></a><div class=\"vestigio__body\">Una dirección que tenía guardada...</div></article>",
+      "css": "body.vestigios-page .vestigio { border-left:1px solid rgba(233,230,220,.12); } body.vestigios-page .vestigio__title { margin:0; padding:0; border:0; color:#e9e6dc; font-family:Newsreader, Georgia, serif; font-size:1.15rem; font-weight:400; line-height:1.25; } body.vestigios-page .vestigio__date { margin-left:.55em; color:#7f8a88; font-family:\"JetBrains Mono\", monospace; font-size:.7rem; letter-spacing:.06em; } body.vestigios-page .vestigio__body { margin-top:.65rem; color:#9aa3a1; font-size:1rem; line-height:1.65; } body.vestigios-page .vestigio__image { border-radius:0; }"
+    },
+    {
+      "name": "Imaginario End of Roll",
+      "kind": "custom",
+      "refersTo": "end-of-roll",
+      "description": "Cierre de la hoja de contactos: ocupa las dos celdas finales con el conteo de placas; convierte el vacío en índice.",
+      "html": "<div class=\"imaginario-tail\" aria-hidden=\"true\"><span class=\"imaginario-tail__label\">fin del carrete</span><strong>16</strong><span class=\"imaginario-tail__unit\">placas</span></div>",
+      "css": ".imaginario-tail { grid-column:span 2; display:flex; flex-direction:column; justify-content:flex-end; gap:.15rem; min-height:100%; padding:1.5rem; background:#060708; color:#7f8a88; font-family:\"JetBrains Mono\", monospace; font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; } .imaginario-tail strong { margin:.2rem 0 0; font-family:Newsreader, Georgia, serif; font-size:clamp(3.5rem,7vw,6rem); font-weight:300; line-height:.8; letter-spacing:-.03em; color:#e9e6dc; } .imaginario-tail__unit { color:#9aa3a1; } @media (max-width:600px) { .imaginario-tail { grid-column:span 1; min-height:16rem; } }"
+    },
+    {
+      "name": "Archive Date",
+      "kind": "custom",
+      "refersTo": "date-meta",
+      "description": "Fecha de archivo: `YYYY-MM-DD` en mono, 11px o más; el año suelto se reserva para la cita de la home.",
+      "html": "<p class=\"page-meta\"><time datetime=\"2025-07-11\">2025-07-11</time></p>",
+      "css": ".page-meta { margin:-1.25rem 0 2rem; font-family:\"JetBrains Mono\", monospace; font-size:.7rem; letter-spacing:.08em; color:#7f8a88; }"
+    },
+    {
+      "name": "Prose Measure",
+      "kind": "custom",
+      "refersTo": "prose-measure",
+      "description": "La prosa larga no ocupa el contenedor de 1000px: mide 75ch y arranca en el borde izquierdo del contenedor.",
+      "html": "<div class=\"reading-body\"><p>Texto largo a 75ch...</p></div>",
+      "css": ":root { --prose-measure:75ch; --container-measure:1000px; } .reading-body, .poem-body, .melange-report__body, .rastro-bloque, .rastros-lead, .rastros-year, .reading-lede, .imaginario-detail__note, .vestigio__body { max-width:var(--prose-measure); margin-right:0; margin-left:0; } body.reading-poem-detail .reading-body, body.reading-poem-detail .poem-body, body.reading-melange-detail .melange-report__body, body.reading-rastros .rastro-bloque, body.reading-rastros .rastros-lead, body.reading-rastros .rastros-year, body.reading-melange .reading-lede, body.diario-surface main > p { margin-left:max(0px,calc((100% - var(--container-measure)) / 2)); }"
+    },
+    {
+      "name": "Umbral Continuo",
+      "kind": "custom",
+      "refersTo": "umbral-transition",
+      "description": "Transición cross-document home → sección: el título y su línea comparten view-transition-name y se transforman en la cabecera de la sección; fallback instantáneo y reduced-motion sin animación.",
+      "html": "<a class=\"umbral__nav-link\" href=\"/poemas/\">Poemas</a>",
+      "css": "@view-transition { navigation: auto; } .umbral__title, .page-title, .reading-detail__title { view-transition-name: umbral-title; } ::view-transition-group(umbral-title) { animation-duration:.55s; animation-timing-function:cubic-bezier(.16,1,.3,1); } @media (prefers-reduced-motion: reduce) { ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation:none !important; } }"
+    },
+    {
+      "name": "Rastros Seismograph",
+      "kind": "custom",
+      "refersTo": "rastros-seismograph",
+      "description": "Traza fija de 1px en el margen de Rastros: cada fragmento que entra en viewport agrega una muesca dispersa; no es una barra de progreso y se oculta en móvil.",
+      "html": "<div class=\"rastros-seismograph\" aria-hidden=\"true\"><span class=\"rastros-seismograph__mark is-visible\" style=\"--mark-y:42%;--mark-w:10px\"></span></div>",
+      "css": "@media (min-width:1280px) { .rastros-seismograph { position:fixed; top:50%; left:clamp(1rem,2.2vw,2.5rem); z-index:20; width:18px; height:45vh; pointer-events:none; transform:translateY(-50%); } .rastros-seismograph::before { content:\"\"; position:absolute; top:0; bottom:0; left:6px; width:1px; background:rgba(233,230,220,.07); } .rastros-seismograph__mark { position:absolute; top:var(--mark-y); left:6px; width:var(--mark-w,8px); height:1px; background:#9fc6c9; opacity:0; transform:scaleX(.2); transform-origin:left center; transition:opacity .45s ease, transform .45s cubic-bezier(.16,1,.3,1); } .rastros-seismograph__mark.is-visible { opacity:.55; transform:scaleX(1); } } @media (prefers-reduced-motion:reduce) { .rastros-seismograph__mark { transition:none; } }"
+    },
+    {
+      "name": "Lab Condensation",
+      "kind": "custom",
+      "refersTo": "lab-condensation",
+      "description": "Al sortear el laboratorio, las filas colapsan y la nueva muestra se expande; foco estable, aria-busy y anuncio separado; reduced motion instantáneo.",
+      "html": "<div class=\"lab-feed is-condensing\" aria-busy=\"true\"><article class=\"lab-specimen\">...</article></div><p class=\"sr-only\" role=\"status\" aria-live=\"polite\">Muestra renovada.</p>",
+      "css": "body.umbral-page .lab-specimen { max-height:20rem; overflow:hidden; transition:max-height .22s ease, opacity .16s ease, transform .22s ease, padding .22s ease, border-color .22s ease; } body.umbral-page .lab-feed.is-condensing .lab-specimen { max-height:0; padding-top:0; padding-bottom:0; border-top-color:transparent; opacity:0; transform:translateY(-4px); } @media (prefers-reduced-motion:reduce) { body.umbral-page .lab-specimen { transition:none; } }"
+    },
+    {
+      "name": "Imaginario Loupe",
+      "kind": "custom",
+      "refersTo": "light-table-loupe",
+      "description": "Lupa 2× de la mesa de luz: recorte de 180px que sigue al puntero fino, con borde trace y etiqueta 2×; no aparece en táctil.",
+      "html": "<figure class=\"imaginario-viewer__figure is-loupe\"><img class=\"imaginario-viewer__media\" src=\"/assets/media/images/IMG_6076.jpg\" alt=\"Ascenso\"><div class=\"imaginario-loupe\" aria-hidden=\"true\"><img class=\"imaginario-loupe__image\" src=\"/assets/media/images/IMG_6076.jpg\" alt=\"\"></div><p class=\"imaginario-viewer__loupe-hint\">Mover para inspeccionar</p></figure>",
+      "css": ".imaginario-viewer__figure { position:relative; } .imaginario-viewer__loupe-hint { display:none; } @media (hover:hover) and (pointer:fine) { .imaginario-viewer__loupe-hint { display:block; padding:.55rem 1rem .8rem; border-top:1px solid rgba(233,230,220,.07); color:#7f8a88; font-family:\"JetBrains Mono\", monospace; font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; } .imaginario-loupe { position:absolute; z-index:3; display:none; width:180px; height:180px; overflow:hidden; border:1px solid #9fc6c9; background:#0a0c0d; pointer-events:none; } .imaginario-viewer__figure.is-loupe .imaginario-loupe { display:block; } .imaginario-loupe::after { content:\"2×\"; position:absolute; top:.4rem; left:.5rem; z-index:2; padding:.1rem .25rem; background:rgba(6,7,8,.78); color:#9fc6c9; font-family:\"JetBrains Mono\", monospace; font-size:.6rem; } .imaginario-loupe__image { position:absolute; max-width:none; max-height:none; margin:0; border:0; } }"
+    },
+    {
+      "name": "Code State Filter",
+      "kind": "custom",
+      "refersTo": "code-filter",
+      "description": "Filtro de estado del rack: todos, ejecutable y lectura como botones mono con aria-pressed; oculta filas y anuncia el total visible.",
+      "html": "<p class=\"codigo-intro__legend\" role=\"group\" aria-label=\"Filtrar módulos por estado\"><button class=\"codigo-filter\" type=\"button\" data-code-filter=\"all\" aria-pressed=\"true\">todos</button><button class=\"codigo-filter\" type=\"button\" data-code-filter=\"true\" aria-pressed=\"false\">ejecutable</button><button class=\"codigo-filter\" type=\"button\" data-code-filter=\"false\" aria-pressed=\"false\">lectura</button></p>",
+      "css": ".codigo-filter { position:relative; display:inline-flex; align-items:center; gap:.4rem; min-height:44px; padding:.25rem 0; border:0; background:none; color:inherit; font:inherit; letter-spacing:inherit; text-transform:inherit; cursor:pointer; } .codigo-filter[aria-pressed=\"true\"] { color:#e9e6dc; } .codigo-filter[aria-pressed=\"true\"]::after { content:\"\"; position:absolute; right:0; bottom:.15rem; left:0; height:1px; background:#9fc6c9; } .codigo-filter:focus-visible { outline:1px solid #9fc6c9; outline-offset:3px; } .codigo-module[hidden] { display:none; }"
+    },
+    {
+      "name": "Espiral Instrument",
+      "kind": "custom",
+      "refersTo": "mixer-instrument",
+      "description": "Instrumento generativo Espiral (quicio/espiral) en tres contextos: Performance, Sequencer y Sound. Transporte y panel generativo persistentes; semilla, escenas, tonalidad, duración de notas, euclid, freeze, evolución, automatización y sesiones.",
+      "html": "<div class=\"instrument\" data-instrument=\"espiral\"><div class=\"instrument-dock\"><section class=\"transport\"><button id=\"transport-play\" class=\"transport-play\" aria-pressed=\"false\">Reproducir</button><div class=\"transport-field\"><label for=\"bpm-control\">Tempo</label><input id=\"bpm-control\" type=\"range\"><output id=\"bpm-value\">120</output></div></section><div class=\"view-switch\" role=\"tablist\"><button class=\"view-tab is-active\" role=\"tab\" aria-selected=\"true\" data-view=\"performance\">Performance</button><button class=\"view-tab\" role=\"tab\" data-view=\"sequencer\">Sequencer</button><button class=\"view-tab\" role=\"tab\" data-view=\"sound\">Sound</button></div></div><div class=\"instrument-body\"><div class=\"stage\"><section class=\"view\" id=\"view-performance\"><div id=\"pulse-wrap\" class=\"pulse-wrap\"></div><div id=\"activity-list\" class=\"activity-list\"></div></section></div><aside class=\"generative\"><h2 class=\"generative-title\">Generativo</h2><div class=\"harmony-fields\"><label for=\"root-select\"><span>Raíz</span><select id=\"root-select\"><option>Do</option></select></label><label for=\"scale-select\"><span>Escala</span><select id=\"scale-select\"><option>Menor natural</option></select></label><label for=\"progression-select\"><span>Progresión</span><select id=\"progression-select\"><option>i · VI · III · VII</option></select></label></div><div class=\"param\"><label for=\"sustain-control\">Duración</label><input id=\"sustain-control\" type=\"range\"><output>50%</output></div><div class=\"scene-grid\"><button class=\"scene is-active\" data-scene=\"umbral\" aria-pressed=\"true\">Umbral</button><button class=\"scene\" data-scene=\"deriva\">Deriva</button></div><div class=\"param-list\"><div class=\"param\"><label for=\"param-density\">Densidad</label><input id=\"param-density\" type=\"range\"><output>55%</output></div></div><button id=\"mutate-selected\" class=\"line-action\">Mutar canal</button></aside></div><section class=\"session-bar\"><button id=\"save-session\" class=\"line-action\">Guardar</button></section></div>",
+      "css": ".instrument-dock { position:sticky; top:0; z-index:20; background:#060708; border-top:1px solid rgba(233,230,220,.12); } .transport { display:grid; grid-template-columns:minmax(8.5rem,.9fr) repeat(4,minmax(0,1fr)); gap:1rem 1.5rem; align-items:end; padding:1rem 0 1.15rem; border-bottom:1px solid rgba(233,230,220,.12); } .transport-play { min-height:44px; padding:.55rem .95rem; border:1px solid rgba(233,230,220,.12); border-radius:0; background:transparent; color:#e9e6dc; font-family:\"JetBrains Mono\",monospace; font-size:.75rem; letter-spacing:.14em; text-transform:uppercase; } .view-switch { display:flex; align-items:center; gap:clamp(1.25rem,3vw,2.25rem); padding:.8rem 0; border-bottom:1px solid rgba(233,230,220,.07); } .view-tab { border:0; background:transparent; color:#9aa3a1; font-family:Newsreader,Georgia,serif; font-size:1rem; } .view-tab.is-active { color:#e9e6dc; border-bottom:1px solid #9fc6c9; } .instrument-body { display:grid; grid-template-columns:minmax(0,1fr) 18.5rem; gap:2.5rem; align-items:start; } .pulse { position:relative; width:20rem; height:20rem; } .pulse::before { content:\"\"; position:absolute; inset:0; border:1px solid rgba(233,230,220,.12); border-radius:50%; } .pulse-dot { position:absolute; top:50%; left:50%; width:7px; height:7px; margin:-3.5px; border-radius:50%; background:rgba(233,230,220,.12); transform:rotate(calc(var(--i)*22.5deg)) translateY(-9.1rem) rotate(calc(var(--i)*-22.5deg)); } .pulse-dot.is-active { background:#9fc6c9; } .pulse-dot.is-current { background:#e9e6dc; } .activity-row { display:grid; grid-template-columns:7.2rem 4.2rem minmax(0,1fr) 2rem 2rem; gap:.7rem; align-items:center; padding:.55rem 0; border-bottom:1px solid rgba(233,230,220,.07); } .activity-name { border:0; background:transparent; color:#e9e6dc; font-family:Newsreader,Georgia,serif; text-align:left; } .activity-step { height:10px; background:rgba(233,230,220,.07); } .activity-step.is-active { background:#9fc6c9; } .radial-step { position:absolute; width:2.35rem; height:2.35rem; border:1px solid rgba(233,230,220,.07); background:#060708; color:#7f8a88; font-family:\"JetBrains Mono\",monospace; } .radial-step.is-active { background:#9fc6c9; color:#060708; } .matrix-cell { height:8px; background:rgba(233,230,220,.07); } .matrix-cell.is-active { background:#9fc6c9; } .sound-channel { display:grid; grid-template-columns:7.5rem minmax(0,1fr) 4rem auto; gap:.5rem 1.1rem; padding:.9rem 0; border-bottom:1px solid rgba(233,230,220,.07); } .generative { padding-left:1.75rem; border-left:1px solid rgba(233,230,220,.07); } .scene__name { font-family:Newsreader,Georgia,serif; color:#9aa3a1; } .scene.is-active .scene__name { color:#9fc6c9; } .line-action { border:0; border-bottom:1px solid rgba(233,230,220,.12); background:transparent; color:#9aa3a1; font-family:\"JetBrains Mono\",monospace; font-size:.75rem; text-transform:uppercase; } @media (max-width:1080px) { .instrument-body { grid-template-columns:1fr; } .generative { padding-left:0; border-left:0; border-top:1px solid rgba(233,230,220,.12); } } @media (max-width:700px) { .transport { grid-template-columns:repeat(2,1fr); } .pulse { width:18rem; height:18rem; } .activity-row { grid-template-columns:1fr auto auto; } } .automation-lane { display:grid; grid-template-columns:repeat(16,minmax(0,1fr)); gap:2px; height:8rem; touch-action:none; } .automation-step { display:flex; flex-direction:column; min-width:0; min-height:0; padding:0; border:0; background:transparent; cursor:crosshair; } .automation-bar { position:relative; flex:1; background:rgba(233,230,220,.07); } .automation-fill { position:absolute; right:0; bottom:0; left:0; height:calc(var(--v)*100%); background:#9fc6c9; } .automation-index { font-family:'JetBrains Mono',monospace; font-size:.75rem; text-align:center; color:#7f8a88; } .automation-step.is-current .automation-bar { outline:1px solid #e9e6dc; outline-offset:1px; }"
+    },
+    {
+      "name": "Automation Lane",
+      "kind": "custom",
+      "refersTo": "automation-lane",
+      "description": "Curva de automatización de 16 pasos para un parámetro de efecto. Se dibuja con el puntero, se ajusta con flechas y se aplica en cada paso con una rampa corta.",
+      "html": "<div class=\"automation-block\"><div class=\"automation-head\"><label for=\"automation-target\" class=\"sr-only\">Parámetro</label><select id=\"automation-target\"><option>Reverb Pad</option><option>Delay Lead</option></select><button id=\"automation-toggle\" class=\"line-action\" aria-pressed=\"false\">Auto</button></div><div id=\"automation-lane\" class=\"automation-lane\"><button class=\"automation-step\" style=\"--v:.4\" aria-label=\"Paso 1: 40%\"><span class=\"automation-bar\"><span class=\"automation-fill\"></span></span><span class=\"automation-index\">1</span></button></div><p class=\"tool-hint\"><span id=\"automation-readout\">Auto apagado · Reverb Pad</span></p></div>",
+      "css": ".automation-lane { display:grid; grid-template-columns:repeat(16,minmax(0,1fr)); gap:2px; height:8rem; touch-action:none; user-select:none; } .automation-step { display:flex; flex-direction:column; gap:2px; min-width:0; min-height:0; height:100%; padding:0; border:0; background:transparent; cursor:crosshair; } .automation-bar { position:relative; flex:1; width:100%; background:rgba(233,230,220,.07); } .automation-fill { position:absolute; right:0; bottom:0; left:0; height:calc(var(--v)*100%); background:#9fc6c9; opacity:.75; } .automation-step.is-current .automation-bar { outline:1px solid #e9e6dc; outline-offset:1px; } .automation-index { font-family:'JetBrains Mono',monospace; font-size:.75rem; text-align:center; color:#7f8a88; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "La cámara de niebla",
+    "overview": "KNDL 000 se comporta como un instrumento científico antiguo encendido en una habitación oscura. La portada no es una landing: es una cámara de niebla donde las señales invisibles —un poema, una imagen, una rutina de código— se condensan en trazas visibles. El fondo casi negro, la línea umbral de 1px y el canvas generativo hacen el trabajo; la interfaz se retira. La voz es editorial y sobria, pero el mecanismo está a la vista. La serif carga el pensamiento; la mono mide y fecha; el canvas produce el fenómeno. Lo psicodélico aparece como física —trazas que se curvan, se ramifican y se disipan—, nunca como neón decorativo.",
+    "keyCharacteristics": [
+      "Cámara oscura full-bleed; el canvas es la materia del hero, no un adorno.",
+      "Una línea umbral horizontal corta el título y organiza la página.",
+      "Serif editorial para la voz; mono solo para medida, fecha y hash.",
+      "Sin tarjetas, sin esquinas redondeadas, sin sombras; profundidad por luz y transparencia.",
+      "Movimiento físico y contenido: trazas que se condensan; nada rebota ni brilla por reflejo.",
+      "Las superficies de lectura comparten marco y medida, pero conservan su comportamiento: Rastros fluye, Poemas se lee de a uno, Melange se recorre como cuaderno de campo.",
+      "Todas las interiores comparten un único contenedor de 1000px centrado dentro de un shell de 1100px.",
+      "Cada sección tiene un sigilo tipográfico único, siempre como prefijo y normalizado por altura óptica; Melange conserva 🜏.",
+      "Un rail de 9 sigilos abre las interiores y Cae pierde una descendente por estrofa hasta formar una línea de sedimento.",
+      "Las fechas de archivo son ISO y Diario, Vestigios y Música comparten el fondo, la tipografía y el contraste de las interiores.",
+      "El umbral cruza de la home a la sección y Rastros deja una traza de lectura en su margen.",
+      "El laboratorio condensa la muestra y la mesa de luz de Imaginario deja una lupa 2× sobre la placa.",
+      "El mixer se toca en tres contextos —Performance, Sequencer y Sound— sobre un transporte persistente y un panel generativo con semilla, escenas, freeze y evolución.",
+      "La tonalidad, la duración de notas y la automatización de 16 pasos convierten el mixer en un pequeño Ableton: se toca, se armoniza y se dibuja el movimiento."
+    ],
+    "rules": [
+      {
+        "name": "The One Trace Rule",
+        "body": "El cian es una señal, no un tema: aparece en el estado activo, el hover o la medida. Si una pantalla tiene cian en tres lugares no relacionados, sobra uno.",
+        "section": "colors"
+      },
+      {
+        "name": "The Warm Event Rule",
+        "body": "El ámbar se reserva para lo que ocurre —un evento, una partícula, una marca de tiempo—. No se usa como color de marca ni como fondo.",
+        "section": "colors"
+      },
+      {
+        "name": "The Instrument Label Rule",
+        "body": "La mono no es un traje técnico: solo aparece para fechas, hashes, códigos, estados y medidas. Un texto que no se mide se compone en serif.",
+        "section": "typography"
+      },
+      {
+        "name": "The No-Card Rule",
+        "body": "No hay tarjetas, ni contenedores elevados, ni halos de color. Una fila se agrupa con una regla de 1px y espacio, no con una caja.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Single Bus Rule",
+        "body": "En Código, todo el índice se organiza sobre un único bus vertical de 1px; el nodo es el único punto y la traza cian es la única señal.",
+        "section": "components"
+      },
+      {
+        "name": "The Bench Is Not a Window Rule",
+        "body": "El banco de Código no imita una ventana de sistema operativo: sin puntos de macOS, sin esquinas redondeadas, sin barra de shell falsa. Es un instrumento del archivo.",
+        "section": "components"
+      },
+      {
+        "name": "The Three-Step Rule",
+        "body": "Código → Entrada → Salida. Ningún panel se adelanta a su paso: la entrada no existe hasta que hace falta y la salida no aparece hasta que hay algo que leer.",
+        "section": "components"
+      },
+      {
+        "name": "The Three-Zone Bar Rule",
+        "body": "Metadatos a la izquierda, pasos al centro, acciones a la derecha. Ninguna zona invade la otra; en móvil, metadatos y pasos comparten la primera fila y las acciones bajan a la segunda.",
+        "section": "components"
+      },
+      {
+        "name": "The Contact Sheet Rule",
+        "body": "El índice de Imaginario es una hoja de contactos, no un masonry: todas las placas comparten ratio y fila para que el ojo pueda comparar formatos.",
+        "section": "components"
+      },
+      {
+        "name": "The Media-Agnostic Plate Rule",
+        "body": "Una placa siempre tiene image como póster/miniatura; el detalle decide si muestra imagen, video, gif, escaneo o embed generativo según media_type. Nunca se asume que toda placa es una foto.",
+        "section": "components"
+      },
+      {
+        "name": "The Instrument Surface Rule",
+        "body": "El mixer no es una página con controles: es una superficie de interpretación. El transporte y el panel generativo permanecen; solo cambia la escena que se está tocando.",
+        "section": "components"
+      },
+      {
+        "name": "The Pulse Is the Score Rule",
+        "body": "El anillo de Performance no decora: muestra la unión rítmica de los canales y el paso que suena. Si el movimiento no ayuda a leer el pulso, sobra.",
+        "section": "components"
+      },
+      {
+        "name": "The Harmony Lock Rule",
+        "body": "La raíz y la escala se eligen una vez y gobiernan todas las voces generativas. Una progresión puede cambiar de centro, pero no debe romper la afinación del pad, el bajo, el lead y el drone.",
+        "section": "components"
+      },
+      {
+        "name": "The Drawn Automation Rule",
+        "body": "La automatización se dibuja en 16 pasos y se lee como una curva, no como una tabla de valores. Cada paso tiene un valor y un estado actual; el parámetro elegido recibe una rampa corta al entrar cada paso.",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "Do dejar que el canvas y la línea umbral hagan el trabajo visual del hero.",
+      "Do usar la serif para la voz y la mono solo para medida, fecha, estado o hash.",
+      "Do agrupar con reglas de 1px, espacio y jerarquía tipográfica.",
+      "Do mantener el texto funcional en 11px o más, con contraste AA.",
+      "Do respetar prefers-reduced-motion: la cámara se detiene, la página sigue completa.",
+      "Do mantener el rack de Código en un solo bus vertical de 1px; el nodo es el único punto.",
+      "Do usar la paleta Syntax de cuatro tintas en el editor y los bloques de código.",
+      "Do revelar Código, Entrada y Salida en ese orden, solo cuando cada paso tiene contenido.",
+      "Do mantener la hoja de contactos de Imaginario en una retícula uniforme de 1px y 4:3.",
+      "Do declarar media_type en cada placa nueva; las fotos pueden omitirlo."
+    ],
+    "donts": [
+      "Don't usar sombras, halos de color, glassmorphism ni degradados como decoración.",
+      "Don't envolver filas o secciones en tarjetas, y nunca anidar tarjetas.",
+      "Don't convertir el cian o el ámbar en fondos de sección.",
+      "Don't añadir kickers, eyebrows ni números de sección decorativos.",
+      "Don't usar emoji o glifos como iconos de interfaz; los sigilos del archivo son marginalia tipográfica.",
+      "Don't repetir el título partido por la línea umbral fuera de la portada.",
+      "Don't usar puntos de ventana, esquinas redondeadas ni un prompt de shell falso en Código.",
+      "Don't sustituir la paleta Syntax por VS Code Dark+ u otro tema de editor ajeno.",
+      "Don't mostrar una salida vacía o un input antes de que el visitante pulse ejecutar.",
+      "Don't volver a Imaginario a un masonry irregular ni a tarjetas con radio.",
+      "Don't asumir que image es el medio final: es el póster o la miniatura."
+    ]
+  }
+}

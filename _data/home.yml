@@ -6,7 +6,7 @@ collage:
   enabled: true
   # Cuántas imágenes mostrar en cada sorteo
   max_items: 6
-  # true = aleatorio desde la colección Visual (site.images); false = lista manual en assemblage.yml
+  # true = aleatorio desde la colección Imaginario (site.images); false = lista manual en assemblage.yml
   dynamic: true
 
 lab:

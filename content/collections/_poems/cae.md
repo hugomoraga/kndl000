@@ -5,6 +5,7 @@ title: Cae
 image: /assets/media/images/BSG_FOLRSUP15RES_0017.webp
 date: 2025-06-23T00:00:00.000Z
 series: Mal Necesario
+effect: descender-drip
 ---
 
 ## **≠**

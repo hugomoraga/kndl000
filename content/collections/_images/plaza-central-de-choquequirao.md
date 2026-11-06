@@ -7,4 +7,5 @@ alt: ''
 image_position: ''
 image_fit: ''
 image_ratio: ''
+place: 'Choquequirao'
 ---

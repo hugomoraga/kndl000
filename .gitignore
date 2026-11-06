@@ -27,3 +27,10 @@ Thumbs.db
 *.swp
 *.swo
 *~
+
+# Impeccable — local inspection artifacts (not shared)
+.impeccable/review/
+.impeccable/mocks/
+
+# Local agent tooling
+.opencode/

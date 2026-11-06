@@ -84,11 +84,23 @@
     const lang = detectLang(codeEl);
     header.innerHTML = `
       <span class="term__dots" aria-hidden="true"><span></span><span></span><span></span></span>
-      <span class="term__title">snippet</span>
-      <span class="term__lang">${escapeHtml(lang)}</span>
+      <span class="term__title">módulo</span>
+      <span class="term__meta">
+        <span class="term__lang">${escapeHtml(lang)}</span>
+        <span class="term__status-wrap">
+          <span class="term__status-dot" aria-hidden="true"></span>
+          <span class="term__status">listo</span>
+        </span>
+      </span>
+      <span class="term__steps" hidden>
+        <button type="button" class="term__step" data-action="step-code" aria-pressed="false">código</button>
+        <button type="button" class="term__step" data-action="step-output" aria-pressed="false">salida</button>
+      </span>
       <span class="term__actions">
-        <button type="button" class="term__btn term__btn--run" data-action="run">run</button>
-        <button type="button" class="term__btn term__btn--reset" data-action="reset" title="restaurar">↺</button>
+        <button type="button" class="term__btn term__btn--run" data-action="run">ejecutar</button>
+        <button type="button" class="term__btn term__btn--reset" data-action="reset" title="reiniciar">reiniciar</button>
+        <button type="button" class="term__btn term__btn--focus" data-action="focus" disabled>enfoque</button>
+        <button type="button" class="term__btn term__btn--exit" data-action="close-fs" hidden>salir</button>
       </span>
     `;
 
@@ -97,7 +109,7 @@
     codeSection.className = 'term__section term__section--code';
     const codeLabel = document.createElement('span');
     codeLabel.className = 'term__label';
-    codeLabel.textContent = 'code';
+    codeLabel.textContent = 'código';
     const editor = document.createElement('div');
     editor.className = 'term__editor highlight';
     editor.setAttribute('contenteditable', 'true');
@@ -118,24 +130,54 @@
     inputSection.hidden = true;
     const inputLabel = document.createElement('span');
     inputLabel.className = 'term__label';
-    inputLabel.textContent = 'input';
+    inputLabel.textContent = 'entrada';
     const inputForm = document.createElement('div');
     inputForm.className = 'term__form';
-    inputSection.appendChild(inputLabel);
+    const inputHead = document.createElement('div');
+    inputHead.className = 'term__output-head';
+    const inputHint = document.createElement('span');
+    inputHint.className = 'term__input-hint';
+    inputHint.textContent = 'Esc para volver';
+    inputHead.appendChild(inputLabel);
+    inputHead.appendChild(inputHint);
+    inputSection.appendChild(inputHead);
     inputSection.appendChild(inputForm);
 
     // Output section
     const outputSection = document.createElement('section');
     outputSection.className = 'term__section term__section--output';
+    const outputHead = document.createElement('div');
+    outputHead.className = 'term__output-head';
     const outputLabel = document.createElement('span');
     outputLabel.className = 'term__label';
-    outputLabel.textContent = 'output';
+    outputLabel.textContent = 'salida';
+    const outputTools = document.createElement('span');
+    outputTools.className = 'term__output-tools';
+    const topBtn = document.createElement('button');
+    topBtn.type = 'button';
+    topBtn.className = 'term__tool';
+    topBtn.dataset.action = 'output-top';
+    topBtn.textContent = 'inicio';
+    topBtn.setAttribute('aria-label', 'Ir al inicio de la salida');
+    const bottomBtn = document.createElement('button');
+    bottomBtn.type = 'button';
+    bottomBtn.className = 'term__tool';
+    bottomBtn.dataset.action = 'output-bottom';
+    bottomBtn.textContent = 'fin';
+    bottomBtn.setAttribute('aria-label', 'Ir al final de la salida');
+    outputTools.appendChild(topBtn);
+    outputTools.appendChild(bottomBtn);
+    outputHead.appendChild(outputLabel);
+    outputHead.appendChild(outputTools);
     const output = document.createElement('div');
     output.className = 'term__output';
     output.setAttribute('role', 'log');
     output.setAttribute('aria-live', 'polite');
-    outputSection.appendChild(outputLabel);
+    output.dataset.follow = 'false';
+    outputSection.appendChild(outputHead);
     outputSection.appendChild(output);
+
+    outputSection.hidden = true;
 
     wrapper.appendChild(header);
     wrapper.appendChild(codeSection);
@@ -146,7 +188,21 @@
     container.parentNode.insertBefore(wrapper, container);
     container.remove();
 
-    return { wrapper, editor, inputSection, inputForm, output, originalCode, originalHtml };
+    return {
+      wrapper,
+      editor,
+      codeSection,
+      inputSection,
+      inputForm,
+      output,
+      outputSection,
+      steps: header.querySelector('.term__steps'),
+      focusBtn: header.querySelector('[data-action="focus"]'),
+      exitBtn: header.querySelector('[data-action="close-fs"]'),
+      hasOutput: false,
+      originalCode,
+      originalHtml,
+    };
   }
 
   /*
@@ -158,16 +214,16 @@
    * El threshold de 30px cubre el "casi al fondo" (caso Langton, donde
    * podés estar a unos pixeles del borde sin estar exactamente encima).
    */
-  const AUTO_FOLLOW_THRESHOLD = 30;
+  const FOLLOW_THRESHOLD = 24;
 
-  function isNearBottom(el) {
-    // Si el contenido entra entero en el viewport, no hay scroll posible:
-    // devolvemos false para que no se active apenas abre el fullscreen.
-    if (el.scrollHeight <= el.clientHeight) return false;
-    // Si el user no ha scrolleado todavía (scrollTop = 0), no lo seguimos.
-    // Es la señal explícita de "estoy leyendo desde el principio, no me muevas".
-    if (el.scrollTop <= 0) return false;
-    return el.scrollHeight - el.scrollTop - el.clientHeight < AUTO_FOLLOW_THRESHOLD;
+  function isAtBottom(el) {
+    return el.scrollHeight - el.scrollTop - el.clientHeight < FOLLOW_THRESHOLD;
+  }
+
+  function followOutput(output) {
+    if (output.dataset.follow === 'false') return;
+
+    output.scrollTop = output.scrollHeight;
   }
 
   function appendLine(output, text, kind) {
@@ -176,14 +232,185 @@
     if (kind) line.classList.add('term__line--' + kind);
     if (text === '[CLEAR]') {
       while (output.firstChild) output.removeChild(output.firstChild);
+      output.dataset.follow = 'true';
       return;
     }
     line.innerHTML = escapeHtml(text).replace(/\n/g, '<br>');
-    const wasAtBottom = isNearBottom(output);
     output.appendChild(line);
-    if (wasAtBottom) {
-      output.scrollTop = output.scrollHeight;
+    followOutput(output);
+  }
+
+  function appendNode(output, node) {
+    output.appendChild(node);
+    followOutput(output);
+  }
+
+  /*
+   * Salida estructurada. El código puede llamar:
+   *   output({ type: 'text', text: '...' })
+   *   output({ type: 'error', text: '...' })
+   *   output({ type: 'grid', data: '...' | [['#','.'], ...] | [[0.1, 0.8], ...] })
+   *   output({ type: 'trace', points: [[0,0], [0.5,0.9], ...], label: '...' })
+   *   output({ type: 'metric', label: '...', value: 42, unit: 'ms' })
+   * El texto siempre se inserta con textContent; nunca se interpreta HTML.
+   */
+  const CELL_RAMP = ' .:-=+*#%@';
+
+  function asText(value) {
+    return value == null ? '' : String(value);
+  }
+
+  function gridAsText(payload) {
+    const data =
+      payload.data != null ? payload.data :
+      payload.rows != null ? payload.rows :
+      payload.text;
+    if (typeof data === 'string') return data;
+    if (!Array.isArray(data)) return asText(data);
+
+    let hasNumber = false;
+    let min = Infinity;
+    let max = -Infinity;
+    data.forEach((row) => {
+      if (!Array.isArray(row)) return;
+      row.forEach((cell) => {
+        if (typeof cell === 'number' && isFinite(cell)) {
+          hasNumber = true;
+          if (cell < min) min = cell;
+          if (cell > max) max = cell;
+        }
+      });
+    });
+
+    return data
+      .map((row) => {
+        if (!Array.isArray(row)) return asText(row);
+        return row
+          .map((cell) => {
+            if (typeof cell === 'number' && isFinite(cell)) {
+              const t = max === min ? 0 : (cell - min) / (max - min);
+              const idx = Math.max(
+                0,
+                Math.min(CELL_RAMP.length - 1, Math.round(t * (CELL_RAMP.length - 1)))
+              );
+              return CELL_RAMP.charAt(idx);
+            }
+            return asText(cell);
+          })
+          .join('');
+      })
+      .join('\n');
+  }
+
+  function traceAsNode(payload) {
+    const points = Array.isArray(payload.points) ? payload.points : [];
+    const valid = [];
+    points.forEach((point) => {
+      const x = Array.isArray(point) ? Number(point[0]) : Number(point && point.x);
+      const y = Array.isArray(point) ? Number(point[1]) : Number(point && point.y);
+      if (isFinite(x) && isFinite(y)) valid.push({ x, y });
+    });
+    if (valid.length < 2) return null;
+
+    const xs = valid.map((p) => p.x);
+    const ys = valid.map((p) => p.y);
+    const minX = Math.min.apply(null, xs);
+    const maxX = Math.max.apply(null, xs);
+    const minY = Math.min.apply(null, ys);
+    const maxY = Math.max.apply(null, ys);
+    const unit =
+      minX >= 0 && maxX <= 1 && minY >= 0 && maxY <= 1;
+    const ns = 'http://www.w3.org/2000/svg';
+
+    const svg = document.createElementNS(ns, 'svg');
+    svg.setAttribute('class', 'term__trace');
+    svg.setAttribute('viewBox', '0 0 100 40');
+    svg.setAttribute('preserveAspectRatio', 'none');
+    svg.setAttribute('role', 'img');
+    const label = asText(payload.label || 'traza de salida');
+    svg.setAttribute('aria-label', label);
+    const title = document.createElementNS(ns, 'title');
+    title.textContent = label;
+    svg.appendChild(title);
+
+    const base = document.createElementNS(ns, 'line');
+    base.setAttribute('x1', '0');
+    base.setAttribute('y1', '40');
+    base.setAttribute('x2', '100');
+    base.setAttribute('y2', '40');
+    base.setAttribute('class', 'term__trace-base');
+    svg.appendChild(base);
+
+    const poly = document.createElementNS(ns, 'polyline');
+    poly.setAttribute('class', 'term__trace-line');
+    poly.setAttribute('fill', 'none');
+    poly.setAttribute('vector-effect', 'non-scaling-stroke');
+    poly.setAttribute(
+      'points',
+      valid
+        .map((p) => {
+          const nx = unit
+            ? p.x
+            : maxX === minX
+              ? 0.5
+              : (p.x - minX) / (maxX - minX);
+          const ny = unit
+            ? p.y
+            : maxY === minY
+              ? 0.5
+              : (p.y - minY) / (maxY - minY);
+          return (nx * 100).toFixed(2) + ',' + ((1 - ny) * 40).toFixed(2);
+        })
+        .join(' ')
+    );
+    svg.appendChild(poly);
+    return svg;
+  }
+
+  function structuredOutput(payload) {
+    if (!payload || typeof payload !== 'object' || Array.isArray(payload)) return null;
+    const type = asText(payload.type).toLowerCase();
+
+    if (type === 'text') return { text: asText(payload.text), kind: 'log' };
+    if (type === 'error') {
+      return { text: asText(payload.text || payload.message), kind: 'error' };
     }
+    if (type === 'grid') {
+      const pre = document.createElement('pre');
+      pre.className = 'term__block term__block--grid';
+      pre.textContent = gridAsText(payload);
+      return { node: pre };
+    }
+    if (type === 'trace') {
+      const svg = traceAsNode(payload);
+      if (!svg) {
+        return { text: 'traza inválida: se necesitan al menos 2 puntos finitos', kind: 'warn' };
+      }
+      const wrap = document.createElement('div');
+      wrap.className = 'term__block term__block--trace';
+      wrap.appendChild(svg);
+      return { node: wrap };
+    }
+    if (type === 'metric') {
+      const row = document.createElement('div');
+      row.className = 'term__block term__block--metric';
+      const label = document.createElement('span');
+      label.className = 'term__metric-label';
+      label.textContent = asText(payload.label);
+      const value = document.createElement('span');
+      value.className = 'term__metric-value';
+      value.textContent = asText(payload.value);
+      row.appendChild(label);
+      row.appendChild(value);
+      if (payload.unit != null) {
+        const unit = document.createElement('span');
+        unit.className = 'term__metric-unit';
+        unit.textContent = asText(payload.unit);
+        row.appendChild(unit);
+      }
+      return { node: row };
+    }
+    return null;
   }
 
   function appendPrompt(output, label) {
@@ -197,6 +424,44 @@
 
   function setState(wrapper, state) {
     wrapper.dataset.state = state;
+    const status = wrapper.querySelector('.term__status');
+    if (!status) return;
+    const labels = {
+      idle: 'listo',
+      input: 'entrada',
+      running: 'ejecutando',
+      ok: 'ok',
+      error: 'error',
+    };
+    status.textContent = labels[state] || state;
+  }
+
+  function setStep(term, step) {
+    const { codeSection, inputSection, outputSection, steps, focusBtn } = term;
+    const code = step === 'code';
+    const input = step === 'input';
+    const output = step === 'output';
+
+    if (codeSection) codeSection.hidden = !code;
+    if (inputSection) inputSection.hidden = !input;
+    if (outputSection) outputSection.hidden = !output;
+
+    if (steps) {
+      const show = term.hasOutput && (code || output);
+      steps.hidden = !show;
+      const codeBtn = steps.querySelector('[data-action="step-code"]');
+      const outBtn = steps.querySelector('[data-action="step-output"]');
+      if (codeBtn) {
+        codeBtn.classList.toggle('is-active', code);
+        codeBtn.setAttribute('aria-pressed', code ? 'true' : 'false');
+      }
+      if (outBtn) {
+        outBtn.classList.toggle('is-active', output);
+        outBtn.setAttribute('aria-pressed', output ? 'true' : 'false');
+      }
+    }
+
+    if (focusBtn) focusBtn.disabled = !term.hasOutput;
   }
 
   function askInputs(prompts, inputForm, inputSection, onReady) {
@@ -235,7 +500,22 @@
           onReady(null);
         }
       });
-      setTimeout(() => input.focus(), 0);
+      setTimeout(() => {
+        try {
+          input.focus({ preventScroll: true });
+        } catch (e) {
+          input.focus();
+        }
+        if (inputSection.scrollIntoView) {
+          const reduce = window.matchMedia
+            ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+            : false;
+          inputSection.scrollIntoView({
+            block: 'center',
+            behavior: reduce ? 'auto' : 'smooth',
+          });
+        }
+      }, 0);
     };
 
     renderStep();
@@ -275,56 +555,59 @@
   }
 
   /*
-   * Fullscreen mode: cuando arranca el run, el terminal se expande a un overlay
-   * mostrando solo el output. Click en cualquier lado lo cierra.
-   * El objetivo es darle al output el espacio que necesita sin restringirlo
-   * al max-height inline de la sección.
+   * Fullscreen: el banco ocupa todo el viewport. Se usa al ejecutar y como
+   * modo de enfoque desde el inline. La barra sigue visible; el paso activo
+   * (código, entrada o salida) llena el resto.
    */
-  function enterFullscreen(term) {
+  function enterFullscreen(term, force) {
+    if (!force && !term.hasOutput) return;
     if (term.wrapper.classList.contains('term--fullscreen')) return;
+
+    if (!force) setStep(term, 'output');
     term.wrapper.classList.add('term--fullscreen');
+    document.body.classList.add('term-lock');
 
-    const bar = document.createElement('div');
-    bar.className = 'term__fs-bar';
-    bar.innerHTML = `
-      <button type="button" class="term__fs-close" data-action="close-fs" aria-label="cerrar">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-        </svg>
-      </button>
-    `;
-
-    // Insertar el bar ANTES del output para que aparezca arriba en el flex column
-    const outputSection = term.wrapper.querySelector('.term__section--output');
-    if (outputSection) {
-      term.wrapper.insertBefore(bar, outputSection);
-    } else {
-      term.wrapper.appendChild(bar);
+    if (term.focusBtn) term.focusBtn.hidden = true;
+    if (term.exitBtn) {
+      term.exitBtn.hidden = false;
+      if (!force) {
+        requestAnimationFrame(() => term.exitBtn.focus());
+      }
     }
 
-    // Empezar arriba: el user decide si scrollear hacia abajo. Si llega al
-    // fondo, el auto-follow de appendLine se activa solo.
-    requestAnimationFrame(() => term.output.scrollTop = 0);
+    if (!force) {
+      requestAnimationFrame(() => {
+        term.output.scrollTop = 0;
+      });
+    }
   }
 
   function exitFullscreen(term) {
     if (!term.wrapper.classList.contains('term--fullscreen')) return;
     term.wrapper.classList.remove('term--fullscreen');
-    const bar = term.wrapper.querySelector('.term__fs-bar');
-    if (bar) bar.remove();
+    document.body.classList.remove('term-lock');
+    if (term.focusBtn) term.focusBtn.hidden = false;
+    if (term.exitBtn) term.exitBtn.hidden = true;
+
+    const trigger =
+      term.focusBtn && !term.focusBtn.disabled
+        ? term.focusBtn
+        : term.wrapper.querySelector('[data-action="run"]');
+    if (trigger) trigger.focus();
   }
 
   function runCode(term) {
-    const { wrapper, editor, inputSection, inputForm, output, originalCode } = term;
+    const { wrapper, editor, inputSection, inputForm, output, outputSection } = term;
     const code = editor.innerText.replace(/\u00a0/g, ' ');
 
+    term.hasOutput = false;
+    setStep(term, 'run');
     setState(wrapper, 'running');
+    enterFullscreen(term, true);
 
     while (output.firstChild) output.removeChild(output.firstChild);
+    output.dataset.follow = 'false';
     inputForm.innerHTML = '';
-    inputSection.hidden = true;
-    appendPrompt(output, 'run');
 
     const prompts = [];
     const re = /\b(?:input|prompt)\(\s*(['"`])([^'"`]+)\1\s*\)/g;
@@ -333,11 +616,43 @@
       prompts.push(m[2]);
     }
 
+    const revealOutput = () => {
+      if (!outputSection || outputSection.hidden || wrapper.classList.contains('term--fullscreen')) return;
+      const rect = outputSection.getBoundingClientRect();
+      if (rect.top < 0 || rect.bottom > window.innerHeight) {
+        const reduce = window.matchMedia
+          ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+          : false;
+        outputSection.scrollIntoView({
+          block: 'nearest',
+          behavior: reduce ? 'auto' : 'smooth',
+        });
+      }
+    };
+
+    const executeValues = (values) => {
+      term.hasOutput = true;
+      setStep(term, 'output');
+      setState(wrapper, 'running');
+      inputForm.innerHTML = '';
+      appendPrompt(output, 'ejecutar');
+      values.forEach((value, idx) => {
+        appendLine(output, '› ' + prompts[idx] + ' ' + value, 'meta');
+      });
+      execute(code, output, values, (hadError) => {
+        setState(wrapper, hadError ? 'error' : 'ok');
+        output.dataset.follow = 'false';
+        output.scrollTop = 0;
+        revealOutput();
+      });
+      setTimeout(revealOutput, 0);
+    };
+
     const finish = (values) => {
       if (values === null) {
-        appendLine(output, '— cancelado', 'meta');
+        term.hasOutput = false;
+        setStep(term, 'code');
         setState(wrapper, 'idle');
-        inputSection.hidden = true;
         inputForm.innerHTML = '';
         return;
       }
@@ -353,26 +668,29 @@
           `⚠ valor${extreme.length > 1 ? 'es' : ''} grande${extreme.length > 1 ? 's' : ''}: ${list} ` +
           `(max recomendado ${MAX_INPUT_VALUE}). ` +
           `Puede congelar el navegador o producir mucho output.`;
+        setStep(term, 'output');
         showConfirm(
           output,
           msg,
           () => {
-            enterFullscreen(term);
-            execute(code, output, values, () => setState(wrapper, 'idle'));
+            executeValues(values);
           },
           () => {
-            appendLine(output, '— cancelado', 'meta');
+            term.hasOutput = false;
+            setStep(term, 'code');
             setState(wrapper, 'idle');
+            inputForm.innerHTML = '';
           }
         );
         return;
       }
 
-      enterFullscreen(term);
-      execute(code, output, values, () => setState(wrapper, 'idle'));
+      executeValues(values);
     };
 
     if (prompts.length > 0) {
+      setStep(term, 'input');
+      setState(wrapper, 'input');
       askInputs(prompts, inputForm, inputSection, finish);
     } else {
       finish([]);
@@ -394,13 +712,17 @@
     let done = false;
     let outputChars = 0;
     let truncated = false;
+    let hadError = false;
 
     const flush = () => {
       scheduled = false;
       if (buf.length === 0) return;
       const chunk = buf;
       buf = [];
-      chunk.forEach((entry) => appendLine(output, entry.text, entry.kind));
+      chunk.forEach((entry) => {
+        if (entry.node) appendNode(output, entry.node);
+        else appendLine(output, entry.text, entry.kind);
+      });
     };
 
     const queue = (text, kind) => {
@@ -437,7 +759,7 @@
     const originalWarn = console.warn;
 
     const fmt = (args) =>
-      args
+      Array.from(args)
         .map((a) => {
           if (typeof a === 'string') return a;
           try {
@@ -456,6 +778,7 @@
     console.error = function () {
       const text = fmt(arguments);
       originalError.apply(console, arguments);
+      hadError = true;
       queue(text, 'error');
     };
     console.warn = function () {
@@ -471,11 +794,39 @@
       return inputValues[index++];
     };
 
+    const queueNode = (node) => {
+      buf.push({ node });
+      if (!scheduled) {
+        scheduled = true;
+        Promise.resolve().then(flush);
+      }
+    };
+
     const outputFn = (content) => {
       if (content === '[CLEAR]') {
+        flush();
         while (output.firstChild) output.removeChild(output.firstChild);
+        if (output.dataset.follow !== 'true') output.scrollTop = 0;
         return;
       }
+
+      const structured = structuredOutput(content);
+      if (structured) {
+        if (structured.kind === 'error') hadError = true;
+        if (structured.node) queueNode(structured.node);
+        else queue(structured.text, structured.kind);
+        return;
+      }
+
+      if (content && typeof content === 'object') {
+        try {
+          queue(JSON.stringify(content), 'log');
+        } catch (_) {
+          queue(String(content), 'log');
+        }
+        return;
+      }
+
       queue(String(content), 'log');
     };
 
@@ -490,7 +841,7 @@
       done = true;
       flush();
       restore();
-      if (typeof onDone === 'function') onDone();
+      if (typeof onDone === 'function') onDone(hadError);
     };
 
     try {
@@ -502,9 +853,26 @@
       }
       finishSafely();
     } catch (err) {
+      hadError = true;
       appendLine(output, err && err.message ? err.message : String(err), 'error');
       finishSafely();
     }
+  }
+
+  function scrollOutput(term, edge) {
+    const reduce = window.matchMedia
+      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      : false;
+    const top = edge === 'top' ? 0 : term.output.scrollHeight;
+    if (term.output.scrollTo) {
+      term.output.scrollTo({
+        top,
+        behavior: reduce ? 'auto' : 'smooth',
+      });
+    } else {
+      term.output.scrollTop = top;
+    }
+    term.output.dataset.follow = edge === 'bottom' ? 'true' : 'false';
   }
 
   function resetCode(term) {
@@ -513,9 +881,10 @@
     }
     term.editor.innerHTML = term.originalHtml;
     term.inputForm.innerHTML = '';
-    term.inputSection.hidden = true;
+    term.hasOutput = false;
+    setStep(term, 'code');
     while (term.output.firstChild) term.output.removeChild(term.output.firstChild);
-    appendPrompt(term.output, '— listo —');
+    term.output.dataset.follow = 'false';
     setState(term.wrapper, 'idle');
   }
 
@@ -528,6 +897,11 @@
         const action = btn.dataset.action;
         if (action === 'run') runCode(term);
         if (action === 'reset') resetCode(term);
+        if (action === 'focus') enterFullscreen(term);
+        if (action === 'step-code') setStep(term, 'code');
+        if (action === 'step-output') setStep(term, 'output');
+        if (action === 'output-top') scrollOutput(term, 'top');
+        if (action === 'output-bottom') scrollOutput(term, 'bottom');
         if (action === 'close-fs') {
           exitFullscreen(term);
           return;
@@ -560,6 +934,18 @@
       }
     });
 
+    wrapper.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && wrapper.classList.contains('term--fullscreen')) {
+        e.preventDefault();
+        exitFullscreen(term);
+      }
+    });
+
+    const output = term.output;
+    output.addEventListener('scroll', () => {
+      output.dataset.follow = isAtBottom(output) ? 'true' : 'false';
+    }, { passive: true });
+
     editor.addEventListener('focus', () => wrapper.classList.add('is-focused'));
     editor.addEventListener('blur', () => wrapper.classList.remove('is-focused'));
   }
@@ -573,7 +959,6 @@
       const term = buildTerminal(codeEl);
       if (term) {
         bind(term);
-        appendPrompt(term.output, '— listo —');
       }
     });
   }

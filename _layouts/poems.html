@@ -6,32 +6,44 @@
   <title>{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }} · {{ site.title }}{% endif %}</title>
   {% include seo.html %}
   {% include head-css.html %}
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Lato:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
   {% include analytics.html %}
 </head>
-<body>
-  <main>
-        <h1 class="page-title">
-          <span class="page-title__text">~ {{ page.title }} ~{% if page.series %}
-        <span class="page-title__series"> ({{ page.series }} / part. {{ page.part }})</span>
-      {% endif %}</span>
-          <span class="init"><a href="{{ site.baseurl }}/">∅ INIT</a></span>
-        </h1>
+<body class="reading-poem-detail{% if page.effect == 'descender-drip' %} effect-descender-drip{% endif %}">
+  <main class="reading-main">
+    <nav class="reading-breadcrumb" aria-label="Ruta">
+      {% include section-link.html url="/poemas/" %}
+      <a href="{{ '/' | relative_url }}" aria-label="Inicio">∅ INIT</a>
+    </nav>
 
-      {% include nav-poem.html %}
+    <header class="reading-detail-head">
+      <h1 class="reading-detail__title"><span class="reading-detail__mark" aria-hidden="true">~</span> {{ page.title }}</h1>
+      <p class="reading-detail__meta">
+        {% if page.series %}<span>{{ page.series }}{% if page.part %} · parte {{ page.part }}{% endif %}</span>{% endif %}
+        {% if page.date %}<span>{{ page.date | date: "%Y-%m-%d" }}</span>{% endif %}
+      </p>
+    </header>
 
-      {% if page.image %}
-      {% include figure.html %}
-      {% endif %}
-      <div class="poem-body">
-         {{ content }}
-      </div>
+    {% if page.image %}
+    {% include figure.html %}
+    {% endif %}
 
-      {% include related-poem.html %}
+    <div class="reading-body poem-body">
+      {{ content }}
+    </div>
 
-      {% include back-button.html %}
-
+    {% include nav-poem.html %}
+    {% include related-poem.html %}
+    {% include back-button.html %}
+    {% include section-rail.html %}
   </main>
-
+  <script>
+    document.querySelectorAll(".poem-body h2").forEach(function (h2, index) {
+      h2.setAttribute("aria-label", "Sección " + (index + 1));
+    });
+  </script>
+  {% if page.effect == "descender-drip" %}
+  <script src="{{ '/assets/js/core/descender-drip.js' | relative_url }}" defer></script>
+  {% endif %}
 </body>
 </html>

@@ -1,5 +1,7 @@
 # Identidad Visual — KNDL 000
 
+> **Estado:** este documento describe la identidad anterior a la portada “cámara de niebla”, al rediseño de Código y a Imaginario. El sistema vigente vive en `DESIGN.md`; conserva este archivo como referencia histórica.
+
 > Documento vivo. Describe la identidad digital del sitio tal como existe hoy.
 > Si cambias tipografía, paleta, glifos o sistema de marcas, **actualiza este doc primero**.
 >
@@ -117,15 +119,18 @@ Catalogados de la Style Bible accent catalog, en orden de aparición:
 
 | Glifo | Sección | Significado | Notas |
 |---|---|---|---|
-| `ↂ` | Poemas | flecha hacia arriba invertida = elevación, verso | único en el nav |
-| `◉` | Visual | ojo = ver | círculo con punto |
-| `🜏` | Melange | antimonio (alquimia) = mixtura, sustancia | U+1F70F |
+| `⁂` | Poemas | asterismo = constelación, verso | normalizado |
+| `◉` | Imaginario | ojo/lente = ver | círculo con punto |
+| `⟡` | Rastros | traza = memoria en curso | normalizado |
+| `🜏` | Melange | antimonio (alquimia) = mixtura, sustancia | U+1F70F + VS15 |
 | `◊` | Código | diamante = dato, bit | |
-| `◇` | Dispositivos | diamante hueco = contenedor, herramienta | variante de ◊ |
+| `⎔` | Dispositivos | módulo = contenedor, herramienta | normalizado |
+| `✶` | Diario | estrella = anotación, día | |
+| `⏚` | Vestigios | tierra = resto, sedimento | |
+| `∿` | Música | onda = eco, sonido | |
 
 **Regla de unicidad:** no hay dos glifos del mismo registro en el nav.
-`◊` y `◇` son variantes (relleno vs. hueco) — diferencia semántica
-"dato puro" vs. "contenedor".
+Cada sigilo se normaliza a `0.68em` de tinta; `Melange` conserva `🜏`.
 
 ### 4.2 Glifos secundarios (en listas, etiquetas, kinds)
 
@@ -239,11 +244,9 @@ binario primero, brackets en el título, **sin** el `∴` separado).
 ## 8. Sistema de símbolos (mapa de uso)
 
 ```
-NAV (5 entradas)
-  ↂ Poemas          ◉ Visual          🜏 Melange         ◊ Código          ◇ Devices
-
-LISTADOS (5 secciones)
-  ✶ Diario          ⚱ Vestigios       ⟡ Rastros       ☽ Melange Reports
+SECCIONES
+  ⁂ Poemas          ◉ Imaginario      ⟡ Rastros        🜏 Melange
+  ◊ Código          ⎔ Dispositivos    ✶ Diario         ⏚ Vestigios       ∿ Música
 
 FIRMAS
   ∴  (Hermes)
@@ -253,6 +256,8 @@ FIRMAS
 UI
   ↳  ver más        ←  volver         ∅  INIT            ◦  bullet
 ```
+
+Los sigilos de sección se normalizan a una altura óptica común de `0.68em` y siempre van como prefijo. Melange conserva `🜏`; el resto usa `⁂ ◉ ⟡ ◊ ⎔ ✶ ⏚ ∿`.
 
 ## 9. Sistema de layout y CSS
 

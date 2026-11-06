@@ -4,9 +4,11 @@ title: 404
 noindex: true
 ---
 
-# 404
+<blockquote class="error-page__quote">
+  <p>“Lo que buscas no está aquí. O tal vez nunca estuvo.”</p>
+</blockquote>
 
-> "Lo que buscas no está aquí. O tal vez nunca estuvo."
+{% assign primary_nav = site.data.navigation | where: "primary", true %}
 
 <div class="error-page">
   <p class="error-page__message">
@@ -21,10 +23,19 @@ noindex: true
   <div class="error-page__explore">
     <p>O explora:</p>
     <div class="nube-de-palabras" data-no-nube-motion>
-      <a href="{{ '/fragmentos/' | relative_url }}">⟡ Rastros</a>
-      <a href="{{ '/poemas/' | relative_url }}">ↂ Poemas</a>
-      <a href="{{ '/visual/' | relative_url }}">◉ Visual</a>
-      <a href="{{ '/melange/' | relative_url }}">🜏 Melange</a>
+      {% for item in primary_nav limit: 4 %}
+        <a href="{{ item.url | relative_url }}"><span class="sigil sigil--{{ item.sigil }}" aria-hidden="true"><span class="sigil__glyph">{{ item.glyph }}</span></span> {{ item.name }}</a>
+      {% endfor %}
     </div>
   </div>
 </div>
+
+<script>
+(function () {
+  var path = location.pathname;
+  var target = path
+    .replace(/^\/visual\//, '/imaginario/')
+    .replace(/^\/imagenes\//, '/imaginario/');
+  if (target !== path) location.replace(target);
+})();
+</script>

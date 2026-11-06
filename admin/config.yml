@@ -124,8 +124,8 @@ collections:
       - { label: Concept, name: concept, widget: text, required: false }
 
   - name: imagenes
-    label: "◉ Imágenes"
-    label_singular: Imagen
+    label: "◉ Imaginario"
+    label_singular: Placa
     folder: content/collections/_images
     create: true
     format: frontmatter
@@ -133,7 +133,21 @@ collections:
     fields:
       - { label: Layout, name: layout, widget: hidden, default: imagen }
       - { label: Title, name: title, widget: string }
-      - { label: Image, name: image, widget: image }
+      - { label: "Imagen / póster", name: image, widget: image }
+      - label: "Tipo de medio"
+        name: media_type
+        widget: select
+        required: false
+        default: foto
+        options: [foto, video, gif, escaneo, generativo]
+      - { label: "Media source (video, gif o pieza)", name: media_src, widget: string, required: false }
+      - { label: "Póster alternativo", name: poster, widget: image, required: false }
+      - { label: "Embed HTML (video/generativo)", name: media_embed, widget: text, required: false }
+      - { label: "Fecha de captura", name: captured, widget: string, required: false }
+      - { label: Lugar, name: place, widget: string, required: false }
+      - { label: Medio, name: medium, widget: string, required: false }
+      - { label: Dimensiones, name: dimensions, widget: string, required: false }
+      - { label: Créditos, name: credits, widget: string, required: false }
       - { label: Caption, name: caption, widget: string, required: false }
       - { label: "Alt Text", name: alt, widget: string, required: false }
       - label: "Image Position"

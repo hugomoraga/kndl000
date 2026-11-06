@@ -1,7 +1,11 @@
 ---
 layout: default
 title: Dispositivos
+symbol: "⎔"
+sigil: dispositivos
+body_class: interior-page section-index
 description: "Plugins, VST, aplicaciones, visuales y herramientas para mentes creativas — KNDL 000."
+back: false
 ---
 
 <p class="dispositivo-index-lead">Herramientas propias: audio, software, visuales y experimentos empaquetados. Cada entrada es un dispositivo en el archivo.</p>
