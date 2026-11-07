@@ -644,6 +644,11 @@
         "name": "The Reading Anomaly Rule",
         "body": "Un efecto de poema ocurre una vez y pertenece al texto. Si obliga a perseguir la lectura o compite con el poema, sobra.",
         "section": "components"
+      },
+      {
+        "name": "The Poem Leads Rule",
+        "body": "En un poema, la imagen es una placa de apertura, no un hero: se limita en ancho y alto y el poema conserva el ancho completo de lectura. Si la foto empuja el primer verso fuera de la primera pantalla, la jerarquía está invertida.",
+        "section": "components"
       }
     ],
     "dos": [

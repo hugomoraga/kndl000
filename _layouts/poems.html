@@ -24,12 +24,14 @@
       </p>
     </header>
 
-    {% if page.image %}
-    {% include figure.html %}
-    {% endif %}
+    <div class="poem-spread{% if page.image %} poem-spread--with-image{% endif %}">
+      {% if page.image %}
+      {% include figure.html %}
+      {% endif %}
 
-    <div class="reading-body poem-body">
-      {{ content }}
+      <div class="reading-body poem-body">
+        {{ content }}
+      </div>
     </div>
 
     {% include nav-poem.html %}

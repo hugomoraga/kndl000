@@ -379,7 +379,7 @@ Todo es recto: radios de 0px, reglas de 1px, bordes completos cuando existen. La
 - **Materials:** Newsreader para la voz, JetBrains Mono solo para fecha, serie, posición y ruta. Reglas de 1px, sin tarjetas, radios ni sombras.
 - **Rastros:** cuaderno continuo sin enlaces en las entradas; año en mono, marca `※`, líneas separadas por puntos cian y un cierre en itálica. No hay paginación ni hover de tarjeta.
 - **Poemas — índice:** meses en mono mayúscula; cada fila es día, título serif y serie en itálica, separados por una regla capilar. Sin miniaturas.
-- **Poemas — detalle:** breadcrumb `← Poemas`, título con marca `~`, meta mono (`serie · parte · fecha`), imagen sin recorte, poema en el contenedor de 1000px, un efecto opcional de lectura (`descender-drip`, `ink-echo`, `fog-focus` o `word-drift`), pager `n / total` y poemas relacionados de la misma serie.
+- **Poemas — detalle:** breadcrumb `← Poemas`, título con marca `~`, meta mono (`serie · parte · fecha`), imagen como placa acotada (máx. 26rem de ancho y 38vh de alto, sin recorte), poema en la medida de prosa, un efecto opcional de lectura (`descender-drip`, `ink-echo`, `fog-focus` o `word-drift`), pager `n / total` y poemas relacionados de la misma serie.
 - **Melange — índice:** ficha de cuaderno de campo con fecha mono, título serif, lead de 44 palabras y estado `en curso` para los reportes `wip`. El título es la única puerta; no hay CTA repetido.
 - **Melange — reporte:** breadcrumb `← Melange`, título y subtítulo, meta mono (`reporte · año · serie` cuando existe), portada y cuerpo largo en el contenedor de 1000px. La ficha técnica es una lista de definición plana, sin caja.
 - **Estados:** vacío en itálica, foco cian de 1px con offset de 3px, navegación por teclado y adaptación a 320, 390, 768 y 1440 sin overflow.
@@ -391,6 +391,8 @@ Todo es recto: radios de 0px, reglas de 1px, bordes completos cuando existen. La
 - **`fog-focus` — Niebla:** las palabras se desenfocan y atenúan al alejarse del centro del viewport; el centro de lectura queda enfocado. Funciona por palabra para poemas de una sola estrofa.
 - **`word-drift` — Deriva:** las palabras respiran con una deriva vertical y una inclinación mínimas, desfasadas por índice. Solo se anima mientras el poema está visible.
 - **Límites:** todos respetan `prefers-reduced-motion`; no cambian el layout, no tapan la lectura y no agregan controles.
+
+**The Poem Leads Rule.** En un poema, la imagen es una placa de apertura, no un hero: se limita en ancho y alto y el poema conserva el ancho completo de lectura. Si la foto empuja el primer verso fuera de la primera pantalla, la jerarquía está invertida.
 
 **The Reading Anomaly Rule.** Un efecto de poema ocurre una vez y pertenece al texto. Si obliga a perseguir la lectura o compite con el poema, sobra.
 

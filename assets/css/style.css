@@ -7084,6 +7084,55 @@ body.reading-poem-detail .page-figure img {
   object-position: center;
 }
 
+/* Poema con imagen: la foto es una placa breve arriba del poema; el poema
+   conserva el ancho completo y el protagonismo. La imagen nunca supera
+   media pantalla. */
+.poem-spread {
+  max-width: var(--reading-measure);
+  margin: 0 auto;
+}
+
+.poem-spread .poem-body {
+  max-width: none;
+  margin: 0;
+}
+
+body.reading-poem-detail .poem-spread .page-figure {
+  width: fit-content;
+  max-width: min(100%, 26rem);
+  margin: 0 0 clamp(1.5rem, 3vw, 2.25rem);
+  border: 1px solid var(--umbral-rule);
+  background: var(--umbral-viewer-black, #0a0c0d);
+}
+
+body.reading-poem-detail .poem-spread .page-figure img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  min-height: 0;
+  max-height: min(38vh, 340px);
+  object-fit: contain;
+  object-position: center;
+  border-radius: 0;
+}
+
+body.reading-poem-detail .poem-spread .page-figure__caption {
+  max-width: 100%;
+}
+
+@media (max-width: 900px) {
+  body.reading-poem-detail .poem-spread .page-figure img {
+    max-height: min(34vh, 320px);
+  }
+}
+
+@media (max-width: 700px) {
+  body.reading-poem-detail .poem-spread .page-figure img {
+    max-height: 30vh;
+  }
+}
+
 body.reading-melange-detail .melange-report__head,
 body.reading-melange-detail .melange-report__subtitle,
 body.reading-melange-detail .reading-detail__meta {
