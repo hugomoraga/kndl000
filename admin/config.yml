@@ -4,10 +4,15 @@ backend:
   name: github
   repo: hugomoraga/kndl000
   branch: main
+  # GitHub Pages no tiene un servidor OAuth propio. El botón de GitHub usa
+  # Netlify por defecto y falla fuera de Netlify; usamos un token de GitHub.
+  # Si más adelante desplegás Sveltia CMS Authenticator, agregá base_url y
+  # cambiá a auth_methods: [oauth, token].
+  auth_methods: [token]
 
 media_folder: assets/media/images
 public_folder: /assets/media/images
-site_url: https://kundala000.com
+site_url: https://kndl.quicio.qzz.io
 
 collections:
   - name: diario
@@ -39,6 +44,14 @@ collections:
       - { label: Date, name: date, widget: datetime, required: false }
       - { label: Body, name: body, widget: markdown }
       - { label: Series, name: series, widget: string, required: false }
+      - { label: "Parte", name: part, widget: string, required: false }
+      - { label: Publicado, name: published, widget: boolean, default: true, required: false }
+      - label: Efecto
+        name: effect
+        widget: select
+        required: false
+        default: none
+        options: [none, descender-drip]
       - { label: Caption, name: caption, widget: string, required: false }
       - label: "Image Position"
         name: image_position
@@ -99,6 +112,7 @@ collections:
       - { label: Layout, name: layout, widget: hidden, default: melange-report }
       - { label: Title, name: title, widget: string }
       - { label: Image, name: image, widget: image, required: false }
+      - { label: "Alt de la imagen", name: alt, widget: string, required: false }
       - { label: Date, name: date, widget: datetime, required: false }
       - { label: Body, name: body, widget: markdown }
       - { label: Subtitle, name: subtitle, widget: string, required: false }
@@ -134,6 +148,13 @@ collections:
       - { label: Layout, name: layout, widget: hidden, default: imagen }
       - { label: Title, name: title, widget: string }
       - { label: "Imagen / póster", name: image, widget: image }
+      - label: "Foco del slider"
+        name: slider_focal
+        widget: select
+        required: false
+        options:
+          - { label: Centro, value: c }
+          - { label: Lado, value: s }
       - label: "Tipo de medio"
         name: media_type
         widget: select
@@ -200,6 +221,7 @@ collections:
         fields:
           - { label: "Línea", name: linea, widget: string }
       - { label: Date, name: date, widget: datetime, required: false }
+      - { label: Hermes, name: hermes, widget: boolean, default: false, required: false }
 
   - name: dispositivos
     label: "◇ Dispositivos"
@@ -211,6 +233,8 @@ collections:
     fields:
       - { label: Layout, name: layout, widget: select, options: [dispositivo, default], default: dispositivo }
       - { label: Title, name: title, widget: string }
+      - { label: Description, name: description, widget: text, required: false }
+      - { label: "Símbolo al final", name: symbol_suffix, widget: boolean, default: true, required: false }
       - { label: Image, name: image, widget: image, required: false }
       - { label: Date, name: date, widget: datetime, required: false }
       - { label: Body, name: body, widget: markdown }
