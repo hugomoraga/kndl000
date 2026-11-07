@@ -386,11 +386,14 @@ Todo es recto: radios de 0px, reglas de 1px, bordes completos cuando existen. La
 
 ### Cae — descender drip
 - **Alcance:** solo el poema `Cae`, mediante `effect: descender-drip`. No es un comportamiento global.
-- **Regla:** una letra con cola (`g`, `j`, `p`, `q`, `y`) por estrofa, elegida de forma determinista; la letra cae desde su línea y se acumula en una línea de sedimento al pie.
-- **Capa:** clon `aria-hidden` dentro de `.descender-layer`, `pointer-events: none`; el texto original no se muta y sigue siendo la fuente accesible.
-- **Fantasma:** el glifo original queda al 22% de opacidad, como rastro; el clon cae al 70% sobre una regla de 1px.
-- **Movimiento:** 1.2–1.7s, sin layout shift, máximo una letra por estrofa; `prefers-reduced-motion` no crea capa ni clones.
-- **No:** lluvia aleatoria, letras que tapan palabras, selección de texto o más de una letra por estrofa.
+- **Regla:** la última palabra de cada estrofa se derrite: cada letra cuelga, se estira y gotea sobre la línea siguiente. No es una letra suelta ni una lluvia.
+- **Capa:** clones `aria-hidden` dentro de `.melt-layer`, `pointer-events: none`; el texto original no se muta y sigue siendo la fuente accesible.
+- **Letras:** cada letra se anima por separado con distinto desplazamiento, escala vertical, inclinación y desenfoque; el conjunto se lee como tinta que se derrite, no como una palabra duplicada.
+- **Gotas:** 1–3 líneas verticales de 1px con gradiente cian caen desde las letras con descendente; desaparecen al terminar.
+- **Disparo:** la palabra se activa cuando su marcador entra en viewport, no cuando la estrofa completa es visible; así el efecto se percibe al llegar a la línea.
+- **Movimiento:** 3–3.4s, sin layout shift, una palabra por estrofa; `prefers-reduced-motion` no crea capa ni clones.
+- **No:** lluvia aleatoria, letras que tapan palabras, selección de texto o efectos que se ejecuten fuera del viewport.
+- **Pager móvil:** por debajo de 700px, anterior/siguiente se apilan a ancho completo y el título deja de truncarse con elipsis.
 
 **The Semantic Anomaly Rule.** La extrañeza solo ocurre cuando el contenido la pide. En `Cae`, la letra que cae es una lectura del poema; en cualquier otra página sería un efecto.
 

@@ -6983,8 +6983,35 @@ body.reading-melange-detail .report-spec dd {
   }
 
   .reading-pager {
-    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-    gap: 0.75rem;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    margin-top: 2.5rem;
+    padding-top: 1rem;
+  }
+
+  .reading-pager__link {
+    display: block;
+    min-height: 44px;
+    padding: 0.7rem 0;
+    border-top: 1px solid var(--umbral-rule-faint);
+    font-size: 0.75rem;
+    line-height: 1.55;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    overflow-wrap: anywhere;
+    text-align: left;
+  }
+
+  .reading-pager__link--next {
+    text-align: left;
+  }
+
+  .reading-pager__count {
+    order: -1;
+    padding-bottom: 0.55rem;
+    text-align: left;
+    white-space: normal;
   }
 }
 
@@ -7588,7 +7615,8 @@ body.reading-melange .melange-item__status {
 }
 
 
-/* Goteo de descendentes — solo Cae. */
+/* Goteo de Cae — solo Cae. La palabra final de cada estrofa se estira,
+   cuelga y gotea sobre la línea siguiente; el texto original no se toca. */
 body.has-descender-drip .poem-body {
   position: relative;
   padding-bottom: 4.75rem;
@@ -7604,7 +7632,7 @@ body.has-descender-drip .poem-body::after {
   background: var(--umbral-rule-faint);
 }
 
-.descender-layer {
+.melt-layer {
   position: absolute;
   inset: 0;
   z-index: 2;
@@ -7612,24 +7640,62 @@ body.has-descender-drip .poem-body::after {
   pointer-events: none;
 }
 
-.descender {
-  display: inline-block;
-  position: relative;
-  will-change: opacity;
+.melt-marker {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
 }
 
-.descender--ghost {
-  opacity: 0.22;
-}
-
-.descender--falling {
+.melt-word {
   position: absolute;
   margin: 0;
-  color: var(--umbral-dim);
-  font: inherit;
-  line-height: 1;
+  padding: 0;
+  color: var(--umbral-trace);
   white-space: nowrap;
-  opacity: 0.7;
+  pointer-events: none;
+  transform-origin: top center;
+  will-change: transform, opacity, filter;
+}
+
+.melt-letter {
+  display: inline-block;
+  transform-origin: top center;
+  will-change: transform, opacity, filter;
+}
+
+.melt-drop {
+  position: absolute;
+  width: 1px;
+  height: 0;
+  background: linear-gradient(to bottom, rgba(159, 198, 201, 0.9), rgba(159, 198, 201, 0));
+  opacity: 0.8;
+  transform-origin: top;
+  animation: melt-drip 2.6s cubic-bezier(0.16, 0.8, 0.2, 1) forwards;
+  will-change: height, opacity, transform;
+}
+
+@keyframes melt-drip {
+  0% {
+    height: 0;
+    opacity: 0.9;
+    transform: translateY(0);
+  }
+  35% {
+    height: 1.5em;
+    opacity: 0.7;
+  }
+  100% {
+    height: 2.9em;
+    opacity: 0;
+    transform: translateY(0.65em);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .melt-drop {
+    animation: none;
+  }
 }
 
 /* El rail fijo no debe heredar el ancho de contenido de las interiores. */

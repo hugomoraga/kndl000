@@ -441,7 +441,7 @@
       "name": "Descender Drip",
       "kind": "custom",
       "refersTo": "descender-drip",
-      "description": "Anomalía semántica de Cae: una descendente determinista por estrofa cae de su línea y se acumula en una línea de sedimento; clon aria-hidden, texto original intacto y reduced-motion sin efecto.",
+      "description": "En Cae, la última palabra de cada estrofa se derrite: letras que cuelgan, se estiran y gotean sobre la línea siguiente. Clones aria-hidden, texto original intacto, reduced-motion respetado.",
       "html": "<div class=\"poem-body\"><p>y yo simplemente caigo...</p><div class=\"descender-layer\" aria-hidden=\"true\"><span class=\"descender descender--falling\">g</span></div></div>",
       "css": "body.has-descender-drip .poem-body { position:relative; padding-bottom:4.75rem; } body.has-descender-drip .poem-body::after { content:\"\"; position:absolute; right:0; bottom:2.4rem; left:0; height:1px; background:rgba(233,230,220,.07); } .descender-layer { position:absolute; inset:0; z-index:2; overflow:visible; pointer-events:none; } .descender { display:inline-block; position:relative; } .descender--ghost { opacity:.22; } .descender--falling { position:absolute; margin:0; color:#9aa3a1; font:inherit; line-height:1; white-space:nowrap; opacity:.7; }"
     },
