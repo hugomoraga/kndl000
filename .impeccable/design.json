@@ -540,6 +540,14 @@
       "description": "Curva de automatización de 16 pasos para un parámetro de efecto. Se dibuja con el puntero, se ajusta con flechas y se aplica en cada paso con una rampa corta.",
       "html": "<div class=\"automation-block\"><div class=\"automation-head\"><label for=\"automation-target\" class=\"sr-only\">Parámetro</label><select id=\"automation-target\"><option>Reverb Pad</option><option>Delay Lead</option></select><button id=\"automation-toggle\" class=\"line-action\" aria-pressed=\"false\">Auto</button></div><div id=\"automation-lane\" class=\"automation-lane\"><button class=\"automation-step\" style=\"--v:.4\" aria-label=\"Paso 1: 40%\"><span class=\"automation-bar\"><span class=\"automation-fill\"></span></span><span class=\"automation-index\">1</span></button></div><p class=\"tool-hint\"><span id=\"automation-readout\">Auto apagado · Reverb Pad</span></p></div>",
       "css": ".automation-lane { display:grid; grid-template-columns:repeat(16,minmax(0,1fr)); gap:2px; height:8rem; touch-action:none; user-select:none; } .automation-step { display:flex; flex-direction:column; gap:2px; min-width:0; min-height:0; height:100%; padding:0; border:0; background:transparent; cursor:crosshair; } .automation-bar { position:relative; flex:1; width:100%; background:rgba(233,230,220,.07); } .automation-fill { position:absolute; right:0; bottom:0; left:0; height:calc(var(--v)*100%); background:#9fc6c9; opacity:.75; } .automation-step.is-current .automation-bar { outline:1px solid #e9e6dc; outline-offset:1px; } .automation-index { font-family:'JetBrains Mono',monospace; font-size:.75rem; text-align:center; color:#7f8a88; }"
+    },
+    {
+      "name": "Poem Effect",
+      "kind": "custom",
+      "refersTo": "poem-effect",
+      "description": "Efecto opcional de lectura en poemas: derretir, eco de tinta, niebla o deriva de palabras. Se asigna con `effect` en el frontmatter y respeta prefers-reduced-motion.",
+      "html": "<div class=\"poem-body\" data-poem-effect=\"ink-echo\"><p>tu lengua brota purpurina</p></div>",
+      "css": ".poem-with-ink-echo { --echo-x:1.2px; --echo-y:.6px; text-shadow:var(--echo-x) var(--echo-y) .4px rgba(159,198,201,.34), calc(var(--echo-x)*-1) calc(var(--echo-y)*-1) .55px rgba(199,164,102,.13); } .poem-with-fog .fog-word { display:inline-block; filter:blur(calc(var(--fog)*.8px)); opacity:calc(1 - var(--fog)*.32); } .poem-with-word-drift .drift-word { display:inline-block; animation:word-drift 7s ease-in-out infinite; animation-delay:calc(var(--i)*-.47s); } @media (prefers-reduced-motion:reduce) { .poem-with-word-drift .drift-word { animation:none; } }"
     }
   ],
   "narrative": {
@@ -630,6 +638,11 @@
       {
         "name": "The Drawn Automation Rule",
         "body": "La automatización se dibuja en 16 pasos y se lee como una curva, no como una tabla de valores. Cada paso tiene un valor y un estado actual; el parámetro elegido recibe una rampa corta al entrar cada paso.",
+        "section": "components"
+      },
+      {
+        "name": "The Reading Anomaly Rule",
+        "body": "Un efecto de poema ocurre una vez y pertenece al texto. Si obliga a perseguir la lectura o compite con el poema, sobra.",
         "section": "components"
       }
     ],

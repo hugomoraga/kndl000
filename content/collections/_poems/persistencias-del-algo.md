@@ -5,6 +5,7 @@ image: /assets/media/images/poems-001.png
 date: 2025-06-23
 series: Mal Necesario
 part: 1
+effect: ink-echo
 
 ---
 

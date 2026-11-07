@@ -4,6 +4,7 @@ title: Medusa
 image: /assets/media/images/pdia-2bc5df08-cbb5-4288-a2f5-0a9793606daf.jpg
 date: 2026-01-01T00:00:00.000Z
 caption: 'Perseus, Aratea  820'
+effect: word-drift
 ---
 
 ## Medusa

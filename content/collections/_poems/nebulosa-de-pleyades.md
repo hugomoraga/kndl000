@@ -3,6 +3,7 @@ layout: poems
 title: Nebula de Pleyades
 image: /assets/media/images/poems-nebula.png
 date: 2025-10-29
+effect: fog-focus
 ---
 
 Nebula de Pléyades  

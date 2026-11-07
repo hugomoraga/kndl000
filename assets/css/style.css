@@ -7615,6 +7615,59 @@ body.reading-melange .melange-item__status {
 }
 
 
+/* Efectos de poema — asignados por `effect` en el frontmatter.
+   Cada uno se aplica sobre el texto original sin mover el layout. */
+
+.poem-with-ink-echo {
+  --echo-x: 1.2px;
+  --echo-y: 0.6px;
+  text-shadow:
+    var(--echo-x) var(--echo-y) 0.4px rgba(159, 198, 201, 0.34),
+    calc(var(--echo-x) * -1) calc(var(--echo-y) * -1) 0.55px rgba(199, 164, 102, 0.13);
+}
+
+.poem-with-fog .fog-word {
+  --fog: 0;
+  display: inline-block;
+  filter: blur(calc(var(--fog) * 0.8px));
+  opacity: calc(1 - var(--fog) * 0.32);
+  will-change: filter, opacity;
+}
+
+.poem-with-word-drift .drift-word {
+  display: inline-block;
+  transform-origin: center bottom;
+  animation: word-drift 7s ease-in-out infinite;
+  animation-delay: calc(var(--i) * -0.47s);
+  will-change: transform;
+}
+
+.poem-with-word-drift:not(.is-visible) .drift-word {
+  animation-play-state: paused;
+}
+
+@keyframes word-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate3d(0.11em, -0.09em, 0) rotate(-0.9deg);
+  }
+  55% {
+    transform: translate3d(-0.1em, 0.08em, 0) rotate(0.85deg);
+  }
+  80% {
+    transform: translate3d(0.04em, -0.035em, 0) rotate(-0.4deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .poem-with-word-drift .drift-word {
+    animation: none;
+  }
+}
+
 /* Goteo de Cae — solo Cae. La palabra final de cada estrofa se estira,
    cuelga y gotea sobre la línea siguiente; el texto original no se toca. */
 body.has-descender-drip .poem-body {

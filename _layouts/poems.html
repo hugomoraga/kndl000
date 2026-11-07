@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
   {% include analytics.html %}
 </head>
-<body class="reading-poem-detail{% if page.effect == 'descender-drip' %} effect-descender-drip{% endif %}">
+<body class="reading-poem-detail{% if page.effect and page.effect != 'none' %} effect-{{ page.effect }}{% endif %}" data-poem-effect="{{ page.effect | default: 'none' }}">
   <main class="reading-main">
     <nav class="reading-breadcrumb" aria-label="Ruta">
       {% include section-link.html url="/poemas/" %}
@@ -42,8 +42,15 @@
       h2.setAttribute("aria-label", "Sección " + (index + 1));
     });
   </script>
-  {% if page.effect == "descender-drip" %}
+  {% case page.effect %}
+  {% when "descender-drip" %}
   <script src="{{ '/assets/js/core/descender-drip.js' | relative_url }}" defer></script>
-  {% endif %}
+  {% when "ink-echo" %}
+  <script src="{{ '/assets/js/core/ink-echo.js' | relative_url }}" defer></script>
+  {% when "fog-focus" %}
+  <script src="{{ '/assets/js/core/fog-focus.js' | relative_url }}" defer></script>
+  {% when "word-drift" %}
+  <script src="{{ '/assets/js/core/word-drift.js' | relative_url }}" defer></script>
+  {% endcase %}
 </body>
 </html>

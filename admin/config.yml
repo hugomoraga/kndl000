@@ -51,7 +51,12 @@ collections:
         widget: select
         required: false
         default: none
-        options: [none, descender-drip]
+        options:
+          - { label: "Sin efecto", value: none }
+          - { label: "Derretir", value: descender-drip }
+          - { label: "Eco de tinta", value: ink-echo }
+          - { label: "Niebla", value: fog-focus }
+          - { label: "Deriva de palabras", value: word-drift }
       - { label: Caption, name: caption, widget: string, required: false }
       - label: "Image Position"
         name: image_position
