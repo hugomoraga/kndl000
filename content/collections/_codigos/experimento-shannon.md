@@ -18,7 +18,7 @@ const corpusEjemplo = `el lenguaje es un sistema de signos que permite la comuni
 let corpus = null;
 let corpusListo = false;
 
-output("Leyendo corpus.txt...\n");
+output({ type: "meta", text: "Leyendo corpus.txt…" });
 
 // Intentar leer corpus.txt desde la raíz
 fetch('/corpus.txt')
@@ -70,7 +70,7 @@ function procesarCorpus() {
   // Normalizar corpus: solo letras y espacios
   corpus = corpus.toLowerCase().replace(/[^a-záéíóúñü\s]/g, ' ').replace(/\s+/g, ' ');
   
-  output("Corpus procesado: " + corpus.length + " caracteres\n");
+  output({ type: "legend", text: "Corpus procesado: " + corpus.length + " caracteres" });
   
   // Continuar con la generación
   generarTexto();
@@ -370,9 +370,7 @@ function nivel7(longitud, corpus) {
 }
 
   // Generar y mostrar resultado - Barrido desde nivel 1 hasta el nivel elegido
-  output("\n=== PROGRESIÓN DEL EXPERIMENTO DE SHANNON ===\n");
-  output("Mostrando niveles del 1 al " + nivelNum + "\n");
-  output("=".repeat(60) + "\n\n");
+  output({ type: "meta", text: `Progresión del experimento · niveles 1 a ${nivelNum}` });
   
   // Pre-construir modelos que se reutilizarán
   let bigramas = null;
@@ -409,29 +407,15 @@ function nivel7(longitud, corpus) {
     }
     
     if (resultado) {
-      output("\n" + descripcion + "\n");
-      output("─".repeat(60) + "\n");
-      
-      // Mostrar en líneas de 60 caracteres
-      for (let i = 0; i < resultado.length; i += 60) {
-        output(resultado.substring(i, i + 60));
-      }
-      
-      output("\n" + "─".repeat(60) + "\n");
-      
-      // Separador entre niveles (excepto el último)
-      if (n < nivelNum) {
-        output("\n");
-      }
+      output({ type: "meta", text: descripcion });
+      output({ type: "text", text: resultado });
     }
   }
-  
-  output("\n");
-  output("=".repeat(60) + "\n");
-  output("Del caos al orden.");
-  output("De la aleatoriedad a la estructura.");
-  output("¿Dónde termina el ruido y comienza el lenguaje?");
-  output("\n");
+
+  output({
+    type: "conclusion",
+    text: "Del caos al orden.\nDe la aleatoriedad a la estructura.\n¿Dónde termina el ruido y comienza el lenguaje?"
+  });
 }
 ```
 

@@ -7,14 +7,14 @@ concept: "La existencia precede a la esencia. ¿Qué es una variable antes de se
 ---
 
 ```javascript
-// Antes de la asignación
+output({ type: "meta", text: "Antes de la asignación" });
 let existencia;
 
 // ¿Qué es existencia?
 console.log("Antes de asignar:", existencia);
 console.log("Tipo:", typeof existencia);
 
-// La existencia precede a la esencia
+output({ type: "meta", text: "La existencia precede a la esencia" });
 existencia = "soy";
 
 // Ahora tiene esencia
@@ -26,6 +26,11 @@ console.log("Tipo:", typeof existencia);
 // ¿El undefined es ausencia o posibilidad?
 console.log("¿undefined === null?", undefined === null);
 console.log("¿undefined == null?", undefined == null);
+
+output({
+  type: "conclusion",
+  text: "Una variable sin valor.\n¿Es nada o es todo lo que puede ser?"
+});
 ```
 
 ---

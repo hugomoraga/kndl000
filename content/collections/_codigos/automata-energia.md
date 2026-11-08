@@ -84,21 +84,14 @@ function render(grid) {
 // Mostrar estado
 function mostrarEstado(gen, grid) {
   output("[CLEAR]");
-  
-  let outputText = `Generación ${gen}:\n`;
-  outputText += `Grid: ${WIDTH}x${HEIGHT}\n`;
-  outputText += `\n`;
-  outputText += `Símbolos:\n`;
-  outputText += `  (espacio) = energía 0.0-0.17 (muy baja)\n`;
-  outputText += `  . = energía 0.17-0.33 (baja)\n`;
-  outputText += `  : = energía 0.33-0.5 (media)\n`;
-  outputText += `  * = energía 0.5-0.67 (alta)\n`;
-  outputText += `  O = energía 0.67-0.83 (muy alta)\n`;
-  outputText += `  @ = energía 0.83-1.0 (máxima)\n\n`;
-  
-  outputText += render(grid);
-  
-  output(outputText);
+  output({ type: "meta", text: `Generación ${gen} · ${WIDTH} × ${HEIGHT}` });
+  output({ type: "legend", text: "energía: espacio 0 · . baja · : media · * alta · O muy alta · @ máxima" });
+  output({
+    type: "grid",
+    data: render(grid),
+    caption: "la energía se difunde entre vecinos hasta encontrar equilibrio",
+    label: "Autómata de energía, generación " + gen
+  });
 }
 
 // Observador - Captura momentos peculiares
@@ -199,27 +192,37 @@ function observar(gen, grid) {
   }
 }
 
-// Mostrar momentos capturados
+// Mostrar momentos capturados (los primeros, para no saturar la lectura)
 function mostrarMomentosCapturados() {
   if (momentosCapturados.length === 0) {
-    output("\nEl observador no capturó momentos peculiares.");
-    output("El sistema evolucionó de forma estable.");
+    output({
+      type: "legend",
+      text: "El observador no capturó momentos peculiares. El sistema evolucionó de forma estable."
+    });
     return;
   }
-  
-  let outputText = "\n=== MOMENTOS CAPTURADOS POR EL OBSERVADOR ===\n\n";
-  
-  for (let i = 0; i < momentosCapturados.length; i++) {
-    const momento = momentosCapturados[i];
-    outputText += `Momento ${i + 1} - Generación ${momento.generacion}:\n`;
-    outputText += `Razón: ${momento.razon}\n`;
-    outputText += `Variación: ${momento.patrones.variacion} | Anomalías: ${momento.patrones.anomalias}\n`;
-    outputText += `Equilibrio: ${momento.patrones.equilibrio} | Concentración: ${momento.patrones.concentracion}\n\n`;
-    outputText += render(momento.grid);
-    outputText += "\n";
-  }
-  
-  output(outputText);
+
+  const visibles = momentosCapturados.slice(0, 3);
+  output({
+    type: "meta",
+    text: `Momentos capturados: ${momentosCapturados.length} · mostrando ${visibles.length}`
+  });
+
+  visibles.forEach((momento, i) => {
+    output({ type: "meta", text: `Momento ${i + 1} · generación ${momento.generacion}` });
+    output({
+      type: "legend",
+      text: `${momento.razon}\n` +
+            `variación ${momento.patrones.variacion} · anomalías ${momento.patrones.anomalias} · ` +
+            `equilibrio ${momento.patrones.equilibrio} · concentración ${momento.patrones.concentracion}`
+    });
+    output({
+      type: "grid",
+      data: render(momento.grid),
+      caption: "instantánea del sistema en un momento peculiar",
+      label: `Momento ${i + 1}, generación ${momento.generacion}`
+    });
+  });
 }
 
 // Inicializar
@@ -240,21 +243,16 @@ function evolucionar() {
     }, 10); // 50 milisegundos entre generaciones
   } else {
     setTimeout(() => {
-      let finalText = "\n";
-      finalText += "La energía ha evolucionado.\n";
-      finalText += "Buscó equilibrio con sus vecinos.\n";
-      finalText += "Las anomalías emergieron y se disiparon.\n";
-      finalText += "El sistema fluyó hacia la estabilidad.\n";
-      finalText += "\n";
-      finalText += "El observador analizó " + generaciones + " generaciones.\n";
-      finalText += "Capturó " + momentosCapturados.length + " momentos peculiares.\n";
-      
-      output(finalText);
-      
-      // Mostrar momentos capturados después de un pequeño delay
-      setTimeout(() => {
-        mostrarMomentosCapturados();
-      }, 300);
+      mostrarMomentosCapturados();
+      output({
+        type: "conclusion",
+        text: "La energía ha evolucionado.\n" +
+              "Buscó equilibrio con sus vecinos.\n" +
+              "Las anomalías emergieron y se disiparon.\n" +
+              "El sistema fluyó hacia la estabilidad.\n\n" +
+              "El observador analizó " + generaciones + " generaciones.\n" +
+              "Capturó " + momentosCapturados.length + " momentos peculiares."
+      });
     }, 100);
   }
 }

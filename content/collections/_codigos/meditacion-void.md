@@ -15,6 +15,7 @@ function vacio() {
 }
 
 // ¿Qué retorna una función que no retorna?
+output({ type: "meta", text: "¿Qué retorna una función que no retorna?" });
 const nada = vacio();
 console.log("Resultado de vacio():", nada);
 
@@ -23,6 +24,11 @@ console.log("Resultado de vacio():", nada);
 // El vacío tiene forma
 console.log("Tipo de nada:", typeof nada);
 console.log("¿Es nada igual a undefined?", nada === undefined);
+
+output({
+  type: "conclusion",
+  text: "Una función que no hace nada, pero existe.\nEl código como meditación sobre la ausencia."
+});
 ```
 
 ---

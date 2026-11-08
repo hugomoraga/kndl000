@@ -7,7 +7,7 @@ concept: "El objeto sin propiedades. La estructura sin contenido. ¿Qué es un o
 ---
 
 ```javascript
-// Un objeto vacío
+output({ type: "meta", text: "Un objeto vacío" });
 const vacio = {};
 
 // ¿Está vacío?
@@ -29,10 +29,17 @@ const algo = vacio;
 console.log("¿algo === vacio?", algo === vacio);
 console.log("¿algo == vacio?", algo == vacio);
 
+output({ type: "meta", text: "El vacío es algo" });
+
 // El vacío es algo
 // La ausencia es presencia
 // El objeto vacío existe
 console.log("JSON.stringify(vacio):", JSON.stringify(vacio));
+
+output({
+  type: "conclusion",
+  text: "Un objeto sin propiedades.\n¿Es nada o es la forma más pura de algo?"
+});
 ```
 
 ---

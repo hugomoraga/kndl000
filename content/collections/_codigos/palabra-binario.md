@@ -10,8 +10,7 @@ concept: "La palabra como código. El lenguaje convertido en binario."
 // Convertir palabra a binario
 const palabra = input("Ingresa una palabra: ");
 
-console.log(`Palabra: "${palabra}"`);
-console.log("");
+output({ type: "meta", text: `Palabra: "${palabra}" · ${palabra.length} caracteres` });
 
 // Convertir cada carácter a binario
 for (let i = 0; i < palabra.length; i++) {
@@ -25,13 +24,16 @@ for (let i = 0; i < palabra.length; i++) {
   console.log(`${char} → ${charCode} → ${binario}`);
 }
 
-console.log("");
-console.log("Binario completo:");
+output({ type: "legend", text: "Binario completo" });
 const binarioCompleto = palabra
   .split('')
   .map(char => char.charCodeAt(0).toString(2).padStart(8, '0'))
   .join(' ');
-console.log(binarioCompleto);
+output({ type: "legend", text: binarioCompleto });
+output({
+  type: "conclusion",
+  text: "La palabra convertida en código.\nEl lenguaje como secuencia de ceros y unos."
+});
 ```
 
 ---

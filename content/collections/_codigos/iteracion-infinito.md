@@ -11,7 +11,7 @@ concept: "El loop como meditación. La repetición como forma de existencia."
 let contador = 0;
 const limite = input("¿Cuántas veces quieres existir?");
 
-console.log("Iniciando iteración...");
+output({ type: "meta", text: "Iniciando iteración" });
 
 while (contador < limite) {
   console.log(`Iteración ${contador + 1}: Estoy aquí`);
@@ -22,8 +22,13 @@ while (contador < limite) {
   }
 }
 
-console.log("Iteración completada.");
-console.log("Total de iteraciones:", contador);
+output({
+  type: "conclusion",
+  text: "Iteración completada.\nTotal de iteraciones: " + contador + ".\n" +
+        "¿Qué pasa si el límite fuera infinito?\n" +
+        "¿El código que nunca termina es código?\n" +
+        "¿La repetición infinita es existencia o ausencia?"
+});
 
 // ¿Qué pasa si el límite fuera infinito?
 // ¿El código que nunca termina es código?

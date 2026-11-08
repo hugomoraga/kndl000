@@ -208,30 +208,8 @@ function actualizarGrid() {
 // Mostrar estado
 function mostrarEstado(mensajeActual) {
   output("[CLEAR]");
-  
-  let outputText = `Mensaje ${mensajeActual}:\n`;
-  outputText += `Mensajes en tránsito: ${mensajesEnTransito.length}\n`;
-  
-  if (mensajesEnTransito.length > 0) {
-    const msg = mensajesEnTransito[0]; // Mostrar primer mensaje como ejemplo
-    outputText += `Ejemplo: "${msg.binario}" (${msg.binario.length} bits)\n`;
-    outputText += `Coherencia: ${msg.coherence.toFixed(3)} ${msg.coherence > 0.7 ? "(máquina)" : "(humano)"}\n`;
-    outputText += `Novedad: ${msg.novelty.toFixed(3)} ${msg.novelty < 0.3 ? "(estabilizado)" : "(variable)"}\n`;
-    outputText += `Pasos: ${msg.paso}\n`;
-  }
-  
-  outputText += `\n`;
-  outputText += `Símbolos:\n`;
-  outputText += `  E = Emisor\n`;
-  outputText += `  R = Receptor\n`;
-  outputText += `  · = coherencia 0.0-0.3 (humano, ruido)\n`;
-  outputText += `  ○ = coherencia 0.3-0.5 (transición)\n`;
-  outputText += `  ◉ = coherencia 0.5-0.7 (optimizando)\n`;
-  outputText += `  ◐ = coherencia 0.7-0.9 (máquina)\n`;
-  outputText += `  █ = coherencia máxima (estabilizado)\n`;
-  outputText += `  (espacio) = vacío\n\n`;
-  
-  // Dibujar grid
+
+  let gridText = "";
   for (let i = 0; i < filas; i++) {
     let fila = "";
     for (let j = 0; j < columnas; j++) {
@@ -254,10 +232,36 @@ function mostrarEstado(mensajeActual) {
         fila += "·";
       }
     }
-    outputText += fila + "\n";
+    gridText += fila + "\n";
   }
-  
-  output(outputText);
+
+  output({
+    type: "meta",
+    text: `Mensaje ${mensajeActual} · ${mensajesEnTransito.length} en tránsito`
+  });
+
+  if (mensajesEnTransito.length > 0) {
+    const msg = mensajesEnTransito[0];
+    output({
+      type: "legend",
+      text: `Ejemplo: "${msg.binario}" (${msg.binario.length} bits)\n` +
+            `coherencia ${msg.coherence.toFixed(3)} ${msg.coherence > 0.7 ? "(máquina)" : "(humano)"} · ` +
+            `novedad ${msg.novelty.toFixed(3)} ${msg.novelty < 0.3 ? "(estabilizado)" : "(variable)"} · ` +
+            `pasos ${msg.paso}`
+    });
+  }
+
+  output({
+    type: "legend",
+    text: "E emisor · R receptor · · coherencia baja · ○ 0.3 · ◉ 0.5 · ◐ 0.7 · █ máxima · espacio = vacío"
+  });
+
+  output({
+    type: "grid",
+    data: gridText,
+    caption: "la coherencia del mensaje se vuelve visible al cruzar el espacio",
+    label: "Autómata de información, mensaje " + mensajeActual
+  });
 }
 
 // Mostrar estado inicial
@@ -300,13 +304,15 @@ function evolucionar() {
       }, 150);
     } else {
       setTimeout(() => {
-        output("");
-        output("La información ha viajado.");
-        output("Algunos mensajes se degradaron hacia el ruido.");
-        output("Otros se optimizaron, aumentando su coherencia.");
-        output("Los tokens se achicaron. Todo se volvió más inmediato.");
-        output("La información tiende a estabilizarse.");
-        output("¿Más coherencia es más máquina? ¿Menos coherencia es más humano?");
+        output({
+          type: "conclusion",
+          text: "La información ha viajado.\n" +
+                "Algunos mensajes se degradaron hacia el ruido.\n" +
+                "Otros se optimizaron, aumentando su coherencia.\n" +
+                "Los tokens se achicaron. Todo se volvió más inmediato.\n" +
+                "La información tiende a estabilizarse.\n\n" +
+                "¿Más coherencia es más máquina? ¿Menos coherencia es más humano?"
+        });
       }, 100);
     }
   }

@@ -77,30 +77,30 @@ function siguientePaso() {
 }
 
 function mostrarEstado(paso) {
-  // Limpiar output anterior
   output("[CLEAR]");
-  
-  // Construir output
-  let outputText = `Paso ${paso}:\n\n`;
-  
+
+  let gridText = "";
   for (let i = 0; i < filas; i++) {
     let fila = "";
     for (let j = 0; j < columnas; j++) {
       if (i === hormiga.x && j === hormiga.y) {
-        // Mostrar la hormiga
         fila += "●";
       } else if (grid[i][j] === 1) {
-        // Celda negra
         fila += "█";
       } else {
-        // Celda blanca
         fila += " ";
       }
     }
-    outputText += fila + "\n";
+    gridText += fila + "\n";
   }
-  
-  output(outputText);
+
+  output({ type: "meta", text: `Paso ${paso} · ${filas} × ${columnas}` });
+  output({
+    type: "grid",
+    data: gridText,
+    caption: "● hormiga · █ celda negra · espacio = celda blanca",
+    label: "Hormiga de Langton, paso " + paso
+  });
 }
 
 // Mostrar estado inicial
@@ -118,10 +118,10 @@ function evolucionar() {
     }, 50); // 50 milisegundos entre pasos
   } else {
     setTimeout(() => {
-      output("");
-      output("La hormiga ha completado su camino.");
-      output("De reglas simples emergen patrones complejos.");
-      output("¿El orden crea el caos o el caos crea el orden?");
+      output({
+        type: "conclusion",
+        text: "La hormiga ha completado su camino.\nDe reglas simples emergen patrones complejos.\n¿El orden crea el caos o el caos crea el orden?"
+      });
     }, 100);
   }
 }

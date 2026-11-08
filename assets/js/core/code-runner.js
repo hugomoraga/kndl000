@@ -240,8 +240,53 @@
     followOutput(output);
   }
 
+  /*
+   * Ajuste de figura: primero intenta que el grid entre completo bajando un
+   * poco el tamaño de letra (hasta un piso legible). Si aun así no entra,
+   * queda scroll horizontal y se centra el contenido para que la figura se
+   * vea equilibrada desde el inicio.
+   */
+  const MIN_FIGURE_FONT = 9;
+
+  function fitFigure(figure) {
+    const scroller = figure.querySelector('.term__figure-scroll');
+    const grid = figure.querySelector('.term__block--grid');
+    if (!scroller || !grid) return;
+
+    grid.style.removeProperty('font-size');
+    const base = parseFloat(window.getComputedStyle(grid).fontSize) || 12;
+    const available = scroller.clientWidth;
+    const needed = grid.scrollWidth;
+
+    if (available > 0 && needed > available) {
+      let size = Math.max(MIN_FIGURE_FONT, base * (available / needed) - 0.25);
+      grid.style.fontSize = size.toFixed(2) + 'px';
+      // Ajuste fino: el redondeo de fuentes puede dejar unos píxeles de más.
+      let guard = 0;
+      while (grid.scrollWidth > available && size > MIN_FIGURE_FONT && guard < 8) {
+        size = Math.max(MIN_FIGURE_FONT, size - 0.2);
+        grid.style.fontSize = size.toFixed(2) + 'px';
+        guard++;
+      }
+    }
+
+    const overflow = scroller.scrollWidth - scroller.clientWidth;
+    const scrollable = overflow > 2;
+    figure.toggleAttribute('data-scrollable', scrollable);
+    scroller.scrollLeft = scrollable ? Math.round(overflow / 2) : 0;
+  }
+
+  function centerFigures(root) {
+    root.querySelectorAll('.term__figure').forEach(function (figure) {
+      fitFigure(figure);
+    });
+  }
+
   function appendNode(output, node) {
     output.appendChild(node);
+    if (node.classList && node.classList.contains('term__figure')) {
+      window.requestAnimationFrame(function () { fitFigure(node); });
+    }
     followOutput(output);
   }
 
@@ -249,9 +294,12 @@
    * Salida estructurada. El código puede llamar:
    *   output({ type: 'text', text: '...' })
    *   output({ type: 'error', text: '...' })
-   *   output({ type: 'grid', data: '...' | [['#','.'], ...] | [[0.1, 0.8], ...] })
+   *   output({ type: 'meta', text: 'Generación 3 · 50 × 20' })
+   *   output({ type: 'legend', text: 'espacio = 0 · @ = 1' })
+   *   output({ type: 'grid', data: '...' | [['#','.'], ...] | [[0.1, 0.8], ...], caption: '...', label: '...' })
    *   output({ type: 'trace', points: [[0,0], [0.5,0.9], ...], label: '...' })
    *   output({ type: 'metric', label: '...', value: 42, unit: 'ms' })
+   *   output({ type: 'conclusion', text: '...' })
    * El texto siempre se inserta con textContent; nunca se interpreta HTML.
    */
   const CELL_RAMP = ' .:-=+*#%@';
@@ -375,11 +423,48 @@
     if (type === 'error') {
       return { text: asText(payload.text || payload.message), kind: 'error' };
     }
+    if (type === 'meta' || type === 'legend') {
+      const block = document.createElement('div');
+      block.className = 'term__block term__block--' + type;
+      block.textContent = asText(payload.text);
+      return { node: block };
+    }
+    if (type === 'conclusion') {
+      const block = document.createElement('div');
+      block.className = 'term__block term__block--conclusion';
+      block.textContent = asText(payload.text);
+      return { node: block };
+    }
     if (type === 'grid') {
+      const figure = document.createElement('figure');
+      figure.className = 'term__figure';
+      const scroller = document.createElement('div');
+      scroller.className = 'term__figure-scroll';
+      scroller.tabIndex = 0;
+      scroller.setAttribute('role', 'region');
+      const label = asText(payload.label || payload.caption || 'Figura de salida');
+      scroller.setAttribute('aria-label', label);
       const pre = document.createElement('pre');
       pre.className = 'term__block term__block--grid';
       pre.textContent = gridAsText(payload);
-      return { node: pre };
+
+      const hint = document.createElement('span');
+      hint.className = 'term__figure-hint';
+      hint.setAttribute('aria-hidden', 'true');
+      hint.textContent = 'figura amplia · deslizá para verla completa';
+      figure.appendChild(hint);
+
+      scroller.appendChild(pre);
+      figure.appendChild(scroller);
+
+      if (payload.caption) {
+        const caption = document.createElement('figcaption');
+        caption.className = 'term__figure-caption';
+        caption.textContent = asText(payload.caption);
+        figure.appendChild(caption);
+      }
+
+      return { node: figure };
     }
     if (type === 'trace') {
       const svg = traceAsNode(payload);
@@ -528,6 +613,9 @@
    */
   const MAX_INPUT_VALUE = 500;
 
+  // Bucles evidentemente infinitos: avisamos antes de bloquear la pestaña.
+  const INFINITE_LOOP = /\b(?:while\s*\(\s*(?:true|1)\s*\)|for\s*\(\s*;\s*;\s*\))/;
+
   function showConfirm(output, message, onYes, onNo) {
     const wrap = document.createElement('div');
     wrap.className = 'term__confirm';
@@ -575,11 +663,10 @@
       }
     }
 
-    if (!force) {
-      requestAnimationFrame(() => {
-        term.output.scrollTop = 0;
-      });
-    }
+    requestAnimationFrame(() => {
+      if (!force) term.output.scrollTop = 0;
+      centerFigures(term.output);
+    });
   }
 
   function exitFullscreen(term) {
@@ -594,6 +681,7 @@
         ? term.focusBtn
         : term.wrapper.querySelector('[data-action="run"]');
     if (trigger) trigger.focus();
+    requestAnimationFrame(function () { centerFigures(term.output); });
   }
 
   function runCode(term) {
@@ -654,6 +742,26 @@
         setStep(term, 'code');
         setState(wrapper, 'idle');
         inputForm.innerHTML = '';
+        return;
+      }
+
+      // Guard de bucles infinitos declarados en el código.
+      if (INFINITE_LOOP.test(code)) {
+        setStep(term, 'output');
+        showConfirm(
+          output,
+          '⚠ este código declara un bucle infinito. Al ejecutarlo, la página puede dejar de responder y tendrás que cerrarla.',
+          () => {
+            executeValues(values);
+          },
+          () => {
+            term.hasOutput = true;
+            appendLine(output, 'ejecución cancelada', 'meta');
+            setStep(term, 'output');
+            setState(wrapper, 'idle');
+            output.scrollTop = 0;
+          }
+        );
         return;
       }
 
@@ -961,6 +1069,9 @@
         bind(term);
       }
     });
+    window.addEventListener('resize', function () {
+      centerFigures(document);
+    }, { passive: true });
   }
 
   function start() {

@@ -165,16 +165,9 @@ function mostrarPatron(generacion) {
   const ratio = generacion > 1 ? (fibonacci(generacion) / fibonacci(Math.max(generacion - 1, 1))).toFixed(6) : "0";
   const recursion = generacion > 1 ? mostrarRecursion(generacion) : "0 = base";
   
-  let outputText = `Generación ${generacion}:\n`;
-  outputText += `Fibonacci[${generacion}] = ${fibActual}\n`;
-  outputText += `Células vivas: ${celulasVivas}\n`;
-  outputText += `Recursión: ${recursion}\n`;
-  outputText += `Proporción áurea (φ) = ${phi.toFixed(6)}\n`;
-  outputText += `Ratio actual: ${ratio} → ${ratio > 0 && Math.abs(parseFloat(ratio) - phi) < 0.1 ? "≈ φ" : "convergiendo a φ"}\n\n`;
-  
-  // Dibujar grid con más símbolos (un símbolo por cada dígito/generación)
   const simbolos = ["·", "○", "◉", "◐", "◑", "◒", "◓", "◔", "◕", "●", "◆", "▲", "■", "□", "▪", "▫", "▬", "▭", "▮", "▯"];
-  
+  let gridText = "";
+
   for (let i = 0; i < filas; i++) {
     let fila = "";
     for (let j = 0; j < columnas; j++) {
@@ -182,16 +175,30 @@ function mostrarPatron(generacion) {
       if (valor === 0) {
         fila += " ";
       } else {
-        // Un símbolo diferente por cada generación (módulo para ciclar si hay muchas)
         const gen = valor - 1;
         const simboloIdx = gen % simbolos.length;
         fila += simbolos[simboloIdx];
       }
     }
-    outputText += fila + "\n";
+    gridText += fila + "\n";
   }
-  
-  output(outputText);
+
+  output({
+    type: "meta",
+    text: `Generación ${generacion} · Fibonacci = ${fibActual} · ${celulasVivas} células vivas`
+  });
+  output({
+    type: "legend",
+    text: `Recursión: ${recursion}\n` +
+          `Proporción áurea (φ) = ${phi.toFixed(6)} · ratio actual = ${ratio} → ` +
+          (ratio > 0 && Math.abs(parseFloat(ratio) - phi) < 0.1 ? "≈ φ" : "convergiendo a φ")
+  });
+  output({
+    type: "grid",
+    data: gridText,
+    caption: "cada símbolo marca la generación en que nació la célula · espacio = vacío",
+    label: "Espiral de Fibonacci, generación " + generacion
+  });
 }
 
 // Mostrar estado inicial
@@ -207,15 +214,16 @@ function evolucionar() {
     }, 600); // 600 milisegundos entre generaciones para ver el crecimiento
   } else {
     setTimeout(() => {
-      output("");
-      output("La recursión se ha completado.");
-      output("Cada número contenía los anteriores.");
-      output("La proporción áurea (φ = " + phi.toFixed(6) + ") se encontró en todo.");
-      output("La belleza matemática emergió de patrones simples.");
-      output("");
-      output("¿La recursión es el principio universal?");
-      output("¿La proporción se encuentra o se impone?");
-      output("¿La belleza es matemática o las matemáticas son bellas?");
+      output({
+        type: "conclusion",
+        text: "La recursión se ha completado.\n" +
+              "Cada número contenía los anteriores.\n" +
+              "La proporción áurea (φ = " + phi.toFixed(6) + ") se encontró en todo.\n" +
+              "La belleza matemática emergió de patrones simples.\n\n" +
+              "¿La recursión es el principio universal?\n" +
+              "¿La proporción se encuentra o se impone?\n" +
+              "¿La belleza es matemática o las matemáticas son bellas?"
+      });
     }, 100);
   }
 }

@@ -368,27 +368,31 @@ function evolucionarGrid() {
 // Mostrar grid
 function mostrarGrid() {
   output("[CLEAR]");
-  output(`Generación ${genActual}/${generaciones} - Nivel ${nivel}\n`);
-  output("─".repeat(ancho + 2) + "\n");
-  
+
+  let gridText = "";
   for (let y = 0; y < alto; y++) {
-    let linea = "│";
+    let linea = "";
     for (let x = 0; x < ancho; x++) {
       linea += grid[y][x];
     }
-    linea += "│";
-    output(linea);
+    gridText += linea + "\n";
   }
-  
-  output("─".repeat(ancho + 2) + "\n");
+
+  output({
+    type: "meta",
+    text: `Generación ${genActual}/${generaciones} · nivel ${nivel} · ${ancho} × ${alto}`
+  });
+  output({
+    type: "grid",
+    data: gridText,
+    caption: "los caracteres mutan y se ordenan generación tras generación",
+    label: "Grid de palabras, generación " + genActual
+  });
 }
 
 // Analizar palabras más repetidas
 function analizarPalabras() {
-  output("\n");
-  output("=".repeat(60) + "\n");
-  output("ANÁLISIS DE PALABRAS\n");
-  output("=".repeat(60) + "\n\n");
+  output({ type: "meta", text: "Análisis de palabras" });
   
   // Extraer palabras reales (secuencias de letras separadas por espacios)
   const palabras = {};
@@ -515,24 +519,27 @@ function analizarPalabras() {
     .slice(0, 50); // Top 50
   
   if (palabrasOrdenadas.length === 0) {
-    output("No se encontraron palabras significativas.\n");
-    output("El grid permaneció en el caos.\n");
-  } else {
-    output(`Top ${palabrasOrdenadas.length} palabras más repetidas:\n\n`);
-    
-    palabrasOrdenadas.forEach(({ palabra, count, enDiccionario }, index) => {
-      const marcador = enDiccionario ? '★' : (palabra.esCompleta ? '✓' : ' ');
-      const etiqueta = enDiccionario ? ' [diccionario]' : '';
-      output(`${(index + 1).toString().padStart(2, ' ')}. ${marcador} "${palabra}" - ${count} ${count === 1 ? 'vez' : 'veces'}${etiqueta}`);
+    output({
+      type: "conclusion",
+      text: "No se encontraron palabras significativas.\nEl grid permaneció en el caos."
     });
+    return;
   }
-  
-  output("\n" + "=".repeat(60) + "\n");
-  output("\nEl grid mutó.");
-  output("Los caracteres se organizaron.");
-  output("Las palabras emergieron del caos.");
-  output("¿Qué patrones se repiten?");
-  output("\n");
+
+  output({ type: "meta", text: `Top ${palabrasOrdenadas.length} palabras más repetidas` });
+
+  const lineas = palabrasOrdenadas.map(({ palabra, count, esCompleta, enDiccionario }, index) => {
+    const marcador = enDiccionario ? '★' : (esCompleta ? '✓' : '·');
+    const etiqueta = enDiccionario ? ' [diccionario]' : '';
+    return `${(index + 1).toString().padStart(2, ' ')}. ${marcador} "${palabra}" — ${count} ${count === 1 ? 'vez' : 'veces'}${etiqueta}`;
+  });
+
+  output({ type: "legend", text: "★ palabra de diccionario · ✓ secuencia legible · · fragmento\n\n" + lineas.join("\n") });
+
+  output({
+    type: "conclusion",
+    text: "El grid mutó.\nLos caracteres se organizaron.\nLas palabras emergieron del caos.\n¿Qué patrones se repiten?"
+  });
 }
 ```
 

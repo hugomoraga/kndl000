@@ -81,20 +81,27 @@ function contarVivas(grid) {
 }
 
 function mostrarGrid(grid, gen) {
-  // Limpiar output anterior
   output("[CLEAR]");
-  
-  // Construir output completo para esta generación
-  let outputText = `Generación ${gen}:\n\n`;
+
+  let gridText = "";
   for (let i = 0; i < filas; i++) {
     let fila = "";
     for (let j = 0; j < columnas; j++) {
       fila += grid[i][j] === 1 ? "█" : " ";
     }
-    outputText += fila + "\n";
+    gridText += fila + "\n";
   }
-  // Mostrar directamente en el DOM
-  output(outputText);
+
+  output({
+    type: "meta",
+    text: `Generación ${gen} · ${filas} × ${columnas} · ${contarVivas(grid)} células vivas`
+  });
+  output({
+    type: "grid",
+    data: gridText,
+    caption: "█ célula viva · espacio = célula muerta",
+    label: "Juego de la vida, generación " + gen
+  });
 }
 
 // Mostrar generación inicial
@@ -115,14 +122,12 @@ function evolucionar() {
         // No hay cambios, la vida se estabilizó
         const vivas = contarVivas(gridNuevo);
         mostrarGrid(gridNuevo, genActual);
-        output("");
-        if (vivas === 0) {
-          output("La vida ha muerto. Extinción total en la generación " + genActual + ".");
-        } else {
-          output("La vida se ha estabilizado en la generación " + genActual + ".");
-          output("Quedan " + vivas + " células vivas en un patrón estático.");
-        }
-        output("La estabilidad es también una forma de existencia.");
+        output({
+          type: "conclusion",
+          text: vivas === 0
+            ? "La vida ha muerto. Extinción total en la generación " + genActual + ".\nLa estabilidad es también una forma de existencia."
+            : "La vida se ha estabilizado en la generación " + genActual + ".\nQuedan " + vivas + " células vivas en un patrón estático.\nLa estabilidad es también una forma de existencia."
+        });
         return; // Detener la evolución
       }
       
@@ -135,11 +140,13 @@ function evolucionar() {
     // Esperar un momento antes de mostrar el mensaje final
     setTimeout(() => {
       const vivas = contarVivas(grid);
-      output("");
-      output("Evolución completada después de " + generaciones + " generaciones.");
-      output("Quedan " + vivas + " células vivas.");
-      output("La vida emerge de reglas simples.");
-      output("¿Qué es la vida sino reglas que se siguen?");
+      output({
+        type: "conclusion",
+        text: "Evolución completada después de " + generaciones + " generaciones.\n" +
+              "Quedan " + vivas + " células vivas.\n" +
+              "La vida emerge de reglas simples.\n" +
+              "¿Qué es la vida sino reglas que se siguen?"
+      });
     }, 100);
   }
 }

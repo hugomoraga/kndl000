@@ -92,25 +92,31 @@ function contarEstados(grid) {
 }
 
 function mostrarEstado(grid, gen) {
-  // Limpiar output anterior
   output("[CLEAR]");
-  
+
   const estados = contarEstados(grid);
-  let outputText = `Generación ${gen}:\n`;
-  outputText += `Árboles: ${estados.arboles} | Fuego: ${estados.fuego} | Ceniza: ${estados.ceniza} | Vacío: ${estados.vacio}\n\n`;
-  
+  let gridText = "";
   for (let i = 0; i < filas; i++) {
     let fila = "";
     for (let j = 0; j < columnas; j++) {
-      if (grid[i][j] === 0) fila += " ";      // Vacío
-      else if (grid[i][j] === 1) fila += "🌲"; // Árbol
-      else if (grid[i][j] === 2) fila += "🔥"; // Fuego
-      else fila += "░";                        // Ceniza
+      if (grid[i][j] === 0) fila += " ";
+      else if (grid[i][j] === 1) fila += "T";
+      else if (grid[i][j] === 2) fila += "*";
+      else fila += ".";
     }
-    outputText += fila + "\n";
+    gridText += fila + "\n";
   }
-  
-  output(outputText);
+
+  output({
+    type: "meta",
+    text: `Generación ${gen} · árboles ${estados.arboles} · fuego ${estados.fuego} · ceniza ${estados.ceniza}`
+  });
+  output({
+    type: "grid",
+    data: gridText,
+    caption: "T árbol · * fuego · . ceniza · espacio = vacío",
+    label: "Incendio forestal, generación " + gen
+  });
 }
 
 // Detectar si el fuego se extinguió
@@ -138,10 +144,12 @@ function evolucionar() {
       // Detectar si el fuego se extinguió
       if (!hayFuego(grid) && genActual > 5) {
         const estados = contarEstados(grid);
-        output("");
-        output("El fuego se ha extinguido en la generación " + genActual + ".");
-        output("Quedan " + estados.arboles + " árboles y " + estados.ceniza + " cenizas.");
-        output("La naturaleza se regenera. El ciclo continúa.");
+        output({
+          type: "conclusion",
+          text: "El fuego se ha extinguido en la generación " + genActual + ".\n" +
+                "Quedan " + estados.arboles + " árboles y " + estados.ceniza + " cenizas.\n" +
+                "La naturaleza se regenera. El ciclo continúa."
+        });
         return; // Detener la evolución
       }
       
@@ -149,11 +157,12 @@ function evolucionar() {
     }, 200); // 200 milisegundos entre generaciones
   } else {
     setTimeout(() => {
-      const estados = contarEstados(grid);
-      output("");
-      output("Simulación completada después de " + generaciones + " generaciones.");
-      output("El fuego destruye, pero también renueva.");
-      output("En la ceniza, la semilla del renacimiento.");
+      output({
+        type: "conclusion",
+        text: "Simulación completada después de " + generaciones + " generaciones.\n" +
+              "El fuego destruye, pero también renueva.\n" +
+              "En la ceniza, la semilla del renacimiento."
+      });
     }, 100);
   }
 }
