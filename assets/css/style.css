@@ -6983,7 +6983,7 @@ body.reading-melange .melange-item__title a:hover {
 }
 
 body.reading-melange .melange-item__lead {
-  max-width: 65ch;
+  max-width: 58ch;
   margin: 0 0 0.8rem;
   font-family: var(--font-serif);
   font-size: 1rem;

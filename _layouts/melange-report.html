@@ -71,7 +71,11 @@
           {% if _melange_plain == '' %}
             {% include melange-report-placeholder.html %}
           {% else %}
-            {{ content }}
+            {%- assign _melange_body = content -%}
+            {%- unless _melange_body contains '<h2' -%}
+              {%- assign _melange_body = _melange_body | replace: '<h3', '<h2' | replace: '</h3>', '</h2>' -%}
+            {%- endunless -%}
+            {{ _melange_body }}
           {% endif %}
         </div>
       </article>

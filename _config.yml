@@ -15,6 +15,10 @@ analytics:
   ga4_measurement_id: "G-2VWGMP1T5M"
 
 # Build settings
+# El CMS permite fechas futuras (por ejemplo, la fecha del festival). Las
+# publicamos igual para que un reporte creado desde /admin/ no quede como un
+# enlace roto en el índice de Melange o en el laboratorio.
+future: true
 markdown: kramdown
 kramdown:
   hard_wrap: false

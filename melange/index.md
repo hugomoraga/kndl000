@@ -25,7 +25,10 @@ nav_order: 6
       {% assign _preview = melanges.summary | strip %}
     {% endif %}
     {% if _preview == '' %}
-      {% assign _parts = melanges.content | split: 'Relato</h2>' %}
+      {% assign _parts = melanges.content | split: '</h2>' %}
+      {% if _parts.size == 1 %}
+        {% assign _parts = melanges.content | split: '</h3>' %}
+      {% endif %}
       {% if _parts.size > 1 %}
         {% assign _preview = _parts[1] | strip_html | strip | truncatewords: 44 %}
       {% else %}
