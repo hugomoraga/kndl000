@@ -1,7 +1,7 @@
 ---
 layout: poems
 title: ∞
-image: /assets/media/images/BSG_FOLRSUP15RES_0017.webp
+image: /assets/media/images/Descenso al Vacío, Portal de Luz.png
 date: 2025-06-23T00:00:00.000Z
 series: Persistir en el algo
 part: '2'
