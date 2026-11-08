@@ -1,10 +1,16 @@
 ---
 layout: poems
 title: Medusa
-image: /assets/media/images/pdia-2bc5df08-cbb5-4288-a2f5-0a9793606daf.jpg
+image: /assets/media/images/dfc5c21f-f8d8-4d5f-87bb-b40f4d6b1028.png
 date: 2026-01-01T00:00:00.000Z
-caption: 'Perseus, Aratea  820'
+series: ''
+part: ''
+published: true
 effect: word-drift
+caption: Perseus, Aratea  820
+image_position: ''
+image_fit: ''
+image_ratio: ''
 ---
 
 ## Medusa
