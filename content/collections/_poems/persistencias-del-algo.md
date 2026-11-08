@@ -1,7 +1,7 @@
 ---
 layout: poems
 title: Una constante en mi ser
-image: /assets/media/images/poems-001.png
+image: /assets/media/images/b742814d-9568-4652-9a7d-99a3574af4a4.png
 date: 2025-06-23
 series: Persistir en el algo
 part: '1'
