@@ -47,10 +47,14 @@ main_class: umbral-main
   </div>
 </div>
 
+{%- comment -%}
+  Cita curada del archivo. Fuente: fragmento-20260331-151000 (Rastros, 2026).
+  Si se cambia la frase, actualizar también el año del bloque.
+{%- endcomment -%}
 <section class="umbral-quote" aria-label="Rastro del archivo">
   <p class="umbral-quote__label" translate="no">Rastro</p>
-  <blockquote class="umbral-quote__text">Tanto ruido sin tono, tanto color sin trazo...</blockquote>
-  <p class="umbral-quote__meta" translate="no">2025</p>
+  <blockquote class="umbral-quote__text">Lo que arde no desaparece, se vuelve residuo.</blockquote>
+  <p class="umbral-quote__meta" translate="no">2026</p>
 </section>
 
 {% include lab-feed.html %}
