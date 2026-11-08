@@ -2,7 +2,7 @@
 layout: poems
 title: 9999 Nudos
 image: /assets/media/images/2608a713-56c2-4cd9-8185-b9dfd579cf97.png
-date: 2026-11-07T00:11:00
+date: 2026-11-07T01:11:00
 series: Nudos
 part: '2'
 published: true
