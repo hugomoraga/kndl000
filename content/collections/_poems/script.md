@@ -3,7 +3,14 @@ layout: poems
 title: Script el verbo
 image: /assets/media/images/poems-003.jpg
 date: 2025-06-21
-
+series: ''
+part: ''
+published: false
+effect: none
+caption: ''
+image_position: ''
+image_fit: ''
+image_ratio: ''
 ---
 
 
