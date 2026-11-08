@@ -1,6 +1,6 @@
 ---
 layout: melange-report
-title: LSD 2 gotas + Stamp  en (300 ug ) - Arkana Festival 2026
+title: 'LSD: 2 gotas + Stamp - Arkana Festival 2026'
 image: /assets/media/images/pasted-image-1794163467618.png
 alt: ''
 date: 2026-12-01T16:08:00
@@ -23,19 +23,19 @@ Tuve la suerte de conseguir una estampilla de LSD en la carpa de al lado. Era un
 
 Cayó la noche. Después de bailar un rato y tomar cervezas, fui a buscar el ácido a la carpa.
 
-Tomé media estampilla, pero como sentí que no pegaba, me frustré y decidí tomar la otra mitad. Aun así, no sentía que estuviera entrando completamente en el viaje.
+Tomé media estampilla, pero como sentí que no pegaba, me frustré. Pasaron unos cuarenta minutos y decidí tomar la otra mitad. Aun así, no sentía que estuviera entrando completamente en el viaje.
 
 Entonces fui a buscar al dealer. Lo encontré y le dije, entre risas:
 
 —Oyeee, tu estampilla no pega.
 
-Enseguida sacó un gotero de su banano y me aseguró que eso me iba a tumbar sí o sí. Abrí la boca y dejó caer una gota, pero fueron dos...
+Enseguida sacó un gotero de su banano y me aseguró que eso me iba a tumbar sí o sí. Abrí la boca esperando una gota, pero fueron dos...
 
-No entendí qué pasó, pero a los veinte minutos ya estaba temblando. Todo vibraba y pensé:
+No entendí qué pasó, pero unos veinte minutos después ya estaba temblando. Todo vibraba y pensé:
 
 «Me está pegando la estampilla...».
 
-Me confundí un poco. Pensé que había calculado mal o que, por alguna razón, el ácido de la estampilla me había pegado con más desfase. Luego me puse algo nervioso, sobrepensando:
+Me confundí un poco. Las primeras dosis parecían estar entrando con desfase, justo cuando ya había consumido más. Pensé que quizás había calculado mal los tiempos y que todo aquello se estaba acumulando. Luego me puse algo nervioso, sobrepensando:
 
 «Ahora se vienen las dos gotas».
 
@@ -88,9 +88,6 @@ No sé cuántas veces ocurrió. Quizás algunas de esas sensaciones se repitiero
 En algún momento miré la hora y me di cuenta de que no había pasado tanto tiempo como imaginaba. Quizás había transcurrido una hora, tal vez menos de dos.
 
 Lo que describiré son algunas ideas, imágenes y emociones de lo que pasó. Me reservo otras porque no soy capaz de entenderlas ni de explicar qué fueron.
-
-
-
 
 ### La muerte
 
