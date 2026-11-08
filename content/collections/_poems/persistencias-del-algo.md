@@ -15,83 +15,74 @@ image_ratio: ''
 
 ### 1. Persistir
 
-_Mantenerse firme o constante en algo._  
+_Mantenerse firme o constante en algo._
+
 Esto encuentro cuando busco el significado.
 
-Cuando intento entender,  
+Cuando intento entender,
 cuando intento profundizar en algo.
-
-Constante de mi ser que busca significados
-
-Y ese algo que a veces no se encuentra,  
-pero que se intuye,  
-se respira,  
-
-para continuar con mi existencia.
 
 ﹏
 
 ### 2. Algo
 
-_Designa una realidad indeterminada,_  
-_cuya identidad no se conoce o no se especifica._  
+_Designa una realidad indeterminada,_
+_cuya identidad no se conoce o no se especifica._
 
-Eso encuentro cuando busco su significado.  
-Y me hundo en las palabras.  
+Eso encuentro cuando busco su significado.
 
-Constante de mi ser,  
-que se obsesiona con los significados.  
+Formas y palabras
+Retóricas de algo
+Intuiciones descansadas
+Conceptos esparcidos
+Misterios desplazados
 
-Ese algo que intuyo  
-y me da descanso:  
-el misterio se resigna  
-y perpetúa mi existencia.
+Una constante en mi ser: buscar significados.
 
 ﹏
 
 ### 3. Busco
 
-_Busco... Hacer lo necesario para conseguir algo._
+_Hacer lo necesario para conseguir algo._
 
 Eso encuentro cuando busco su significado.
 
-¿Que es lo que Busco?... ¿Un verbo? 
-
-¿Que encuentro?... ¿Un Sentido?
+¿Qué es lo que busco?... ¿Un verbo?
 
 ﹏
 
 ### 4. Verbo
 
-**Verbo...**  
+**Verbo...**
 _Palabra que expresa acción, estado o proceso._
 
-Eso encuentro cuando busco su significado. 
+Eso encuentro cuando busco su significado.
 
-El verbo fue sentir, fue ser, fue existir.
+¿Que encuentro?... ¿Un sentido?
 
-El verbo pone algo en movimiento dentro del lenguaje.
+﹏
 
 ### 5. Sentido
 
-**Sentido...**  
+**Sentido...**
 _Significado, dirección, motivo._
 
-Eso encuentro  
+Eso encuentro
 cuando busco su significado.
 
-Pero el sentido...  
-se encuentra,  
-o solo es algo que se busca  
-...en el verbo  
+Pero el sentido...
+se encuentra,
+o solo es algo que se busca
+...en el verbo
 que persiste en el algo...
 
-camino con las palabras  
-o me enredaré con en ellas
+Camino con las palabras
+o me enredaré en ellas.
 
-algo se oye  
-y todo  se tuerce,  
-la lengua serpentea  
-y algo se rasga 
-Interjecciones brotan
-y las palabras caen...
+Algo se oye
+y todo se tuerce,
+la lengua serpentea
+y algo se rasga.
+
+Interjecciones que brotan
+y las palabras que caen...
