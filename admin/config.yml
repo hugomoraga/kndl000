@@ -116,15 +116,39 @@ collections:
     fields:
       - { label: Layout, name: layout, widget: hidden, default: melange-report }
       - { label: Title, name: title, widget: string }
+      - { label: "SEO title", name: seo_title, widget: string, required: false, hint: "Si se deja vacío se usa el título." }
+      - { label: Subtitle, name: subtitle, widget: string, required: false }
+      - { label: Summary, name: summary, widget: text, required: false, hint: "Lead breve para el índice de Melange. Si se deja vacío se extrae del cuerpo." }
+      - { label: Date, name: date, widget: datetime, required: false }
       - { label: Image, name: image, widget: image, required: false }
       - { label: "Alt de la imagen", name: alt, widget: string, required: false }
-      - { label: Date, name: date, widget: datetime, required: false }
-      - { label: Body, name: body, widget: markdown }
-      - { label: Subtitle, name: subtitle, widget: string, required: false }
-      - { label: Summary, name: summary, widget: text, required: false }
-      - { label: "Borrador (WIP)", name: wip, widget: boolean, default: false, required: false }
       - { label: "Image Credit", name: image_credit, widget: string, required: false }
       - { label: Series, name: series, widget: string, required: false }
+      - { label: "Borrador (WIP)", name: wip, widget: boolean, default: false, required: false }
+      - { label: "Efectos de imagen", name: effects, widget: boolean, default: true, required: false }
+      - label: "Ficha técnica"
+        name: ficha
+        widget: object
+        required: false
+        collapsed: true
+        hint: "Sustancia, formato, contexto, lugar, compañía y resultado del viaje."
+        fields:
+          - { label: Sustancia, name: substance, widget: string, required: false }
+          - { label: Formato, name: format, widget: string, required: false }
+          - { label: Dosis, name: dose, widget: string, required: false }
+          - { label: Método, name: method, widget: string, required: false }
+          - { label: Lugar, name: place, widget: string, required: false }
+          - { label: Evento, name: event, widget: string, required: false }
+          - { label: Setting, name: setting, widget: string, required: false }
+          - { label: "Set (mental)", name: mindset, widget: string, required: false }
+          - { label: "Contexto previo", name: context, widget: string, required: false }
+          - { label: Compañía, name: company, widget: string, required: false }
+          - { label: Momento, name: moment, widget: string, required: false }
+          - { label: Duración, name: duration, widget: string, required: false }
+          - { label: Intensidad, name: intensity, widget: string, required: false }
+          - { label: Extras, name: extras, widget: string, required: false }
+          - { label: Resultado, name: outcome, widget: string, required: false }
+      - { label: Body, name: body, widget: markdown }
 
   - name: codigos
     label: "◊ Código"

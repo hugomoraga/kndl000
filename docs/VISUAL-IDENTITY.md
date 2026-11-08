@@ -78,12 +78,12 @@ Catalogados de la Style Bible accent catalog, en orden de aparición:
 | Color | Hex | Uso en el sitio | Origen |
 |---|---|---|---|
 | Teal | `#5fa8a0` | Binary sigil en `/codigo/`, kind `CÓDIGO` en lab-feed, código y `#5fa8a0` como acento secundario | Style Bible implícito (no está en el catálogo pero es el acento histórico del sitio desde los primeros commits) |
-| Ámbar | `#b8741a` | Kind `DIARIO` en lab-feed, border-left de excerpts en `/diario/`, hover del glifo `∴` en `/vestigios/` | Style Bible: "ámbar — savia, memoria, calor residual" |
+| Ámbar | `#b8741a` | Border-left de excerpts en `/diario/`, hover del glifo `∴` en `/vestigios/` | Style Bible: "ámbar — savia, memoria, calor residual" |
 | Ámbar vivo | `#c9a86b` | Glifo `∴` (firma Hermes) en estado de reposo | Style Bible: ámbar (más saturado para firma) |
 | Ámbar más claro | `#e0c08a` | Glifo `∴` en hover | Derivado de `#c9a86b` |
 | Cinabrio | `#a8321a` | Kind `POEMA` en lab-feed, color de error del 404 | Style Bible: "rojo cinabrio — alquimia, transmutación" |
 | Cobalto apagado | `#6a8caf` | Kind `REPORTE` en lab-feed | Style Bible: "azul cobalto — agua, melancolía" |
-| Beige cálido | `#c9c2b3` | Kind `FRAGMENTO` en lab-feed, figcaption hover de `/visual/` | Derivado del papel cálido |
+| Beige cálido | `#c9c2b3` | Figcaption hover de `/visual/` | Derivado del papel cálido |
 | Azul link | `#7ab6f5` | Links del 404, links externos en lab-feed | Convencional (no Style Bible) |
 | Verde savia | `#5a6b3a` | Acento histórico (revisar si sigue en uso) | Style Bible: "verde savia" |
 

@@ -3107,11 +3107,12 @@ main.dispositivo-page {
 .melange-report__skeleton {
   margin-top: 0.25rem;
   padding-top: 0.5rem;
-  opacity: 0.5;
 }
 
 .melange-report__skeleton h2 {
   margin-top: 1.5rem;
+  color: #8a7d72;
+  font-weight: 400;
 }
 
 .melange-report__skeleton h2:first-of-type {
@@ -3123,7 +3124,7 @@ main.dispositivo-page {
   font-size: 0.82rem;
   font-style: italic;
   font-weight: 300;
-  color: #6d655c;
+  color: #8a7d72;
   margin: 0 0 1.15rem;
   line-height: 1.45;
 }
@@ -3468,6 +3469,20 @@ main.fragmentos-archive .rastro-lista li + li {
 .lab-text a:hover {
   border-bottom-color: #5fa8a0;
   color: #eee;
+}
+
+.lab-wip {
+  margin-left: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--umbral-muted);
+  white-space: nowrap;
+}
+
+body.umbral-page .lab-wip {
+  color: var(--umbral-muted);
 }
 
 /* Melange — índice como diario / reportes de viaje */
@@ -7039,6 +7054,10 @@ body.reading-melange-detail .melange-report__credit {
 body.reading-melange-detail .melange-report__body {
   max-width: var(--reading-measure);
   margin: 0 auto;
+}
+
+body.reading-melange-detail .melange-report__body > p {
+  max-width: 58ch;
 }
 
 body.reading-melange-detail .melange-report__body > h2 {

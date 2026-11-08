@@ -9,29 +9,23 @@ summary: ''
 wip: false
 image_credit: © alexis suarez / arkana 2017
 series: ''
+ficha:
+  substance: Mescalina (Echinopsis pachanoi — San Pedro)
+  format: Polvo (cactus deshidratado)
+  dose: Desconocida
+  method: Mezclado con agua en botella
+  place: Ollantaytambo, Valle Sagrado (Perú)
+  event: Arkana Festival 2017
+  setting: Festival psytrance, entorno natural, multicultural
+  mindset: Crisis emocional, búsqueda personal, penas de amor
+  context: Mochileo solo por Bolivia y Perú
+  company: Solo (interacciones esporádicas)
+  moment: Noche (aprox., sin precisión)
+  duration: Varias horas (hasta amanecer)
+  intensity: Media–alta (subida progresiva + peak emocional)
+  extras: Incienso, humo desconocido, ritualidad ambiental
+  outcome: Insight emocional + integración positiva
 ---
-
-## Ficha
-
-<dl class="report-spec">
-  <dt>Sustancia</dt><dd>Mescalina (Echinopsis pachanoi — San Pedro)</dd>
-  <dt>Formato</dt><dd>Polvo (cactus deshidratado)</dd>
-  <dt>Dosis</dt><dd>Desconocida</dd>
-  <dt>Método</dt><dd>Mezclado con agua en botella</dd>
-  <dt>Lugar</dt><dd>Ollantaytambo, Valle Sagrado (Perú)</dd>
-  <dt>Evento</dt><dd>Arkana Festival 2017</dd>
-  <dt>Setting</dt><dd>Festival psytrance, entorno natural, multicultural</dd>
-  <dt>Set (mental)</dt><dd>Crisis emocional, búsqueda personal, penas de amor</dd>
-  <dt>Contexto previo</dt><dd>Mochileo solo por Bolivia y Perú</dd>
-  <dt>Compañía</dt><dd>Solo (interacciones esporádicas)</dd>
-  <dt>Momento</dt><dd>Noche (aprox., sin precisión)</dd>
-  <dt>Duración</dt><dd>Varias horas (hasta amanecer)</dd>
-  <dt>Intensidad</dt><dd>Media–alta (subida progresiva + peak emocional)</dd>
-  <dt>Extras</dt><dd>Incienso, humo desconocido, ritualidad ambiental</dd>
-  <dt>Resultado</dt><dd>Insight emocional + integración positiva</dd>
-</dl>
-
-***
 
 ## Relato
 

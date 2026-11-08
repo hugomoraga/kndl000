@@ -12,7 +12,6 @@ collage:
 lab:
   # Cuántas tarjetas "ARCHIVO_xx" se muestran en cada sorteo
   sample_count: 10
-  # Cuántos posts/poemas/reportes entran al JSON del laboratorio (pool para el shuffle)
-  posts_pool_limit: 50
+  # Cuántos poemas/reportes entran al JSON del laboratorio (pool para el shuffle)
   poems_pool_limit: 50
   melange_pool_limit: 50

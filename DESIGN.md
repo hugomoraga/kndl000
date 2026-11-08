@@ -282,7 +282,7 @@ Todo es recto: radios de 0px, reglas de 1px, bordes completos cuando existen. La
 
 ### Lab rows
 - **Structure:** dos columnas (metadato / título) separadas por reglas capilares; sin borde lateral de color.
-- **Meta:** tipo de muestra con punto de 5px y hash FNV-1a en mono de 0.7rem. Colores semánticos: cian para CÓDIGO, ámbar para DIARIO, cinabrio para POEMA, cobalto para REPORTE.
+- **Meta:** tipo de muestra con punto de 5px y hash FNV-1a en mono de 0.7rem. Colores semánticos: cian para CÓDIGO, cinabrio para POEMA, cobalto para REPORTE. El diario no entra al laboratorio; los reportes Melange sí, incluso en curso.
 - **Hover:** una línea cian de 1px recorre la base de la fila y el título se subraya con una regla que crece.
 
 ### Laboratorio — condensación de muestra
@@ -381,7 +381,7 @@ Todo es recto: radios de 0px, reglas de 1px, bordes completos cuando existen. La
 - **Poemas — índice:** meses en mono mayúscula; cada fila es día, título serif y serie en itálica, separados por una regla capilar. Sin miniaturas.
 - **Poemas — detalle:** breadcrumb `← Poemas`, título con marca `~`, meta mono (`serie · parte · fecha`), imagen como frontispicio flotante a la derecha del título en escritorio (máx. 16rem de ancho y 300px de alto); el poema empieza debajo del título y envuelve la imagen; en móvil se apila centrada (máx. 30vh); sin recorte, poema en la medida de prosa, un efecto opcional de lectura (`descender-drip`, `ink-echo`, `fog-focus` o `word-drift`), pager `n / total` y poemas relacionados de la misma serie.
 - **Melange — índice:** ficha de cuaderno de campo con fecha mono, título serif, lead de 44 palabras y estado `en curso` para los reportes `wip`. El título es la única puerta; no hay CTA repetido.
-- **Melange — reporte:** breadcrumb `← Melange`, título y subtítulo, meta mono (`reporte · año · serie` cuando existe), portada y cuerpo largo en el contenedor de 1000px. La ficha técnica es una lista de definición plana, sin caja.
+- **Melange — reporte:** breadcrumb `← Melange`, título y subtítulo, meta mono (`reporte · año · serie` cuando existe), portada y cuerpo largo en el contenedor de 1000px. La ficha técnica (`ficha` en frontmatter) es una lista de definición plana, sin caja.
 - **Estados:** vacío en itálica, foco cian de 1px con offset de 3px, navegación por teclado y adaptación a 320, 390, 768 y 1440 sin overflow.
 
 ### Poemas — efectos de lectura

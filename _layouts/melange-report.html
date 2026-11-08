@@ -44,6 +44,29 @@
         </figure>
 
         <div class="reading-body melange-report__body">
+          {%- assign _ficha_keys = "substance|format|dose|method|place|event|setting|mindset|context|company|moment|duration|intensity|extras|outcome" | split: "|" -%}
+          {%- assign _ficha_labels = "Sustancia|Formato|Dosis|Método|Lugar|Evento|Setting|Set (mental)|Contexto previo|Compañía|Momento|Duración|Intensidad|Extras|Resultado" | split: "|" -%}
+          {%- assign _ficha_present = false -%}
+          {%- if page.ficha -%}
+            {%- for key in _ficha_keys -%}
+              {%- assign value = page.ficha[key] -%}
+              {%- if value and value != "" -%}{%- assign _ficha_present = true -%}{%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+          {%- if _ficha_present %}
+          <section class="melange-report__spec" aria-label="Ficha técnica">
+            <h2>Ficha</h2>
+            <dl class="report-spec">
+              {%- for key in _ficha_keys -%}
+                {%- assign value = page.ficha[key] -%}
+                {%- if value and value != "" %}
+              <dt>{{ _ficha_labels[forloop.index0] }}</dt><dd>{{ value | escape }}</dd>
+                {%- endif -%}
+              {%- endfor %}
+            </dl>
+          </section>
+          {%- endif %}
+
           {% assign _melange_plain = content | strip_html | strip %}
           {% if _melange_plain == '' %}
             {% include melange-report-placeholder.html %}
