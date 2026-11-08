@@ -1,12 +1,14 @@
 ---
+layout: melange-report
 title: Mescalina en Arkana Festival
 image: /assets/media/images/mescalina-arkana-festival.png
+alt: Festival Arkana, baile al aire libre entre árboles y carpas
 date: 2017-04-29T00:00:00.000Z
 subtitle: San Pedro · Ollantaytambo, Valle Sagrado
 summary: ''
+wip: false
 image_credit: © alexis suarez / arkana 2017
 series: ''
-alt: Festival Arkana, baile al aire libre entre árboles y carpas
 ---
 
 ## Ficha
@@ -37,15 +39,15 @@ Estaba en un momento caótico, venía con penas de amor y una necesidad fuerte d
 
 Decidí mochilear: partí por Bolivia y después pasé a Perú. Mirándolo ahora, ese viaje fue una especie de preparación, aunque en ese momento no lo veía así; me estaba abriendo, pero también estaba inestable. Es raro, porque hoy lo siento difuso, pero sé que fue importante.
 
-En Cusco me pasó algo clave. Fui al mercado central de san pedro  y me sorprendió lo abierto que era todo: ahí vendían Echinopsis pachanoi (San Pedro) como si fuera cualquier cosa. Venía deshidratado, en polvo, y decía que era de Chavín de Huántar.
+En Cusco me pasó algo clave. Fui al mercado central de san pedro y aparecio frente a mis ojos:  Echinopsis pachanoi (San Pedro), entre bolsas de coca, polvos de especies, hierbas varias. Venía deshidratado, en polvo, y decía que era de Chavín de Huántar.
 
 No tenía idea de la dosis, nada… solo sabía, de forma general, lo que era.
 
 Recuerdo que no costaba más de cinco dólares.
 
-No lo compré de inmediato, di vueltas, lo pensé un rato… pero había algo que ya estaba decidido antes de decidirlo, así que terminé comprando.
+No lo compré de inmediato, di vueltas, lo pensé un rato… pero había estaba ya decidido antes de decidirlo, así que terminé comprando.
 
-En ese momento tampoco tenía completamente claro lo del Arkana; no recuerdo si ya tenía la entrada o si todavía estaba dudando. También dudé de ir.
+En ese momento tampoco tenía completamente claro lo del Arkana; no recuerdo si ya tenía la entrada o si todavía estaba dudando.
 
 Estaba recién entrando al psytrance, me gustaba, pero no era algo central en mi vida todavía.
 
@@ -53,19 +55,19 @@ Estaba recién entrando al psytrance, me gustaba, pero no era algo central en mi
 
 Luego de tener la entrada en mano ya estaba decidido, no lo pensé dos veces. La mescalina iba a ser en el Arkana Festival.
 
-Era la edición 2017. Me llamó la atención que había países invitados, y al llegar vi cómo entraban brasileños gratis; sentí una especie de envidia, pero era sana, me pareció bonito ese enfoque.
+Era la edición 2017. Me llamó la atención que había países invitados, y al llegar vi varios brasileños entrar. Era el pais invitado por entre su entrada era liberada.
 
 Ese año se hacía en Ollantaytambo, en el Valle Sagrado de los Incas. El entorno ya tenía algo especial por sí solo.
 
-Había mucha gente de distintos países, se sentía diverso, con una mezcla cultural fuerte.
+Había mucha gente, de varios paises. Un festival bien diverso y multicultural.
 
-No recuerdo bien si fue el mismo día o al siguiente, pero preparé la mescalina mezclando todo el polvo con agua en una botella, sin medir, sin mucha ciencia.
+No recuerdo bien si fue el mismo día o al siguiente, pero preparé la mescalina mezclando todo el polvo con agua en una botella. En aquel entonces, sin libros ni referentes que pudieran orientarme en ese momento, me entregué a una suerte de ciencia improvisada. No había método, ni medición, ni hipótesis demasiado elaboradas. Solo curiosidad y una disposición experimental bastante temeraria. Todo, por supuesto, con fines estrictamente científicos. 
 
 ***
 
 El viaje comenzó lento, difuso, sin un golpe inmediato.
 
-Me encontré con un chileno que vio la botella y me preguntó qué era; le dije que era San Pedro y quiso darle un sorbo.
+Me encontré con un chileno que vio la botella y me preguntó qué era; le dije muy entusiasta: San Pedro y quiso darle un sorbo.
 
 No lo cuestioné. Sentí que no era quien para interceder en procesos ajenos; si alguien sentía ese llamado, yo compartía.
 
