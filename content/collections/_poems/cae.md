@@ -3,7 +3,7 @@ layout: poems
 title: ∞
 image: /assets/media/images/BSG_FOLRSUP15RES_0017.webp
 date: 2025-06-23T00:00:00.000Z
-series: Mal Necesario
+series: Persistir en el algo
 part: '2'
 published: true
 effect: descender-drip
