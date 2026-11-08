@@ -7084,9 +7084,24 @@ body.reading-poem-detail .page-figure img {
   object-position: center;
 }
 
-/* Poema con imagen: la foto es una placa breve arriba del poema; el poema
-   conserva el ancho completo y el protagonismo. La imagen nunca supera
-   media pantalla. */
+/* Poema con imagen: la foto es un frontispicio al lado del título. Usa el
+   espacio que antes quedaba vacío y deja el poema a todo su ancho. */
+.poem-head {
+  max-width: var(--reading-measure);
+  margin: 0 auto clamp(2rem, 4vw, 3rem);
+}
+
+.poem-head--with-image {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(12rem, 16rem);
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: start;
+}
+
+.poem-head .reading-detail-head {
+  margin: 0;
+}
+
 .poem-spread {
   max-width: var(--reading-measure);
   margin: 0 auto;
@@ -7097,48 +7112,51 @@ body.reading-poem-detail .page-figure img {
   margin: 0;
 }
 
-body.reading-poem-detail .poem-spread .page-figure {
-  width: fit-content;
-  max-width: min(100%, 26rem);
-  margin: 0 0 clamp(1.5rem, 3vw, 2.25rem);
+body.reading-poem-detail .poem-head .page-figure {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
   border: 1px solid var(--umbral-rule);
   background: var(--umbral-viewer-black, #0a0c0d);
 }
 
-body.reading-poem-detail .poem-spread .page-figure img {
+body.reading-poem-detail .poem-head .page-figure img {
   display: block;
-  width: auto;
-  max-width: 100%;
+  width: 100%;
   height: auto;
   min-height: 0;
-  max-height: min(38vh, 340px);
+  max-height: min(34vh, 300px);
   object-fit: contain;
   object-position: center;
   border-radius: 0;
 }
 
-body.reading-poem-detail .poem-spread .page-figure__caption {
+body.reading-poem-detail .poem-head .page-figure__caption {
   max-width: 100%;
 }
 
 @media (max-width: 900px) {
-  body.reading-poem-detail .poem-spread .page-figure {
+  .poem-head--with-image {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+
+  body.reading-poem-detail .poem-head .page-figure {
     width: fit-content;
     max-width: 100%;
     margin-right: auto;
     margin-left: auto;
   }
 
-  body.reading-poem-detail .poem-spread .page-figure img {
+  body.reading-poem-detail .poem-head .page-figure img {
     width: auto;
     max-width: 100%;
     max-height: min(34vh, 320px);
-    margin: 0;
   }
 }
 
 @media (max-width: 700px) {
-  body.reading-poem-detail .poem-spread .page-figure img {
+  body.reading-poem-detail .poem-head .page-figure img {
     max-height: 30vh;
   }
 }

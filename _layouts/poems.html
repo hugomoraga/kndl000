@@ -16,19 +16,21 @@
       <a href="{{ '/' | relative_url }}" aria-label="Inicio">∅ INIT</a>
     </nav>
 
-    <header class="reading-detail-head">
-      <h1 class="reading-detail__title"><span class="reading-detail__mark" aria-hidden="true">~</span> {{ page.title }}</h1>
-      <p class="reading-detail__meta">
-        {% if page.series %}<span>{{ page.series }}{% if page.part %} · parte {{ page.part }}{% endif %}</span>{% endif %}
-        {% if page.date %}<span>{{ page.date | date: "%Y-%m-%d" }}</span>{% endif %}
-      </p>
-    </header>
+    <div class="poem-head{% if page.image %} poem-head--with-image{% endif %}">
+      <header class="reading-detail-head">
+        <h1 class="reading-detail__title"><span class="reading-detail__mark" aria-hidden="true">~</span> {{ page.title }}</h1>
+        <p class="reading-detail__meta">
+          {% if page.series %}<span>{{ page.series }}{% if page.part %} · parte {{ page.part }}{% endif %}</span>{% endif %}
+          {% if page.date %}<span>{{ page.date | date: "%Y-%m-%d" }}</span>{% endif %}
+        </p>
+      </header>
 
-    <div class="poem-spread{% if page.image %} poem-spread--with-image{% endif %}">
       {% if page.image %}
       {% include figure.html %}
       {% endif %}
+    </div>
 
+    <div class="poem-spread">
       <div class="reading-body poem-body">
         {{ content }}
       </div>
