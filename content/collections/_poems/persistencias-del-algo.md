@@ -1,9 +1,9 @@
 ---
 layout: poems
-title: Persistencias del Algo
+title: Una constante en mi ser
 image: /assets/media/images/poems-001.png
 date: 2025-06-23
-series: Mal Necesario
+series: Persistir en el algo
 part: '1'
 published: true
 effect: ink-echo
@@ -17,7 +17,7 @@ image_ratio: ''
 
 _Mantenerse firme o constante en algo._
 
-Esto encuentro cuando busco el significado.
+Esto encuentro cuando busco su significado.
 
 Cuando intento entender,
 cuando intento profundizar en algo.
@@ -53,7 +53,6 @@ Eso encuentro cuando busco su significado.
 
 ### 4. Verbo
 
-**Verbo...**
 _Palabra que expresa acción, estado o proceso._
 
 Eso encuentro cuando busco su significado.
@@ -64,11 +63,9 @@ Eso encuentro cuando busco su significado.
 
 ### 5. Sentido
 
-**Sentido...**
 _Significado, dirección, motivo._
 
-Eso encuentro
-cuando busco su significado.
+Eso encuentro cuando busco su significado.
 
 Pero el sentido...
 se encuentra,
