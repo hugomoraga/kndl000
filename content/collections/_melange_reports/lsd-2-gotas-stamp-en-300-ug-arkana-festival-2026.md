@@ -1,14 +1,17 @@
 ---
 layout: melange-report
 title: 'LSD: 2 gotas + Stamp - Arkana Festival 2026'
-image: /assets/media/images/pasted-image-1794163467618.png
-alt: ''
-date: 2026-12-01T16:08:00
+seo_title: ''
 subtitle: ''
 summary: ''
-wip: false
+date: 2026-04-30T23:00:00
+image: /assets/media/images/pasted-image-1794163467618.png
+alt: ''
 image_credit: ''
 series: ''
+wip: false
+effects: true
+ficha: null
 ---
 
 ### Llegada
