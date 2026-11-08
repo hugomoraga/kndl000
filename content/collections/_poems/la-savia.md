@@ -1,8 +1,16 @@
 ---
 layout: poems
 title: La savia
-image: /assets/media/images/la-savia.png
+image: /assets/media/images/5db8b59c-2d17-47f7-95e9-302a849f3956.png
 date: 2026-04-01
+series: ''
+part: ''
+published: true
+effect: none
+caption: ''
+image_position: ''
+image_fit: ''
+image_ratio: ''
 ---
 
 
