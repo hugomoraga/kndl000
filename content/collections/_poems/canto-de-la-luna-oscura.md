@@ -1,11 +1,16 @@
 ---
 layout: poems
 title: Canto de la Luna Oscura
-image: /assets/media/images/oct_19_new_prints_00032.webp
+image: /assets/media/images/2f3ce5d7-e884-45c2-ab1b-93e39bd7178a.png
 date: 2026-03-31T00:00:00.000Z
+series: ''
+part: ''
+published: true
+effect: none
 caption: The Corona - 1871
 image_position: center
 image_fit: contain
+image_ratio: ''
 ---
 
 ## Canto de la Luna Oscura
