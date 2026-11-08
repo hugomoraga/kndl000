@@ -7122,8 +7122,18 @@ body.reading-poem-detail .poem-spread .page-figure__caption {
 }
 
 @media (max-width: 900px) {
+  body.reading-poem-detail .poem-spread .page-figure {
+    width: fit-content;
+    max-width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
   body.reading-poem-detail .poem-spread .page-figure img {
+    width: auto;
+    max-width: 100%;
     max-height: min(34vh, 320px);
+    margin: 0;
   }
 }
 
