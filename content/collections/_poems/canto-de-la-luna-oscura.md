@@ -6,8 +6,8 @@ date: 2026-03-31T00:00:00.000Z
 series: ''
 part: ''
 published: true
-effect: none
-caption: The Corona - 1871
+effect: fog-focus
+caption: ''
 image_position: center
 image_fit: contain
 image_ratio: ''
