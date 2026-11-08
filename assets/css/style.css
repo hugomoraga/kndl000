@@ -7084,43 +7084,44 @@ body.reading-poem-detail .page-figure img {
   object-position: center;
 }
 
-/* Poema con imagen: la foto es un frontispicio al lado del título. Usa el
-   espacio que antes quedaba vacío y deja el poema a todo su ancho. */
-.poem-head {
-  max-width: var(--reading-measure);
-  margin: 0 auto clamp(2rem, 4vw, 3rem);
-}
-
-.poem-head--with-image {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(12rem, 16rem);
-  gap: clamp(1.5rem, 4vw, 3rem);
-  align-items: start;
-}
-
-.poem-head .reading-detail-head {
-  margin: 0;
-}
-
-.poem-spread {
+/* Poema con imagen: frontispicio flotante. El título ocupa la izquierda,
+   la imagen respira a la derecha y el poema empieza debajo del título sin
+   esperar a que la imagen termine. */
+.poem-flow {
   max-width: var(--reading-measure);
   margin: 0 auto;
 }
 
-.poem-spread .poem-body {
+.poem-flow::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.poem-flow .reading-detail-head {
+  max-width: none;
+  margin: 0 0 clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.poem-flow--with-image .reading-detail-head {
+  padding-right: calc(16rem + clamp(1.5rem, 4vw, 3rem));
+}
+
+.poem-flow .poem-body {
   max-width: none;
   margin: 0;
 }
 
-body.reading-poem-detail .poem-head .page-figure {
-  width: 100%;
-  max-width: 100%;
-  margin: 0;
+body.reading-poem-detail .poem-flow .page-figure {
+  float: right;
+  width: 16rem;
+  max-width: 32%;
+  margin: 0 0 clamp(1.5rem, 3vw, 2.25rem) clamp(1.5rem, 4vw, 3rem);
   border: 1px solid var(--umbral-rule);
   background: var(--umbral-viewer-black, #0a0c0d);
 }
 
-body.reading-poem-detail .poem-head .page-figure img {
+body.reading-poem-detail .poem-flow .page-figure img {
   display: block;
   width: 100%;
   height: auto;
@@ -7131,24 +7132,35 @@ body.reading-poem-detail .poem-head .page-figure img {
   border-radius: 0;
 }
 
-body.reading-poem-detail .poem-head .page-figure__caption {
+body.reading-poem-detail .poem-flow .page-figure__caption {
   max-width: 100%;
 }
 
 @media (max-width: 900px) {
-  .poem-head--with-image {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 1.5rem;
+  .poem-flow--with-image {
+    display: flex;
+    flex-direction: column;
   }
 
-  body.reading-poem-detail .poem-head .page-figure {
+  .poem-flow--with-image .reading-detail-head {
+    order: 1;
+    padding-right: 0;
+    margin-bottom: 1.25rem;
+  }
+
+  body.reading-poem-detail .poem-flow--with-image .page-figure {
+    order: 2;
+    float: none;
     width: fit-content;
     max-width: 100%;
-    margin-right: auto;
-    margin-left: auto;
+    margin: 0 auto 1.5rem;
   }
 
-  body.reading-poem-detail .poem-head .page-figure img {
+  .poem-flow--with-image .poem-body {
+    order: 3;
+  }
+
+  body.reading-poem-detail .poem-flow .page-figure img {
     width: auto;
     max-width: 100%;
     max-height: min(34vh, 320px);
@@ -7156,7 +7168,7 @@ body.reading-poem-detail .poem-head .page-figure__caption {
 }
 
 @media (max-width: 700px) {
-  body.reading-poem-detail .poem-head .page-figure img {
+  body.reading-poem-detail .poem-flow .page-figure img {
     max-height: 30vh;
   }
 }
