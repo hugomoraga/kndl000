@@ -1,11 +1,23 @@
 /* Ficha de dispositivo: lectura y enlaces con contraste AA.
    Se carga solo en el layout dispositivo.html. */
 
+/* Cuerpo y entradilla comparten el eje izquierdo del contenedor de 1000px,
+   no el centro. El max() evita márgenes negativos en móvil. */
+body.dispositivo-detail .dispositivo-page__body,
+body.dispositivo-detail .dispositivo-page__lead {
+  margin-right: 0;
+  margin-left: max(0px, calc((100% - var(--interior-measure)) / 2));
+}
+
 body.dispositivo-detail .dispositivo-page__body {
-  max-width: 58ch;
+  max-width: 66ch;
   font-family: var(--font-serif);
   font-size: 1.02rem;
   line-height: 1.68;
+}
+
+body.dispositivo-detail .dispositivo-page__lead {
+  max-width: 66ch;
 }
 
 .dispositivo-page__body a {

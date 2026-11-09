@@ -13,6 +13,10 @@
   </head>
   <body class="interior-page dispositivo-detail">
     <main class="dispositivo-page">
+      <nav class="reading-breadcrumb" aria-label="Ruta">
+        {% include section-link.html url="/dispositivos/" %}
+      </nav>
+
       {% include title.html symbol="⎔" sigil="dispositivos" %}
 
       {% if page.description %}
