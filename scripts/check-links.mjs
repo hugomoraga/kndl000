@@ -36,8 +36,16 @@ for (const file of files) {
     let raw = match[1].trim().replace(/&amp;/g, '&');
     if (!raw || skip.test(raw)) continue;
 
-    const clean = raw.split('#')[0].split('?')[0];
+    let clean = raw.split('#')[0].split('?')[0];
     if (!clean) continue;
+
+    // Los slugs con acentos se publican con la ruta UTF-8, pero el HTML los
+    // escribe percent-encoded. Decodificamos para comparar contra el archivo real.
+    try {
+      clean = decodeURIComponent(clean);
+    } catch {
+      // Si el porcentaje está mal formado, dejamos la ruta tal cual.
+    }
 
     const target = clean.startsWith('/')
       ? join(SITE, clean)
