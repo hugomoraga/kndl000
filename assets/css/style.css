@@ -7316,6 +7316,12 @@ body.reading-poemas .poemas-index__series-label {
   line-height: 1.5;
   text-transform: uppercase;
   color: var(--umbral-muted);
+  text-decoration: none;
+}
+
+body.reading-poemas a.poemas-index__series-label:hover,
+body.reading-poemas a.poemas-index__series-label:focus-visible {
+  color: var(--umbral-trace);
 }
 
 body.reading-poemas .poemas-index__series-date {
@@ -7437,6 +7443,14 @@ body.reading-poem-detail .poem-body p {
   letter-spacing: 0;
   text-transform: none;
   color: var(--umbral-ink);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.poem-series-kicker__name:hover,
+.poem-series-kicker__name:focus-visible {
+  color: var(--umbral-trace);
+  border-bottom-color: var(--umbral-trace);
 }
 
 .poem-series-kicker__part {
@@ -7475,6 +7489,16 @@ body.reading-poem-detail .poem-body p {
   line-height: 1.4;
   text-transform: uppercase;
   color: var(--umbral-muted);
+}
+
+.poem-series__title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.poem-series__title a:hover,
+.poem-series__title a:focus-visible {
+  color: var(--umbral-trace);
 }
 
 .poem-series__list {
@@ -7553,6 +7577,82 @@ body.reading-poem-detail .poem-body p {
   .poem-series__name {
     font-size: 1rem;
   }
+}
+
+/* --- Serie de poemas — índice -------------------------------------------- */
+
+body.reading-serie .page-title {
+  margin-bottom: 1.5rem;
+}
+
+body.reading-serie .serie-lede {
+  max-width: 58ch;
+  margin: 0 0 2.5rem;
+  font-family: var(--font-serif);
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  font-style: italic;
+  line-height: 1.5;
+  text-align: left;
+  color: var(--umbral-dim);
+}
+
+body.reading-serie .serie-list {
+  max-width: var(--reading-measure);
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--umbral-rule-faint);
+}
+
+body.reading-serie .serie-item {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  gap: 1rem;
+  align-items: baseline;
+  padding: 1.15rem 0;
+  border-bottom: 1px solid var(--umbral-rule-faint);
+}
+
+body.reading-serie .serie-part {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  color: var(--umbral-muted);
+}
+
+body.reading-serie .serie-body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.35rem 1rem;
+}
+
+body.reading-serie .serie-title {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(1.3rem, 2.3vw, 1.7rem);
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+body.reading-serie .serie-title a {
+  color: var(--umbral-ink);
+  text-decoration: none;
+}
+
+body.reading-serie .serie-title a:hover,
+body.reading-serie .serie-title a:focus-visible {
+  color: var(--umbral-trace);
+}
+
+body.reading-serie .serie-date {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  color: var(--umbral-faint);
 }
 
 /* --- Melange índice ------------------------------------------------------ */
@@ -8583,6 +8683,10 @@ body.dispositivo-detail .reading-next {
   margin: clamp(3rem, 7vw, 5rem) auto 0;
 }
 
+.archive-rail__progress {
+  display: none;
+}
+
 .archive-rail__list {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -8647,7 +8751,38 @@ body.dispositivo-detail .reading-next {
     width: auto;
     max-width: none;
     margin: 0;
+    padding-left: 0.9rem;
     transform: translateY(-50%);
+  }
+
+  .archive-rail__progress {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    display: block;
+    width: 1px;
+    background: var(--umbral-rule-faint);
+  }
+
+  .archive-rail__progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 0;
+    background: var(--umbral-trace);
+    transition: height 0.12s linear;
+  }
+
+  .archive-rail__progress-fill::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: -2px;
+    width: 5px;
+    height: 1px;
+    background: var(--umbral-trace);
   }
 
   .archive-rail__list {
@@ -8699,6 +8834,12 @@ body.dispositivo-detail .reading-next {
 
   .archive-rail__link.is-active .archive-rail__name {
     color: var(--umbral-trace);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .archive-rail__progress-fill {
+    transition: none;
   }
 }
 

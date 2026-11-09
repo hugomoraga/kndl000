@@ -8,6 +8,8 @@
 {%- assign _series_poems = site.poems | where: "series", page.series | sort: "part" -%}
 {%- assign _series_total = _series_poems | size -%}
 {%- if page.series and page.series != "" and _series_total > 1 -%}
+  {%- assign _series_slug = page.series | slugify -%}
+  {%- assign _series_url = '/poemas/series/' | append: _series_slug | append: '/' -%}
   {%- assign _series_index = 0 -%}
   {%- for poem in _series_poems -%}
     {%- if poem.url == page.url -%}{%- assign _series_index = forloop.index0 -%}{%- endif -%}
@@ -33,7 +35,7 @@
   <p class="poem-series-kicker">
     <span class="poem-series-kicker__label">Serie</span>
     <span class="poem-series-kicker__sep" aria-hidden="true">·</span>
-    <span class="poem-series-kicker__name">{{ page.series }}</span>
+    <a class="poem-series-kicker__name" href="{{ _series_url | relative_url }}">{{ page.series }}</a>
     <span class="poem-series-kicker__sep" aria-hidden="true">·</span>
     <span class="poem-series-kicker__part">Parte {{ _current_part }} de {{ _series_total }}</span>
     {%- if _prev %}
@@ -47,7 +49,7 @@
   </p>
   {%- else -%}
   <nav class="poem-series" aria-labelledby="poem-series-title">
-    <h2 class="poem-series__title" id="poem-series-title">Serie · {{ page.series }}</h2>
+    <h2 class="poem-series__title" id="poem-series-title"><a href="{{ _series_url | relative_url }}">Serie · {{ page.series }}</a></h2>
     <ol class="poem-series__list">
       {%- for poem in _series_poems -%}
         {%- assign _part = poem.part -%}

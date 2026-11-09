@@ -89,10 +89,12 @@ description: "Archivo de poemas — KNDL 000. Versos breves, simbólicos, fragme
 
     {%- if _type == "series" -%}
       {%- assign _members = site.poems | where: "series", _value | sort: "part" -%}
+      {%- assign _series_slug = _value | slugify -%}
+      {%- assign _series_url = '/poemas/series/' | append: _series_slug | append: '/' -%}
       <li class="poemas-index__series-item">
         <article class="poemas-index__series-block">
           <header class="poemas-index__series-head">
-            <span class="poemas-index__series-label">Serie · {{ _value }} · {{ _members.size }} {% if _members.size == 1 %}parte{% else %}partes{% endif %}</span>
+            <a class="poemas-index__series-label" href="{{ _series_url | relative_url }}">Serie · {{ _value }} · {{ _members.size }} {% if _members.size == 1 %}parte{% else %}partes{% endif %}</a>
             <time class="poemas-index__series-date" datetime="{{ _date }}">{{ _date }}</time>
           </header>
           <ol class="poemas-index__series-list">

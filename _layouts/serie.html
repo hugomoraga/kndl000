@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }} · {{ site.title }}{% endif %}</title>
+  {% include seo.html %}
+  {% include head-css.html %}
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+  {% include analytics.html %}
+</head>
+<body class="{{ page.body_class | default: 'reading-poemas reading-serie' }}">
+  <main class="reading-main">
+    <nav class="reading-breadcrumb" aria-label="Ruta">
+      {% include section-link.html url="/poemas/" %}
+      <a href="{{ '/' | relative_url }}" aria-label="Inicio">∅ INIT</a>
+    </nav>
+
+    <h1 class="page-title" aria-label="{{ page.title | escape }}">
+      <span class="page-title__text"><span class="sigil sigil--poemas" aria-hidden="true"><span class="sigil__glyph">⁂</span></span>{{ page.title }}</span>
+    </h1>
+
+    <p class="serie-lede">Serie de {{ page.series_count }} {% if page.series_count == 1 %}poema{% else %}poemas{% endif %}. Se leen en orden; la serie empieza en la parte 1.</p>
+
+    <ol class="serie-list">
+      {% for poem in page.series_poems %}
+      <li class="serie-item">
+        <span class="serie-part">{{ poem.part | default: forloop.index }}</span>
+        <div class="serie-body">
+          <h2 class="serie-title"><a href="{{ poem.url | relative_url }}">{{ poem.title }}</a></h2>
+          {% if poem.date %}<time class="serie-date" datetime="{{ poem.date }}">{{ poem.date }}</time>{% endif %}
+        </div>
+      </li>
+      {% endfor %}
+    </ol>
+
+    {% include back-button.html %}
+    {% include section-rail.html %}
+  </main>
+</body>
+</html>

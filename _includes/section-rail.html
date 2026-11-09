@@ -1,5 +1,8 @@
 {%- assign _here = page.url -%}
 <nav class="archive-rail" aria-label="Secciones del archivo">
+  <span class="archive-rail__progress" aria-hidden="true">
+    <span class="archive-rail__progress-fill"></span>
+  </span>
   <ul class="archive-rail__list">
     {%- for item in site.data.navigation -%}
       {%- assign _active = false -%}
@@ -28,3 +31,4 @@
     {%- endfor -%}
   </ul>
 </nav>
+<script src="{{ '/assets/js/core/rail-progress.js' | relative_url }}" defer></script>
