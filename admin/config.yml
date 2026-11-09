@@ -251,6 +251,8 @@ collections:
           - { label: "Línea", name: linea, widget: string }
       - { label: Date, name: date, widget: datetime, required: false }
       - { label: Hermes, name: hermes, widget: boolean, default: false, required: false }
+      - { label: "Mostrar en la cita de inicio", name: home_quote, widget: boolean, default: false, required: false, hint: "Solo los rastros marcados entran al sorteo de la cita de la home." }
+      - { label: "Texto de la cita", name: quote, widget: text, required: false, hint: "Opcional. Si se deja vacío se usa la primera línea del rastro." }
 
   - name: dispositivos
     label: "◇ Dispositivos"

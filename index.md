@@ -48,14 +48,57 @@ main_class: umbral-main
 </div>
 
 {%- comment -%}
-  Cita curada del archivo. Fuente: fragmento-20260331-151000 (Rastros, 2026).
-  Si se cambia la frase, actualizar también el año del bloque.
+  Cita curada del archivo. Solo entran los rastros con `home_quote: true`.
+  El HTML renderiza la más reciente como fallback sin JavaScript; home-quote.js
+  elige otra del pool en cada visita.
 {%- endcomment -%}
+{%- assign _quote_pool = site.fragmentos | where: "home_quote", true | sort: "path" | reverse -%}
+{%- assign _quote_count = _quote_pool | size -%}
+{%- if _quote_count > 0 -%}
+  {%- assign _quote_first = _quote_pool | first -%}
+  {%- assign _quote_text = _quote_first.quote -%}
+  {%- if _quote_text == nil or _quote_text == "" -%}
+    {%- assign _quote_line = _quote_first.lineas | first -%}
+    {%- assign _quote_text = _quote_line.linea -%}
+  {%- endif -%}
+  {%- assign _quote_slug = _quote_first.path | split: "/" | last | replace: ".md", "" -%}
+  {%- assign _quote_year = _quote_slug | slice: 10, 4 -%}
+  {%- assign _quote_year_num = _quote_year | plus: 0 -%}
+  {%- if _quote_year.size != 4 or _quote_year_num <= 2000 -%}
+    {%- if _quote_first.date -%}{%- assign _quote_year = _quote_first.date | date: "%Y" -%}{%- else -%}{%- assign _quote_year = "" -%}{%- endif -%}
+  {%- endif %}
 <section class="umbral-quote" aria-label="Rastro del archivo">
   <p class="umbral-quote__label" translate="no">Rastro</p>
-  <blockquote class="umbral-quote__text">Lo que arde no desaparece, se vuelve residuo.</blockquote>
-  <p class="umbral-quote__meta" translate="no">2026</p>
+  <blockquote class="umbral-quote__text">{{ _quote_text | escape }}</blockquote>
+  {%- if _quote_year != "" %}
+  <p class="umbral-quote__meta" translate="no">{{ _quote_year }}</p>
+  {%- endif %}
 </section>
+
+<script type="application/json" id="home-quote-pool">
+[
+{%- assign _quote_first_item = true -%}
+{%- for f in _quote_pool -%}
+  {%- assign _text = f.quote -%}
+  {%- if _text == nil or _text == "" -%}
+    {%- assign _line = f.lineas | first -%}
+    {%- assign _text = _line.linea -%}
+  {%- endif -%}
+  {%- assign _slug = f.path | split: "/" | last | replace: ".md", "" -%}
+  {%- assign _year = _slug | slice: 10, 4 -%}
+  {%- assign _year_num = _year | plus: 0 -%}
+  {%- if _year.size != 4 or _year_num <= 2000 -%}
+    {%- if f.date -%}{%- assign _year = f.date | date: "%Y" -%}{%- else -%}{%- assign _year = "" -%}{%- endif -%}
+  {%- endif -%}
+  {%- if _text and _text != "" -%}
+    {%- unless _quote_first_item -%},{%- endunless -%}{%- assign _quote_first_item = false -%}
+{"text":{{ _text | jsonify }},"year":{{ _year | jsonify }}}
+  {%- endif -%}
+{%- endfor -%}
+]
+</script>
+<script src="{{ '/assets/js/core/home-quote.js' | relative_url }}" defer></script>
+{%- endif -%}
 
 {% include lab-feed.html %}
 

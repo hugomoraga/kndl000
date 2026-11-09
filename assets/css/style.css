@@ -1129,7 +1129,7 @@ main {
   }
 }
 
-/* Poemas: --font-serif; Kramdown "  " → <br> */
+/* Poemas: --font-serif; los saltos simples del markdown son versos. */
 .poem-body {
   font-family: var(--font-serif);
   font-size: clamp(1.1rem, 2.1vw, 1.1rem);
@@ -1141,10 +1141,16 @@ main {
 .poem-body p {
   margin: 0 0 0.9em;
   line-height: var(--lh-loose);
+  /* Los saltos simples del markdown son versos: no dependemos de "  ". */
+  white-space: pre-line;
 }
 
 .poem-body p:last-child {
   margin-bottom: 0;
+}
+
+.poem-body li {
+  white-space: pre-line;
 }
 
 .poem-body h2 {
@@ -4180,6 +4186,7 @@ body.umbral-page #art.umbral__chamber {
   line-height: 1.18;
   text-wrap: balance;
   color: var(--umbral-ink);
+  white-space: pre-line;
 }
 
 /* --- laboratorio ---------------------------------------------------------- */

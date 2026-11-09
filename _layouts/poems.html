@@ -30,7 +30,11 @@
       </header>
 
       <div class="reading-body poem-body">
-        {{ content }}
+        {%- assign _poem_body = content -%}
+        {%- unless _poem_body contains '<h2' -%}
+          {%- assign _poem_body = _poem_body | replace: '<h3', '<h2' | replace: '</h3>', '</h2>' -%}
+        {%- endunless -%}
+        {{ _poem_body }}
       </div>
     </div>
 
