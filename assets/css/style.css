@@ -10136,3 +10136,269 @@ body.section-index .page-title {
     font-size: clamp(2.4rem, 12vw, 3.2rem);
   }
 }
+
+/* ==========================================================================
+   Música — cuaderno de escucha
+   La página deja de ser una lista de playlists y pasa a ser un cuaderno:
+   Ahora, notas, aparatos, sesiones y referencias.
+   ========================================================================== */
+
+body.reading-musica .musica-cuaderno {
+  max-width: var(--reading-measure);
+  margin: 0 auto;
+}
+
+body.reading-musica .musica-lede {
+  max-width: 58ch;
+  margin: 0 0 2.5rem;
+  font-family: var(--font-serif);
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  font-style: italic;
+  line-height: 1.45;
+  text-align: left;
+  color: var(--umbral-dim);
+}
+
+body.reading-musica .musica-section-title {
+  margin: 0 0 1rem;
+  padding: 0 0 0.5rem;
+  border: 0;
+  border-bottom: 1px solid var(--umbral-rule-faint);
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  font-weight: 400;
+  line-height: 1.2;
+  text-align: left;
+  color: var(--umbral-ink);
+}
+
+body.reading-musica .musica-ahora {
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--umbral-rule);
+}
+
+body.reading-musica .musica-ahora__artist {
+  margin: -0.35rem 0 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--umbral-muted);
+}
+
+body.reading-musica .musica-ahora__title {
+  margin: 0 0 1rem;
+  padding: 0;
+  border: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+  font-weight: 300;
+  line-height: 1.08;
+  color: var(--umbral-ink);
+}
+
+body.reading-musica .musica-ahora__note {
+  max-width: 58ch;
+  margin: 0 0 1rem;
+  font-family: var(--font-serif);
+  font-size: clamp(1.1rem, 1.8vw, 1.25rem);
+  line-height: 1.55;
+  color: var(--umbral-ink);
+}
+
+body.reading-musica .musica-ahora__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0.3rem 0;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--umbral-trace);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+body.reading-musica .musica-ahora__link:hover,
+body.reading-musica .musica-ahora__link:focus-visible {
+  color: var(--umbral-ink);
+  border-bottom-color: var(--umbral-trace);
+}
+
+body.reading-musica .musica-notas {
+  margin-top: 3rem;
+}
+
+body.reading-musica .musica-notas__list {
+  border-top: 1px solid var(--umbral-rule-faint);
+}
+
+body.reading-musica .musica-nota {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: start;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--umbral-rule-faint);
+}
+
+body.reading-musica .musica-nota__index {
+  padding-top: 0.2rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: var(--umbral-muted);
+}
+
+body.reading-musica .musica-nota__kind {
+  margin: 0 0 0.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--umbral-muted);
+}
+
+body.reading-musica .musica-nota__title {
+  margin: 0 0 0.3rem;
+  padding: 0;
+  border: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(1.2rem, 2.2vw, 1.45rem);
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--umbral-ink);
+}
+
+body.reading-musica .musica-nota__source {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  color: var(--umbral-faint);
+}
+
+body.reading-musica .musica-nota__note {
+  max-width: 60ch;
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--umbral-dim);
+}
+
+body.reading-musica .musica-nota__date {
+  padding-top: 0.2rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  color: var(--umbral-faint);
+  white-space: nowrap;
+}
+
+body.reading-musica .musica-block {
+  margin-top: 2.5rem;
+}
+
+body.reading-musica .musica-aparatos {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--umbral-rule-faint);
+}
+
+body.reading-musica .musica-aparatos a {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: flex-start;
+  gap: 0.35rem 0.75rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--umbral-rule-faint);
+  color: inherit;
+  text-decoration: none;
+}
+
+body.reading-musica .musica-aparatos__name {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  line-height: 1.2;
+  color: var(--umbral-ink);
+}
+
+body.reading-musica .musica-aparatos__desc {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--umbral-dim);
+}
+
+body.reading-musica .musica-aparatos a:hover .musica-aparatos__name,
+body.reading-musica .musica-aparatos a:focus-visible .musica-aparatos__name {
+  color: var(--umbral-trace);
+}
+
+body.reading-musica .musica-status {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--umbral-dim);
+}
+
+body.reading-musica .musica-status span {
+  margin-left: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--umbral-faint);
+}
+
+body.reading-musica .musica-block--last {
+  margin-bottom: 0;
+}
+
+body.reading-musica .musica-referencias {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0;
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--umbral-dim);
+}
+
+body.reading-musica .musica-referencias a + a::before {
+  content: "·";
+  margin: 0 0.55rem;
+  color: var(--umbral-faint);
+}
+
+body.reading-musica .musica-referencias a {
+  color: var(--umbral-dim);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+body.reading-musica .musica-referencias a:hover,
+body.reading-musica .musica-referencias a:focus-visible {
+  color: var(--umbral-trace);
+  border-bottom-color: var(--umbral-trace);
+}
+
+@media (max-width: 600px) {
+  body.reading-musica .musica-nota {
+    grid-template-columns: 2rem minmax(0, 1fr);
+  }
+
+  body.reading-musica .musica-nota__date {
+    grid-column: 2;
+  }
+}

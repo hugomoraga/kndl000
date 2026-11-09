@@ -90,6 +90,8 @@ collections:
     output: false
   personal_music:
     output: false
+  escuchas:
+    output: false
   codigos:
     output: true
     permalink: /codigo/:name/

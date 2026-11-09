@@ -150,6 +150,27 @@ collections:
           - { label: Resultado, name: outcome, widget: string, required: false }
       - { label: Body, name: body, widget: markdown }
 
+  - name: escuchas
+    label: "∿ Notas de escucha"
+    label_singular: Nota
+    folder: content/collections/_escuchas
+    create: true
+    format: frontmatter
+    slug: "{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Artist, name: artist, widget: string, required: false }
+      - label: Tipo
+        name: kind
+        widget: select
+        default: Idea
+        options: [Escucha, Idea, Aparato]
+      - { label: Date, name: date, widget: datetime }
+      - { label: Note, name: note, widget: text }
+      - { label: Link, name: link, widget: string, required: false, hint: "Spotify, YouTube, Bandcamp…" }
+      - { label: Source, name: source, widget: string, required: false, hint: "Álbum, track o referencia que originó la nota." }
+      - { label: Destacada en Ahora, name: featured, widget: boolean, default: false }
+
   - name: investigaciones
     label: "⌖ Investigación"
     label_singular: Expediente
