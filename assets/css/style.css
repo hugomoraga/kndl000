@@ -4477,6 +4477,61 @@ body.umbral-page .lab-feed {
   display: block;
 }
 
+body.umbral-page .lab-thread {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.85rem;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--umbral-rule-faint);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  line-height: 1.5;
+  text-transform: uppercase;
+  color: var(--umbral-muted);
+}
+
+body.umbral-page .lab-thread[hidden] {
+  display: none;
+}
+
+body.umbral-page .lab-thread__label {
+  color: var(--umbral-faint);
+}
+
+body.umbral-page .lab-thread__section::before {
+  content: "·";
+  margin-right: 0.5rem;
+  color: var(--umbral-faint);
+}
+
+body.umbral-page .lab-thread__more,
+body.umbral-page .lab-thread__section {
+  margin: 0;
+  padding: 0.3rem 0;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  background: none;
+  color: var(--umbral-dim);
+  font: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  text-transform: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+body.umbral-page .lab-thread__more:hover,
+body.umbral-page .lab-thread__more:focus-visible,
+body.umbral-page .lab-thread__section:hover,
+body.umbral-page .lab-thread__section:focus-visible {
+  color: var(--umbral-ink);
+  border-bottom-color: var(--umbral-trace);
+}
+
 body.umbral-page .lab-specimen {
   position: relative;
   display: grid;

@@ -23,7 +23,7 @@
       <p>Muestras del archivo, sorteadas. La cámara condensa una selección distinta cada vez.</p>
     </div>
     <div class="lab-toolbar">
-      <button type="button" class="lab-shuffle" id="lab-shuffle">Nueva muestra</button>
+      <button type="button" class="lab-shuffle" id="lab-shuffle">Otra selección</button>
     </div>
   </header>
   <div class="lab-feed" id="lab-feed-root">
@@ -39,6 +39,7 @@
       </ul>
     </noscript>
   </div>
+  <nav class="lab-thread" id="lab-thread" aria-label="Seguir leyendo" data-baseurl="{{ site.baseurl }}" hidden></nav>
   <p class="sr-only" id="lab-status" role="status" aria-live="polite"></p>
 </section>
 <script type="application/json" id="lab-items">

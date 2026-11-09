@@ -23,7 +23,12 @@
 
       <header class="reading-detail-head">
         {% include poem-series.html mode="kicker" %}
-        <h1 class="reading-detail__title"><span class="reading-detail__mark" aria-hidden="true">~</span> {{ page.title }}</h1>
+        {%- assign _poem_aria = "" -%}
+        {%- if page.series and page.series != "" -%}
+          {%- assign _poem_aria = page.title | append: " — " | append: page.series -%}
+          {%- if page.part and page.part != "" -%}{%- assign _poem_aria = _poem_aria | append: ", parte " | append: page.part -%}{%- endif -%}
+        {%- endif -%}
+        <h1 class="reading-detail__title"{% if _poem_aria != "" %} aria-label="{{ _poem_aria | escape }}"{% endif %}><span class="reading-detail__mark" aria-hidden="true">~</span> {{ page.title }}</h1>
         <p class="reading-detail__meta">
           {% if page.series and page.series != "" %}<span>{{ page.series }}{% if page.part and page.part != "" %} · parte {{ page.part }}{% endif %}</span>{% endif %}
           {% if page.date %}<span>{{ page.date | date: "%Y-%m-%d" }}</span>{% endif %}
