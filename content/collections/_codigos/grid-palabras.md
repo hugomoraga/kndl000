@@ -7,538 +7,357 @@ concept: "El grid muta. Los caracteres se organizan. Las palabras emergen del ca
 ---
 
 ```javascript
-// Grid de Palabras - Mutación y emergencia de patrones
-const ancho = parseInt(input("Ancho del grid:"));
-const alto = parseInt(input("Alto del grid:"));
-const generaciones = parseInt(input("Número de generaciones:"));
-const nivel = parseInt(input("Nivel de Markov (1-7):"));
+// Grid de palabras — un modelo de Markov llena una grilla de caracteres.
+// Cada generación es una muestra nueva; después buscamos palabras reales
+// en filas, columnas y diagonales.
 
-// Corpus de ejemplo
+const pedidas = parseInt(input("¿Cuántas generaciones? (3–8)"), 10);
+const generaciones = Math.max(3, Math.min(8, isNaN(pedidas) ? 5 : pedidas));
+const pedidoNivel = parseInt(input("Nivel (1 caos → 7 lenguaje)"), 10);
+const nivel = Math.max(1, Math.min(7, isNaN(pedidoNivel) ? 4 : pedidoNivel));
+
+const ancho = 33;
+const alto = 13;
+const total = ancho * alto;
+const LETRAS = "abcdefghijklmnopqrstuvwxyzáéíóúñü ";
+const FRECUENCIAS = {
+  "e": 0.137, "a": 0.125, "o": 0.087, "l": 0.082, "s": 0.079,
+  "n": 0.075, "r": 0.069, "u": 0.046, "i": 0.042, "d": 0.037,
+  "t": 0.033, "c": 0.030, "m": 0.029, "p": 0.025, "b": 0.014,
+  "g": 0.010, "v": 0.009, "q": 0.009, "h": 0.007, "f": 0.005,
+  "y": 0.004, "j": 0.004, "z": 0.004, "ñ": 0.003, "x": 0.001,
+  " ": 0.150
+};
+const descripcionNivel = nivel === 1
+  ? "letras uniformes"
+  : nivel === 2
+    ? "frecuencias del castellano"
+    : `Markov orden ${nivel - 2}`;
+
 const corpusEjemplo = `el lenguaje es un sistema de signos que permite la comunicación entre los seres humanos a través de la historia el lenguaje ha evolucionado desde formas simples hasta estructuras complejas que reflejan el pensamiento y la cultura de cada sociedad la palabra escrita preserva el conocimiento y permite que las ideas trasciendan el tiempo y el espacio`;
 
-// Diccionario básico de palabras comunes en castellano
+// Fallback si no se puede leer diccionario.txt. El archivo completo se carga
+// desde el sitio y se suma a este conjunto.
 const diccionarioBasico = new Set([
-  'el', 'la', 'de', 'que', 'y', 'a', 'en', 'un', 'ser', 'se', 'no', 'haber', 'por', 'con', 'su', 'para', 'como', 'estar', 'tener', 'le', 'lo', 'todo', 'pero', 'más', 'hacer', 'o', 'poder', 'decir', 'este', 'ir', 'otro', 'ese', 'la', 'si', 'me', 'ya', 'ver', 'porque', 'dar', 'cuando', 'él', 'muy', 'sin', 'vez', 'mucho', 'saber', 'qué', 'sobre', 'mi', 'alguno', 'mismo', 'yo', 'también', 'hasta', 'año', 'dos', 'querer', 'entre', 'así', 'primero', 'desde', 'grande', 'eso', 'ni', 'nos', 'llegar', 'pasar', 'tiempo', 'ella', 'sí', 'día', 'uno', 'bien', 'poco', 'deber', 'entonces', 'poner', 'cosa', 'tanto', 'hombre', 'parecer', 'nuestro', 'tan', 'donde', 'ahora', 'parte', 'después', 'vida', 'quedar', 'siempre', 'creer', 'hablar', 'llevar', 'dejar', 'nada', 'cada', 'seguir', 'menos', 'nuevo', 'encontrar', 'venir', 'pensar', 'casa', 'trabajar', 'preguntar', 'mujer', 'sin', 'hacer', 'mismo', 'mundo', 'año', 'decir', 'cada', 'primero', 'querer', 'hablar', 'dar', 'ver', 'poder', 'saber', 'tener', 'llegar', 'pasar', 'deber', 'poner', 'parecer', 'quedar', 'haber', 'hablar', 'llevar', 'dejar', 'seguir', 'encontrar', 'venir', 'pensar', 'trabajar', 'preguntar', 'casa', 'mujer', 'mundo', 'tiempo', 'día', 'año', 'hombre', 'vida', 'parte', 'cosa', 'mismo', 'grande', 'nuevo', 'siempre', 'nada', 'poco', 'mucho', 'más', 'menos', 'tan', 'tanto', 'bien', 'mal', 'ahora', 'después', 'entonces', 'cuando', 'donde', 'porque', 'así', 'sí', 'no', 'también', 'ni', 'o', 'pero', 'sin', 'con', 'por', 'para', 'sobre', 'entre', 'desde', 'hasta', 'durante', 'según', 'contra', 'hacia', 'hasta', 'mediante', 'durante', 'según', 'contra', 'hacia', 'caballero', 'sancho', 'dormía', 'enjuto', 'cuando', 'buenos', 'punto', 'pecho', 'sobre', 'gusto', 'parece', 'uscar', 'aviso', 'tenga', 'admirado', 'lástima', 'sospecho', 'razones', 'aperciba', 'parecer', 'hermosura', 'caballeriza', 'compadre', 'buscar', 'finísimo', 'polvo', 'noticia', 'vencidos', 'adulterador', 'varas', 'bellísimas', 'lunes', 'mayor'
+  "el", "la", "de", "que", "y", "a", "en", "un", "por", "con", "para",
+  "como", "más", "pero", "sus", "le", "ya", "o", "este", "sí", "porque",
+  "esta", "entre", "cuando", "muy", "sin", "sobre", "también", "me", "hasta",
+  "hay", "donde", "quien", "desde", "todo", "nos", "durante", "todos", "uno",
+  "les", "ni", "contra", "otros", "ese", "eso", "ante", "ellos", "esto", "mí",
+  "antes", "algunos", "qué", "unos", "yo", "otro", "otras", "otra", "él",
+  "tanto", "esa", "estos", "mucho", "quienes", "nada", "muchos", "cual",
+  "poco", "ella", "estar", "estas", "algunas", "algo", "nosotros", "mi",
+  "mis", "tú", "te", "ti", "tu", "tus", "ellas", "nosotras", "vosotros",
+  "os", "mío", "mía", "míos", "mías", "tuyo", "tuya", "tuyos", "tuyas",
+  "suyo", "suya", "suyos", "suyas", "nuestro", "nuestra", "nuestros",
+  "nuestras", "vuestro", "vuestra", "vuestros", "vuestras", "esos", "esas",
+  "estoy", "estás", "está", "estamos", "estáis", "están", "casa", "tiempo",
+  "mundo", "vida", "palabra", "lenguaje", "texto", "luz", "sombra", "fuego",
+  "agua", "tierra", "aire", "hombre", "mujer", "niño", "niña", "día", "noche",
+  "año", "amor", "muerte", "palabra", "lengua", "lenguas", "signo", "signos",
+  "historia", "memoria", "archivo", "ruido", "orden", "caos", "patrón"
 ]);
 
-// Leer corpus y diccionario
-let corpus = null;
-let corpusListo = false;
+let corpus = corpusEjemplo;
 let diccionario = diccionarioBasico;
+let ngramas = null;
+let grid = [];
+let genActual = 0;
+let metricasActuales = null;
+let iniciado = false;
+const historialDic = [];
 
-output("Leyendo corpus.txt...\n");
+output({ type: "meta", text: "Leyendo corpus y diccionario…" });
 
-// Cargar corpus y diccionario
-Promise.all([
-  fetch('/corpus.txt').then(r => r.ok ? r.text() : null).catch(() => null),
-  fetch('/diccionario.txt').then(r => r.ok ? r.text() : null).catch(() => null)
-]).then(([corpusTexto, diccionarioTexto]) => {
-  // Procesar corpus
-  if (corpusTexto && corpusTexto.trim().length > 10) {
-    corpus = corpusTexto;
-  } else {
-    corpus = corpusEjemplo;
-  }
-  
-  // Procesar diccionario
-  if (diccionarioTexto) {
-    const lineas = diccionarioTexto.toLowerCase().split('\n');
-    lineas.forEach(linea => {
-      linea = linea.trim();
-      if (!linea) return;
-      
-      // Procesar formato: "palabra" o "palabra, variante1 variante2"
-      // Ejemplo: "abanderado, da" -> "abanderado" y "abanderada"
-      const partes = linea.split(',');
-      const palabraBase = partes[0].trim();
-      
-      // Agregar palabra base si es válida
-      if (palabraBase.length >= 3 && /^[a-záéíóúñü]+$/i.test(palabraBase)) {
-        diccionario.add(palabraBase);
-      }
-      
-      // Procesar variantes (si las hay)
-      if (partes.length > 1) {
-        const variantesTexto = partes[1].trim();
-        const variantes = variantesTexto.split(/\s+/);
-        
-        variantes.forEach(variante => {
-          variante = variante.trim();
-          if (!variante) return;
-          
-          // Construir palabra completa con variante
-          // Ejemplo: "abanderado, da" -> base="abanderado", variante="da" -> "abanderada"
-          // La variante reemplaza el final de la palabra base
-          if (variante.length >= 2 && palabraBase.length >= variante.length) {
-            const palabraCompleta = palabraBase.slice(0, -variante.length) + variante;
-            if (palabraCompleta.length >= 3 && /^[a-záéíóúñü]+$/i.test(palabraCompleta)) {
-              diccionario.add(palabraCompleta);
-            }
-          }
-          
-          // Si la variante es una palabra completa por sí sola (mínimo 3 caracteres)
-          if (variante.length >= 3 && /^[a-záéíóúñü]+$/i.test(variante)) {
-            diccionario.add(variante);
-          }
-        });
+function iniciarUnaVez() {
+  if (iniciado) return;
+  iniciado = true;
+  procesarCorpus();
+}
+
+function cargarDiccionario(texto) {
+  const set = new Set(diccionarioBasico);
+  texto.toLowerCase().split("\n").forEach((linea) => {
+    const [baseRaw, variantesRaw] = linea.split(",");
+    const base = (baseRaw || "").trim();
+    if (base.length >= 3 && /^[a-záéíóúñü]+$/i.test(base)) set.add(base);
+    if (!variantesRaw) return;
+    variantesRaw.trim().split(/\s+/).forEach((variante) => {
+      if (!variante) return;
+      if (variante.length >= 3 && /^[a-záéíóúñü]+$/i.test(variante)) set.add(variante);
+      if (base.length >= variante.length) {
+        const completa = base.slice(0, -variante.length) + variante;
+        if (completa.length >= 3 && /^[a-záéíóúñü]+$/i.test(completa)) set.add(completa);
       }
     });
-    output(`Diccionario cargado: ${diccionario.size} palabras\n`);
+  });
+  return set;
+}
+
+Promise.all([
+  fetch("/corpus.txt").then((r) => r.ok ? r.text() : null).catch(() => null),
+  fetch("/diccionario.txt").then((r) => r.ok ? r.text() : null).catch(() => null)
+]).then(([corpusTexto, diccionarioTexto]) => {
+  if (corpusTexto && corpusTexto.trim().length > 10) corpus = corpusTexto;
+  if (diccionarioTexto) {
+    diccionario = cargarDiccionario(diccionarioTexto);
+    output({ type: "legend", text: `Diccionario: ${diccionario.size} palabras` });
   } else {
-    output(`Usando diccionario básico: ${diccionario.size} palabras\n`);
+    output({ type: "legend", text: `Diccionario básico: ${diccionario.size} palabras` });
   }
-  
-  corpusListo = true;
-  procesarCorpus();
-}).catch(error => {
-  corpus = corpusEjemplo;
-  corpusListo = true;
-  procesarCorpus();
+  iniciarUnaVez();
+}).catch(() => {
+  iniciarUnaVez();
 });
 
-// Esperar corpus
+// Si el fetch tarda demasiado, arrancamos con el corpus de ejemplo.
 let intentos = 0;
-const maxIntentos = 200;
-
-const esperarCorpus = setInterval(() => {
+const esperar = setInterval(() => {
   intentos++;
-  if (corpusListo || intentos >= maxIntentos) {
-    clearInterval(esperarCorpus);
-    if (!corpusListo) {
-      corpus = corpusEjemplo;
-      corpusListo = true;
-      procesarCorpus();
-    }
+  if (iniciado) {
+    clearInterval(esperar);
+    return;
+  }
+  if (intentos >= 100) {
+    clearInterval(esperar);
+    iniciarUnaVez();
   }
 }, 50);
 
-// Normalizar corpus
 function procesarCorpus() {
-  corpus = corpus.toLowerCase().replace(/[^a-záéíóúñü\s]/g, ' ').replace(/\s+/g, ' ');
-  iniciarGrid();
-}
-
-// Construir n-gramas
-function construirNGramas(corpus, orden) {
-  const ngramas = {};
-  
-  for (let i = 0; i < corpus.length - orden; i++) {
-    const contexto = corpus.substring(i, i + orden);
-    const siguiente = corpus[i + orden];
-    
-    if (!ngramas[contexto]) {
-      ngramas[contexto] = {};
-    }
-    if (!ngramas[contexto][siguiente]) {
-      ngramas[contexto][siguiente] = 0;
-    }
-    ngramas[contexto][siguiente]++;
-  }
-  
-  // Convertir a probabilidades
-  for (let contexto in ngramas) {
-    const total = Object.values(ngramas[contexto]).reduce((a, b) => a + b, 0);
-    const probabilidades = {};
-    let acumulado = 0;
-    for (let siguiente in ngramas[contexto]) {
-      acumulado += ngramas[contexto][siguiente] / total;
-      probabilidades[siguiente] = acumulado;
-    }
-    ngramas[contexto] = probabilidades;
-  }
-  
-  return ngramas;
-}
-
-// Obtener siguiente carácter según nivel con mejor contexto
-function obtenerSiguienteCaracter(contextoCompleto, ngramas, nivel, corpus) {
-  if (nivel === 1) {
-    // Letras aleatorias uniformes
-    const letras = "abcdefghijklmnopqrstuvwxyzáéíóúñü ";
-    return letras[Math.floor(Math.random() * letras.length)];
-  } else if (nivel === 2) {
-    // Frecuencias del castellano
-    const frecuencias = {
-      'e': 0.137, 'a': 0.125, 'o': 0.087, 'l': 0.082, 's': 0.079,
-      'n': 0.075, 'r': 0.069, 'u': 0.046, 'i': 0.042, 'd': 0.037,
-      't': 0.033, 'c': 0.030, 'm': 0.029, 'p': 0.025, 'b': 0.014,
-      'g': 0.010, 'v': 0.009, 'q': 0.009, 'h': 0.007, 'f': 0.005,
-      'y': 0.004, 'j': 0.004, 'z': 0.004, 'ñ': 0.003, 'x': 0.001,
-      ' ': 0.150
-    };
-    const letras = Object.keys(frecuencias);
-    const pesos = Object.values(frecuencias);
-    let acumulado = 0;
-    for (let i = 0; i < pesos.length; i++) {
-      acumulado += pesos[i];
-    }
-    const rand = Math.random() * acumulado;
-    let suma = 0;
-    for (let i = 0; i < pesos.length; i++) {
-      suma += pesos[i];
-      if (rand < suma) {
-        return letras[i];
-      }
-    }
-    return ' ';
-  } else {
-    // Markov de orden (nivel - 2)
-    const orden = nivel - 2;
-    // Usar el contexto completo, tomando los últimos 'orden' caracteres
-    const contextoRelevante = contextoCompleto.length >= orden 
-      ? contextoCompleto.substring(contextoCompleto.length - orden) 
-      : contextoCompleto;
-    
-    // Intentar con el contexto exacto
-    if (ngramas[contextoRelevante]) {
-      const rand = Math.random();
-      for (let letra in ngramas[contextoRelevante]) {
-        if (rand < ngramas[contextoRelevante][letra]) {
-          return letra;
-        }
-      }
-    }
-    
-    // Backoff: intentar con contexto más corto (limitado y optimizado)
-    for (let o = Math.min(orden - 1, contextoRelevante.length - 1, 3); o > 0; o--) {
-      const contextoCorto = contextoRelevante.substring(contextoRelevante.length - o);
-      if (ngramas[contextoCorto]) {
-        const rand = Math.random();
-        for (let letra in ngramas[contextoCorto]) {
-          if (rand < ngramas[contextoCorto][letra]) {
-            return letra;
-          }
-        }
-      }
-    }
-    
-    // Fallback: letra aleatoria del corpus
-    return corpus[Math.floor(Math.random() * corpus.length)];
-  }
-}
-
-// Inicializar grid
-let grid = [];
-let ngramas = null;
-
-function iniciarGrid() {
-  // Construir modelo según nivel
-  if (nivel >= 3) {
-    const orden = nivel - 2;
-    ngramas = construirNGramas(corpus, orden);
-  }
-  
-  // Inicializar grid vacío
-  grid = [];
-  for (let y = 0; y < alto; y++) {
-    grid[y] = [];
-    for (let x = 0; x < ancho; x++) {
-      grid[y][x] = ' ';
-    }
-  }
-  
-  // Semilla inicial: para niveles altos, usar una secuencia coherente del corpus
-  if (nivel >= 4) {
-    // Empezar con una secuencia real del corpus
-    const inicioCorpus = Math.floor(Math.random() * (corpus.length - ancho));
-    let x = 0;
-    let y = 0;
-    for (let i = 0; i < Math.min(ancho * alto, corpus.length - inicioCorpus); i++) {
-      grid[y][x] = corpus[inicioCorpus + i];
-      x++;
-      if (x >= ancho) {
-        x = 0;
-        y++;
-        if (y >= alto) break;
-      }
-    }
-  } else {
-    // Para niveles bajos, usar caracteres aleatorios
-    for (let i = 0; i < Math.min(ancho * alto / 10, 20); i++) {
-      const x = Math.floor(Math.random() * ancho);
-      const y = Math.floor(Math.random() * alto);
-      grid[y][x] = corpus[Math.floor(Math.random() * corpus.length)];
-    }
-  }
-  
+  corpus = corpus.toLowerCase().replace(/[^a-záéíóúñü\s]/g, " ").replace(/\s+/g, " ");
+  if (nivel >= 3) ngramas = construirNGramas(corpus, nivel - 2);
+  grid = Array.from({ length: alto }, () => Array(ancho).fill(" "));
   evolucionarGrid();
 }
 
-// Generar texto secuencial para el grid (como en el experimento de Shannon)
-function generarTextoSecuencial(longitud, nivel, ngramas, corpus) {
-  let texto = '';
-  
+function construirNGramas(texto, orden) {
+  const mapa = {};
+  for (let i = 0; i < texto.length - orden; i++) {
+    const contexto = texto.substring(i, i + orden);
+    const siguiente = texto[i + orden];
+    if (!mapa[contexto]) mapa[contexto] = {};
+    mapa[contexto][siguiente] = (mapa[contexto][siguiente] || 0) + 1;
+  }
+  return mapa;
+}
+
+function elegirPonderado(pesos) {
+  let totalPesos = 0;
+  for (const clave in pesos) totalPesos += pesos[clave];
+  let rand = Math.random() * totalPesos;
+  let suma = 0;
+  for (const clave in pesos) {
+    suma += pesos[clave];
+    if (rand < suma) return clave;
+  }
+  return Object.keys(pesos)[0] || " ";
+}
+
+function generarTextoSecuencial(longitud) {
   if (nivel === 1) {
-    // Letras aleatorias uniformes
-    const letras = "abcdefghijklmnopqrstuvwxyzáéíóúñü ";
-    for (let i = 0; i < longitud; i++) {
-      texto += letras[Math.floor(Math.random() * letras.length)];
-    }
-  } else if (nivel === 2) {
-    // Frecuencias del castellano
-    const frecuencias = {
-      'e': 0.137, 'a': 0.125, 'o': 0.087, 'l': 0.082, 's': 0.079,
-      'n': 0.075, 'r': 0.069, 'u': 0.046, 'i': 0.042, 'd': 0.037,
-      't': 0.033, 'c': 0.030, 'm': 0.029, 'p': 0.025, 'b': 0.014,
-      'g': 0.010, 'v': 0.009, 'q': 0.009, 'h': 0.007, 'f': 0.005,
-      'y': 0.004, 'j': 0.004, 'z': 0.004, 'ñ': 0.003, 'x': 0.001,
-      ' ': 0.150
-    };
-    const letras = Object.keys(frecuencias);
-    const pesos = Object.values(frecuencias);
-    let acumulado = pesos.reduce((a, b) => a + b, 0);
-    for (let i = 0; i < longitud; i++) {
-      const rand = Math.random() * acumulado;
-      let suma = 0;
-      for (let j = 0; j < pesos.length; j++) {
-        suma += pesos[j];
-        if (rand < suma) {
-          texto += letras[j];
+    let texto = "";
+    for (let i = 0; i < longitud; i++) texto += LETRAS[Math.floor(Math.random() * LETRAS.length)];
+    return texto;
+  }
+
+  if (nivel === 2) {
+    let texto = "";
+    for (let i = 0; i < longitud; i++) texto += elegirPonderado(FRECUENCIAS);
+    return texto;
+  }
+
+  const orden = nivel - 2;
+  const inicio = Math.floor(Math.random() * Math.max(1, corpus.length - orden));
+  let texto = corpus.substring(inicio, inicio + orden);
+
+  while (texto.length < longitud) {
+    const contexto = texto.substring(texto.length - orden);
+    let siguiente = "";
+
+    if (ngramas[contexto]) {
+      siguiente = elegirPonderado(ngramas[contexto]);
+    } else {
+      for (let o = Math.min(orden - 1, contexto.length - 1); o > 0; o--) {
+        const corto = contexto.substring(contexto.length - o);
+        if (ngramas[corto]) {
+          siguiente = elegirPonderado(ngramas[corto]);
           break;
         }
       }
     }
-  } else {
-    // Markov de orden (nivel - 2)
-    const orden = nivel - 2;
-    
-    // Empezar con orden caracteres aleatorios del corpus
-    let inicio = Math.floor(Math.random() * (corpus.length - orden));
-    texto = corpus.substring(inicio, inicio + orden);
-    
-    for (let i = orden; i < longitud; i++) {
-      const contexto = texto.substring(texto.length - orden);
-      
-      if (ngramas[contexto]) {
-        const rand = Math.random();
-        let siguiente = ' ';
-        for (let letra in ngramas[contexto]) {
-          if (rand < ngramas[contexto][letra]) {
-            siguiente = letra;
-            break;
-          }
-        }
-        texto += siguiente;
-      } else {
-        // Fallback: letra aleatoria del corpus
-        texto += corpus[Math.floor(Math.random() * corpus.length)];
-      }
-    }
+
+    if (!siguiente) siguiente = corpus[Math.floor(Math.random() * corpus.length)];
+    texto += siguiente;
   }
-  
-  return texto;
+
+  return texto.substring(0, longitud);
 }
 
-// Evolucionar grid - ahora genera texto secuencial
-let genActual = 0;
 
-function evolucionarGrid() {
-  if (genActual >= generaciones) {
-    analizarPalabras();
-    return;
+function lineasDelGrid() {
+  const lineas = [];
+
+  for (let y = 0; y < alto; y++) lineas.push(grid[y].join(""));
+
+  for (let x = 0; x < ancho; x++) {
+    let linea = "";
+    for (let y = 0; y < alto; y++) linea += grid[y][x];
+    lineas.push(linea);
   }
-  
-  setTimeout(() => {
-    // Generar texto completo usando el nivel de Markov
-    const textoCompleto = generarTextoSecuencial(ancho * alto, nivel, ngramas, corpus);
-    
-    // Llenar grid secuencialmente (de izquierda a derecha, arriba a abajo)
-    let indiceTexto = 0;
-    for (let y = 0; y < alto; y++) {
-      for (let x = 0; x < ancho; x++) {
-        if (indiceTexto < textoCompleto.length) {
-          grid[y][x] = textoCompleto[indiceTexto];
-          indiceTexto++;
-        } else {
-          // Si se acaba el texto, usar caracteres aleatorios
-          grid[y][x] = corpus[Math.floor(Math.random() * corpus.length)];
-        }
-      }
+
+  for (let inicio = 0; inicio < alto + ancho - 1; inicio++) {
+    let linea = "";
+    for (let y = Math.max(0, inicio - ancho + 1); y < Math.min(alto, inicio + 1); y++) {
+      const x = inicio - y;
+      if (x >= 0 && x < ancho) linea += grid[y][x];
     }
-    
-    genActual++;
-    
-    // Mostrar grid cada generación
-    mostrarGrid();
-    
-    evolucionarGrid();
-  }, 200); // 200ms entre generaciones
+    lineas.push(linea);
+  }
+
+  for (let inicio = 0; inicio < alto + ancho - 1; inicio++) {
+    let linea = "";
+    for (let y = Math.max(0, inicio - ancho + 1); y < Math.min(alto, inicio + 1); y++) {
+      const x = ancho - 1 - (inicio - y);
+      if (x >= 0 && x < ancho) linea += grid[y][x];
+    }
+    lineas.push(linea);
+  }
+
+  return lineas;
 }
 
-// Mostrar grid
+function analizarGrid() {
+  const palabras = new Map();
+
+  for (const linea of lineasDelGrid()) {
+    const tokens = linea.match(/[a-záéíóúñü]+/gi) || [];
+    for (const token of tokens) {
+      if (token.length < 3) continue;
+      const palabra = token.toLowerCase();
+      const data = palabras.get(palabra) || { count: 0, enDiccionario: diccionario.has(palabra) };
+      data.count++;
+      palabras.set(palabra, data);
+    }
+  }
+
+  let letras = 0;
+  for (const fila of grid) {
+    for (const caracter of fila) {
+      if (caracter !== " ") letras++;
+    }
+  }
+
+  const items = [...palabras.entries()].map(([palabra, data]) => ({
+    palabra,
+    count: data.count,
+    enDiccionario: data.enDiccionario
+  }));
+
+  const top = items
+    .filter((item) => item.enDiccionario)
+    .sort((a, b) => {
+      if (b.count !== a.count) return b.count - a.count;
+      return b.palabra.length - a.palabra.length;
+    })
+    .slice(0, 10);
+
+  return {
+    unicas: items.length,
+    dic: items.filter((item) => item.enDiccionario).length,
+    ocupacion: Math.round((letras / total) * 100),
+    top
+  };
+}
+
 function mostrarGrid() {
   output("[CLEAR]");
+  metricasActuales = analizarGrid();
 
   let gridText = "";
-  for (let y = 0; y < alto; y++) {
-    let linea = "";
-    for (let x = 0; x < ancho; x++) {
-      linea += grid[y][x];
-    }
-    gridText += linea + "\n";
-  }
+  for (const fila of grid) gridText += fila.join("") + "\n";
 
   output({
     type: "meta",
     text: `Generación ${genActual}/${generaciones} · nivel ${nivel} · ${ancho} × ${alto}`
   });
   output({
+    type: "legend",
+    text: `${descripcionNivel}\n` +
+          `secuencias ${metricasActuales.unicas} · diccionario ${metricasActuales.dic} · ocupación ${metricasActuales.ocupacion}%`
+  });
+  output({
     type: "grid",
     data: gridText,
-    caption: "los caracteres mutan y se ordenan generación tras generación",
-    label: "Grid de palabras, generación " + genActual
+    caption: "cada generación es una muestra nueva del modelo; las palabras se buscan después en filas, columnas y diagonales",
+    label: `Grid de palabras, generación ${genActual}`
   });
 }
 
-// Analizar palabras más repetidas
-function analizarPalabras() {
-  output({ type: "meta", text: "Análisis de palabras" });
-  
-  // Extraer palabras reales (secuencias de letras separadas por espacios)
-  const palabras = {};
-  
-  // Función para extraer palabras de una línea
-  function extraerPalabrasReales(linea) {
-    // Dividir por espacios y encontrar palabras completas (prioridad alta)
-    const palabrasEnLinea = linea.match(/[a-záéíóúñü]+/gi) || [];
-    palabrasEnLinea.forEach(palabra => {
-      // Considerar palabras de cualquier longitud razonable (mínimo 3 caracteres)
-      if (palabra.length >= 3) {
-        const palabraLower = palabra.toLowerCase();
-        const enDiccionario = diccionario.has(palabraLower);
-        
-        if (!palabras[palabraLower]) {
-          palabras[palabraLower] = { count: 0, esCompleta: true, enDiccionario: false };
-        }
-        palabras[palabraLower].count++;
-        palabras[palabraLower].esCompleta = true; // Marcar como palabra completa
-        if (enDiccionario) {
-          palabras[palabraLower].enDiccionario = true; // Marcar si está en diccionario
-        }
-      }
-    });
-  }
-  
-  // Función para verificar si una secuencia parece una palabra real
-  function parecePalabraReal(secuencia) {
-    // Filtrar secuencias que no parecen palabras
-    // - No más de 2 vocales o consonantes consecutivas (excepto casos comunes)
-    // - Debe tener al menos una vocal
-    // - No debe tener patrones muy raros
-    
-    const tieneVocal = /[aeiouáéíóúü]/.test(secuencia);
-    if (!tieneVocal) return false;
-    
-    // Rechazar si tiene más de 3 consonantes consecutivas
-    if (/[bcdfghjklmnñpqrstvwxyz]{4,}/i.test(secuencia)) return false;
-    
-    // Rechazar si tiene más de 3 vocales consecutivas (excepto casos como "aie")
-    if (/[aeiouáéíóúü]{4,}/i.test(secuencia)) return false;
-    
-    // Rechazar patrones muy raros como "uyroji", "qtorvl"
-    const patronesRaros = /(uy|qy|qj|qk|qx|qz|jw|jx|jz|kx|kz|zx|zy)/i;
-    if (patronesRaros.test(secuencia)) return false;
-    
-    return true;
-  }
-  
-  // Analizar líneas horizontales
-  for (let y = 0; y < alto; y++) {
-    let linea = '';
-    for (let x = 0; x < ancho; x++) {
-      linea += grid[y][x];
-    }
-    extraerPalabrasReales(linea);
-  }
-  
-  // Analizar líneas verticales
-  for (let x = 0; x < ancho; x++) {
-    let linea = '';
-    for (let y = 0; y < alto; y++) {
-      linea += grid[y][x];
-    }
-    extraerPalabrasReales(linea);
-  }
-  
-  // Analizar diagonales principales
-  for (let inicio = 0; inicio < alto + ancho - 1; inicio++) {
-    let linea = '';
-    for (let y = Math.max(0, inicio - ancho + 1); y < Math.min(alto, inicio + 1); y++) {
-      const x = inicio - y;
-      if (x >= 0 && x < ancho) {
-        linea += grid[y][x];
-      }
-    }
-    extraerPalabrasReales(linea);
-  }
-  
-  // Analizar diagonales secundarias
-  for (let inicio = 0; inicio < alto + ancho - 1; inicio++) {
-    let linea = '';
-    for (let y = Math.max(0, inicio - ancho + 1); y < Math.min(alto, inicio + 1); y++) {
-      const x = ancho - 1 - (inicio - y);
-      if (x >= 0 && x < ancho) {
-        linea += grid[y][x];
-      }
-    }
-    extraerPalabrasReales(linea);
-  }
-  
-  // Convertir el objeto de palabras a formato simple para ordenar
-  const palabrasSimples = Object.entries(palabras).map(([palabra, data]) => ({
-    palabra,
-    count: typeof data === 'object' ? data.count : data,
-    esCompleta: typeof data === 'object' ? (data.esCompleta || false) : false,
-    enDiccionario: typeof data === 'object' ? (data.enDiccionario || false) : false
-  }));
-  
-  // Ordenar palabras por frecuencia y prioridad
-  const palabrasOrdenadas = palabrasSimples
-    .filter(({ palabra }) => {
-      // Filtrar palabras muy cortas (mínimo 3), con caracteres repetidos, o que no sean solo letras
-      const sinEspacios = palabra.replace(/\s/g, '');
-      return sinEspacios.length >= 3 && 
-             !/^(.)\1+$/.test(sinEspacios) &&
-             /^[a-záéíóúñü]+$/i.test(palabra);
-    })
-    .sort((a, b) => {
-      // Priorizar palabras en diccionario
-      if (a.enDiccionario && !b.enDiccionario) return -1;
-      if (!a.enDiccionario && b.enDiccionario) return 1;
-      
-      // Luego priorizar palabras completas
-      if (a.esCompleta && !b.esCompleta) return -1;
-      if (!a.esCompleta && b.esCompleta) return 1;
-      
-      // Luego por frecuencia
-      if (b.count !== a.count) return b.count - a.count;
-      
-      // Finalmente por longitud (más largas primero)
-      return b.palabra.length - a.palabra.length;
-    })
-    .slice(0, 50); // Top 50
-  
-  if (palabrasOrdenadas.length === 0) {
-    output({
-      type: "conclusion",
-      text: "No se encontraron palabras significativas.\nEl grid permaneció en el caos."
-    });
+function evolucionarGrid() {
+  if (genActual >= generaciones) {
+    finalizar();
     return;
   }
 
-  output({ type: "meta", text: `Top ${palabrasOrdenadas.length} palabras más repetidas` });
+  setTimeout(() => {
+    const texto = generarTextoSecuencial(total);
+    let indice = 0;
+    for (let y = 0; y < alto; y++) {
+      for (let x = 0; x < ancho; x++) {
+        grid[y][x] = texto[indice++] || " ";
+      }
+    }
 
-  const lineas = palabrasOrdenadas.map(({ palabra, count, esCompleta, enDiccionario }, index) => {
-    const marcador = enDiccionario ? '★' : (esCompleta ? '✓' : '·');
-    const etiqueta = enDiccionario ? ' [diccionario]' : '';
-    return `${(index + 1).toString().padStart(2, ' ')}. ${marcador} "${palabra}" — ${count} ${count === 1 ? 'vez' : 'veces'}${etiqueta}`;
+    genActual++;
+    mostrarGrid();
+    historialDic.push([genActual, metricasActuales.dic]);
+    evolucionarGrid();
+  }, 300);
+}
+
+function finalizar() {
+  const m = metricasActuales || analizarGrid();
+
+  output({ type: "meta", text: "Resultado" });
+  output({
+    type: "legend",
+    text: `secuencias ${m.unicas} · diccionario ${m.dic} · ocupación ${m.ocupacion}%`
   });
 
-  output({ type: "legend", text: "★ palabra de diccionario · ✓ secuencia legible · · fragmento\n\n" + lineas.join("\n") });
+  if (m.top.length > 0) {
+    output({
+      type: "meta",
+      text: `Top ${m.top.length} ${m.top.length === 1 ? "palabra" : "palabras"} de diccionario`
+    });
+    const lineas = m.top.map((item, index) => {
+      return `${(index + 1).toString().padStart(2, " ")}. "${item.palabra}" — ${item.count} ${item.count === 1 ? "vez" : "veces"}`;
+    });
+    output({ type: "legend", text: lineas.join("\n") });
+  } else {
+    output({ type: "legend", text: "No se encontraron palabras de diccionario en esta muestra." });
+  }
+
+  if (historialDic.length >= 2 && historialDic.some((punto) => punto[1] > 0)) {
+    output({ type: "meta", text: "Diccionario por generación" });
+    output({
+      type: "trace",
+      points: historialDic,
+      label: "Palabras de diccionario encontradas por generación"
+    });
+  }
+
+  const hayPalabras = m.dic > 0;
+  const resultado = hayPalabras
+    ? `Se encontraron ${m.dic} ${m.dic === 1 ? "palabra" : "palabras"} de diccionario en ${m.unicas} secuencias.`
+    : "No se encontraron palabras de diccionario; el grid quedó más cerca del ruido. Probá un nivel más alto.";
 
   output({
     type: "conclusion",
-    text: "El grid mutó.\nLos caracteres se organizaron.\nLas palabras emergieron del caos.\n¿Qué patrones se repiten?"
+    text:
+      `El grid mutó durante ${generaciones} generaciones en ${descripcionNivel}.\n` +
+      `${resultado}\n\n` +
+      "¿Qué patrones se repiten?"
   });
 }
 ```
