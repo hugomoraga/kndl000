@@ -7526,7 +7526,7 @@ body.reading-melange-detail .melange-report__cover {
 }
 
 body.reading-melange-detail .melange-report__cover-frame {
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 4 / 5;
   overflow: hidden;
   border-radius: 0;
   box-shadow: none;
@@ -7646,6 +7646,9 @@ body.reading-melange-detail .reading-next {
     grid-template-columns: minmax(0, 1fr);
     gap: 1.5rem;
     margin-bottom: 2rem;
+  }
+  body.reading-melange-detail .melange-report__cover-frame {
+    aspect-ratio: 4 / 3;
   }
 
 }
@@ -7889,7 +7892,7 @@ body.reading-melange-detail .melange-report__cover-frame {
 
 body.reading-melange-detail .melange-report__cover-frame img {
   max-height: none;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 body.reading-melange-detail .report-spec {
