@@ -423,6 +423,16 @@ Todo es recto: radios de 0px, reglas de 1px, bordes completos cuando existen. La
 
 **The One Container Rule.** Toda página interior usa un contenedor de 1000px centrado. Dentro de él, la prosa se mide a 75ch; el contenedor es uno, la medida de lectura es otra.
 
+### Dispositivos — rack modular
+- **Estructura:** rack de tres columnas (dos en tablet, una en móvil) con gutters de 1px. Cada módulo es una ficha técnica sin caja: dirección `DEV/01`, estado, título serif, descripción, franja de especificaciones (`tipo`, `stack`, `target`, `versión`) y pie con fecha + enlaces.
+- **Barra:** conteo de módulos, activos y en línea en mono 0.7rem, sobre una regla capilar. Es un resumen funcional, no un kicker decorativo.
+- **Estado:** punto de 5px y etiqueta mono: `activo` en Trace Cyan, `experimental` en Event Amber, `archivado` en Ink Muted.
+- **Interacción:** una línea cian de 1px recorre el borde superior del módulo en hover/focus-within; el título se subraya y los enlaces del pie pasan a Ink.
+- **Campos:** `version` y `status` en el frontmatter del dispositivo; el estado por defecto es `activo`. La ficha del detalle repite versión y estado en la meta.
+- **No:** tarjetas, sombras, fondos elevados ni una segunda retícula. La separación es la regla de 1px.
+
+**The Module Rack Rule.** El índice de Dispositivos no es una lista de enlaces: es un rack de módulos donde cada pieza declara qué es, con qué stack se construyó y en qué estado está. La dirección `DEV/nn` es wayfinding técnico, no numeración decorativa.
+
 ### Section sigils
 - **Regla:** cada sección tiene un solo sigilo, siempre como prefijo del nombre. No hay sufijos, paréntesis ni símbolos dentro del título.
 - **Tamaño:** la tinta se normaliza a `0.68em` del título, con ajustes ópticos para glifos de poca masa.
@@ -492,6 +502,7 @@ Todo es recto: radios de 0px, reglas de 1px, bordes completos cuando existen. La
 - **Do** usar un solo sigilo por sección, como prefijo y normalizado por altura óptica.
 - **Do** tomar el glifo de `_data/navigation.yml` para que título, home, 404 y rail coincidan.
 - **Do** usar el rail de secciones en interiores: es la puerta lateral del archivo.
+- **Do** presentar cada dispositivo como un módulo del rack: dirección, estado, stack y versión visibles antes de entrar.
 - **Do** dejar que `Cae` pierda una descendente por estrofa y la acumule en su línea de sedimento.
 - **Do** escribir las fechas de metadatos como `YYYY-MM-DD`.
 - **Do** cerrar la hoja de contactos con el bloque de fin de carrete, no con celdas vacías.
@@ -519,6 +530,7 @@ Todo es recto: radios de 0px, reglas de 1px, bordes completos cuando existen. La
 - **Don't** convertir Rastros en tarjetas, acordeones o paginación: es un cuaderno continuo.
 - **Don't** devolver a Poemas las miniaturas del índice ni a Melange las cajas de la ficha técnica.
 - **Don't** dar a Diario, Vestigios, Dispositivos o Música un ancho de página distinto al resto de las interiores.
+- **Don't** devolver Dispositivos a una lista de enlaces sin stack ni estado.
 - **Don't** pegar el contenedor a la izquierda ni llevarlo al ancho completo: siempre 1000px centrados.
 - **Don't** dejar que un párrafo largo ocupe los 1000px del contenedor: la prosa va a 75ch.
 - **Don't** convertir el sismógrafo de Rastros en una barra de progreso ni en una métrica de lectura.

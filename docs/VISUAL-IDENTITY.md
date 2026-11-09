@@ -168,7 +168,7 @@ Cada sigilo se normaliza a `0.68em` de tinta; `Melange` conserva `🜏`.
 | `poems.html` | detalle de poemas | H1 con `~` + `nav-poem.html` + `figure.html` + cuerpo + `related-poem.html` + `back-button.html` |
 | `codigo.html` | detalle de códigos | H1 + `concept` (cursiva) + `codigo-meta` (lenguaje, fecha) + código |
 | `imagen.html` | detalle de imágenes | `<article class="imagen-page">` con figure + body |
-| `dispositivo.html` | detalle de dispositivos | H1 con `◇` + meta + contenido |
+| `dispositivo.html` | detalle de dispositivos | H1 con `⎔` + meta + contenido |
 | `melange-report.html` | detalle de melange reports | ficha técnica + relato |
 | `generator.html` | **(dead code, eliminado en #18)** | — |
 | `interactive.html` | **(dead code, eliminado en #18)** | — |

@@ -3,6 +3,8 @@ title: Umbral Vision
 date: 2026-06-15
 kind: visual
 tech: p5.js · JavaScript
+version: v0.3.3
+status: activo
 demo_url: /imaginario/generator/
 repo: https://github.com/hugomoraga/kndl000/tree/main/assets/js/umbral-vision
 formats: Web

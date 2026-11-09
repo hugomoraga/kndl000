@@ -4,6 +4,8 @@ symbol_suffix: false
 date: 2026-11-06
 kind: tool
 tech: Tone.js · Web Audio
+version: v0.1.1
+status: activo
 demo_url: https://quicio.github.io/espiral/
 repo: https://github.com/quicio/espiral
 formats: Web

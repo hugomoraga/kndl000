@@ -275,6 +275,13 @@ collections:
         required: false
         options: [vst, app, tool, visual, hardware, plugin]
       - { label: Tech, name: tech, widget: string, required: false }
+      - { label: Version, name: version, widget: string, required: false }
+      - label: Estado
+        name: status
+        widget: select
+        required: false
+        default: activo
+        options: [activo, experimental, archivado]
       - { label: "Demo URL", name: demo_url, widget: string, required: false }
       - { label: "Repo URL", name: repo, widget: string, required: false }
       - { label: Formats, name: formats, widget: string, required: false }

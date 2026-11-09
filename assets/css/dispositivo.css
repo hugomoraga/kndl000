@@ -10,14 +10,14 @@ body.dispositivo-detail .dispositivo-page__lead {
 }
 
 body.dispositivo-detail .dispositivo-page__body {
-  max-width: 66ch;
+  max-width: 58ch;
   font-family: var(--font-serif);
   font-size: 1.02rem;
   line-height: 1.68;
 }
 
 body.dispositivo-detail .dispositivo-page__lead {
-  max-width: 66ch;
+  max-width: 58ch;
 }
 
 .dispositivo-page__body a {
@@ -38,4 +38,43 @@ body.dispositivo-detail .dispositivo-page__lead {
 
 .dispositivo-page__body code {
   color: var(--umbral-ink);
+}
+
+/* Versión y estado en la ficha del dispositivo. */
+.dispositivo-meta__version {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: rgba(140, 180, 170, 0.9);
+}
+
+.dispositivo-meta__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--umbral-muted);
+}
+
+.dispositivo-meta__status::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.dispositivo-meta__status--activo {
+  color: var(--umbral-trace);
+}
+
+.dispositivo-meta__status--experimental {
+  color: var(--event-amber);
+}
+
+.dispositivo-meta__status--archivado {
+  color: var(--umbral-muted);
 }

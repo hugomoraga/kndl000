@@ -28,6 +28,12 @@
         {% if page.kind %}
         <span class="dispositivo-meta__badge dispositivo-meta__badge--{{ page.kind }}">{% case page.kind %}{% when 'vst' %}VST{% when 'app' %}APP{% when 'tool' %}HERRAMIENTA{% when 'visual' %}VISUAL{% when 'hardware' %}HARDWARE{% when 'plugin' %}PLUGIN{% else %}{{ page.kind }}{% endcase %}</span>
         {% endif %}
+        {% if page.version %}
+        <span class="dispositivo-meta__version">{{ page.version }}</span>
+        {% endif %}
+        {% if page.status %}
+        <span class="dispositivo-meta__status dispositivo-meta__status--{{ page.status }}">{{ page.status }}</span>
+        {% endif %}
         {% if page.date %}
         <span><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y-%m-%d" }}</time></span>
         {% endif %}

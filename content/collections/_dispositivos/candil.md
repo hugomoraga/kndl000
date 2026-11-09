@@ -3,6 +3,8 @@ title: Candil
 date: 2026-11-08
 kind: app
 tech: Rust · egui
+version: v0.2.1
+status: activo
 repo: https://github.com/quicio/candil
 formats: macOS · Linux · Windows
 platform: Desktop
