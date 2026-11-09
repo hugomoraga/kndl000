@@ -41,9 +41,11 @@ description: "Pensamiento continuo. Acumulación. Memoria. Lenguaje latiendo."
       {%- assign _year = "?" -%}
     {%- endif -%}
     {%- if _year != _year_prev -%}
-      {%- unless forloop.first -%}{%- endunless -%}
+      {%- unless forloop.first -%}{% include rastro-divider.html size="full" %}{%- endunless -%}
       <div class="rastros-year">{{ _year }}</div>
       {%- assign _year_prev = _year -%}
+    {%- else -%}
+      {%- unless forloop.first -%}{% include rastro-divider.html size="compact" %}{%- endunless -%}
     {%- endif -%}
     <article class="rastro-bloque">
       {%- assign _lineas = f.lineas | where_exp: "row", "row.linea != nil and row.linea != ''" -%}
@@ -57,9 +59,9 @@ description: "Pensamiento continuo. Acumulación. Memoria. Lenguaje latiendo."
   {%- endif -%}
 {%- endfor -%}
 
----
+{% include rastro-divider.html size="full" %}
 
-_Archivo de pensamiento en curso. No son publicaciones. Son rastros._
+<p class="rastros-end"><span class="rastros-end__fleuron" aria-hidden="true">❧</span> <em>Archivo de pensamiento en curso. No son publicaciones. Son rastros.</em></p>
 
 <div class="rastros-seismograph" aria-hidden="true"></div>
 <script src="{{ '/assets/js/core/rastros-seismograph.js' | relative_url }}" defer></script>

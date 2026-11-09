@@ -7027,8 +7027,12 @@ body.reading-melange .page-title .init a:hover {
 
 /* --- Rastros -------------------------------------------------------------
    Libro de aforismos: una sola columna, líneas del mismo peso y sin viñetas.
-   Cada rastro se separa con aire y una marca vertical de 1px en el margen.
+   El símbolo ⁘ marca cada frase; el divisor con estrella separa los rastros.
    ------------------------------------------------------------------------- */
+
+body.reading-rastros {
+  --rastro-ornament: #b49a78;
+}
 
 body.reading-rastros .rastros-lead {
   max-width: var(--reading-measure);
@@ -7041,11 +7045,8 @@ body.reading-rastros .rastros-lead {
 }
 
 body.reading-rastros .rastros-year {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
   max-width: var(--reading-measure);
-  margin: 3.5rem auto 1.75rem;
+  margin: 0 auto 1.75rem;
   font-family: var(--font-mono);
   font-size: 0.7rem;
   letter-spacing: 0.18em;
@@ -7053,29 +7054,35 @@ body.reading-rastros .rastros-year {
   color: var(--umbral-muted);
 }
 
-body.reading-rastros .rastros-year::after {
-  content: "";
-  flex: 1 1 auto;
-  height: 1px;
-  background: var(--umbral-rule-faint);
+/* Divisor ornamental: estrella de cuatro puntas y barras que se afinan. */
+body.reading-rastros .rastro-divider {
+  display: flex;
+  justify-content: center;
+  margin: 2.4rem auto;
+  color: var(--rastro-ornament);
+  opacity: 0.78;
+}
+
+body.reading-rastros .rastro-divider svg {
+  display: block;
+  width: 180px;
+  height: auto;
+}
+
+body.reading-rastros .rastro-divider--full {
+  margin: 3.25rem auto 2rem;
+}
+
+body.reading-rastros .rastro-divider--full svg {
+  width: 220px;
 }
 
 body.reading-rastros .rastro-bloque {
   position: relative;
   max-width: var(--reading-measure);
-  margin: 0 auto 2.75rem;
-  padding: 0 0 0 2.2rem;
+  margin: 0 auto;
+  padding: 0;
   cursor: text;
-}
-
-body.reading-rastros .rastro-bloque::before {
-  content: "";
-  position: absolute;
-  top: 0.38em;
-  left: 0;
-  width: 1px;
-  height: 1.15em;
-  background: var(--umbral-rule);
 }
 
 body.reading-rastros .rastro-texto {
@@ -7087,38 +7094,29 @@ body.reading-rastros .rastro-texto {
 }
 
 body.reading-rastros .rastro-linea {
+  position: relative;
   display: block;
+  padding-left: 1.8rem;
   color: inherit;
+}
+
+body.reading-rastros .rastro-linea::before {
+  content: "⁘";
+  position: absolute;
+  top: 0.45em;
+  left: 0;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--rastro-ornament);
 }
 
 body.reading-rastros .rastro-linea + .rastro-linea {
   margin-top: 0.2rem;
 }
 
-@media (max-width: 700px) {
-  body.reading-rastros .rastros-year {
-    margin-top: 2.5rem;
-  }
-
-  body.reading-rastros .rastro-bloque {
-    margin-bottom: 2.1rem;
-    padding-left: 1.4rem;
-  }
-
-  body.reading-rastros .rastro-texto {
-    font-size: 1.1rem;
-    line-height: 1.7;
-  }
-}
-
-body.reading-rastros main.reading-main > hr {
-  max-width: var(--reading-measure);
-  border: 0;
-  border-top: 1px solid var(--umbral-rule);
-  margin: 3rem auto;
-}
-
-body.reading-rastros main.reading-main > p:last-child {
+body.reading-rastros .rastros-end {
   max-width: var(--reading-measure);
   margin: 0 auto;
   font-family: var(--font-serif);
@@ -7126,6 +7124,43 @@ body.reading-rastros main.reading-main > p:last-child {
   font-style: italic;
   line-height: 1.6;
   color: var(--umbral-muted);
+}
+
+body.reading-rastros .rastros-end__fleuron {
+  margin-right: 0.45rem;
+  color: var(--rastro-ornament);
+  font-style: normal;
+}
+
+@media (max-width: 700px) {
+  body.reading-rastros .rastro-divider {
+    margin: 1.8rem auto;
+  }
+
+  body.reading-rastros .rastro-divider svg {
+    width: 140px;
+  }
+
+  body.reading-rastros .rastro-divider--full {
+    margin: 2.5rem auto 1.5rem;
+  }
+
+  body.reading-rastros .rastro-divider--full svg {
+    width: 180px;
+  }
+
+  body.reading-rastros .rastro-linea {
+    padding-left: 1.45rem;
+  }
+
+  body.reading-rastros .rastro-linea::before {
+    font-size: 0.9rem;
+  }
+
+  body.reading-rastros .rastro-texto {
+    font-size: 1.1rem;
+    line-height: 1.7;
+  }
 }
 
 /* --- Poemas -------------------------------------------------------------- */
@@ -8945,6 +8980,14 @@ body.diario-surface main > p,
 body.diario-surface main > blockquote,
 body.diario-surface main > ul,
 body.diario-surface main > ol {
+  margin-left: max(0px, calc((100% - var(--container-measure)) / 2));
+}
+
+/* Los divisores y el cierre comparten la columna de prosa, no el shell de 1000px. */
+body.reading-rastros .rastro-divider,
+body.reading-rastros .rastros-end {
+  max-width: var(--prose-measure);
+  margin-right: 0;
   margin-left: max(0px, calc((100% - var(--container-measure)) / 2));
 }
 

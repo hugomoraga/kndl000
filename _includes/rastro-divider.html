@@ -1,0 +1,13 @@
+{%- comment -%}
+  Divisor ornamental de Rastros.
+  Estrella de cuatro puntas con dos barras que se afinan hacia los extremos.
+  Parámetros:
+    - size: compact (entre rastros) o full (entre años / cierre)
+{%- endcomment -%}
+<div class="rastro-divider rastro-divider--{{ include.size | default: 'compact' }}" aria-hidden="true">
+  <svg viewBox="0 0 240 24" focusable="false" role="presentation">
+    <path d="M8 12 L96 11.3 L100 10.7 L100 13.3 L96 12.7 Z" fill="currentColor"/>
+    <path d="M232 12 L144 11.3 L140 10.7 L140 13.3 L144 12.7 Z" fill="currentColor"/>
+    <path d="M120 3 C120.8 9.2 122.8 11.2 129 12 C122.8 12.8 120.8 14.8 120 21 C119.2 14.8 117.2 12.8 111 12 C117.2 11.2 119.2 9.2 120 3 Z" fill="currentColor"/>
+  </svg>
+</div>
