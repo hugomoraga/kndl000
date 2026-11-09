@@ -22,6 +22,7 @@
       {% endif %}
 
       <header class="reading-detail-head">
+        {% include poem-series.html mode="kicker" %}
         <h1 class="reading-detail__title"><span class="reading-detail__mark" aria-hidden="true">~</span> {{ page.title }}</h1>
         <p class="reading-detail__meta">
           {% if page.series and page.series != "" %}<span>{{ page.series }}{% if page.part and page.part != "" %} · parte {{ page.part }}{% endif %}</span>{% endif %}
@@ -38,8 +39,8 @@
       </div>
     </div>
 
+    {% include poem-series.html mode="map" %}
     {% include nav-poem.html %}
-    {% include related-poem.html %}
     {% include back-button.html %}
     {% include section-rail.html %}
   </main>

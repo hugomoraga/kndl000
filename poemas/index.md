@@ -47,7 +47,7 @@ description: "Archivo de poemas — KNDL 000. Versos breves, simbólicos, fragme
           <span class="poemas-index__title-wrap">
             <span class="poemas-index__title">{{ poem.title }}</span>
             {% if poem.series and poem.series != "" %}
-            <span class="poemas-index__series"> · {{ poem.series }}</span>
+            <span class="poemas-index__series"> · {{ poem.series }}{% if poem.part and poem.part != "" %} · parte {{ poem.part }}{% endif %}</span>
             {% endif %}
           </span>
         </a>

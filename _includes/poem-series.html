@@ -1,0 +1,71 @@
+{%- comment -%}
+  Serie de poemas.
+  Parámetros:
+    - mode: "kicker" (contexto antes del título) o "map" (mapa al pie)
+  Ordena las partes por `part`; si falta, usa la fecha.
+  No renderiza nada si el poema no pertenece a una serie de dos o más partes.
+{%- endcomment -%}
+{%- assign _series_poems = site.poems | where: "series", page.series | sort: "part" -%}
+{%- assign _series_total = _series_poems | size -%}
+{%- if page.series and page.series != "" and _series_total > 1 -%}
+  {%- assign _series_index = 0 -%}
+  {%- for poem in _series_poems -%}
+    {%- if poem.url == page.url -%}{%- assign _series_index = forloop.index0 -%}{%- endif -%}
+  {%- endfor -%}
+
+  {%- assign _current_part = page.part -%}
+  {%- if _current_part == nil or _current_part == "" -%}
+    {%- assign _current_part = _series_index | plus: 1 -%}
+  {%- endif -%}
+
+  {%- assign _prev_i = _series_index | minus: 1 -%}
+  {%- assign _next_i = _series_index | plus: 1 -%}
+  {%- assign _prev = nil -%}
+  {%- assign _next = nil -%}
+  {%- if _prev_i >= 0 -%}{%- assign _prev = _series_poems[_prev_i] -%}{%- endif -%}
+  {%- if _next_i < _series_total -%}{%- assign _next = _series_poems[_next_i] -%}{%- endif -%}
+
+  {%- if include.mode == "kicker" -%}
+    {%- assign _prev_part = _prev.part -%}
+    {%- if _prev_part == nil or _prev_part == "" -%}{%- assign _prev_part = _prev_i | plus: 1 -%}{%- endif -%}
+    {%- assign _next_part = _next.part -%}
+    {%- if _next_part == nil or _next_part == "" -%}{%- assign _next_part = _next_i | plus: 1 -%}{%- endif -%}
+  <p class="poem-series-kicker">
+    <span class="poem-series-kicker__label">Serie</span>
+    <span class="poem-series-kicker__sep" aria-hidden="true">·</span>
+    <span class="poem-series-kicker__name">{{ page.series }}</span>
+    <span class="poem-series-kicker__sep" aria-hidden="true">·</span>
+    <span class="poem-series-kicker__part">Parte {{ _current_part }} de {{ _series_total }}</span>
+    {%- if _prev %}
+    <span class="poem-series-kicker__sep" aria-hidden="true">·</span>
+    <a class="poem-series-kicker__link" href="{{ _prev.url | relative_url }}">← Parte {{ _prev_part }}</a>
+    {%- endif %}
+    {%- if _next %}
+    <span class="poem-series-kicker__sep" aria-hidden="true">·</span>
+    <a class="poem-series-kicker__link" href="{{ _next.url | relative_url }}">Parte {{ _next_part }} →</a>
+    {%- endif %}
+  </p>
+  {%- else -%}
+  <nav class="poem-series" aria-labelledby="poem-series-title">
+    <h2 class="poem-series__title" id="poem-series-title">Serie · {{ page.series }}</h2>
+    <ol class="poem-series__list">
+      {%- for poem in _series_poems -%}
+        {%- assign _part = poem.part -%}
+        {%- if _part == nil or _part == "" -%}{%- assign _part = forloop.index -%}{%- endif -%}
+      <li class="poem-series__item{% if poem.url == page.url %} is-current{% endif %}">
+        {%- if poem.url == page.url -%}
+        <span class="poem-series__part">{{ _part }}</span>
+        <span class="poem-series__name">{{ poem.title }}</span>
+        <span class="poem-series__here">estás acá</span>
+        {%- else -%}
+        <a class="poem-series__link" href="{{ poem.url | relative_url }}">
+          <span class="poem-series__part">{{ _part }}</span>
+          <span class="poem-series__name">{{ poem.title }}</span>
+        </a>
+        {%- endif -%}
+      </li>
+      {%- endfor -%}
+    </ol>
+  </nav>
+  {%- endif -%}
+{%- endif -%}

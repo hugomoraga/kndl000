@@ -7,7 +7,8 @@
 {% assign poem_prev_i = poem_current | minus: 1 %}
 {% assign poem_next_i = poem_current | plus: 1 %}
 
-<nav class="reading-pager" aria-label="Poemas">
+<p class="reading-pager__label" id="reading-pager-label">Otros poemas</p>
+<nav class="reading-pager" aria-labelledby="reading-pager-label">
   {% if poem_prev_i >= 0 %}
     {% assign prev_poem = ordered_poems[poem_prev_i] %}
     <a class="reading-pager__link" href="{{ prev_poem.url | relative_url }}">← {{ prev_poem.title }}</a>
