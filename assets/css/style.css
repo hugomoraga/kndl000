@@ -3115,7 +3115,7 @@ body.section-index :focus-visible {
 .device-module__specs dd {
   margin: 0;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   line-height: 1.35;
   color: var(--umbral-ink);
   overflow-wrap: anywhere;
@@ -3152,6 +3152,12 @@ body.section-index :focus-visible {
 .device-module__links a:focus-visible {
   color: var(--umbral-ink);
   border-bottom-color: var(--umbral-trace);
+}
+
+@media (min-width: 641px) {
+  .device-modules--two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 900px) {

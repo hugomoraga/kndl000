@@ -27,7 +27,7 @@ back: false
     <span>{{ _online_count }} en línea</span>
   </div>
 
-  <div class="device-modules">
+  <div class="device-modules{% if _module_count == 4 %} device-modules--two{% endif %}">
     {% for d in sorted %}
       {% assign label = d.list_title | default: d.title %}
       {% assign kind = d.kind | default: "tool" %}
