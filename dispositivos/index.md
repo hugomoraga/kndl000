@@ -85,5 +85,3 @@ back: false
     {% endfor %}
   </div>
 </div>
-
-_Dispositivos: cosas que instalar, abrir, ejecutar o enchufar._
