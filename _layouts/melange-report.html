@@ -32,20 +32,8 @@
           </p>
         </header>
 
-        {% assign melange_cover_fallback = '/assets/media/images/melange-report-fallback.png' %}
         {% assign _has_cover = false %}
         {% if page.image and page.image != "" %}{% assign _has_cover = true %}{% endif %}
-        {% assign _cover_src = page.image | default: melange_cover_fallback %}
-        <figure class="melange-report__cover{% unless _has_cover %} melange-report__cover--fallback{% endunless %}">
-          <div class="melange-report__cover-frame">
-            <img src="{{ site.baseurl }}{{ _cover_src }}" alt="{{ page.alt | default: page.title }}" loading="eager" />
-          </div>
-          {% if _has_cover and page.image_credit %}
-          <figcaption class="melange-report__credit">{{ page.image_credit }}</figcaption>
-          {% endif %}
-        </figure>
-
-        <div class="reading-body melange-report__body">
           {%- assign _ficha_groups = "Sustancia|substance:Nombre,format:Formato,dose:Dosis,method:Método;Contexto|place:Lugar,event:Evento,setting:Setting,mindset:Set (mental),context:Contexto previo,company:Compañía,moment:Momento;Cierre|duration:Duración,intensity:Intensidad,extras:Extras,outcome:Resultado" | split: ";" -%}
           {%- assign _ficha_present = false -%}
           {%- if page.ficha -%}
@@ -60,6 +48,18 @@
               {%- endfor -%}
             {%- endfor -%}
           {%- endif -%}
+        {%- if _has_cover or _ficha_present %}
+        <div class="melange-report__dossier{% unless _has_cover %} melange-report__dossier--no-image{% endunless %}{% unless _ficha_present %} melange-report__dossier--no-ficha{% endunless %}">
+          {% if _has_cover %}
+          <figure class="melange-report__cover">
+            <div class="melange-report__cover-frame">
+              <img src="{{ site.baseurl }}{{ page.image }}" alt="{{ page.alt | default: page.title | escape }}" loading="eager" style="object-position: {{ page.image_position | default: 'center 42%' }};" />
+            </div>
+            {% if page.image_credit %}
+            <figcaption class="melange-report__credit">{{ page.image_credit }}</figcaption>
+            {% endif %}
+          </figure>
+          {% endif %}
           {%- if _ficha_present %}
           <section class="melange-report__spec" aria-label="Ficha técnica">
             <h2>Ficha</h2>
@@ -93,6 +93,11 @@
             {%- endfor -%}
           </section>
           {%- endif %}
+
+        </div>
+        {%- endif %}
+
+        <div class="reading-body melange-report__body">
 
           {% assign _melange_plain = content | strip_html | strip %}
           {% if _melange_plain == '' %}
