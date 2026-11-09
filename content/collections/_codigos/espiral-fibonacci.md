@@ -185,8 +185,3 @@ function evolucionar() {
 
 evolucionar();
 ```
-
----
-
-_La recursión como principio universal. La proporción que se encuentra en todo. La belleza matemática que emerge de patrones simples._
-

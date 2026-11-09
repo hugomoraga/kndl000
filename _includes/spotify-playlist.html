@@ -1,38 +1,33 @@
 {%- comment -%}
-  Include para mostrar una playlist de Spotify
+  Sala de escucha: una playlist como registro nativo, sin iframe.
   Parámetros:
     - playlist: objeto de la colección spotify_playlists
-  Orden: título → embed (protagonista) → descripción como nota breve
+    - index: número de orden visible
+  El enlace abre Spotify en otra pestaña; la página conserva su tipografía,
+  sus reglas de 1px y su foco visible.
 {%- endcomment -%}
 
-<div class="spotify-playlist">
-  {% if include.playlist.title %}
-    <h3 class="spotify-playlist__title">
-      {{ include.playlist.title }}
+<article class="listen-item">
+  <span class="listen-item__index">{{ include.index | prepend: "0" | slice: -2, 2 }}</span>
+  <div class="listen-item__body">
+    <header class="listen-item__head">
+      <h3 class="listen-item__title">{{ include.playlist.title }}</h3>
       {% if include.playlist.genre %}
-        <span class="spotify-playlist__genre">[{{ include.playlist.genre }}]</span>
+        <span class="listen-item__genre">{{ include.playlist.genre }}</span>
       {% endif %}
-    </h3>
-  {% endif %}
+    </header>
 
-  {% if include.playlist.description %}
-  <p class="spotify-playlist__desc">
-    {{ include.playlist.description }}
-  </p>
-  {% endif %}
+    {% if include.playlist.description %}
+    <p class="listen-item__desc">{{ include.playlist.description | strip | newline_to_br }}</p>
+    {% endif %}
 
-  {% if include.playlist.spotify_id %}
-    <div class="spotify-playlist__embed-wrap">
-      <iframe
-        class="spotify-playlist__embed"
-        src="https://open.spotify.com/embed/playlist/{{ include.playlist.spotify_id }}?utm_source=generator&theme=0"
-        width="100%"
-        height="152"
-        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-        loading="lazy"
-        title="{{ include.playlist.title | escape }}">
-      </iframe>
+    <div class="listen-item__foot">
+      {% if include.playlist.spotify_id %}
+      <a class="listen-item__link" href="https://open.spotify.com/playlist/{{ include.playlist.spotify_id }}" target="_blank" rel="noopener noreferrer">
+        <span>Escuchar en Spotify ↗</span>
+      </a>
+      {% endif %}
+      <span class="listen-item__source" aria-hidden="true">playlist · spotify</span>
     </div>
-  {% endif %}
-
-</div>
+  </div>
+</article>

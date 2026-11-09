@@ -4,4 +4,5 @@
   version token makes the URL unique per deploy, bypassing the cache.
 {%- endcomment -%}
 {%- assign css_ts = site.time | date: '%s%N' -%}
+<link rel="icon" type="image/svg+xml" href="{{ '/assets/favicon.svg' | relative_url }}">
 <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: css_ts | relative_url }}">

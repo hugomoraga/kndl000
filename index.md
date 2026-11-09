@@ -115,6 +115,16 @@ main_class: umbral-main
       </li>
     {% endfor %}
   </ul>
+
+  {% assign archive_nav = site.data.navigation | where: "primary", false %}
+  {% if archive_nav.size > 0 %}
+  <p class="umbral-archive-line">
+    <span class="umbral-archive-line__label">Archivo:</span>
+    {% for item in archive_nav %}
+      <a href="{{ item.url | relative_url }}">{{ item.name }}</a>{% unless forloop.last %}<span class="umbral-archive-line__sep" aria-hidden="true">·</span>{% endunless %}
+    {% endfor %}
+  </p>
+  {% endif %}
 </section>
 
 <footer class="umbral-foot">

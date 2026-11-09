@@ -304,7 +304,3 @@ function tick() {
 mostrarEstado(0);
 setTimeout(tick, 90);
 ```
-
----
-
-_El emisor y el receptor. La información que se degrada hacia el ruido. La coherencia que se optimiza. La estabilización que emerge._

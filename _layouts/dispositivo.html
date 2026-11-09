@@ -50,7 +50,7 @@
         <span><a href="{{ page.repo }}" rel="noopener noreferrer" target="_blank">Repositorio</a></span>
         {% endif %}
         {% if page.demo_url %}
-        <span><a href="{{ page.demo_url }}" rel="noopener noreferrer" target="_blank">Web / demo</a></span>
+        <span><a href="{{ page.demo_url }}" rel="noopener noreferrer" target="_blank">Demo ↗</a></span>
         {% endif %}
       </div>
       {% endif %}
@@ -62,6 +62,8 @@
         {%- endunless -%}
         {{ _dispositivo_body }}
       </div>
+
+      {% include reading-next.html collection="dispositivos" sort="date" reverse=true title="Seguir en Dispositivos" label_prev="Más reciente" label_next="Más antiguo" %}
 
       {% include back-button.html %}
       {% include section-rail.html %}

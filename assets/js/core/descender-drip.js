@@ -80,17 +80,10 @@
     poem.appendChild(layer);
     document.body.classList.add("has-descender-drip");
 
-    targets.forEach(function (target) {
-      var rect = lastRect(target.range);
-      if (!rect) return;
-      var layerRect = layer.getBoundingClientRect();
-      var marker = document.createElement("span");
-      marker.className = "melt-marker";
-      marker.style.left = (rect.left - layerRect.left) + "px";
-      marker.style.top = (rect.top - layerRect.top) + "px";
-      layer.appendChild(marker);
-      target.marker = marker;
-    });
+    var melted = Object.create(null);
+    var activeUntil = 0;
+    var cooldown = 1400;
+    var ticking = false;
 
     function addDrop(left, top, delay) {
       var drop = document.createElement("span");
@@ -106,15 +99,15 @@
 
     function melt(target) {
       var rect = lastRect(target.range);
-      if (!rect) return;
+      if (!rect) return false;
 
       var layerRect = layer.getBoundingClientRect();
       var style = window.getComputedStyle(target.paragraph);
       var left = rect.left - layerRect.left;
       var top = rect.top - layerRect.top;
-      var delay = target.index * 55;
+      var delay = 0;
       var value = target.range.toString();
-      if (!value) return;
+      if (!value) return false;
 
       var clone = document.createElement("span");
       clone.className = "melt-word";
@@ -142,7 +135,7 @@
         clone.style.opacity = "0.7";
         clone.style.transform = "translateY(1.2em) scaleY(2.4) skewX(5deg)";
         window.setTimeout(function () { clone.remove(); }, 2800);
-        return;
+        return true;
       }
 
       letters.forEach(function (letter, index) {
@@ -167,14 +160,14 @@
               offset: 0.62
             },
             {
-              transform: "translate3d(" + ((index % 2 ? 1 : -1) * 0.12) + "em, " + (1.35 + (index % 3) * 0.22) + "em, 0) scale(1.1, 3.1) skewX(8deg)",
+              transform: "translate3d(" + ((index % 2 ? 1 : -1) * 0.1) + "em, " + (0.95 + (index % 3) * 0.16) + "em, 0) scale(1.08, 2.7) skewX(6deg)",
               opacity: 0,
-              filter: "blur(0.8px)",
+              filter: "blur(0.55px)",
               offset: 1
             }
           ],
           {
-            duration: 3000 + (index % 4) * 220,
+            duration: 2800 + (index % 4) * 180,
             delay: delay + index * 24,
             easing: "cubic-bezier(.16,.8,.2,1)",
             fill: "forwards"
@@ -198,32 +191,54 @@
         });
       });
 
-      window.setTimeout(function () { clone.remove(); }, 4300 + delay);
+      window.setTimeout(function () { clone.remove(); }, 3900 + delay);
+      return true;
     }
 
-    var observer = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (!entry.isIntersecting) return;
-          var target = null;
-          for (var i = 0; i < targets.length; i++) {
-            if (targets[i].marker === entry.target) {
-              target = targets[i];
-              break;
-            }
-          }
-          if (!target) return;
-          observer.unobserve(entry.target);
-          if (target.marker) target.marker.remove();
-          window.setTimeout(function () { melt(target); }, 80);
-        });
-      },
-      { threshold: 0.01, rootMargin: "0px 0px -8% 0px" }
-    );
+    function nearestTarget() {
+      var viewportCenter = window.innerHeight * 0.5;
+      var best = null;
+      var bestDistance = Infinity;
 
-    targets.forEach(function (target) {
-      if (target.marker) observer.observe(target.marker);
-    });
+      targets.forEach(function (target) {
+        if (melted[target.index]) return;
+        var rect = lastRect(target.range);
+        if (!rect) return;
+        if (rect.bottom < 40 || rect.top > window.innerHeight - 40) return;
+        var middle = rect.top + rect.height / 2;
+        var distance = Math.abs(middle - viewportCenter);
+        if (distance < bestDistance) {
+          bestDistance = distance;
+          best = target;
+        }
+      });
+
+      return best;
+    }
+
+    function maybeMelt() {
+      var now = window.performance && performance.now ? performance.now() : Date.now();
+      if (now < activeUntil + cooldown) return;
+      var target = nearestTarget();
+      if (!target) return;
+      activeUntil = now + 3400;
+      if (melt(target)) {
+        melted[target.index] = true;
+      } else {
+        activeUntil = now + 600;
+      }
+    }
+
+    function schedule() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(function () {
+        ticking = false;
+        maybeMelt();
+      });
+    }
+
+    window.addEventListener("scroll", schedule, { passive: true });
 
     var resizeTimer;
     window.addEventListener("resize", function () {
@@ -234,8 +249,20 @@
             node.remove();
           }
         });
+        schedule();
       }, 180);
     });
+
+    window.setTimeout(schedule, 700);
+
+    var loadTries = 0;
+    var loadTimer = window.setInterval(function () {
+      schedule();
+      loadTries++;
+      if (loadTries >= 8 || Object.keys(melted).length > 0) {
+        window.clearInterval(loadTimer);
+      }
+    }, 900);
   }
 
   if (document.fonts && document.fonts.ready) {

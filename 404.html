@@ -8,7 +8,7 @@ noindex: true
   <p>“Lo que buscas no está aquí. O tal vez nunca estuvo.”</p>
 </blockquote>
 
-{% assign primary_nav = site.data.navigation | where: "primary", true %}
+{% assign all_nav = site.data.navigation %}
 
 <div class="error-page">
   <p class="error-page__message">
@@ -23,7 +23,7 @@ noindex: true
   <div class="error-page__explore">
     <p>O explora:</p>
     <div class="nube-de-palabras" data-no-nube-motion>
-      {% for item in primary_nav limit: 4 %}
+      {% for item in all_nav %}
         <a href="{{ item.url | relative_url }}"><span class="sigil sigil--{{ item.sigil }}" aria-hidden="true"><span class="sigil__glyph">{{ item.glyph }}</span></span> {{ item.name }}</a>
       {% endfor %}
     </div>

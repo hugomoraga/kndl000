@@ -295,8 +295,3 @@ function evolucionar() {
 
 evolucionar();
 ```
-
----
-
-_La energía busca equilibrio. Las anomalías emergen. El sistema fluye hacia la estabilidad._
-

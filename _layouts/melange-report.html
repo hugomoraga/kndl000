@@ -33,12 +33,14 @@
         </header>
 
         {% assign melange_cover_fallback = '/assets/media/images/melange-report-fallback.png' %}
+        {% assign _has_cover = false %}
+        {% if page.image and page.image != "" %}{% assign _has_cover = true %}{% endif %}
         {% assign _cover_src = page.image | default: melange_cover_fallback %}
-        <figure class="melange-report__cover{% unless page.image %} melange-report__cover--fallback{% endunless %}">
+        <figure class="melange-report__cover{% unless _has_cover %} melange-report__cover--fallback{% endunless %}">
           <div class="melange-report__cover-frame">
             <img src="{{ site.baseurl }}{{ _cover_src }}" alt="{{ page.alt | default: page.title }}" loading="eager" />
           </div>
-          {% if page.image and page.image_credit %}
+          {% if _has_cover and page.image_credit %}
           <figcaption class="melange-report__credit">{{ page.image_credit }}</figcaption>
           {% endif %}
         </figure>
@@ -78,6 +80,8 @@
             {{ _melange_body }}
           {% endif %}
         </div>
+
+        {% include reading-next.html collection="melange_reports" published_only=true title="Seguir leyendo" label_prev="Más reciente" label_next="Más antiguo" related_field="ficha" related_key="event" related_prefix="Otro reporte en" %}
       </article>
 
       {% include back-button.html %}

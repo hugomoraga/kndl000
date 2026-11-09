@@ -22,7 +22,7 @@ back: false
     <p class="codigo-intro__lede">Código como expresión. Programación desfasada y algo inútil.</p>
     <div class="codigo-intro__meta">
       <p class="codigo-intro__stats">
-        <span>{{ total_modulos }} módulos</span>
+        <span data-code-stat="visible" data-code-total="{{ total_modulos }}">{{ total_modulos }} módulos</span>
         <span aria-hidden="true">·</span>
         <span>{{ ejecutables }} ejecutables</span>
         <span aria-hidden="true">·</span>

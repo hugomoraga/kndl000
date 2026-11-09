@@ -1,0 +1,121 @@
+{%- comment -%}
+  Cadena de lectura al final de una pieza.
+  Parámetros:
+    collection       nombre de la colección (melange_reports, codigos, dispositivos)
+    sort             campo de orden (por defecto date)
+    reverse          true para orden descendente
+    published_only   true para omitir borradores (wip: true)
+    title            rótulo de la sección
+    label_prev       rótulo del paso anterior
+    label_next       rótulo del paso siguiente
+    related_field    campo para agrupar piezas afines (opcional)
+    related_key      subcampo si related_field es un objeto (opcional)
+    related_prefix   prefijo del bloque de afinidad (opcional)
+  Sin JavaScript: la cadena se resuelve en el build.
+{%- endcomment -%}
+{%- assign _collection = include.collection -%}
+{%- assign _items = site[_collection] -%}
+{%- if include.published_only == true or include.published_only == "true" -%}
+  {%- assign _items = _items | where_exp: "item", "item.wip != true" -%}
+{%- endif -%}
+{%- assign _sort = include.sort | default: "date" -%}
+{%- assign _ordered = _items | sort: _sort -%}
+{%- if include.reverse == true or include.reverse == "true" -%}
+  {%- assign _ordered = _ordered | reverse -%}
+{%- endif -%}
+
+{%- assign _index = -1 -%}
+{%- for item in _ordered -%}
+  {%- if item.url == page.url -%}{%- assign _index = forloop.index0 -%}{%- endif -%}
+{%- endfor -%}
+
+{%- if _index >= 0 -%}
+  {%- assign _prev = nil -%}
+  {%- assign _next = nil -%}
+  {%- assign _prev_url = "" -%}
+  {%- assign _next_url = "" -%}
+  {%- if _index > 0 -%}
+    {%- assign _prev_i = _index | minus: 1 -%}
+    {%- assign _prev = _ordered[_prev_i] -%}
+    {%- assign _prev_url = _prev.url -%}
+  {%- endif -%}
+  {%- assign _next_i = _index | plus: 1 -%}
+  {%- if _next_i < _ordered.size -%}
+    {%- assign _next = _ordered[_next_i] -%}
+    {%- assign _next_url = _next.url -%}
+  {%- endif -%}
+
+  {%- assign _related_value = nil -%}
+  {%- if include.related_field -%}
+    {%- if include.related_key -%}
+      {%- assign _related_value = page[include.related_field][include.related_key] -%}
+    {%- else -%}
+      {%- assign _related_value = page[include.related_field] -%}
+    {%- endif -%}
+  {%- endif -%}
+
+  {%- assign _related_count = 0 -%}
+  {%- if _related_value and _related_value != "" -%}
+    {%- for item in _ordered -%}
+      {%- assign _item_value = nil -%}
+      {%- if include.related_key -%}
+        {%- assign _item_value = item[include.related_field][include.related_key] -%}
+      {%- else -%}
+        {%- assign _item_value = item[include.related_field] -%}
+      {%- endif -%}
+      {%- if _item_value == _related_value and item.url != page.url and item.url != _prev_url and item.url != _next_url -%}
+        {%- assign _related_count = _related_count | plus: 1 -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+
+  {%- if _prev or _next or _related_count > 0 %}
+<nav class="reading-next" aria-labelledby="reading-next-title">
+  <h2 class="reading-next__title" id="reading-next-title">{{ include.title | default: "Continuar" }}</h2>
+
+  {%- if _prev or _next %}
+  <div class="reading-next__steps">
+    {%- if _prev %}
+    <a class="reading-next__step reading-next__step--prev" href="{{ _prev.url | relative_url }}">
+      <span class="reading-next__dir">← {{ include.label_prev | default: "Anterior" }}</span>
+      <span class="reading-next__name">{{ _prev.title }}</span>
+    </a>
+    {%- endif %}
+    {%- if _next %}
+    <a class="reading-next__step reading-next__step--next" href="{{ _next.url | relative_url }}">
+      <span class="reading-next__dir">{{ include.label_next | default: "Siguiente" }} →</span>
+      <span class="reading-next__name">{{ _next.title }}</span>
+    </a>
+    {%- endif %}
+  </div>
+  {%- endif %}
+
+  {%- if _related_count > 0 %}
+  <div class="reading-next__related">
+    <span class="reading-next__dir">{{ include.related_prefix | default: "Otros en" }} {{ _related_value }}</span>
+    <ul class="reading-next__list">
+      {%- assign _shown = 0 -%}
+      {%- for item in _ordered -%}
+        {%- assign _item_value = nil -%}
+        {%- if include.related_key -%}
+          {%- assign _item_value = item[include.related_field][include.related_key] -%}
+        {%- else -%}
+          {%- assign _item_value = item[include.related_field] -%}
+        {%- endif -%}
+        {%- if _item_value == _related_value and item.url != page.url and item.url != _prev_url and item.url != _next_url -%}
+          {%- if _shown >= 3 -%}{%- break -%}{%- endif %}
+      <li class="reading-next__item">
+        <a href="{{ item.url | relative_url }}">
+          <span>{{ item.title }}</span>
+          {%- if item.date %}<span class="reading-next__date">{{ item.date | date: "%Y-%m-%d" }}</span>{% endif %}
+        </a>
+      </li>
+          {%- assign _shown = _shown | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor %}
+    </ul>
+  </div>
+  {%- endif %}
+</nav>
+  {%- endif %}
+{%- endif -%}

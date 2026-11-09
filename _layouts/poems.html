@@ -16,15 +16,15 @@
       <a href="{{ '/' | relative_url }}" aria-label="Inicio">∅ INIT</a>
     </nav>
 
-    <div class="poem-flow{% if page.image %} poem-flow--with-image{% endif %}">
-      {% if page.image %}
+    <div class="poem-flow{% if page.image and page.image != "" %} poem-flow--with-image{% endif %}">
+      {% if page.image and page.image != "" %}
       {% include figure.html %}
       {% endif %}
 
       <header class="reading-detail-head">
         <h1 class="reading-detail__title"><span class="reading-detail__mark" aria-hidden="true">~</span> {{ page.title }}</h1>
         <p class="reading-detail__meta">
-          {% if page.series %}<span>{{ page.series }}{% if page.part %} · parte {{ page.part }}{% endif %}</span>{% endif %}
+          {% if page.series and page.series != "" %}<span>{{ page.series }}{% if page.part and page.part != "" %} · parte {{ page.part }}{% endif %}</span>{% endif %}
           {% if page.date %}<span>{{ page.date | date: "%Y-%m-%d" }}</span>{% endif %}
         </p>
       </header>

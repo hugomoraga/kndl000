@@ -380,8 +380,3 @@ function finalizar() {
   });
 }
 ```
-
----
-
-_El grid muta. Los caracteres se organizan. Las palabras emergen del caos. ¿Qué patrones se repiten?_
-

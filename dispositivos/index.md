@@ -24,7 +24,7 @@ back: false
   <div class="device-rack__bar" aria-label="Resumen de dispositivos">
     <span>{{ _module_count }} {% if _module_count == 1 %}módulo{% else %}módulos{% endif %}</span>
     <span>{{ _active_count }} {% if _active_count == 1 %}activo{% else %}activos{% endif %}</span>
-    <span>{{ _online_count }} en línea</span>
+    <span>{{ _online_count }} con demo</span>
   </div>
 
   <div class="device-modules{% if _module_count == 4 %} device-modules--two{% endif %}">

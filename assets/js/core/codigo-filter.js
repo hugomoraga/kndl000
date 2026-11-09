@@ -4,6 +4,7 @@
   var filters = Array.prototype.slice.call(document.querySelectorAll("[data-code-filter]"));
   var modules = Array.prototype.slice.call(document.querySelectorAll(".codigo-rack .codigo-module"));
   var status = document.getElementById("codigo-filter-status");
+  var stat = document.querySelector('[data-code-stat="visible"]');
   if (!filters.length || !modules.length) return;
 
   function apply(value) {
@@ -23,6 +24,10 @@
 
     if (status) {
       status.textContent = "Mostrando " + visible + " módulos.";
+    }
+    if (stat) {
+      var total = stat.getAttribute("data-code-total") || "0";
+      stat.textContent = value === "all" ? total + " módulos" : visible + " de " + total + " módulos";
     }
   }
 

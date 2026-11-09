@@ -16,7 +16,9 @@
 {%- if page.collection == 'posts' or page.layout == 'melange-report' -%}
   {%- assign seo_og_type = 'article' -%}
 {%- endif -%}
-{%- assign seo_image = page.og_image | default: page.image | default: site.seo_image -%}
+{%- assign _page_image = page.image -%}
+{%- if _page_image == "" -%}{%- assign _page_image = nil -%}{%- endif -%}
+{%- assign seo_image = page.og_image | default: _page_image | default: site.seo_image -%}
 {%- if seo_image and seo_image != '' -%}
   {%- assign seo_image_abs = seo_image | absolute_url -%}
 {%- endif -%}

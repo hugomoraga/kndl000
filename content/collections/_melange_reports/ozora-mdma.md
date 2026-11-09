@@ -29,8 +29,6 @@ ficha:
   outcome: Confusion
 ---
 
-# 
-
 Este trip no lo recuerdo mucho, pero sí recuerdo lo fuerte que fue.
 
 Estaba bastante integrado en un grupo de amigos mexicanos que había conocido en Ozora. Todo iba bien hasta que un cuate me ofreció probar MDMA desde un gotero. Dejé caer varias gotas en mi vaso. No sé cuál fue la dosis exacta.
