@@ -11,7 +11,22 @@ image_credit: ''
 series: ''
 wip: false
 effects: true
-ficha: null
+ficha:
+  substance: LSD
+  format: 1 Estampilla + 2 gotas
+  dose: Posiblemente 300ug
+  method: 50 ug + 50 ug bajo la lengua + 2 gotas
+  place: Sacred Valley of the Incas. Cusco Peru
+  event: Arkana Festival
+  setting: Ambiente seguro en festival
+  mindset: Buen animo
+  context: ''
+  company: Solitario
+  moment: ''
+  duration: 10 horas aprox
+  intensity: Muy Fuerte
+  extras: ''
+  outcome: Experiencia integrada con varios topicos
 ---
 
 ### Llegada
