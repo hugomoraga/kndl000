@@ -9,7 +9,7 @@ image: /assets/media/images/pasted-image-1794187584955.png
 alt: ''
 image_credit: ''
 series: ''
-wip: true
+wip: false
 effects: true
 ficha:
   substance: 5-meo-dmt
