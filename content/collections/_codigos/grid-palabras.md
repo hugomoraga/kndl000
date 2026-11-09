@@ -16,6 +16,10 @@ const generaciones = Math.max(3, Math.min(8, isNaN(pedidas) ? 5 : pedidas));
 const pedidoNivel = parseInt(input("Nivel (1 caos → 7 lenguaje)"), 10);
 const nivel = Math.max(1, Math.min(7, isNaN(pedidoNivel) ? 4 : pedidoNivel));
 
+// Seed temporal: si se elige un .txt, reemplaza al corpus del sitio.
+const seed = typeof file === "function" ? await file("Semilla .txt (opcional)") : null;
+const seedValido = !!(seed && seed.text && seed.text.trim().length > 10);
+
 const ancho = 33;
 const alto = 13;
 const total = ancho * alto;
@@ -59,6 +63,7 @@ const diccionarioBasico = new Set([
 ]);
 
 let corpus = corpusEjemplo;
+let fuenteCorpus = seedValido ? `semilla: ${seed.name}` : "corpus: ejemplo";
 let diccionario = diccionarioBasico;
 let ngramas = null;
 let grid = [];
@@ -94,11 +99,24 @@ function cargarDiccionario(texto) {
   return set;
 }
 
+const corpusRemoto = seedValido
+  ? Promise.resolve(null)
+  : fetch("/corpus.txt").then((r) => r.ok ? r.text() : null).catch(() => null);
+
 Promise.all([
-  fetch("/corpus.txt").then((r) => r.ok ? r.text() : null).catch(() => null),
+  corpusRemoto,
   fetch("/diccionario.txt").then((r) => r.ok ? r.text() : null).catch(() => null)
 ]).then(([corpusTexto, diccionarioTexto]) => {
-  if (corpusTexto && corpusTexto.trim().length > 10) corpus = corpusTexto;
+  if (!iniciado) {
+    if (seedValido) {
+      corpus = seed.text;
+      fuenteCorpus = `semilla: ${seed.name}`;
+    } else if (corpusTexto && corpusTexto.trim().length > 10) {
+      corpus = corpusTexto;
+      fuenteCorpus = "corpus: corpus.txt";
+    }
+  }
+
   if (diccionarioTexto) {
     diccionario = cargarDiccionario(diccionarioTexto);
     output({ type: "legend", text: `Diccionario: ${diccionario.size} palabras` });
@@ -283,7 +301,7 @@ function mostrarGrid() {
   });
   output({
     type: "legend",
-    text: `${descripcionNivel}\n` +
+    text: `${descripcionNivel} · ${fuenteCorpus}\n` +
           `secuencias ${metricasActuales.unicas} · diccionario ${metricasActuales.dic} · ocupación ${metricasActuales.ocupacion}%`
   });
   output({
@@ -322,7 +340,8 @@ function finalizar() {
   output({ type: "meta", text: "Resultado" });
   output({
     type: "legend",
-    text: `secuencias ${m.unicas} · diccionario ${m.dic} · ocupación ${m.ocupacion}%`
+    text: `${fuenteCorpus}\n` +
+          `secuencias ${m.unicas} · diccionario ${m.dic} · ocupación ${m.ocupacion}%`
   });
 
   if (m.top.length > 0) {

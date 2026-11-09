@@ -300,6 +300,7 @@
    *   output({ type: 'trace', points: [[0,0], [0.5,0.9], ...], label: '...' })
    *   output({ type: 'metric', label: '...', value: 42, unit: 'ms' })
    *   output({ type: 'conclusion', text: '...' })
+   *   const seed = await file('Seed .txt (opcional)')
    * El texto siempre se inserta con textContent; nunca se interpreta HTML.
    */
   const CELL_RAMP = ' .:-=+*#%@';
@@ -910,6 +911,111 @@
       }
     };
 
+    /*
+     * Selector de archivo temporal. El código puede hacer:
+     *   const seed = await file('Seed .txt (opcional)');
+     * y recibe { name, text, size } o null si se saltea.
+     * El archivo se lee en el navegador; no se sube a ningún servidor.
+     */
+    const MAX_FILE_BYTES = 512 * 1024;
+
+    const readFileText = (fileObj) => {
+      if (fileObj && typeof fileObj.text === 'function') {
+        return fileObj.text();
+      }
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result || ''));
+        reader.onerror = () => reject(reader.error || new Error('No se pudo leer el archivo.'));
+        reader.readAsText(fileObj);
+      });
+    };
+
+    const fileFn = (label) => new Promise((resolve) => {
+      const wrap = document.createElement('div');
+      wrap.className = 'term__file';
+
+      const head = document.createElement('div');
+      head.className = 'term__file-head';
+
+      const labelEl = document.createElement('span');
+      labelEl.className = 'term__file-label';
+      labelEl.textContent = label || 'Archivo de texto';
+
+      const nameEl = document.createElement('span');
+      nameEl.className = 'term__file-name';
+      nameEl.textContent = 'sin archivo';
+
+      head.appendChild(labelEl);
+      head.appendChild(nameEl);
+
+      const actions = document.createElement('div');
+      actions.className = 'term__file-actions';
+
+      const pick = document.createElement('button');
+      pick.type = 'button';
+      pick.className = 'term__file-btn';
+      pick.textContent = 'elegir .txt';
+
+      const skip = document.createElement('button');
+      skip.type = 'button';
+      skip.className = 'term__file-btn term__file-btn--skip';
+      skip.textContent = 'sin semilla';
+
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.txt,text/plain';
+      input.className = 'term__file-input';
+
+      actions.appendChild(pick);
+      actions.appendChild(skip);
+      actions.appendChild(input);
+
+      const note = document.createElement('p');
+      note.className = 'term__file-note';
+      note.textContent = 'máx. 512 KB · se lee en tu navegador';
+
+      wrap.appendChild(head);
+      wrap.appendChild(actions);
+      wrap.appendChild(note);
+      output.appendChild(wrap);
+      output.dataset.follow = 'true';
+      output.scrollTop = output.scrollHeight;
+
+      const fail = (message) => {
+        note.textContent = message;
+        note.classList.add('term__file-note--error');
+        input.value = '';
+      };
+
+      pick.addEventListener('click', () => input.click());
+      skip.addEventListener('click', () => {
+        wrap.remove();
+        resolve(null);
+      });
+
+      input.addEventListener('change', () => {
+        const fileObj = input.files && input.files[0];
+        if (!fileObj) return;
+        if (fileObj.size > MAX_FILE_BYTES) {
+          fail('El archivo supera los 512 KB. Elegí uno más chico.');
+          return;
+        }
+        readFileText(fileObj)
+          .then((text) => {
+            const kb = Math.max(1, Math.round(fileObj.size / 1024));
+            nameEl.textContent = fileObj.name + ' · ' + kb + ' KB';
+            wrap.classList.add('is-loaded');
+            resolve({ name: fileObj.name, text, size: fileObj.size });
+          })
+          .catch(() => fail('No se pudo leer el archivo. Probá con otro .txt.'));
+      });
+
+      requestAnimationFrame(() => {
+        try { pick.focus({ preventScroll: true }); } catch (_) { pick.focus(); }
+      });
+    });
+
     const outputFn = (content) => {
       if (content === '[CLEAR]') {
         flush();
@@ -952,14 +1058,34 @@
       if (typeof onDone === 'function') onDone(hadError);
     };
 
-    try {
-      const fn = new Function('input', 'output', 'console', code);
-      const result = fn(inputFn, outputFn, console);
-      if (result !== undefined) {
-        const text = typeof result === 'object' ? JSON.stringify(result, null, 2) : String(result);
+    const finishResult = (value) => {
+      if (value !== undefined) {
+        const text = typeof value === 'object' ? JSON.stringify(value, null, 2) : String(value);
         appendLine(output, text, 'result');
       }
       finishSafely();
+    };
+
+    try {
+      // El wrapper async permite `await file(...)` en cualquier snippet.
+      const fn = new Function(
+        'input',
+        'output',
+        'console',
+        'file',
+        `return (async () => {\n${code}\n})();`
+      );
+      const result = fn(inputFn, outputFn, console, fileFn);
+
+      if (result && typeof result.then === 'function') {
+        result.then(finishResult).catch((err) => {
+          hadError = true;
+          appendLine(output, err && err.message ? err.message : String(err), 'error');
+          finishSafely();
+        });
+      } else {
+        finishResult(result);
+      }
     } catch (err) {
       hadError = true;
       appendLine(output, err && err.message ? err.message : String(err), 'error');
