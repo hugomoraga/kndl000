@@ -8,7 +8,8 @@ concept: "La energía busca equilibrio. Las anomalías emergen. El sistema fluye
 
 ```javascript
 // Autómata de Energía - La búsqueda del equilibrio
-const generaciones = parseInt(input("¿Cuántas generaciones quieres observar?"));
+const pedidas = parseInt(input("¿Cuántas generaciones? (2–30)"), 10);
+const generaciones = Math.max(2, Math.min(30, isNaN(pedidas) ? 8 : pedidas));
 const WIDTH = 50;
 const HEIGHT = 20;
 
@@ -18,7 +19,7 @@ function emptyGrid() {
   for (let y = 0; y < HEIGHT; y++) {
     grid[y] = [];
     for (let x = 0; x < WIDTH; x++) {
-      grid[y][x] = Math.random() * 0.3;
+      grid[y][x] = Math.random();
     }
   }
   return grid;
@@ -81,10 +82,52 @@ function render(grid) {
   return out;
 }
 
+// Resumen numérico del estado de energía.
+function resumenEnergia(grid) {
+  let total = 0;
+  let suma = 0;
+  let maxVal = 0;
+  let minVal = 1;
+  let extremos = 0;
+
+  for (let y = 0; y < HEIGHT; y++) {
+    for (let x = 0; x < WIDTH; x++) {
+      const val = grid[y][x];
+      total++;
+      suma += val;
+      maxVal = Math.max(maxVal, val);
+      minVal = Math.min(minVal, val);
+      if (val > 0.8 || val < 0.1) extremos++;
+    }
+  }
+
+  const promedio = suma / total;
+  const rango = maxVal - minVal;
+
+  return {
+    promedio,
+    rango,
+    max: maxVal,
+    min: minVal,
+    anomalias: extremos / total,
+    equilibrio: 1 - rango
+  };
+}
+
 // Mostrar estado
 function mostrarEstado(gen, grid) {
   output("[CLEAR]");
+
+  const resumen = resumenEnergia(grid);
+  historialRango.push([gen, resumen.rango]);
+  energiaFinal = resumen.promedio;
+
   output({ type: "meta", text: `Generación ${gen} · ${WIDTH} × ${HEIGHT}` });
+  output({
+    type: "legend",
+    text: `energía media ${resumen.promedio.toFixed(3)} · rango ${resumen.rango.toFixed(3)} · ` +
+          `anomalías ${(resumen.anomalias * 100).toFixed(1)}%`
+  });
   output({ type: "legend", text: "energía: espacio 0 · . baja · : media · * alta · O muy alta · @ máxima" });
   output({
     type: "grid",
@@ -97,43 +140,22 @@ function mostrarEstado(gen, grid) {
 // Observador - Captura momentos peculiares
 let momentosCapturados = [];
 let gridAnterior = null;
+const historialRango = [];
+let energiaFinal = 0;
 
 // Detectar patrones interesantes
 function detectarPatrones(grid) {
+  const resumen = resumenEnergia(grid);
   const patrones = {
     variacion: 0,
-    anomalias: 0,
-    equilibrio: 0,
-    concentracion: 0
+    anomalias: resumen.anomalias,
+    equilibrio: resumen.equilibrio,
+    concentracion: Math.abs(resumen.promedio - 0.5)
   };
-  
-  let total = 0;
-  let suma = 0;
-  let maxVal = 0;
-  let minVal = 1;
-  let valoresExtremos = 0;
-  
-  for (let y = 0; y < HEIGHT; y++) {
-    for (let x = 0; x < WIDTH; x++) {
-      const val = grid[y][x];
-      total++;
-      suma += val;
-      maxVal = Math.max(maxVal, val);
-      minVal = Math.min(minVal, val);
-      
-      // Detectar anomalías (valores extremos)
-      if (val > 0.8 || val < 0.1) {
-        valoresExtremos++;
-      }
-    }
-  }
-  
-  const promedio = suma / total;
-  const rango = maxVal - minVal;
-  
-  // Calcular variación (diferencia con generación anterior)
+
   if (gridAnterior) {
     let diferenciaTotal = 0;
+    const total = WIDTH * HEIGHT;
     for (let y = 0; y < HEIGHT; y++) {
       for (let x = 0; x < WIDTH; x++) {
         diferenciaTotal += Math.abs(grid[y][x] - gridAnterior[y][x]);
@@ -141,11 +163,7 @@ function detectarPatrones(grid) {
     }
     patrones.variacion = diferenciaTotal / total;
   }
-  
-  patrones.anomalias = valoresExtremos / total;
-  patrones.equilibrio = 1 - rango; // Menor rango = más equilibrio
-  patrones.concentracion = Math.abs(promedio - 0.5); // Lejos del centro = más concentración
-  
+
   return patrones;
 }
 
@@ -202,7 +220,7 @@ function mostrarMomentosCapturados() {
     return;
   }
 
-  const visibles = momentosCapturados.slice(0, 3);
+  const visibles = momentosCapturados.slice(0, 1);
   output({
     type: "meta",
     text: `Momentos capturados: ${momentosCapturados.length} · mostrando ${visibles.length}`
@@ -244,14 +262,32 @@ function evolucionar() {
   } else {
     setTimeout(() => {
       mostrarMomentosCapturados();
+
+      if (historialRango.length >= 2) {
+        output({ type: "meta", text: "Rango de energía por generación" });
+        output({
+          type: "trace",
+          points: historialRango,
+          label: "Rango de energía del sistema a lo largo de las generaciones"
+        });
+      }
+
+      const rangoInicial = historialRango[0] ? historialRango[0][1] : 0;
+      const rangoFinal = historialRango.length
+        ? historialRango[historialRango.length - 1][1]
+        : 0;
+      const cantidadMomentos = momentosCapturados.length;
       output({
         type: "conclusion",
         text: "La energía ha evolucionado.\n" +
               "Buscó equilibrio con sus vecinos.\n" +
               "Las anomalías emergieron y se disiparon.\n" +
               "El sistema fluyó hacia la estabilidad.\n\n" +
+              "Energía media final: " + energiaFinal.toFixed(3) + ".\n" +
+              "Rango de energía: " + rangoInicial.toFixed(3) + " → " + rangoFinal.toFixed(3) + ".\n" +
               "El observador analizó " + generaciones + " generaciones.\n" +
-              "Capturó " + momentosCapturados.length + " momentos peculiares."
+              "Capturó " + cantidadMomentos + " " +
+              (cantidadMomentos === 1 ? "momento peculiar." : "momentos peculiares.")
       });
     }, 100);
   }

@@ -8,11 +8,13 @@ concept: "La vida como reglas simples. La complejidad emergente de la simplicida
 
 ```javascript
 // Juego de la vida - Reglas simples, vida compleja
-const generaciones = parseInt(input("¿Cuántas generaciones quieres observar?"));
+const pedidas = parseInt(input("¿Cuántas generaciones? (2–30)"), 10);
+const generaciones = Math.max(2, Math.min(30, isNaN(pedidas) ? 8 : pedidas));
 const filas = 20; // Altura del grid
 const columnas = 50; // Ancho del grid (más horizontal)
 
 // Crear grid inicial aleatorio
+const historialVivas = [];
 let grid = [];
 for (let i = 0; i < filas; i++) {
   grid[i] = [];
@@ -92,9 +94,12 @@ function mostrarGrid(grid, gen) {
     gridText += fila + "\n";
   }
 
+  const vivas = contarVivas(grid);
+  historialVivas.push([gen, vivas]);
+
   output({
     type: "meta",
-    text: `Generación ${gen} · ${filas} × ${columnas} · ${contarVivas(grid)} células vivas`
+    text: `Generación ${gen} · ${filas} × ${columnas} · ${vivas} células vivas`
   });
   output({
     type: "grid",
@@ -102,6 +107,22 @@ function mostrarGrid(grid, gen) {
     caption: "█ célula viva · espacio = célula muerta",
     label: "Juego de la vida, generación " + gen
   });
+}
+
+function plural(n, singular, plural) {
+  return n === 1 ? singular : plural;
+}
+
+function finalizar(mensaje) {
+  if (historialVivas.length >= 2) {
+    output({ type: "meta", text: "Células vivas por generación" });
+    output({
+      type: "trace",
+      points: historialVivas,
+      label: "Células vivas por generación"
+    });
+  }
+  output({ type: "conclusion", text: mensaje });
 }
 
 // Mostrar generación inicial
@@ -122,12 +143,13 @@ function evolucionar() {
         // No hay cambios, la vida se estabilizó
         const vivas = contarVivas(gridNuevo);
         mostrarGrid(gridNuevo, genActual);
-        output({
-          type: "conclusion",
-          text: vivas === 0
+        finalizar(
+          vivas === 0
             ? "La vida ha muerto. Extinción total en la generación " + genActual + ".\nLa estabilidad es también una forma de existencia."
-            : "La vida se ha estabilizado en la generación " + genActual + ".\nQuedan " + vivas + " células vivas en un patrón estático.\nLa estabilidad es también una forma de existencia."
-        });
+            : "La vida se ha estabilizado en la generación " + genActual + ".\nQuedan " + vivas + " " +
+              plural(vivas, "célula viva", "células vivas") + " en un patrón estático.\n" +
+              "La estabilidad es también una forma de existencia."
+        );
         return; // Detener la evolución
       }
       
@@ -140,13 +162,13 @@ function evolucionar() {
     // Esperar un momento antes de mostrar el mensaje final
     setTimeout(() => {
       const vivas = contarVivas(grid);
-      output({
-        type: "conclusion",
-        text: "Evolución completada después de " + generaciones + " generaciones.\n" +
-              "Quedan " + vivas + " células vivas.\n" +
-              "La vida emerge de reglas simples.\n" +
-              "¿Qué es la vida sino reglas que se siguen?"
-      });
+      const generacionesTexto = plural(generaciones, "1 generación", generaciones + " generaciones");
+      finalizar(
+        "Evolución completada después de " + generacionesTexto + ".\n" +
+        "Quedan " + vivas + " " + plural(vivas, "célula viva", "células vivas") + ".\n" +
+        "La vida emerge de reglas simples.\n" +
+        "¿Qué es la vida sino reglas que se siguen?"
+      );
     }, 100);
   }
 }

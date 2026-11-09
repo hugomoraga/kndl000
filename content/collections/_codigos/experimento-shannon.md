@@ -8,8 +8,10 @@ concept: "Las aproximaciones al lenguaje. Del caos a la estructura. La informaci
 
 ```javascript
 // Experimento de Shannon - Aproximaciones al lenguaje en castellano
-const longitud = parseInt(input("¿Cuántos caracteres quieres generar?"));
-const nivel = parseInt(input("¿Qué nivel quieres ver? (1-7)"));
+const pedidaLongitud = parseInt(input("¿Cuántos caracteres? (80–300)"), 10);
+const longitud = Math.max(80, Math.min(300, isNaN(pedidaLongitud) ? 160 : pedidaLongitud));
+const pedidoNivel = parseInt(input("Nivel máximo (1–7)"), 10);
+const nivel = Math.max(1, Math.min(7, isNaN(pedidoNivel) ? 4 : pedidoNivel));
 
 // Corpus de ejemplo en castellano (fallback si no se puede leer archivo)
 const corpusEjemplo = `el lenguaje es un sistema de signos que permite la comunicación entre los seres humanos a través de la historia el lenguaje ha evolucionado desde formas simples hasta estructuras complejas que reflejan el pensamiento y la cultura de cada sociedad la palabra escrita preserva el conocimiento y permite que las ideas trasciendan el tiempo y el espacio`;
@@ -17,6 +19,13 @@ const corpusEjemplo = `el lenguaje es un sistema de signos que permite la comuni
 // Leer corpus: intentar desde corpus.txt, sino usar ejemplo
 let corpus = null;
 let corpusListo = false;
+let iniciado = false;
+
+function iniciarUnaVez() {
+  if (iniciado) return;
+  iniciado = true;
+  procesarCorpus();
+}
 
 output({ type: "meta", text: "Leyendo corpus.txt…" });
 
@@ -33,19 +42,19 @@ fetch('/corpus.txt')
     if (texto && texto.trim().length > 10) {
       corpus = texto;
       corpusListo = true;
-      procesarCorpus();
+      iniciarUnaVez();
     } else {
       // Archivo vacío, usar ejemplo
       corpus = corpusEjemplo;
       corpusListo = true;
-      procesarCorpus();
+      iniciarUnaVez();
     }
   })
-  .catch(error => {
+  .catch(() => {
     // Si no existe corpus.txt, usar ejemplo directamente (sin pedir input)
     corpus = corpusEjemplo;
     corpusListo = true;
-    procesarCorpus();
+    iniciarUnaVez();
   });
 
 // Esperar a que el corpus esté listo (máximo 10 segundos)
@@ -60,39 +69,56 @@ const esperarCorpus = setInterval(() => {
       // Timeout: usar ejemplo
       corpus = corpusEjemplo;
       corpusListo = true;
-      procesarCorpus();
+      iniciarUnaVez();
     }
   }
 }, 50);
 
 // Función para procesar el corpus y generar el texto
+let corpusTrigramas = new Set();
+
+function prepararCobertura() {
+  corpusTrigramas = new Set();
+  for (let i = 0; i < corpus.length - 2; i++) {
+    corpusTrigramas.add(corpus.substring(i, i + 3));
+  }
+}
+
+function coberturaTrigramas(texto) {
+  if (texto.length < 3) return 0;
+  let total = 0;
+  let encontrados = 0;
+  for (let i = 0; i < texto.length - 2; i++) {
+    total++;
+    if (corpusTrigramas.has(texto.substring(i, i + 3))) encontrados++;
+  }
+  return total ? (encontrados / total) * 100 : 0;
+}
+
 function procesarCorpus() {
   // Normalizar corpus: solo letras y espacios
   corpus = corpus.toLowerCase().replace(/[^a-záéíóúñü\s]/g, ' ').replace(/\s+/g, ' ');
-  
-  output({ type: "legend", text: "Corpus procesado: " + corpus.length + " caracteres" });
-  
+
+  // El corpus completo son 2 MB; una muestra mantiene el experimento ágil
+  // en el navegador y alcanza para comparar los siete niveles.
+  const totalCorpus = corpus.length;
+  if (corpus.length > 150000) corpus = corpus.slice(0, 150000);
+  prepararCobertura();
+
+  const muestra = totalCorpus > corpus.length
+    ? ` (muestra de ${totalCorpus.toLocaleString()})`
+    : "";
+  output({ type: "legend", text: `Corpus procesado: ${corpus.length.toLocaleString()} caracteres${muestra}` });
+  output({ type: "legend", text: "cobertura: trigramas del resultado que ya existen en el corpus" });
+
   // Continuar con la generación
   generarTexto();
 }
 
 // Función para generar el texto según el nivel
 function generarTexto() {
-  // Validar nivel y longitud
-  const nivelNum = typeof nivel === 'string' ? parseInt(nivel) : nivel;
-  const longitudNum = typeof longitud === 'string' ? parseInt(longitud) : longitud;
-  
-  if (isNaN(nivelNum) || nivelNum < 1 || nivelNum > 7) {
-    output("Error: Nivel inválido. Debe ser un número entre 1 y 7.");
-    output("Recibido: " + nivel);
-    return;
-  }
-  
-  if (isNaN(longitudNum) || longitudNum <= 0) {
-    output("Error: Longitud inválida. Debe ser un número mayor a 0.");
-    output("Recibido: " + longitud);
-    return;
-  }
+  const nivelNum = nivel;
+  const longitudNum = longitud;
 
 // Nivel 1 - Letras aleatorias uniformes
 function nivel1(longitud) {
@@ -370,51 +396,75 @@ function nivel7(longitud, corpus) {
 }
 
   // Generar y mostrar resultado - Barrido desde nivel 1 hasta el nivel elegido
-  output({ type: "meta", text: `Progresión del experimento · niveles 1 a ${nivelNum}` });
+  output({ type: "meta", text: nivelNum === 1 ? "Nivel 1" : `Progresión del experimento · niveles 1 a ${nivelNum}` });
   
   // Pre-construir modelos que se reutilizarán
   let bigramas = null;
   let trigramas = null;
-  
+  const coberturas = [];
+
   // Generar todos los niveles desde 1 hasta el elegido
   for (let n = 1; n <= nivelNum; n++) {
     let resultado = "";
     let descripcion = "";
     
     if (n === 1) {
-      descripcion = "Nivel 1: Letras aleatorias uniformes (caos total)";
+      descripcion = "Nivel 1 · letras uniformes";
       resultado = nivel1(longitudNum);
     } else if (n === 2) {
-      descripcion = "Nivel 2: Letras ponderadas por frecuencia del castellano";
+      descripcion = "Nivel 2 · frecuencias del castellano";
       resultado = nivel2(longitudNum);
     } else if (n === 3) {
-      descripcion = "Nivel 3: Cadena de Markov orden 1 (bigramas)";
+      descripcion = "Nivel 3 · Markov orden 1";
       if (!bigramas) bigramas = construirBigramas(corpus);
       resultado = nivel3(longitudNum, bigramas);
     } else if (n === 4) {
-      descripcion = "Nivel 4: Cadena de Markov orden 2 (trigramas)";
+      descripcion = "Nivel 4 · Markov orden 2";
       if (!trigramas) trigramas = construirTrigramas(corpus);
       resultado = nivel4(longitudNum, trigramas);
     } else if (n === 5) {
-      descripcion = "Nivel 5: Cadena de Markov orden 3 (cuatrigramas)";
+      descripcion = "Nivel 5 · Markov orden 3";
       resultado = nivel5(longitudNum, corpus);
     } else if (n === 6) {
-      descripcion = "Nivel 6: Cadena de Markov orden 4 (pentagramas)";
+      descripcion = "Nivel 6 · Markov orden 4";
       resultado = nivel6(longitudNum, corpus);
     } else if (n === 7) {
-      descripcion = "Nivel 7: Cadena de Markov orden 5 (hexagramas)";
+      descripcion = "Nivel 7 · Markov orden 5";
       resultado = nivel7(longitudNum, corpus);
     }
     
     if (resultado) {
+      const cobertura = coberturaTrigramas(resultado);
+      coberturas.push([n, cobertura]);
       output({ type: "meta", text: descripcion });
       output({ type: "text", text: resultado });
+      output({ type: "legend", text: `cobertura de trigramas ${cobertura.toFixed(1)}%` });
     }
   }
 
+  if (coberturas.length >= 2) {
+    output({ type: "meta", text: "Cobertura de trigramas por nivel" });
+    output({
+      type: "trace",
+      points: coberturas,
+      label: "Cobertura de trigramas del texto generado por nivel"
+    });
+  }
+
+  const primera = coberturas.length ? coberturas[0][1] : 0;
+  const ultima = coberturas.length ? coberturas[coberturas.length - 1][1] : 0;
+
+  const progreso = coberturas.length >= 2
+    ? `La cobertura de trigramas pasó de ${primera.toFixed(1)}% a ${ultima.toFixed(1)}%.`
+    : `La cobertura de trigramas fue de ${primera.toFixed(1)}%.`;
+
   output({
     type: "conclusion",
-    text: "Del caos al orden.\nDe la aleatoriedad a la estructura.\n¿Dónde termina el ruido y comienza el lenguaje?"
+    text:
+      "Del caos al orden.\n" +
+      `${progreso}\n` +
+      "De la aleatoriedad a la estructura.\n" +
+      "¿Dónde termina el ruido y comienza el lenguaje?"
   });
 }
 ```

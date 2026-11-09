@@ -8,11 +8,13 @@ concept: "El fuego que se propaga. La destrucción que crea. El ciclo que renace
 
 ```javascript
 // Incendio Forestal - Propagación del fuego
-const generaciones = parseInt(input("¿Cuántas generaciones quieres observar?"));
+const pedidas = parseInt(input("¿Cuántas generaciones? (2–30)"), 10);
+const generaciones = Math.max(2, Math.min(30, isNaN(pedidas) ? 8 : pedidas));
 const filas = 30;
 const columnas = 60;
 
 // Estados: 0 = vacío, 1 = árbol, 2 = fuego, 3 = ceniza
+const historialBosque = [];
 let grid = [];
 for (let i = 0; i < filas; i++) {
   grid[i] = [];
@@ -107,9 +109,18 @@ function mostrarEstado(grid, gen) {
     gridText += fila + "\n";
   }
 
+  const total = filas * columnas;
+  const pct = (n) => Math.round((n / total) * 100);
+  historialBosque.push([gen, estados.arboles]);
+
   output({
     type: "meta",
     text: `Generación ${gen} · árboles ${estados.arboles} · fuego ${estados.fuego} · ceniza ${estados.ceniza}`
+  });
+  output({
+    type: "legend",
+    text: `bosque ${pct(estados.arboles)}% · fuego ${pct(estados.fuego)}% · ` +
+          `ceniza ${pct(estados.ceniza)}% · vacío ${pct(estados.vacio)}%`
   });
   output({
     type: "grid",
@@ -129,11 +140,24 @@ function hayFuego(grid) {
   return false;
 }
 
+function finalizar(mensaje) {
+  if (historialBosque.length >= 2) {
+    output({ type: "meta", text: "Bosque por generación" });
+    output({
+      type: "trace",
+      points: historialBosque,
+      label: "Árboles vivos por generación"
+    });
+  }
+  output({ type: "conclusion", text: mensaje });
+}
+
 // Mostrar estado inicial
 mostrarEstado(grid, 0);
 
 // Evolucionar
 let genActual = 0;
+let genExtincion = 0;
 function evolucionar() {
   if (genActual < generaciones) {
     setTimeout(() => {
@@ -141,28 +165,25 @@ function evolucionar() {
       grid = siguienteGeneracion(grid);
       mostrarEstado(grid, genActual);
       
-      // Detectar si el fuego se extinguió
-      if (!hayFuego(grid) && genActual > 5) {
-        const estados = contarEstados(grid);
-        output({
-          type: "conclusion",
-          text: "El fuego se ha extinguido en la generación " + genActual + ".\n" +
-                "Quedan " + estados.arboles + " árboles y " + estados.ceniza + " cenizas.\n" +
-                "La naturaleza se regenera. El ciclo continúa."
-        });
-        return; // Detener la evolución
-      }
-      
+      // Registrar la extinción, pero seguir para ver el rebrote.
+      if (!genExtincion && !hayFuego(grid)) genExtincion = genActual;
+
       evolucionar();
-    }, 200); // 200 milisegundos entre generaciones
+    }, 150); // 150 milisegundos entre generaciones
   } else {
     setTimeout(() => {
-      output({
-        type: "conclusion",
-        text: "Simulación completada después de " + generaciones + " generaciones.\n" +
-              "El fuego destruye, pero también renueva.\n" +
-              "En la ceniza, la semilla del renacimiento."
-      });
+      const estados = contarEstados(grid);
+      const generacionesTexto = generaciones === 1 ? "1 generación" : generaciones + " generaciones";
+      const extincion = genExtincion
+        ? "El fuego se extinguió en la generación " + genExtincion + ".\n"
+        : "";
+      finalizar(
+        "Simulación completada después de " + generacionesTexto + ".\n" +
+        extincion +
+        "Quedan " + estados.arboles + " árboles y " + estados.ceniza + " cenizas.\n" +
+        "El fuego destruye, pero también renueva.\n" +
+        "En la ceniza, la semilla del renacimiento."
+      );
     }, 100);
   }
 }

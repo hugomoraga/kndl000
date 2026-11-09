@@ -8,7 +8,8 @@ concept: "Una hormiga que sigue reglas simples. El caos que emerge del orden. El
 
 ```javascript
 // Hormiga de Langton - Reglas simples, patrones complejos
-const pasos = parseInt(input("¿Cuántos pasos quieres observar?"));
+const pedidos = parseInt(input("¿Cuántos pasos? (10–300)"), 10);
+const pasos = Math.max(10, Math.min(300, isNaN(pedidos) ? 60 : pedidos));
 const filas = 40;
 const columnas = 60;
 
@@ -76,10 +77,14 @@ function siguientePaso() {
   else hormiga.y = nuevoY;
 }
 
+const historialNegras = [];
+let negrasFinal = 0;
+
 function mostrarEstado(paso) {
   output("[CLEAR]");
 
   let gridText = "";
+  let negras = 0;
   for (let i = 0; i < filas; i++) {
     let fila = "";
     for (let j = 0; j < columnas; j++) {
@@ -87,6 +92,7 @@ function mostrarEstado(paso) {
         fila += "●";
       } else if (grid[i][j] === 1) {
         fila += "█";
+        negras++;
       } else {
         fila += " ";
       }
@@ -94,7 +100,10 @@ function mostrarEstado(paso) {
     gridText += fila + "\n";
   }
 
-  output({ type: "meta", text: `Paso ${paso} · ${filas} × ${columnas}` });
+  negrasFinal = negras;
+  historialNegras.push([paso, negras]);
+
+  output({ type: "meta", text: `Paso ${paso} · ${filas} × ${columnas} · ${negras} celdas negras` });
   output({
     type: "grid",
     data: gridText,
@@ -115,12 +124,23 @@ function evolucionar() {
       siguientePaso();
       mostrarEstado(pasoActual);
       evolucionar();
-    }, 50); // 50 milisegundos entre pasos
+    }, 40); // 40 milisegundos entre pasos
   } else {
     setTimeout(() => {
+      if (historialNegras.length >= 2) {
+        output({ type: "meta", text: "Celdas negras por paso" });
+        output({
+          type: "trace",
+          points: historialNegras,
+          label: "Celdas negras construidas por la hormiga"
+        });
+      }
       output({
         type: "conclusion",
-        text: "La hormiga ha completado su camino.\nDe reglas simples emergen patrones complejos.\n¿El orden crea el caos o el caos crea el orden?"
+        text:
+          `La hormiga completó ${pasos} pasos y dejó ${negrasFinal} celdas negras.\n` +
+          "De reglas simples emergen patrones complejos.\n" +
+          "¿El orden crea el caos o el caos crea el orden?"
       });
     }, 100);
   }
