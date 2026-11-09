@@ -1,6 +1,6 @@
 {%- comment -%}
-  Dataset JSON para lab-home.js: código, poemas y reportes Melange.
-  El diario NO entra al laboratorio; los reportes Melange sí, incluso en curso.
+  Dataset JSON para lab-home.js: código, poemas y reportes Melange publicados.
+  El diario NO entra al laboratorio y los reportes en borrador tampoco.
   Los rastros (ex-fragmentos) viven en /rastros/ y tampoco entran al feed.
 {%- endcomment -%}
 {%- assign _poem_lim = 50 -%}
@@ -12,6 +12,7 @@
   {%- assign _melange_lim = l.melange_pool_limit | default: 50 -%}
   {%- assign _sample = l.sample_count | default: 10 -%}
 {%- endif -%}
+{%- assign lab_melange_published = site.melange_reports | where_exp: "item", "item.wip != true" -%}
 <script type="application/json" id="lab-home-config">
 {"sample_count":{{ _sample }}}
 </script>
@@ -29,8 +30,8 @@
     <noscript>
       <ul class="lab-fallback">
         {%- assign _fb_count = 0 -%}
-        {%- for report in site.melange_reports limit: 3 -%}
-          {%- if _fb_count < 3 -%}<li class="lab-specimen"><header class="lab-specimen-meta"><span class="lab-kind">REPORTE</span><span class="lab-num">REP/{{ report.slug }}</span></header><p class="lab-text"><a href="{{ report.url | relative_url }}">{{ report.title }}</a>{% if report.wip %}<span class="lab-wip">&nbsp;· en curso</span>{% endif %}</p></li>{%- assign _fb_count = _fb_count | plus: 1 -%}{%- endif -%}
+        {%- for report in lab_melange_published limit: 3 -%}
+          {%- if _fb_count < 3 -%}<li class="lab-specimen"><header class="lab-specimen-meta"><span class="lab-kind">REPORTE</span><span class="lab-num">REP/{{ report.slug }}</span></header><p class="lab-text"><a href="{{ report.url | relative_url }}">{{ report.title }}</a></p></li>{%- assign _fb_count = _fb_count | plus: 1 -%}{%- endif -%}
         {%- endfor -%}
         {%- for poem in site.poems limit: 3 -%}
           {%- if _fb_count < 6 -%}<li class="lab-specimen"><header class="lab-specimen-meta"><span class="lab-kind">POEMA</span><span class="lab-num">POE/{{ poem.slug }}</span></header><p class="lab-text"><a href="{{ poem.url | relative_url }}">{{ poem.title }}</a></p></li>{%- assign _fb_count = _fb_count | plus: 1 -%}{%- endif -%}
@@ -53,10 +54,10 @@
   {%- unless lab_first -%},{%- endunless -%}{%- assign lab_first = false -%}
 {"kind":"POEMA","text":{{ poem.title | jsonify }},"href":{{ poem.url | relative_url | jsonify }},"ref":{{ _ref | jsonify }}}
 {%- endfor -%}
-{%- for report in site.melange_reports limit: _melange_lim -%}
+{%- for report in lab_melange_published limit: _melange_lim -%}
   {%- assign _ref = 'REP/' | append: report.slug -%}
   {%- unless lab_first -%},{%- endunless -%}{%- assign lab_first = false -%}
-{"kind":"REPORTE","text":{{ report.title | jsonify }},"href":{{ report.url | relative_url | jsonify }},"ref":{{ _ref | jsonify }}{% if report.wip %},"wip":true{% endif %}}
+{"kind":"REPORTE","text":{{ report.title | jsonify }},"href":{{ report.url | relative_url | jsonify }},"ref":{{ _ref | jsonify }}}
 {%- endfor -%}
 ]
 </script>

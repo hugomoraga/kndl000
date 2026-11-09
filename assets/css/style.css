@@ -3477,20 +3477,6 @@ main.fragmentos-archive .rastro-lista li + li {
   color: #eee;
 }
 
-.lab-wip {
-  margin-left: 0.6rem;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--umbral-muted);
-  white-space: nowrap;
-}
-
-body.umbral-page .lab-wip {
-  color: var(--umbral-muted);
-}
-
 /* Melange — índice como diario / reportes de viaje */
 .melange-journal {
   max-width: 40rem;

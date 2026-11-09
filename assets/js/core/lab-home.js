@@ -104,7 +104,6 @@
       var text = item.text != null ? String(item.text) : "";
       var href = item.href != null ? String(item.href) : "#";
       var kind = item.kind != null ? String(item.kind) : "MUESTRA";
-      var wip = item.wip === true;
       var key = canonicalKey(item);
       var hex = archiveHashHex(key);
       var prefix = kindPrefix(kind);
@@ -131,9 +130,7 @@
         escapeHtml(href) +
         '">' +
         escapeHtml(text) +
-        "</a>" +
-        (wip ? '<span class="lab-wip">&nbsp;· en curso</span>' : "") +
-        "</p>";
+        "</a></p>";
       frag.appendChild(article);
     });
     elRoot.innerHTML = "";
