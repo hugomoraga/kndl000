@@ -46,26 +46,51 @@
         </figure>
 
         <div class="reading-body melange-report__body">
-          {%- assign _ficha_keys = "substance|format|dose|method|place|event|setting|mindset|context|company|moment|duration|intensity|extras|outcome" | split: "|" -%}
-          {%- assign _ficha_labels = "Sustancia|Formato|Dosis|Método|Lugar|Evento|Setting|Set (mental)|Contexto previo|Compañía|Momento|Duración|Intensidad|Extras|Resultado" | split: "|" -%}
+          {%- assign _ficha_groups = "Sustancia|substance:Nombre,format:Formato,dose:Dosis,method:Método;Contexto|place:Lugar,event:Evento,setting:Setting,mindset:Set (mental),context:Contexto previo,company:Compañía,moment:Momento;Cierre|duration:Duración,intensity:Intensidad,extras:Extras,outcome:Resultado" | split: ";" -%}
           {%- assign _ficha_present = false -%}
           {%- if page.ficha -%}
-            {%- for key in _ficha_keys -%}
-              {%- assign value = page.ficha[key] -%}
-              {%- if value and value != "" -%}{%- assign _ficha_present = true -%}{%- endif -%}
+            {%- for group in _ficha_groups -%}
+              {%- assign _group_parts = group | split: "|" -%}
+              {%- assign _group_fields = _group_parts[1] | split: "," -%}
+              {%- for field in _group_fields -%}
+                {%- assign _pair = field | split: ":" -%}
+                {%- assign _key = _pair[0] -%}
+                {%- assign _value = page.ficha[_key] -%}
+                {%- if _value and _value != "" -%}{%- assign _ficha_present = true -%}{%- endif -%}
+              {%- endfor -%}
             {%- endfor -%}
           {%- endif -%}
           {%- if _ficha_present %}
           <section class="melange-report__spec" aria-label="Ficha técnica">
             <h2>Ficha</h2>
-            <dl class="report-spec">
-              {%- for key in _ficha_keys -%}
-                {%- assign value = page.ficha[key] -%}
-                {%- if value and value != "" %}
-              <dt>{{ _ficha_labels[forloop.index0] }}</dt><dd>{{ value | escape }}</dd>
-                {%- endif -%}
-              {%- endfor %}
-            </dl>
+            {%- for group in _ficha_groups -%}
+              {%- assign _group_parts = group | split: "|" -%}
+              {%- assign _group_title = _group_parts[0] -%}
+              {%- assign _group_fields = _group_parts[1] | split: "," -%}
+              {%- assign _group_has = false -%}
+              {%- for field in _group_fields -%}
+                {%- assign _pair = field | split: ":" -%}
+                {%- assign _key = _pair[0] -%}
+                {%- assign _value = page.ficha[_key] -%}
+                {%- if _value and _value != "" -%}{%- assign _group_has = true -%}{%- endif -%}
+              {%- endfor -%}
+              {%- if _group_has %}
+            <div class="report-spec-group">
+              <h3 class="report-spec-group__title">{{ _group_title }}</h3>
+              <dl class="report-spec">
+                {%- for field in _group_fields -%}
+                  {%- assign _pair = field | split: ":" -%}
+                  {%- assign _key = _pair[0] -%}
+                  {%- assign _label = _pair[1] -%}
+                  {%- assign _value = page.ficha[_key] -%}
+                  {%- if _value and _value != "" %}
+                <dt>{{ _label }}</dt><dd>{{ _value | escape }}</dd>
+                  {%- endif -%}
+                {%- endfor %}
+              </dl>
+            </div>
+              {%- endif -%}
+            {%- endfor -%}
           </section>
           {%- endif %}
 

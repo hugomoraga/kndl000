@@ -46,14 +46,13 @@ description: "Pensamiento continuo. Acumulación. Memoria. Lenguaje latiendo."
       {%- assign _year_prev = _year -%}
     {%- endif -%}
     <article class="rastro-bloque">
-      <span class="rastro-marca" aria-hidden="true">※</span>
       {%- assign _lineas = f.lineas | where_exp: "row", "row.linea != nil and row.linea != ''" -%}
-      <ul class="rastro-lista">
+      <p class="rastro-texto">
         {%- for row in _lineas -%}
           {%- assign t = row.linea -%}
-          <li>{{ t | escape }}</li>
+          <span class="rastro-linea">{{ t | escape }}</span>
         {%- endfor -%}
-      </ul>
+      </p>
     </article>
   {%- endif -%}
 {%- endfor -%}

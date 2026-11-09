@@ -3634,105 +3634,6 @@ main.fragmentos-archive {
   letter-spacing: 0.005em;
 }
 
-main.fragmentos-archive .rastros-lead {
-  font-style: italic;
-  color: rgba(180, 180, 200, 0.6);
-  font-size: var(--fs-lead);
-  line-height: var(--lh-snug);
-  margin: 0 0 3.5rem;
-  max-width: 32rem;
-}
-
-main.fragmentos-archive .rastros-year {
-  font-family: var(--font-mono);
-  font-size: var(--fs-small);
-  letter-spacing: 0.18em;
-  color: rgba(160, 160, 180, 0.4);
-  margin: 3.5rem 0 1.5rem;
-  text-transform: uppercase;
-}
-
-main.fragmentos-archive .rastros-year-sep {
-  display: none;
-}
-
-main.fragmentos-archive .rastro-bloque {
-  /* Cuaderno: el bloque no reacciona. El texto está, no se mueve,
-     no cambia de color al pasar el mouse. Como página escrita. */
-  margin: 0 0 2.6rem;
-  padding: 0;
-  cursor: text;
-}
-
-main.fragmentos-archive .rastro-linea {
-  margin: 0;
-  padding: 0;
-  font-family: var(--font-serif);
-  font-size: 1.1rem;
-  line-height: 1.75;
-  color: rgba(210, 210, 220, 0.85);
-}
-
-main.fragmentos-archive .rastro-linea + .rastro-linea {
-  margin-top: 0.5rem;
-  color: rgba(200, 200, 210, 0.8);
-}
-
-main.fragmentos-archive .rastro-marca {
-  display: block;
-  color: rgba(200, 170, 130, 0.45);
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  margin-bottom: 0.4rem;
-  letter-spacing: 0.3em;
-  padding-left: 0.2rem;
-}
-
-main.fragmentos-archive .rastro-lista {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 0 1.4rem;
-}
-
-main.fragmentos-archive .rastro-lista li {
-  position: relative;
-  padding: 0.2rem 0 0.2rem 0.9rem;
-  font-family: var(--font-serif);
-  font-size: 1.1rem;
-  line-height: 1.75;
-  color: rgba(210, 210, 220, 0.85);
-}
-
-main.fragmentos-archive .rastro-lista li::before {
-  content: "·";
-  position: absolute;
-  left: 0;
-  top: 0.4rem;
-  color: rgba(200, 170, 130, 0.55);
-  font-family: var(--font-mono);
-  font-size: 1.1em;
-  line-height: 1;
-}
-
-main.fragmentos-archive .rastro-lista li + li {
-  color: rgba(200, 200, 210, 0.8);
-}
-
-@media (max-width: 600px) {
-  main.fragmentos-archive {
-    line-height: var(--lh-base);
-  }
-  main.fragmentos-archive .rastros-year {
-    margin-top: 2.5rem;
-  }
-  main.fragmentos-archive .rastro-bloque {
-    margin-bottom: 1.8rem;
-  }
-  main.fragmentos-archive .rastro-linea {
-    font-size: 1.05rem;
-  }
-}
-
 /* Laboratorio (inicio) */
 .lab {
   margin: 2rem 0 2.5rem;
@@ -7124,7 +7025,10 @@ body.reading-melange .page-title .init a:hover {
   color: var(--umbral-muted);
 }
 
-/* --- Rastros ------------------------------------------------------------- */
+/* --- Rastros -------------------------------------------------------------
+   Libro de aforismos: una sola columna, líneas del mismo peso y sin viñetas.
+   Cada rastro se separa con aire y una marca vertical de 1px en el margen.
+   ------------------------------------------------------------------------- */
 
 body.reading-rastros .rastros-lead {
   max-width: var(--reading-measure);
@@ -7137,8 +7041,11 @@ body.reading-rastros .rastros-lead {
 }
 
 body.reading-rastros .rastros-year {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
   max-width: var(--reading-measure);
-  margin: 3rem auto 1rem;
+  margin: 3.5rem auto 1.75rem;
   font-family: var(--font-mono);
   font-size: 0.7rem;
   letter-spacing: 0.18em;
@@ -7146,42 +7053,62 @@ body.reading-rastros .rastros-year {
   color: var(--umbral-muted);
 }
 
+body.reading-rastros .rastros-year::after {
+  content: "";
+  flex: 1 1 auto;
+  height: 1px;
+  background: var(--umbral-rule-faint);
+}
+
 body.reading-rastros .rastro-bloque {
-  max-width: var(--reading-measure);
-  margin: 0 auto 2rem;
-  padding: 0;
-}
-
-body.reading-rastros .rastro-marca {
-  display: block;
-  margin-bottom: 0.45rem;
-  padding-left: 0.1rem;
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  color: var(--umbral-faint);
-}
-
-body.reading-rastros .rastro-lista {
-  margin: 0;
-  padding: 0 0 0 1.4rem;
-  list-style: none;
-}
-
-body.reading-rastros .rastro-lista li {
   position: relative;
+  max-width: var(--reading-measure);
+  margin: 0 auto 2.75rem;
+  padding: 0 0 0 2.2rem;
+  cursor: text;
+}
+
+body.reading-rastros .rastro-bloque::before {
+  content: "";
+  position: absolute;
+  top: 0.38em;
+  left: 0;
+  width: 1px;
+  height: 1.15em;
+  background: var(--umbral-rule);
+}
+
+body.reading-rastros .rastro-texto {
   margin: 0;
-  padding: 0.15rem 0;
   font-family: var(--font-serif);
   font-size: clamp(1.1rem, 2vw, 1.35rem);
   line-height: 1.65;
   color: var(--umbral-ink);
 }
 
-body.reading-rastros .rastro-lista li::before {
-  content: "·";
-  position: absolute;
-  left: -1rem;
-  color: var(--umbral-trace);
+body.reading-rastros .rastro-linea {
+  display: block;
+  color: inherit;
+}
+
+body.reading-rastros .rastro-linea + .rastro-linea {
+  margin-top: 0.2rem;
+}
+
+@media (max-width: 700px) {
+  body.reading-rastros .rastros-year {
+    margin-top: 2.5rem;
+  }
+
+  body.reading-rastros .rastro-bloque {
+    margin-bottom: 2.1rem;
+    padding-left: 1.4rem;
+  }
+
+  body.reading-rastros .rastro-texto {
+    font-size: 1.1rem;
+    line-height: 1.7;
+  }
 }
 
 body.reading-rastros main.reading-main > hr {
@@ -7581,14 +7508,46 @@ body.reading-melange-detail .melange-report__body > h2 {
   color: var(--umbral-ink);
 }
 
+body.reading-melange-detail .melange-report__spec {
+  margin: 1.75rem 0 2.5rem;
+}
+
+body.reading-melange-detail .melange-report__body h2,
+body.reading-melange-detail .melange-report__spec > h2 {
+  text-align: left;
+}
+
+body.reading-melange-detail .report-spec-group {
+  padding: 1.05rem 0 1.15rem;
+  border-top: 1px solid var(--umbral-rule-faint);
+}
+
+body.reading-melange-detail .report-spec-group:first-of-type {
+  border-top: 1px solid var(--umbral-rule);
+}
+
+body.reading-melange-detail .report-spec-group:last-of-type {
+  border-bottom: 1px solid var(--umbral-rule);
+}
+
+body.reading-melange-detail .report-spec-group__title {
+  margin: 0 0 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--umbral-muted);
+}
+
 body.reading-melange-detail .report-spec {
   display: grid;
   grid-template-columns: 9rem minmax(0, 1fr);
-  gap: 0.55rem 1.5rem;
-  margin: 1.5rem 0 2.5rem;
-  padding: 1.25rem 0;
-  border-top: 1px solid var(--umbral-rule);
-  border-bottom: 1px solid var(--umbral-rule);
+  gap: 0.45rem 1.5rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 
 body.reading-melange-detail .report-spec dt {
@@ -7634,6 +7593,11 @@ body.reading-melange-detail .report-spec dd {
 
   body.reading-melange-detail .report-spec dt {
     margin-top: 0.7rem;
+  }
+
+  body.reading-melange-detail .report-spec dd {
+    padding-bottom: 0;
+    border-bottom: 0;
   }
 
   .reading-detail__title {
