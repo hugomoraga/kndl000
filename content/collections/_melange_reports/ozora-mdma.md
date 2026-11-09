@@ -4,7 +4,7 @@ title: MDMA in OZORA 2025 - Hada - Pumpui Stage
 seo_title: ''
 subtitle: ''
 summary: ''
-date: ''
+date: 2025-07-30T21:00:00
 image: /assets/media/images/ozora-mdma.png
 alt: Escenario nocturno Pumpui en OZORA, luces en larga exposición, público frente al cabina
 image_credit: PASCALE
