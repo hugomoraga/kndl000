@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }} · {{ site.title }}{% endif %}</title>
+  {% include seo.html %}
+  {% include head-css.html %}
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+  {% include analytics.html %}
+</head>
+<body class="reading-poemas reading-investigacion">
+  <main class="reading-main">
+    <nav class="reading-breadcrumb" aria-label="Ruta">
+      {% include section-link.html url="/investigacion/" %}
+      <a href="{{ '/' | relative_url }}" aria-label="Inicio">∅ INIT</a>
+    </nav>
+
+    <header class="expediente__head">
+      <h1 class="expediente__title">{{ page.title }}</h1>
+      {% if page.question %}
+      <p class="expediente__question">{{ page.question }}</p>
+      {% endif %}
+      <p class="expediente__meta">
+        <span>expte. {{ page.order }}</span>
+        <span>{{ page.status }}</span>
+        {% if page.fields %}<span>{{ page.fields | join: " · " }}</span>{% endif %}
+        {% if page.updated %}<span>actualizado {{ page.updated | date: "%Y-%m-%d" }}</span>{% endif %}
+      </p>
+    </header>
+
+    <div class="expediente">
+      <div class="expediente__body reading-body">
+        {{ content }}
+      </div>
+
+      <aside class="expediente__margin" aria-label="Corpus y conceptos">
+        {% if page.corpus %}
+        <section class="expediente__block">
+          <h2 class="expediente__margin-title">Corpus</h2>
+          {% include investigacion-corpus.html %}
+        </section>
+        {% endif %}
+
+        {% if page.concepts %}
+        <section class="expediente__block">
+          <h2 class="expediente__margin-title">Conceptos</h2>
+          <ul class="expediente__concepts">
+            {% for concept in page.concepts %}
+            {% assign _slug = concept | slugify %}
+            <li><a href="{{ '/investigacion/conceptos/' | relative_url }}#{{ _slug }}">{{ concept }}</a></li>
+            {% endfor %}
+          </ul>
+        </section>
+        {% endif %}
+      </aside>
+    </div>
+
+    {% include back-button.html %}
+    {% include section-rail.html %}
+  </main>
+</body>
+</html>

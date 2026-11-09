@@ -1,0 +1,53 @@
+{%- comment -%}
+  Corpus de un expediente.
+  Cada entrada de page.corpus puede traer url + note. La pieza se resuelve
+  contra las colecciones del archivo para mostrar su tipo, sigilo y título.
+{%- endcomment -%}
+{%- assign _collections = "poems|images|codigos|melange_reports|dispositivos|vestigios" | split: "|" -%}
+<ul class="expediente-corpus">
+  {%- for item in page.corpus -%}
+    {%- assign _url = item.url -%}
+    {%- assign _title = item.label -%}
+    {%- assign _kind = item.kind -%}
+    {%- assign _sigil = item.sigil -%}
+    {%- assign _glyph = "" -%}
+
+    {%- if _url == "/fragmentos/" -%}
+      {%- assign _title = "Rastros" -%}
+      {%- assign _kind = "Rastro" -%}
+      {%- assign _sigil = "rastros" -%}
+    {%- else -%}
+      {%- for _collection in _collections -%}
+        {%- assign _doc = site[_collection] | where: "url", _url | first -%}
+        {%- if _doc -%}
+          {%- assign _title = _doc.title -%}
+          {%- case _collection -%}
+            {%- when "poems" -%}{%- assign _kind = "Poema" -%}{%- assign _sigil = "poemas" -%}
+            {%- when "images" -%}{%- assign _kind = "Imagen" -%}{%- assign _sigil = "imaginario" -%}
+            {%- when "codigos" -%}{%- assign _kind = "Código" -%}{%- assign _sigil = "codigo" -%}
+            {%- when "melange_reports" -%}{%- assign _kind = "Reporte" -%}{%- assign _sigil = "melange" -%}
+            {%- when "dispositivos" -%}{%- assign _kind = "Dispositivo" -%}{%- assign _sigil = "dispositivos" -%}
+            {%- when "vestigios" -%}{%- assign _kind = "Vestigio" -%}{%- assign _sigil = "vestigios" -%}
+          {%- endcase -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+
+    {%- assign _nav = site.data.navigation | where: "sigil", _sigil | first -%}
+    {%- if _nav -%}{%- assign _glyph = _nav.glyph -%}{%- endif -%}
+
+  <li class="expediente-corpus__item">
+    <a href="{{ _url | relative_url }}">
+      {%- if _glyph != "" -%}
+      <span class="sigil sigil--{{ _sigil }}" aria-hidden="true"><span class="sigil__glyph">{{ _glyph }}</span></span>
+      {%- endif -%}
+      <span class="expediente-corpus__kind">{{ _kind | default: "Archivo" }}</span>
+      <span class="expediente-corpus__title">{{ _title | default: _url }}</span>
+    </a>
+    {%- if item.note -%}
+    <p class="expediente-corpus__note">{{ item.note }}</p>
+    {%- endif -%}
+  </li>
+  {%- endfor -%}
+</ul>

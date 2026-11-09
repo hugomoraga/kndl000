@@ -96,6 +96,9 @@ collections:
   dispositivos:
     output: true
     permalink: /dispositivos/:name/
+  investigaciones:
+    output: true
+    permalink: /investigacion/:name/
 
 defaults:
   - scope:

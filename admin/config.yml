@@ -150,6 +150,45 @@ collections:
           - { label: Resultado, name: outcome, widget: string, required: false }
       - { label: Body, name: body, widget: markdown }
 
+  - name: investigaciones
+    label: "⌖ Investigación"
+    label_singular: Expediente
+    folder: content/collections/_investigaciones
+    create: true
+    format: frontmatter
+    slug: "{{slug}}"
+    fields:
+      - { label: Layout, name: layout, widget: hidden, default: investigacion }
+      - { label: Title, name: title, widget: string }
+      - { label: Question, name: question, widget: string, required: false }
+      - { label: Summary, name: summary, widget: text, required: false }
+      - { label: Order, name: order, widget: string, required: false, hint: "01, 02, 03…" }
+      - label: Status
+        name: status
+        widget: select
+        default: abierta
+        options: [abierta, en curso, cerrada]
+      - { label: Date, name: date, widget: datetime, required: false }
+      - { label: Updated, name: updated, widget: datetime, required: false }
+      - label: Campos
+        name: fields
+        widget: list
+        required: false
+        field: { label: Campo, name: campo, widget: string }
+      - label: Conceptos
+        name: concepts
+        widget: list
+        required: false
+        field: { label: Concepto, name: concepto, widget: string }
+      - label: Corpus
+        name: corpus
+        widget: list
+        required: false
+        fields:
+          - { label: URL, name: url, widget: string }
+          - { label: Nota, name: note, widget: text, required: false }
+      - { label: Body, name: body, widget: markdown }
+
   - name: codigos
     label: "◊ Código"
     label_singular: Código

@@ -91,3 +91,13 @@
   primary: false
   detail_prefixes:
     - /musica/
+
+- name: Investigación
+  url: /investigacion/
+  glyph: "⌖"
+  sigil: investigacion
+  description: "Preguntas que atraviesan el archivo."
+  primary: false
+  featured: true
+  detail_prefixes:
+    - /investigacion/
