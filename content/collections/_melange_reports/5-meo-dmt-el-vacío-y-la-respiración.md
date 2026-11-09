@@ -5,7 +5,7 @@ seo_title: ''
 subtitle: Bailar para no morir
 summary: ''
 date: 2023-07-18T22:09:00
-image: ''
+image: /assets/media/images/pasted-image-1794187584955.png
 alt: ''
 image_credit: ''
 series: ''
