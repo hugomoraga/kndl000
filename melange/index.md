@@ -51,3 +51,17 @@ nav_order: 6
     </article>
   {% endfor %}
 </div>
+
+{%- assign melange_pending = site.melange_reports | where: "wip", true -%}
+{%- if melange_pending.size > 0 %}
+<section class="melange-pending" aria-labelledby="melange-pending-title">
+  <header class="melange-pending__head">
+    <h2 class="melange-pending__title" id="melange-pending-title">En curso · {{ melange_pending.size }}</h2>
+  </header>
+  <ul class="melange-pending__list">
+    {%- for report in melange_pending %}
+    <li class="melange-pending__item"><a href="{{ report.url | relative_url }}">{{ report.title }}</a></li>
+    {%- endfor %}
+  </ul>
+</section>
+{%- endif %}
