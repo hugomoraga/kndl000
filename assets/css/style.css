@@ -7502,11 +7502,17 @@ body.reading-melange-detail .melange-report__subtitle {
 
 body.reading-melange-detail .melange-report__dossier {
   display: grid;
-  grid-template-columns: minmax(0, 28rem) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 28rem);
   gap: clamp(1.5rem, 3vw, 2.5rem);
   align-items: start;
   max-width: var(--reading-measure);
   margin: 0 auto 2.5rem;
+}
+
+@media (min-width: 901px) {
+  body.reading-melange-detail .melange-report__spec {
+    order: -1;
+  }
 }
 
 body.reading-melange-detail .melange-report__dossier--no-image {
