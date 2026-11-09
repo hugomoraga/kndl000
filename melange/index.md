@@ -13,7 +13,11 @@ nav_order: 6
 
 <p class="reading-lede">Cuaderno de campo. Notas sueltas, fechas aproximadas, reportes de travesía… sicodélica.</p>
 
-{% assign melange_sorted = site.melange_reports | sort: 'date' | reverse %}
+{%- comment -%}
+  El índice solo muestra reportes publicados. Los borradores (wip: true)
+  siguen disponibles en el CMS y en el laboratorio, pero no se listan acá.
+{%- endcomment -%}
+{% assign melange_sorted = site.melange_reports | where_exp: "item", "item.wip != true" | sort: 'date' | reverse %}
 {% if melange_sorted.size == 0 %}
 <p class="reading-empty">Todavía no hay reportes publicados.</p>
 {% endif %}
@@ -36,13 +40,11 @@ nav_order: 6
       {% endif %}
     {% endif %}
 
-    <article class="melange-item{% if melanges.wip %} is-wip{% endif %}">
+    <article class="melange-item">
       <time class="melange-item__date" datetime="{{ melanges.date | date: '%Y-%m-%d' }}">{{ melanges.date | date: "%Y-%m-%d" }}</time>
       <div class="melange-item__body">
         <h2 class="melange-item__title"><a href="{{ melanges.url | relative_url }}">{{ melanges.title }}</a></h2>
-        {% if melanges.wip %}
-          <p class="melange-item__status">en curso</p>
-        {% elsif _preview != '' %}
+        {% if _preview != '' %}
           <p class="melange-item__lead">{{ _preview }}</p>
         {% endif %}
       </div>
