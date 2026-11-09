@@ -136,4 +136,5 @@ main_class: umbral-main
   <p class="umbral-noscript">La cámara generativa y el laboratorio requieren JavaScript. La navegación, los poemas, las imágenes y el archivo completo siguen disponibles sin él.</p>
 </noscript>
 
+<script src="{{ '/assets/js/core/home-descent.js' | relative_url }}" defer></script>
 <script src="{{ '/assets/js/bundles/home.bundle.js' | relative_url }}" defer></script>

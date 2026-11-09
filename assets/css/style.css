@@ -4130,6 +4130,11 @@ body.umbral-page :focus-visible {
   padding: clamp(1.1rem, 2.4vw, 2rem);
   overflow: hidden;
   isolation: isolate;
+  transition: opacity 0.55s ease;
+}
+
+.umbral.is-descending {
+  opacity: 0.52;
 }
 
 .umbral__chamber {
@@ -4212,6 +4217,11 @@ body.umbral-page #art.umbral__chamber {
   justify-content: center;
   gap: clamp(1.5rem, 4vh, 3rem);
   padding: clamp(2rem, 8vh, 6rem) 0;
+  transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.umbral.is-descending .umbral__stage {
+  transform: translateY(-16px);
 }
 
 .umbral__title {
@@ -4361,13 +4371,26 @@ body.umbral-page #art.umbral__chamber {
   text-decoration: none;
 }
 
+.umbral__descent span {
+  transition: opacity 0.35s ease;
+}
+
 .umbral__descent svg {
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
 }
 
 .umbral__descent:hover svg,
 .umbral__descent:focus-visible svg {
   transform: translateY(5px);
+}
+
+.umbral.is-descending .umbral__descent span,
+.umbral.is-descending .umbral__descent svg {
+  opacity: 0.35;
+}
+
+.umbral.is-descending .umbral__descent svg {
+  transform: translateY(18px);
 }
 
 /* --- cita / rastro -------------------------------------------------------- */
@@ -4904,6 +4927,9 @@ body.umbral-page .lab-fallback {
   }
 
   .umbral-skip,
+  .umbral,
+  .umbral__stage,
+  .umbral__descent span,
   .umbral__nav a::after,
   .umbral__descent svg,
   .umbral-exits__glyph,
