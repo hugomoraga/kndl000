@@ -1,8 +1,9 @@
 ---
 layout: default
-title: "Fragmento de papel"
+title: Fragmento de papel
+image: ''
 date: 2025-01-15
-image: /assets/media/images/object-001.png
+hermes: false
 ---
 
 Encontrado en la calle.  
@@ -14,4 +15,3 @@ Texto parcialmente borrado por la lluvia.
 El resto es ilegible.  
 Solo quedan estas palabras.  
 Y la pregunta que no tiene respuesta.
-
