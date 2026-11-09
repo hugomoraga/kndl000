@@ -9,7 +9,7 @@ image: /assets/media/images/ozora-mdma.png
 alt: Escenario nocturno Pumpui en OZORA, luces en larga exposición, público frente al cabina
 image_credit: PASCALE
 series: ''
-wip: true
+wip: false
 effects: true
 ficha:
   substance: MDMA
