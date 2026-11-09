@@ -46,7 +46,11 @@
       {% endif %}
 
       <div class="dispositivo-page__body">
-        {{ content }}
+        {%- assign _dispositivo_body = content -%}
+        {%- unless _dispositivo_body contains '<h2' -%}
+          {%- assign _dispositivo_body = _dispositivo_body | replace: '<h3', '<h2' | replace: '</h3>', '</h2>' -%}
+        {%- endunless -%}
+        {{ _dispositivo_body }}
       </div>
 
       {% include back-button.html %}
