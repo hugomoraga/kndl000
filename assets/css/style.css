@@ -5672,6 +5672,10 @@ body.codigo-detail .term__block--grid {
   scrollbar-color: rgba(159, 198, 201, 0.22) transparent;
 }
 
+body.codigo-detail .term__figure .term__block--grid {
+  line-height: 1.05;
+}
+
 body.codigo-detail .term__figure-caption {
   max-width: 62ch;
   margin: 0.5rem auto 0;
@@ -5731,7 +5735,9 @@ body.codigo-detail .term__block--trace {
 body.codigo-detail .term__trace {
   display: block;
   width: 100%;
-  height: 140px;
+  max-width: 62ch;
+  height: 120px;
+  margin: 0.35rem auto 0.85rem;
   color: var(--umbral-trace);
   overflow: visible;
 }

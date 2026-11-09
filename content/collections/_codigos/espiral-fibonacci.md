@@ -7,222 +7,177 @@ concept: "La recursión como principio universal. La proporción que se encuentr
 ---
 
 ```javascript
-// La Recursión Universal - La Proporción que se Encuentra - La Belleza Emergente
-// Cada número contiene los anteriores. La proporción aparece en todo. La belleza emerge de lo simple.
+// Espiral de Fibonacci — la proporción que emerge de sumar los dos términos anteriores.
+// Cada generación agrega un término, revela un tramo de la espiral áurea y muestra
+// el ratio F(n)/F(n−1) acercándose a φ.
 
-const iteraciones = parseInt(input("¿Cuántas generaciones quieres observar?"));
-const filas = 60;
-const columnas = 60;
+const pedidos = parseInt(input("¿Cuántos términos de Fibonacci? (3–12)"), 10);
+const iteraciones = Math.max(3, Math.min(12, isNaN(pedidos) ? 8 : pedidos));
 
-// Calcular proporción áurea (φ) - La proporción que se encuentra en todo
-const phi = (1 + Math.sqrt(5)) / 2; // ≈ 1.618...
+const phi = (1 + Math.sqrt(5)) / 2;
+const filas = 31;
+const columnas = 31;
+const centro = Math.floor(filas / 2);
 
-// Generar secuencia de Fibonacci - La recursión como principio universal
-// Cada número contiene los anteriores: F(n) = F(n-1) + F(n-2)
+// Espiral logarítmica: r = a · φ^(θ / (π/2)).
+// El radio se multiplica por φ en cada cuarto de giro.
+const maxR = centro - 1;
+const a = 1.5;
+const thetaMax = (Math.PI / 2) * Math.log(maxR / a) / Math.log(phi);
+const espiral = [];
+for (let theta = 0; theta <= thetaMax; theta += 0.006) {
+  const r = a * Math.pow(phi, theta / (Math.PI / 2));
+  espiral.push({ theta, r, x: Math.cos(theta) * r, y: Math.sin(theta) * r });
+}
+
+// Encajar la espiral completa en la grilla sin deformarla.
+const xs = espiral.map((p) => p.x).concat(0);
+const ys = espiral.map((p) => p.y).concat(0);
+const minX = Math.min(...xs);
+const maxX = Math.max(...xs);
+const minY = Math.min(...ys);
+const maxY = Math.max(...ys);
+const margen = 1;
+const escala = (filas - 1 - 2 * margen) / Math.max(maxX - minX, maxY - minY);
+const offsetX = (columnas - (maxX - minX) * escala) / 2 - minX * escala;
+const offsetY = (filas - (maxY - minY) * escala) / 2 - minY * escala;
+
 function fibonacci(n) {
   if (n <= 1) return n;
-  let a = 0, b = 1;
+  let a = 0;
+  let b = 1;
   for (let i = 2; i <= n; i++) {
-    [a, b] = [b, a + b]; // Cada número es la suma de los dos anteriores
+    [a, b] = [b, a + b];
   }
   return b;
 }
 
-// Mostrar la recursión: cómo cada número contiene los anteriores
-function mostrarRecursion(n) {
-  if (n <= 1) return String(n);
-  const fibN = fibonacci(n);
-  const fibN1 = fibonacci(n - 1);
-  const fibN2 = fibonacci(n - 2);
-  return `${fibN} = ${fibN1} + ${fibN2}`;
+function secuenciaHasta(n) {
+  const terminos = [];
+  for (let i = 1; i <= n; i++) terminos.push(fibonacci(i));
+  return terminos;
 }
 
-// Crear grid inicial
-let grid = [];
-for (let i = 0; i < filas; i++) {
-  grid[i] = [];
-  for (let j = 0; j < columnas; j++) {
-    grid[i][j] = 0; // 0 = vacío, números = generación
-  }
+function recursion(n) {
+  if (n <= 2) return `${fibonacci(n)} = base`;
+  return `${fibonacci(n)} = ${fibonacci(n - 1)} + ${fibonacci(n - 2)}`;
 }
 
-// Células vivas: {x, y, generacion, edad}
-let celulas = [];
-let generacionActual = 0;
-
-// Iniciar con una célula en el centro
-const centroX = Math.floor(filas / 2);
-const centroY = Math.floor(columnas / 2);
-celulas.push({ x: centroX, y: centroY, gen: 0, edad: 0 });
-grid[centroX][centroY] = 1;
-
-// Función para obtener posiciones en espiral desde un punto
-function obtenerPosicionesEspiral(x, y, radio) {
-  const posiciones = [];
-  
-  // Generar posiciones en espiral usando φ
-  for (let angulo = 0; angulo < Math.PI * 2 * 3; angulo += Math.PI / 4) {
-    const r = radio * (1 + angulo / (Math.PI * 2));
-    const nx = Math.floor(x + Math.cos(angulo) * r);
-    const ny = Math.floor(y + Math.sin(angulo) * r);
-    
-    if (nx >= 0 && nx < filas && ny >= 0 && ny < columnas) {
-      posiciones.push({ x: nx, y: ny, distancia: r });
-    }
-  }
-  
-  // Ordenar por distancia y eliminar duplicados
-  posiciones.sort((a, b) => a.distancia - b.distancia);
-  const unicas = [];
-  const vistas = new Set();
-  
-  for (let pos of posiciones) {
-    const key = `${pos.x},${pos.y}`;
-    if (!vistas.has(key)) {
-      vistas.add(key);
-      unicas.push({ x: pos.x, y: pos.y });
-    }
-  }
-  
-  return unicas;
+function ratio(n) {
+  if (n < 2) return null;
+  return fibonacci(n) / fibonacci(n - 1);
 }
 
-// Crecer según Fibonacci en espiral: 1, 1, 2, 3, 5, 8, 13...
-function crecerGeneracion() {
-  if (generacionActual >= iteraciones) return;
-  
-  generacionActual++;
-  const fibValue = fibonacci(generacionActual);
-  
-  // Limitar crecimiento para que dure más pero mantenga el patrón
-  const nuevasCelulas = [];
-  let celulasCreadas = 0;
-  // Crecimiento más sostenible: mínimo 3, máximo basado en Fibonacci pero limitado
-  const objetivoTotal = Math.min(Math.max(fibValue, 3), 40); // Mínimo 3, máximo 40
-  
-  // Obtener todas las posiciones en espiral desde el centro
-  const radio = generacionActual * 2;
-  const posicionesEspiral = obtenerPosicionesEspiral(centroX, centroY, radio);
-  
-  // Crear nuevas células en espiral
-  for (let i = 0; i < posicionesEspiral.length && celulasCreadas < objetivoTotal; i++) {
-    const pos = posicionesEspiral[i];
-    
-    // Regla de pisado: solo reemplazar si la célula es muy vieja (más de 5 generaciones)
-    const celulaExistente = celulas.find(c => c.x === pos.x && c.y === pos.y);
-    
-    if (!celulaExistente) {
-      // Celda vacía, crear nueva
-      grid[pos.x][pos.y] = generacionActual + 1;
-      nuevasCelulas.push({ x: pos.x, y: pos.y, gen: generacionActual, edad: 0 });
-      celulasCreadas++;
-    } else if (celulaExistente.gen < generacionActual - 6) {
-      // Solo reemplazar células muy viejas (más de 6 generaciones)
-      grid[pos.x][pos.y] = generacionActual + 1;
-      // Remover la vieja
-      celulas = celulas.filter(c => !(c.x === pos.x && c.y === pos.y));
-      nuevasCelulas.push({ x: pos.x, y: pos.y, gen: generacionActual, edad: 0 });
-      celulasCreadas++;
-    }
+function dibujarEspiral(progreso) {
+  const grid = Array.from({ length: filas }, () => Array(columnas).fill(" "));
+  const thetaFin = thetaMax * progreso;
+  const vistos = new Set();
+
+  for (const punto of espiral) {
+    if (punto.theta > thetaFin) break;
+    const x = Math.round(offsetX + punto.x * escala);
+    const y = Math.round(offsetY + punto.y * escala);
+    if (x < 0 || x >= columnas || y < 0 || y >= filas) continue;
+
+    const key = x + "," + y;
+    if (vistos.has(key)) continue;
+    vistos.add(key);
+
+    let simbolo = "░";
+    if (punto.r < maxR * 0.3) simbolo = "█";
+    else if (punto.r < maxR * 0.55) simbolo = "▓";
+    else if (punto.r < maxR * 0.8) simbolo = "▒";
+
+    grid[y][x] = simbolo;
   }
-  
-  // Envejecer células existentes (más lento)
-  for (let celula of celulas) {
-    celula.edad++;
-    // Las células muy viejas (más de 8 generaciones) pueden desaparecer con baja probabilidad
-    // Esto mantiene el patrón visible por más tiempo
-    if (celula.edad > 8 && Math.random() < 0.05) {
-      grid[celula.x][celula.y] = 0;
-    }
+
+  const cx = Math.round(offsetX);
+  const cy = Math.round(offsetY);
+  if (cx >= 0 && cx < columnas && cy >= 0 && cy < filas) {
+    grid[cy][cx] = "●";
   }
-  
-  // Filtrar células que desaparecieron
-  celulas = celulas.filter(c => grid[c.x][c.y] > 0);
-  
-  // Asegurar que siempre haya un mínimo de células para mantener el patrón
-  if (celulas.length === 0 && generacionActual > 0) {
-    // Si todas desaparecieron, crear algunas nuevas desde el centro
-    const nuevasDesdeCentro = obtenerPosicionesEspiral(centroX, centroY, 3);
-    for (let i = 0; i < Math.min(5, nuevasDesdeCentro.length); i++) {
-      const pos = nuevasDesdeCentro[i];
-      if (grid[pos.x][pos.y] === 0) {
-        grid[pos.x][pos.y] = generacionActual + 1;
-        celulas.push({ x: pos.x, y: pos.y, gen: generacionActual, edad: 0 });
-      }
-    }
-  }
-  
-  // Agregar las nuevas células
-  celulas = celulas.concat(nuevasCelulas);
+
+  return grid.map((fila) => fila.join("")).join("\n");
 }
 
-function mostrarPatron(generacion) {
-  // Limpiar output anterior
+function mostrar(generacion) {
   output("[CLEAR]");
-  
-  const fibActual = fibonacci(generacion);
-  const celulasVivas = celulas.length;
-  const ratio = generacion > 1 ? (fibonacci(generacion) / fibonacci(Math.max(generacion - 1, 1))).toFixed(6) : "0";
-  const recursion = generacion > 1 ? mostrarRecursion(generacion) : "0 = base";
-  
-  const simbolos = ["·", "○", "◉", "◐", "◑", "◒", "◓", "◔", "◕", "●", "◆", "▲", "■", "□", "▪", "▫", "▬", "▭", "▮", "▯"];
-  let gridText = "";
 
-  for (let i = 0; i < filas; i++) {
-    let fila = "";
-    for (let j = 0; j < columnas; j++) {
-      const valor = grid[i][j];
-      if (valor === 0) {
-        fila += " ";
-      } else {
-        const gen = valor - 1;
-        const simboloIdx = gen % simbolos.length;
-        fila += simbolos[simboloIdx];
-      }
-    }
-    gridText += fila + "\n";
-  }
+  const fib = fibonacci(generacion);
+  const terminos = secuenciaHasta(generacion);
+  const r = ratio(generacion);
+  const error = r === null ? null : (Math.abs(r - phi) / phi) * 100;
+  const progreso = generacion / iteraciones;
 
   output({
     type: "meta",
-    text: `Generación ${generacion} · Fibonacci = ${fibActual} · ${celulasVivas} células vivas`
+    text: `Generación ${generacion} · F(${generacion}) = ${fib} · ${filas} × ${columnas}`
   });
   output({
     type: "legend",
-    text: `Recursión: ${recursion}\n` +
-          `Proporción áurea (φ) = ${phi.toFixed(6)} · ratio actual = ${ratio} → ` +
-          (ratio > 0 && Math.abs(parseFloat(ratio) - phi) < 0.1 ? "≈ φ" : "convergiendo a φ")
+    text: `Secuencia: ${terminos.length ? terminos.join(" · ") : "—"}`
   });
   output({
-    type: "grid",
-    data: gridText,
-    caption: "cada símbolo marca la generación en que nació la célula · espacio = vacío",
-    label: "Espiral de Fibonacci, generación " + generacion
+    type: "legend",
+    text: `Recursión: ${recursion(generacion)}`
   });
+  output({
+    type: "legend",
+    text: r === null
+      ? `φ = ${phi.toFixed(6)} · ratio = —`
+      : `φ = ${phi.toFixed(6)} · ratio = ${r.toFixed(6)} · error = ${error.toFixed(3)}%`
+  });
+
+  output({
+    type: "grid",
+    data: dibujarEspiral(progreso),
+    caption: "espiral áurea · el radio crece φ cada cuarto de giro",
+    label: `Espiral de Fibonacci, generación ${generacion}`
+  });
+  output({
+    type: "legend",
+    text: "● centro · █ núcleo · ▓ medio · ▒ exterior · ░ borde"
+  });
+
+  if (generacion >= 3) {
+    const puntos = [];
+    for (let n = 2; n <= generacion; n++) {
+      puntos.push([n, fibonacci(n) / fibonacci(n - 1)]);
+    }
+    output({ type: "meta", text: "Convergencia del ratio" });
+    output({
+      type: "trace",
+      points: puntos,
+      label: `Ratio F(n)/F(n−1) hasta la generación ${generacion}`
+    });
+  }
 }
 
-// Mostrar estado inicial
-mostrarPatron(0);
+mostrar(0);
 
-// Evolucionar mostrando el crecimiento progresivo
+let gen = 0;
+
 function evolucionar() {
-  if (generacionActual < iteraciones) {
+  if (gen < iteraciones) {
     setTimeout(() => {
-      crecerGeneracion();
-      mostrarPatron(generacionActual);
+      gen++;
+      mostrar(gen);
       evolucionar();
-    }, 600); // 600 milisegundos entre generaciones para ver el crecimiento
+    }, 450);
   } else {
     setTimeout(() => {
+      const r = ratio(iteraciones);
+      const error = r === null ? 0 : (Math.abs(r - phi) / phi) * 100;
       output({
         type: "conclusion",
-        text: "La recursión se ha completado.\n" +
-              "Cada número contenía los anteriores.\n" +
-              "La proporción áurea (φ = " + phi.toFixed(6) + ") se encontró en todo.\n" +
-              "La belleza matemática emergió de patrones simples.\n\n" +
-              "¿La recursión es el principio universal?\n" +
-              "¿La proporción se encuentra o se impone?\n" +
-              "¿La belleza es matemática o las matemáticas son bellas?"
+        text:
+          `La espiral se completó después de ${iteraciones} términos.\n` +
+          `F(${iteraciones}) = ${fibonacci(iteraciones)}. ` +
+          `El ratio ${r === null ? "—" : r.toFixed(6)} se acerca a φ = ${phi.toFixed(6)}.\n` +
+          `La diferencia es ${error.toFixed(3)}%. La proporción no se impone: ` +
+          `emerge de sumar los dos términos anteriores.\n\n` +
+          `¿La proporción se encuentra o se impone?\n` +
+          `¿La belleza es matemática o las matemáticas son bellas?`
       });
     }, 100);
   }
