@@ -26,6 +26,7 @@ SOFT = "rgba(233,230,220,0.055)"
 SERIF = "'Newsreader', Georgia, serif"
 MONO = "'JetBrains Mono', ui-monospace, monospace"
 SANS = "'Lato', system-ui, sans-serif"
+EXPLORACION_URL = "/rizoma/que-se-conserva-cuando-algo-se-repite/"
 
 
 def text(x, y, s, size=14, fill=INK, family=SERIF, italic=False, anchor=None,
@@ -112,8 +113,12 @@ CONTOURS = """
 """
 
 
-def build() -> str:
+def build(site: bool = False) -> str:
     out: list[str] = []
+    back_nav = (
+        f'  <nav class="plate-back"><a href="{EXPLORACION_URL}">← Exploración 01</a></nav>\n'
+        if site else ""
+    )
     out.append(f'''<!doctype html>
 <html lang="es">
 <head>
@@ -135,6 +140,15 @@ def build() -> str:
   .diagram-container {{ width: 100%; overflow-x: auto; }}
   svg {{ width: 100%; min-width: 1280px; display: block; }}
   a {{ color: inherit; }}
+  .plate-back {{
+    margin-bottom: 1.25rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .68rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }}
+  .plate-back a {{ color: #9aa3a1; text-decoration: none; }}
+  .plate-back a:hover, .plate-back a:focus-visible {{ color: #9fc6c9; }}
   .read-alt {{
     position: absolute; width: 1px; height: 1px; overflow: hidden;
     clip-path: inset(50%); white-space: nowrap;
@@ -161,7 +175,7 @@ def build() -> str:
 </head>
 <body>
 <main>
-  <nav class="read-alt" aria-label="Lectura lineal de la lámina">
+{back_nav}  <nav class="read-alt" aria-label="Lectura lineal de la lámina">
     <h2>Lectura de la lámina</h2>
     <ul>
 ''')
@@ -183,7 +197,7 @@ def build() -> str:
     # Header
     out.append(linked("/rizoma/", text(44, 56, "KNDL · RIZOMA / LÁMINA 01", 10.5, MUTED, MONO, spacing="0.12em"), "Rizoma"))
     out.append(text(1236, 56, "2026-11-10 · ABIERTA", 10.5, MUTED, MONO, anchor="end", spacing="0.12em"))
-    out.append(linked("/rizoma/que-se-conserva-cuando-algo-se-repite/",
+    out.append(linked(EXPLORACION_URL,
                       text(44, 112, "¿Qué se conserva cuando algo se", 44, INK, SERIF, weight="300") +
                       text(44, 156, "repite?", 44, INK, SERIF, weight="300"),
                       "Volver a la exploración"))
@@ -249,4 +263,15 @@ def build() -> str:
 
 
 if __name__ == "__main__":
-    print(build(), end="")
+    import sys
+
+    html = build("--site" in sys.argv)
+    if "--site" in sys.argv:
+        html = (
+            "---\n"
+            "layout: null\n"
+            'title: "Lámina 01 — ¿Qué se conserva cuando algo se repite?"\n'
+            "permalink: /rizoma/que-se-conserva-cuando-algo-se-repite/lamina/\n"
+            "---\n"
+        ) + html
+    print(html, end="")

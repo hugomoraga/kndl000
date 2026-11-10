@@ -69,6 +69,13 @@
         </section>
         {% endif %}
 
+        {% if page.lamina %}
+        <section class="expediente__block">
+          <h2 class="expediente__margin-title">Lámina</h2>
+          <a class="expediente__history-link" href="{{ page.url | relative_url }}lamina/">Ver la lámina →</a>
+        </section>
+        {% endif %}
+
         <section class="expediente__block">
           <h2 class="expediente__margin-title">Evolución</h2>
           <a class="expediente__history-link" href="{{ page.url | relative_url }}historial/">Ver historial de versiones →</a>

@@ -197,6 +197,7 @@ collections:
         options: [abierta, pausada, cerrada]
       - { label: Date, name: date, widget: datetime, required: false }
       - { label: Updated, name: updated, widget: datetime, required: false }
+      - { label: Lámina, name: lamina, widget: boolean, required: false, default: false, hint: "Muestra el enlace a la lámina cartográfica." }
       - label: Campos
         name: fields
         widget: list
