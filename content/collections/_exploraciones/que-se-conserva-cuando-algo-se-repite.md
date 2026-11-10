@@ -37,9 +37,11 @@ corpus:
   - url: /dispositivos/espiral/
     note: La máquina que repite para producir diferencia.
   - url: /codigo/experimento-shannon/
-    note: "La redundancia como lo que permite que un mensaje sobreviva al ruido."
+    note: "Las aproximaciones al lenguaje de Shannon, con cadenas de Markov de orden creciente."
+  - url: /codigo/voto-por-mayoria/
+    note: "Tres copias, un voto: la redundancia que corrige y su umbral."
   - url: /codigo/hormiga-langton/
-    note: "Dos reglas que van del caos al ciclo: la repetición que se ordena."
+    note: "Dos reglas que van del caos a un ciclo de 104 pasos: la repetición que se vuelve periódica."
 relacionadas:
   - /rizoma/archivo/
 hitos:
@@ -52,6 +54,12 @@ hitos:
   - date: 2026-11-10
     title: "Redundancia y archivo"
     text: "Se integra la redundancia como contra-cara del desgaste y la deriva se enlaza con Archivo."
+  - date: 2026-11-10
+    title: "Precisión y objeción"
+    text: "Se corrige la definición de redundancia, se separa el comportamiento de Langton de su lectura y se abre la objeción entre contenido y diferencia."
+  - date: 2026-11-10
+    title: "Un código de repetición"
+    text: "Se suma un experimento de redundancia con voto por mayoría y se enlaza desde §7."
 ---
 
 No es una tesis. Es una deriva.
@@ -89,7 +97,7 @@ La espiral es una forma de repetición que no puede ser idéntica. Si lo fuera, 
 
 En Código hay otras máquinas: un bucle que no termina, una recursión que desborda la pila, una iteración que pregunta cuántas veces querés existir. Esas no producen diferencia: insisten.
 
-Y hay una que empieza en cualquier parte y termina en un ciclo. La [hormiga de Langton](/codigo/hormiga-langton/) sigue dos reglas, pinta el tablero y, después de miles de pasos, entra en un ciclo de 104 pasos que ya no abandona. No creció: se ordenó.
+Y hay una que empieza en cualquier parte y termina en un ciclo. La [hormiga de Langton](/codigo/hormiga-langton/) sigue dos reglas, pinta el tablero y, después de miles de pasos, entra en un ciclo de 104 pasos que ya no abandona. No creció: se volvió periódico. Que eso sea orden es una lectura nuestra, no un resultado del sistema.
 
 La máquina no es una sola.
 
@@ -101,22 +109,33 @@ Por eso una serie de poemas no es la suma de sus partes. Es la conversación ent
 
 ## 7. Redundancia
 
-La repetición gasta, pero también sostiene. Un mensaje dicho una sola vez se pierde en el ruido; uno que se repite llega. [Shannon](/codigo/experimento-shannon/) llamó redundancia a lo que sobra: la parte que no hace falta para entender el mensaje y que sirve para que llegue.
+La repetición gasta, pero también sostiene. Un mensaje dicho una sola vez se pierde en el ruido; uno que se repite llega. Shannon llamó redundancia a la diferencia entre la entropía máxima de una fuente y su entropía real: la parte del mensaje que está determinada por su estructura. No es un resto: es lo que permite detectar o corregir errores y resistir el ruido.
 
 Repetir, entonces, no solo consume potencia: también corrige. Y lo que se conservó no fue lo más valioso, sino lo que se repitió lo suficiente para llegar hasta acá. Una copia, una cita, una lista, un índice: formas de redundancia.
+
+En Código hay una versión mínima de esa corrección: un [código de repetición](/codigo/voto-por-mayoria/) que triplica cada bit, vota por mayoría y mide cuánto se corrige. También muestra el límite: si el canal es peor que el azar, la repetición amplifica el error.
 
 Pero la redundancia tiene un costo. Ocupa lugar, vuelve previsible el mensaje, gasta la atención de quien lo recibe. Lo que se repite demasiado se vuelve paisaje: se deja de oír. Ahí vuelve la frase de Rastros, ya no como advertencia sino como descripción: el alfabeto se gasta al repetirlo.
 
 La diferencia no está, entonces, entre conservar y gastar. Está entre dos maneras de gastar: la que pierde el mensaje y la que lo sostiene.
 
+## 8. La objeción
+
+§6 dijo que la repetición no conserva el contenido. §7 mostró que a veces sí: la redundancia conserva lo suficiente para que un mensaje llegue.
+
+No es una contradicción que se resuelva. Es una distinción que falta. §6 hablaba del contenido como sentido; §7, del contenido como señal. Conservar el sentido no es lo mismo que conservar la señal. La repetición puede conservar una y gastar la otra; puede conservar la señal y no el sentido, o el sentido y no la señal.
+
+La pregunta no es si la repetición conserva. Es qué conserva, para quién y a costa de qué.
+
 ¿Cuánta redundancia necesita una memoria para no desaparecer? De eso se ocupa la segunda deriva: [Lo que el archivo no conserva](/rizoma/archivo/).
 
-## 8. Preguntas abiertas
+## 9. Preguntas abiertas
 
 - ¿Qué se pierde cuando una obra se convierte en corpus de otra?
 - ¿La repetición conserva la memoria o solo su forma?
 - ¿Qué pasa cuando el archivo se repite a sí mismo?
 - ¿Puede una máquina repetir sin gastar?
 - ¿Qué diferencia hay entre insistir y persistir?
+- ¿Conservar el sentido y conservar la señal son la misma cosa?
 
 No tengo respuestas. Tengo una serie de vueltas. Por ahora, eso alcanza.

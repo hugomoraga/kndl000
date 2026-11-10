@@ -6,6 +6,8 @@ language: JavaScript
 concept: "El emisor y el receptor. La información que se degrada hacia el ruido. La coherencia que se optimiza. La estabilización que emerge."
 ---
 
+Esto no es un código de redundancia: el mensaje se degrada y se homogeneiza, pero el receptor no decodifica ni corrige. Para el caso mínimo de redundancia —tres copias, un voto—, ver [Voto por mayoría](/codigo/voto-por-mayoria/).
+
 ```javascript
 // Autómata de información — un mensaje cruza del emisor al receptor.
 // En el camino se degrada con ruido y se optimiza con repetición: la
