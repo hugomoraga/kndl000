@@ -4,6 +4,7 @@ title: "Shannon, Markov y el experimento"
 order: "03"
 date: 2026-11-10
 estado: corregido
+tipo: correccion
 exploracion: /rizoma/que-se-conserva-cuando-algo-se-repite/
 permalink: /rizoma/que-se-conserva-cuando-algo-se-repite/anexos/shannon-markov/
 fuentes:

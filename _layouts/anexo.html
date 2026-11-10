@@ -18,9 +18,10 @@
     </nav>
 
     {% assign _exp = site.exploraciones | where: "url", page.exploracion | first %}
+    {% assign _tipo = site.data.anexos_tipos | where: "id", page.tipo | first %}
 
     <header class="expediente__head">
-      <p class="anexo__eyebrow">Anexo {{ page.order | default: "—" }} · {{ page.estado | default: "abierto" }}</p>
+      <p class="anexo__eyebrow">Anexo {{ page.order | default: "—" }} · {{ _tipo.label | default: "Anexo" }} · {{ page.estado | default: "abierto" }}</p>
       <h1 class="expediente__title">{{ page.title }}</h1>
       <p class="expediente__meta">
         {% if page.date %}<span>{{ page.date | date: "%Y-%m-%d" }}</span>{% endif %}
@@ -56,6 +57,11 @@
           {% if _exp %}
           <p class="anexo__margin-note"><a href="{{ page.exploracion | relative_url }}">{{ _exp.title }}</a></p>
           {% endif %}
+        </section>
+
+        <section class="expediente__block">
+          <h2 class="expediente__margin-title">Tipo</h2>
+          <p class="anexo__margin-note">{{ _tipo.label | default: "Anexo" }}</p>
         </section>
 
         <section class="expediente__block">

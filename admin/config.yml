@@ -228,6 +228,10 @@ collections:
           - { label: URL, name: url, widget: string }
           - { label: Título, name: title, widget: string }
           - { label: Nota, name: note, widget: text, required: false }
+          - label: Tipo
+            name: tipo
+            widget: select
+            options: [correccion, fuente, concepto, objecion, derivacion]
       - label: Hitos editoriales
         name: hitos
         widget: list

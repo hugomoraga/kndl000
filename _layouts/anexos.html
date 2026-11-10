@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }} · {{ site.title }}{% endif %}</title>
+  {% include seo.html %}
+  {% include head-css.html %}
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+  {% include analytics.html %}
+</head>
+<body class="reading-poemas reading-rizoma">
+  <main class="reading-main">
+    <nav class="reading-breadcrumb" aria-label="Ruta">
+      {% include section-link.html url="/rizoma/" %}
+      <a href="{{ page.exploracion | relative_url }}">← Exploración</a>
+      <a href="{{ '/' | relative_url }}" aria-label="Inicio">∅ INIT</a>
+    </nav>
+
+    {% assign _exp = site.exploraciones | where: "url", page.exploracion | first %}
+
+    <header class="expediente__head">
+      <p class="anexo__eyebrow">Aparato · Exploración {{ _exp.order | default: "—" }}</p>
+      <h1 class="expediente__title">Anexos</h1>
+      <p class="expediente__question">Correcciones, fuentes, conceptos, objeciones y derivaciones.</p>
+      <p class="expediente__meta">{% if _exp %}<span>{{ _exp.title }}</span>{% endif %}</p>
+    </header>
+
+    <div class="expediente">
+      <div class="expediente__body reading-body">
+        <p class="anexos-intro">No todo anexo es una errata. Acá viven las correcciones, las fuentes, los conceptos, las objeciones y las derivaciones que no caben en la deriva; cada grupo declara qué operación hace.</p>
+
+        {% for tipo in site.data.anexos_tipos %}
+          {% assign grupo = _exp.anexos | where: "tipo", tipo.id %}
+          {% if grupo.size > 0 %}
+          <section class="anexos-grupo" id="{{ tipo.id }}">
+            <h2>{{ tipo.label }}</h2>
+            <p class="anexos-grupo__description">{{ tipo.description }}</p>
+            <ul class="anexo-list">
+              {% for anexo in grupo %}
+              <li>
+                <a href="{{ anexo.url | relative_url }}">{{ anexo.title }}</a>
+                {% if anexo.note %}<p>{{ anexo.note }}</p>{% endif %}
+              </li>
+              {% endfor %}
+            </ul>
+          </section>
+          {% endif %}
+        {% endfor %}
+
+        <p class="anexos-back"><a href="{{ page.exploracion | relative_url }}">← Volver a la exploración</a></p>
+      </div>
+
+      <aside class="expediente__margin" aria-label="Ficha del aparato">
+        <section class="expediente__block">
+          <h2 class="expediente__margin-title">Exploración</h2>
+          {% if _exp %}<p class="anexo__margin-note"><a href="{{ page.exploracion | relative_url }}">{{ _exp.title }}</a></p>{% endif %}
+        </section>
+
+        <section class="expediente__block">
+          <h2 class="expediente__margin-title">Tipos</h2>
+          <ul class="anexo-list">
+            {% for tipo in site.data.anexos_tipos %}
+              {% assign grupo = _exp.anexos | where: "tipo", tipo.id %}
+              {% if grupo.size > 0 %}
+              <li><a href="#{{ tipo.id }}">{{ tipo.label }}</a></li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </section>
+      </aside>
+    </div>
+
+    {% include back-button.html %}
+    {% include section-rail.html %}
+  </main>
+</body>
+</html>

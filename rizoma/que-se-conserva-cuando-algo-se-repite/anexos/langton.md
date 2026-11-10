@@ -4,6 +4,7 @@ title: "La hormiga no se ordenó"
 order: "02"
 date: 2026-11-10
 estado: corregido
+tipo: correccion
 exploracion: /rizoma/que-se-conserva-cuando-algo-se-repite/
 permalink: /rizoma/que-se-conserva-cuando-algo-se-repite/anexos/langton/
 fuentes:

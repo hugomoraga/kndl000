@@ -48,12 +48,19 @@ anexos:
   - url: /rizoma/que-se-conserva-cuando-algo-se-repite/anexos/redundancia/
     title: "La redundancia no es lo que sobra"
     note: "Corrección de la definición de Shannon."
+    tipo: correccion
   - url: /rizoma/que-se-conserva-cuando-algo-se-repite/anexos/langton/
     title: "La hormiga no se ordenó"
     note: "Comportamiento periódico e interpretación."
+    tipo: correccion
   - url: /rizoma/que-se-conserva-cuando-algo-se-repite/anexos/shannon-markov/
     title: "Shannon, Markov y el experimento"
     note: "Atribución correcta del método."
+    tipo: correccion
+  - url: /rizoma/que-se-conserva-cuando-algo-se-repite/anexos/automata/
+    title: "El autómata no es redundancia"
+    note: "Una objeción al atajo repetición = redundancia."
+    tipo: objecion
 hitos:
   - date: 2026-11-09
     title: "La pregunta inicial"

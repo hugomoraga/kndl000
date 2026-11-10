@@ -180,9 +180,7 @@ a {
   color: rgb(82, 82, 90);
   text-decoration: none;
 }
-a:hover {
-  text-decoration: underline;
-}
+/* El hover se resuelve con color o borde; nunca añade subrayado. */
 
 blockquote {
   color: #666666;
@@ -288,7 +286,7 @@ nav {
 }
 
 .nav a:hover {
-  text-decoration: underline;
+  color: #e9e6dc;
 }
 
 /* Inicio: cabecera con título + glifo alineados; escritorio = nube sin disparador */
@@ -1003,7 +1001,7 @@ select, input, button {
 }
 
 .poem-nav a:hover {
-  text-decoration: underline;
+  color: #e0e0e0;
 }
 
 .highlight pre {
@@ -1065,7 +1063,6 @@ select, input, button {
 }
 .read-more:hover {
   color: #e0e0e0;
-  text-decoration: underline;
 }
 
 /* Link oculto a Vestigios */
@@ -2881,7 +2878,7 @@ main.dispositivo-page {
 }
 
 .dispositivo-meta a:hover {
-  text-decoration: underline;
+  color: var(--umbral-trace);
 }
 
 .dispositivo-meta__badge {
@@ -4201,6 +4198,11 @@ body.umbral-page #art.umbral__chamber {
   text-decoration: none;
 }
 
+.umbral__mark:hover,
+.umbral__mark:focus-visible {
+  color: var(--umbral-trace);
+}
+
 .umbral__state {
   margin: 0;
   font-family: var(--font-mono);
@@ -4677,7 +4679,8 @@ body.umbral-page .lab-fallback {
 
 @media (max-width: 700px) {
   body.umbral-page .lab__intro h2,
-  body.umbral-page .umbral-exits h2 {
+  body.umbral-page .umbral-exits h2,
+  body.umbral-page .umbral-feature__title {
     text-align: left;
   }
 }
@@ -4791,78 +4794,186 @@ body.umbral-page .lab-fallback {
   color: var(--umbral-faint);
 }
 
-.umbral-featured {
-  display: grid;
-  grid-template-columns: 2.5rem minmax(0, 1fr) auto;
-  gap: 1rem;
-  align-items: center;
-  margin-top: 2.5rem;
-  padding: 1.4rem 0;
+/* Rizoma en portada: la sección destacada abre el archivo, no lo cierra. */
+.umbral-feature {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: clamp(3.5rem, 8vw, 6rem) clamp(1.25rem, 4vw, 2rem);
   border-top: 1px solid var(--umbral-rule);
-  border-bottom: 1px solid var(--umbral-rule-faint);
+}
+
+.umbral-feature__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: start;
+}
+
+.umbral-feature__label {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0 0 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--umbral-faint);
+}
+
+.umbral-feature__label .sigil {
+  font-size: 1rem;
+  color: var(--umbral-trace);
+}
+
+.umbral-feature__title {
+  margin: 0 0 0.85rem;
+  padding: 0;
+  border: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(2.6rem, 6vw, 4.2rem);
+  font-weight: 300;
+  line-height: 0.98;
+  letter-spacing: -0.01em;
+  color: var(--umbral-ink);
+}
+
+.umbral-feature__title a {
   color: inherit;
   text-decoration: none;
 }
 
-.umbral-featured__glyph {
-  font-size: 1.5rem;
-  color: var(--umbral-muted);
-  transition: color 0.25s ease;
+.umbral-feature__title a:hover,
+.umbral-feature__title a:focus-visible {
+  color: var(--umbral-trace);
 }
 
-.umbral-featured__body {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  min-width: 0;
-}
-
-.umbral-featured__name {
+.umbral-feature__desc {
+  max-width: 32ch;
+  margin: 0 0 1.6rem;
   font-family: var(--font-serif);
-  font-size: clamp(1.5rem, 3vw, 2rem);
-  font-weight: 300;
-  line-height: 1.1;
-  color: var(--umbral-ink);
-  transition: color 0.25s ease;
-}
-
-.umbral-featured__desc {
-  max-width: 48ch;
-  font-family: var(--font-sans);
-  font-size: 0.9rem;
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  font-style: italic;
   line-height: 1.45;
   color: var(--umbral-dim);
 }
 
-.umbral-featured__arrow {
+.umbral-feature__enter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 44px;
   font-family: var(--font-mono);
-  font-size: 1rem;
-  color: var(--umbral-muted);
-  transition: color 0.25s ease, transform 0.25s ease;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--umbral-dim);
+  text-decoration: none;
+  border-bottom: 1px solid var(--umbral-rule);
 }
 
-.umbral-featured:hover .umbral-featured__glyph,
-.umbral-featured:hover .umbral-featured__name,
-.umbral-featured:hover .umbral-featured__arrow,
-.umbral-featured:focus-visible .umbral-featured__glyph,
-.umbral-featured:focus-visible .umbral-featured__name,
-.umbral-featured:focus-visible .umbral-featured__arrow {
+.umbral-feature__enter:hover,
+.umbral-feature__enter:focus-visible {
+  color: var(--umbral-trace);
+  border-bottom-color: var(--umbral-trace);
+}
+
+.umbral-feature__index-label {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--umbral-faint);
+}
+
+.umbral-feature__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--umbral-rule-faint);
+}
+
+.umbral-feature__item {
+  border-bottom: 1px solid var(--umbral-rule-faint);
+}
+
+.umbral-feature__item a {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr);
+  grid-template-areas:
+    "num name"
+    "num meta";
+  gap: 0.15rem 0.9rem;
+  padding: 1.05rem 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.umbral-feature__num {
+  grid-area: num;
+  padding-top: 0.2rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+  color: var(--umbral-muted);
+}
+
+.umbral-feature__name {
+  grid-area: name;
+  font-family: var(--font-serif);
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  line-height: 1.25;
+  color: var(--umbral-ink);
+  transition: color 0.2s ease;
+}
+
+.umbral-feature__meta {
+  grid-area: meta;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: var(--umbral-muted);
+}
+
+.umbral-feature__item a:hover .umbral-feature__name,
+.umbral-feature__item a:focus-visible .umbral-feature__name {
   color: var(--umbral-trace);
 }
 
-.umbral-featured:hover .umbral-featured__arrow,
-.umbral-featured:focus-visible .umbral-featured__arrow {
-  transform: translateX(4px);
+.umbral-feature__nodes {
+  display: inline-block;
+  margin-top: 1rem;
+  padding-bottom: 0.2rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--umbral-muted);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
 }
 
-@media (max-width: 520px) {
-  .umbral-featured {
-    grid-template-columns: 2rem minmax(0, 1fr) auto;
-    gap: 0.75rem;
+.umbral-feature__nodes:hover,
+.umbral-feature__nodes:focus-visible {
+  color: var(--umbral-ink);
+  border-bottom-color: var(--umbral-trace);
+}
+
+@media (max-width: 760px) {
+  .umbral-feature__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
   }
 
-  .umbral-featured__glyph {
-    font-size: 1.25rem;
+  .umbral-feature__desc {
+    max-width: 46ch;
   }
 }
 
@@ -10970,8 +11081,9 @@ body.reading-rizoma .anexo-fuente__url a {
   text-decoration: none;
 }
 
-body.reading-rizoma .anexo-fuente__url a:hover {
-  text-decoration: underline;
+body.reading-rizoma .anexo-fuente__url a:hover,
+body.reading-rizoma .anexo-fuente__url a:focus-visible {
+  color: var(--umbral-ink);
 }
 
 body.reading-rizoma .anexo-fuente__meta {
@@ -11058,4 +11170,55 @@ body.reading-rizoma .expediente__body h2 {
 
 body.reading-rizoma .expediente__body h2:target {
   color: var(--umbral-trace);
+}
+
+/* Rizoma — aparato de anexos */
+body.reading-rizoma .anexo-list__label {
+  margin: 1.1rem 0 .35rem;
+  font-family: var(--font-mono);
+  font-size: .6rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--umbral-muted);
+}
+
+body.reading-rizoma .anexos-intro {
+  max-width: 60ch;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  line-height: 1.7;
+  letter-spacing: .03em;
+  color: var(--umbral-muted);
+}
+
+body.reading-rizoma .anexos-grupo {
+  margin-top: 2.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--umbral-rule);
+}
+
+body.reading-rizoma .anexos-grupo:first-of-type {
+  margin-top: 2rem;
+}
+
+body.reading-rizoma .anexos-grupo__description {
+  max-width: 60ch;
+  margin: .5rem 0 0;
+  font-family: var(--font-serif);
+  font-size: .95rem;
+  line-height: 1.6;
+  color: var(--umbral-dim);
+}
+
+body.reading-rizoma .anexos-back {
+  margin-top: 3rem;
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  letter-spacing: .04em;
+}
+
+body.reading-rizoma .anexos-back a {
+  color: var(--umbral-trace);
+  text-decoration: none;
 }

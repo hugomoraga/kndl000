@@ -72,14 +72,21 @@
         {% if page.anexos %}
         <section class="expediente__block">
           <h2 class="expediente__margin-title">Anexos</h2>
-          <ul class="anexo-list">
-            {% for anexo in page.anexos %}
-            <li>
-              <a href="{{ anexo.url | relative_url }}">{{ anexo.title }}</a>
-              {% if anexo.note %}<p>{{ anexo.note }}</p>{% endif %}
-            </li>
-            {% endfor %}
-          </ul>
+          {% for tipo in site.data.anexos_tipos %}
+            {% assign grupo = page.anexos | where: "tipo", tipo.id %}
+            {% if grupo.size > 0 %}
+            <p class="anexo-list__label">{{ tipo.label }}</p>
+            <ul class="anexo-list">
+              {% for anexo in grupo %}
+              <li>
+                <a href="{{ anexo.url | relative_url }}">{{ anexo.title }}</a>
+                {% if anexo.note %}<p>{{ anexo.note }}</p>{% endif %}
+              </li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          {% endfor %}
+          <a class="expediente__history-link" href="{{ page.url | relative_url }}anexos/">Ver el aparato →</a>
         </section>
         {% endif %}
 
