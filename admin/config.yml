@@ -177,15 +177,15 @@ collections:
           - { label: URL, name: url, widget: string, required: false, hint: "Interna (/poemas/...) o externa (https://...)." }
       - { label: Destacada en Ahora, name: featured, widget: boolean, default: false }
 
-  - name: investigaciones
-    label: "⌖ Investigación"
-    label_singular: Expediente
-    folder: content/collections/_investigaciones
+  - name: exploraciones
+    label: "⋔ Rizoma"
+    label_singular: Exploración
+    folder: content/collections/_exploraciones
     create: true
     format: frontmatter
     slug: "{{slug}}"
     fields:
-      - { label: Layout, name: layout, widget: hidden, default: investigacion }
+      - { label: Layout, name: layout, widget: hidden, default: exploracion }
       - { label: Title, name: title, widget: string }
       - { label: Question, name: question, widget: string, required: false }
       - { label: Summary, name: summary, widget: text, required: false }
@@ -194,7 +194,7 @@ collections:
         name: status
         widget: select
         default: abierta
-        options: [abierta, en curso, cerrada]
+        options: [abierta, pausada, cerrada]
       - { label: Date, name: date, widget: datetime, required: false }
       - { label: Updated, name: updated, widget: datetime, required: false }
       - label: Campos
@@ -202,11 +202,11 @@ collections:
         widget: list
         required: false
         field: { label: Campo, name: campo, widget: string }
-      - label: Conceptos
-        name: concepts
+      - label: Nodos
+        name: nodos
         widget: list
         required: false
-        field: { label: Concepto, name: concepto, widget: string }
+        field: { label: Nodo, name: nodo, widget: string }
       - label: Corpus
         name: corpus
         widget: list
@@ -214,7 +214,33 @@ collections:
         fields:
           - { label: URL, name: url, widget: string }
           - { label: Nota, name: note, widget: text, required: false }
+      - label: Exploraciones relacionadas
+        name: relacionadas
+        widget: list
+        required: false
+        field: { label: URL, name: url, widget: string }
+      - label: Hitos editoriales
+        name: hitos
+        widget: list
+        required: false
+        fields:
+          - { label: Fecha, name: date, widget: datetime }
+          - { label: Título, name: title, widget: string }
+          - { label: Texto, name: text, widget: text }
+          - { label: Commit, name: commit, widget: string, required: false }
       - { label: Body, name: body, widget: markdown }
+
+  - name: nodos
+    label: "⋔ Nodos"
+    label_singular: Nodo
+    folder: content/collections/_nodos
+    create: true
+    format: frontmatter
+    slug: "{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Order, name: order, widget: string, required: false, hint: "01, 02, 03…" }
+      - { label: Definition, name: definition, widget: text, hint: "Definición provisional; puede evolucionar." }
 
   - name: codigos
     label: "◊ Código"

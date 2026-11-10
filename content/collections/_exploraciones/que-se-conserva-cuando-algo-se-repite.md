@@ -1,12 +1,12 @@
 ---
-layout: investigacion
-title: ¿Qué se conserva cuando algo se repite?
-question: ¿La repetición conserva algo o solo lo gasta?
-summary: Una deriva por la persistencia, el lenguaje, la programación y ritualidad.
-order: '01'
+layout: exploracion
+title: "¿Qué se conserva cuando algo se repite?"
+question: "¿La repetición conserva algo o solo lo gasta?"
+summary: "Una deriva por la persistencia, el lenguaje, la programación y ritualidad."
+order: "01"
 status: abierta
 date: 2026-11-09
-updated: 2026-11-09
+updated: 2026-11-10
 fields:
   - memoria
   - lenguaje
@@ -14,12 +14,15 @@ fields:
   - ritual
   - sonido
   - Programacion
-concepts:
+nodos:
   - Repetición
   - Persistencia
   - Memoria
-  - Ruido
-  - Ritual
+  - Desgaste
+  - Archivo
+  - Recurrencia
+  - Automatización
+  - Diferencia
 corpus:
   - url: /poemas/persistencias-del-algo/
     note: La palabra que insiste para no desaparecer. Encuentra una obsesión y luego repite.
@@ -31,6 +34,14 @@ corpus:
     note: ¿Las palabras se gastan?
   - url: /dispositivos/espiral/
     note: La máquina que repite para producir diferencia.
+relacionadas: []
+hitos:
+  - date: 2026-11-09
+    title: "La pregunta inicial"
+    text: "La exploración comienza con una pregunta sobre la repetición."
+  - date: 2026-11-10
+    title: "Migración a Rizoma"
+    text: "La exploración se integra al mapa abierto; se suman nodos, historial y relaciones."
 ---
 
 No es una tesis. Es una deriva.

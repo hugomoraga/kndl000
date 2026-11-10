@@ -6,6 +6,7 @@ description: "Fragments on technology, art, culture, philosophy — and the quie
 author: "KNDL"
 baseurl: ""
 url: "https://kndl.quicio.qzz.io"
+repository: "hugomoraga/kndl000"
 locale: es_ES
 # Imagen por defecto para redes (opcional; ruta bajo el sitio, ej. /assets/media/og.jpg)
 # seo_image:
@@ -98,9 +99,11 @@ collections:
   dispositivos:
     output: true
     permalink: /dispositivos/:name/
-  investigaciones:
+  exploraciones:
     output: true
-    permalink: /investigacion/:name/
+    permalink: /rizoma/:name/
+  nodos:
+    output: false
 
 defaults:
   - scope:

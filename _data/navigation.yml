@@ -92,12 +92,12 @@
   detail_prefixes:
     - /musica/
 
-- name: Investigación
-  url: /investigacion/
-  glyph: "⌖"
-  sigil: investigacion
-  description: "Preguntas que atraviesan el archivo."
+- name: Rizoma
+  url: /rizoma/
+  glyph: "⋔"
+  sigil: rizoma
+  description: "Ideas que se ramifican. El mapa permanece abierto."
   primary: false
   featured: true
   detail_prefixes:
-    - /investigacion/
+    - /rizoma/

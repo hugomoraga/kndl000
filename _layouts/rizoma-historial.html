@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }} · {{ site.title }}{% endif %}</title>
+  {% include seo.html %}
+  {% include head-css.html %}
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+  {% include analytics.html %}
+</head>
+<body class="{{ page.body_class | default: 'reading-poemas reading-rizoma' }}">
+  <main class="reading-main">
+    <nav class="reading-breadcrumb" aria-label="Ruta">
+      {% include section-link.html url="/rizoma/" %}
+      <a href="{{ '/' | relative_url }}" aria-label="Inicio">∅ INIT</a>
+    </nav>
+
+    <header class="historia-head">
+      <h1 class="historia-head__title">Historial de evolución</h1>
+      <p class="historia-head__exploracion">
+        <a href="{{ page.exploracion_url | relative_url }}">{{ page.exploracion_title }}</a>
+      </p>
+      {% if page.exploracion_question %}
+      <p class="historia-head__question">{{ page.exploracion_question }}</p>
+      {% endif %}
+      <p class="historia-intro">Las versiones provienen de Git. Para recuperar una versión, abrí el archivo en el commit correspondiente; esta vista no sobrescribe el historial.</p>
+    </header>
+
+    <section class="historia-section" aria-labelledby="historia-actual-title">
+      <h2 class="historia-section__title" id="historia-actual-title">Versión actual</h2>
+      <div class="historia-current">
+        <p class="historia-current__title">{{ page.current.title }}</p>
+        {% if page.current.question %}<p class="historia-current__question">{{ page.current.question }}</p>{% endif %}
+        {% if page.current.summary %}<p class="historia-current__summary">{{ page.current.summary }}</p>{% endif %}
+        <p class="historia-version__meta">
+          {{ page.current.status }}
+          {% if page.current.nodos.size > 0 %} · {{ page.current.nodos | size }} nodos{% endif %}
+          {% if page.current.updated %} · actualizado {{ page.current.updated | date: "%Y-%m-%d" }}{% endif %}
+        </p>
+        <p class="historia-current__back"><a href="{{ page.exploracion_url | relative_url }}">Volver a la exploración →</a></p>
+      </div>
+    </section>
+
+    {% if page.hitos.size > 0 %}
+    <section class="historia-section" aria-labelledby="historia-hitos-title">
+      <h2 class="historia-section__title" id="historia-hitos-title">Hitos editoriales</h2>
+      <p class="historia-note">Reconstrucción editorial inicial. No son eventos automáticos: son una lectura curada de los cambios que sí están registrados en Git.</p>
+      <ol class="historia-hitos">
+        {% for hito in page.hitos %}
+        <li class="historia-hito">
+          <time datetime="{{ hito.date | date: '%Y-%m-%d' }}">{{ hito.date | date: "%Y-%m-%d" }}</time>
+          <div class="historia-hito__body">
+            <h3>{{ hito.title }}</h3>
+            <p>{{ hito.text }}</p>
+          </div>
+        </li>
+        {% endfor %}
+      </ol>
+    </section>
+    {% endif %}
+
+    <section class="historia-section" aria-labelledby="historia-versiones-title">
+      <h2 class="historia-section__title" id="historia-versiones-title">Versiones registradas</h2>
+      {% if page.history.size == 0 %}
+      <p class="historia-empty">No hay historial de Git disponible en este entorno. La versión actual sigue siendo la de la exploración.</p>
+      {% else %}
+      <ol class="historia-versiones">
+        {% for version in page.history %}
+        <li class="historia-version">
+          <time datetime="{{ version.date }}">
+            {{ version.date | date: "%Y-%m-%d" }}
+            <span>{{ version.date | date: "%H:%M" }}</span>
+          </time>
+          <div class="historia-version__body">
+            <h3>{{ version.title | default: "Sin título" }}</h3>
+            {% if version.question %}<p class="historia-version__question">{{ version.question }}</p>{% endif %}
+            {% if version.summary %}<p class="historia-version__summary">{{ version.summary }}</p>{% endif %}
+            <p class="historia-version__meta">
+              {{ version.status }}
+              {% if version.nodos.size > 0 %} · {{ version.nodos | size }} nodos{% endif %}
+            </p>
+            {% if version.changes.size > 0 %}
+            <ul class="historia-version__changes">
+              {% for change in version.changes %}<li>{{ change }}</li>{% endfor %}
+            </ul>
+            {% endif %}
+            <p class="historia-version__message">{{ version.message }}</p>
+            <p class="historia-version__links">
+              <a href="{{ version.url_commit }}" target="_blank" rel="noopener noreferrer">Commit {{ version.short }} ↗</a>
+              <a href="{{ version.url_file }}" target="_blank" rel="noopener noreferrer">Ver archivo ↗</a>
+              <a href="{{ version.url_raw }}" target="_blank" rel="noopener noreferrer">Texto plano ↗</a>
+              {% if version.url_compare %}<a href="{{ version.url_compare }}" target="_blank" rel="noopener noreferrer">Comparar con la anterior ↗</a>{% endif %}
+            </p>
+          </div>
+        </li>
+        {% endfor %}
+      </ol>
+      {% endif %}
+    </section>
+
+    {% include back-button.html %}
+    {% include section-rail.html %}
+  </main>
+</body>
+</html>

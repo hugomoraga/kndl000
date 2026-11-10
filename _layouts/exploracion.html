@@ -9,10 +9,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
   {% include analytics.html %}
 </head>
-<body class="reading-poemas reading-investigacion">
+<body class="reading-poemas reading-rizoma">
   <main class="reading-main">
     <nav class="reading-breadcrumb" aria-label="Ruta">
-      {% include section-link.html url="/investigacion/" %}
+      {% include section-link.html url="/rizoma/" %}
       <a href="{{ '/' | relative_url }}" aria-label="Inicio">∅ INIT</a>
     </nav>
 
@@ -21,8 +21,11 @@
       {% if page.question %}
       <p class="expediente__question">{{ page.question }}</p>
       {% endif %}
+      {% if page.summary %}
+      <p class="expediente__summary">{{ page.summary }}</p>
+      {% endif %}
       <p class="expediente__meta">
-        <span>expte. {{ page.order }}</span>
+        <span>exploración {{ page.order }}</span>
         <span>{{ page.status }}</span>
         {% if page.fields %}<span>{{ page.fields | join: " · " }}</span>{% endif %}
         {% if page.updated %}<span>actualizado {{ page.updated | date: "%Y-%m-%d" }}</span>{% endif %}
@@ -34,25 +37,42 @@
         {{ content }}
       </div>
 
-      <aside class="expediente__margin" aria-label="Corpus y conceptos">
+      <aside class="expediente__margin" aria-label="Corpus y nodos">
         {% if page.corpus %}
         <section class="expediente__block">
           <h2 class="expediente__margin-title">Corpus</h2>
-          {% include investigacion-corpus.html %}
+          {% include rizoma-corpus.html %}
         </section>
         {% endif %}
 
-        {% if page.concepts %}
+        {% if page.nodos %}
         <section class="expediente__block">
-          <h2 class="expediente__margin-title">Conceptos</h2>
-          <ul class="expediente__concepts">
-            {% for concept in page.concepts %}
-            {% assign _slug = concept | slugify %}
-            <li><a href="{{ '/investigacion/conceptos/' | relative_url }}#{{ _slug }}">{{ concept }}</a></li>
+          <h2 class="expediente__margin-title">Nodos</h2>
+          <ul class="expediente__nodos">
+            {% for nodo in page.nodos %}
+            {% assign _slug = nodo | slugify %}
+            <li><a href="{{ '/rizoma/nodos/' | relative_url }}#{{ _slug }}">{{ nodo }}</a></li>
             {% endfor %}
           </ul>
         </section>
         {% endif %}
+
+        {% if page.relacionadas %}
+        <section class="expediente__block">
+          <h2 class="expediente__margin-title">Relacionadas</h2>
+          <ul class="expediente__related">
+            {% for rel_url in page.relacionadas %}
+            {% assign _rel = site.exploraciones | where: "url", rel_url | first %}
+            <li><a href="{{ rel_url | relative_url }}">{{ _rel.title | default: rel_url }}</a></li>
+            {% endfor %}
+          </ul>
+        </section>
+        {% endif %}
+
+        <section class="expediente__block">
+          <h2 class="expediente__margin-title">Evolución</h2>
+          <a class="expediente__history-link" href="{{ page.url | relative_url }}historial/">Ver historial de versiones →</a>
+        </section>
       </aside>
     </div>
 

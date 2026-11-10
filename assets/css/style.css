@@ -7756,9 +7756,9 @@ body.reading-serie .serie-date {
   color: var(--umbral-faint);
 }
 
-/* --- Investigación ------------------------------------------------------- */
+/* --- Rizoma --------------------------------------------------------------- */
 
-body.reading-investigacion .investigacion-lede {
+body.reading-rizoma .rizoma-lede {
   max-width: var(--reading-measure);
   margin: 0 auto 2.5rem;
   font-family: var(--font-serif);
@@ -7769,13 +7769,85 @@ body.reading-investigacion .investigacion-lede {
   color: var(--umbral-dim);
 }
 
-body.reading-investigacion .investigacion-index {
+body.reading-rizoma .rizoma-declaration {
+  max-width: 58ch;
+  margin: 0 0 2.5rem;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--umbral-dim);
+}
+
+body.reading-rizoma .rizoma-declaration p {
+  margin: 0 0 1em;
+}
+
+body.reading-rizoma .rizoma-declaration__close {
+  font-style: italic;
+  color: var(--umbral-ink);
+}
+
+body.reading-rizoma .expediente__summary {
+  max-width: 58ch;
+  margin: 0 0 1rem;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--umbral-dim);
+}
+
+body.reading-rizoma .expediente__history-link {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--umbral-dim);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+body.reading-rizoma .expediente__history-link:hover,
+body.reading-rizoma .expediente__history-link:focus-visible {
+  color: var(--umbral-trace);
+  border-bottom-color: var(--umbral-trace);
+}
+
+body.reading-rizoma .expediente__related {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+body.reading-rizoma .expediente__related a {
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  line-height: 1.35;
+  color: var(--umbral-ink);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+body.reading-rizoma .expediente__related a:hover,
+body.reading-rizoma .expediente__related a:focus-visible {
+  color: var(--umbral-trace);
+  border-bottom-color: var(--umbral-trace);
+}
+
+body.reading-rizoma .rizoma-index {
   max-width: var(--reading-measure);
   margin: 0 auto;
   border-top: 1px solid var(--umbral-rule-faint);
 }
 
-body.reading-investigacion .expediente-item {
+body.reading-rizoma .expediente-item {
   display: grid;
   grid-template-columns: 3rem minmax(0, 1fr);
   gap: 1rem;
@@ -7784,7 +7856,7 @@ body.reading-investigacion .expediente-item {
   border-bottom: 1px solid var(--umbral-rule-faint);
 }
 
-body.reading-investigacion .expediente-item__num {
+body.reading-rizoma .expediente-item__num {
   padding-top: 0.35rem;
   font-family: var(--font-mono);
   font-size: 0.7rem;
@@ -7792,7 +7864,7 @@ body.reading-investigacion .expediente-item__num {
   color: var(--umbral-muted);
 }
 
-body.reading-investigacion .expediente-item__title {
+body.reading-rizoma .expediente-item__title {
   margin: 0 0 0.4rem;
   padding: 0;
   border: 0;
@@ -7802,17 +7874,17 @@ body.reading-investigacion .expediente-item__title {
   line-height: 1.1;
 }
 
-body.reading-investigacion .expediente-item__title a {
+body.reading-rizoma .expediente-item__title a {
   color: var(--umbral-ink);
   text-decoration: none;
 }
 
-body.reading-investigacion .expediente-item__title a:hover,
-body.reading-investigacion .expediente-item__title a:focus-visible {
+body.reading-rizoma .expediente-item__title a:hover,
+body.reading-rizoma .expediente-item__title a:focus-visible {
   color: var(--umbral-trace);
 }
 
-body.reading-investigacion .expediente-item__question {
+body.reading-rizoma .expediente-item__question {
   max-width: 58ch;
   margin: 0 0 0.55rem;
   font-family: var(--font-serif);
@@ -7822,17 +7894,17 @@ body.reading-investigacion .expediente-item__question {
   color: var(--umbral-dim);
 }
 
-body.reading-investigacion .expediente-item__meta {
+body.reading-rizoma .expediente-item__meta {
   margin: 0;
   font-family: var(--font-mono);
   font-size: 0.7rem;
-  letter-spacing: 0.08em;
+  letter-spacing: 0;
   line-height: 1.5;
-  text-transform: uppercase;
+  text-transform: none;
   color: var(--umbral-muted);
 }
 
-body.reading-investigacion .investigacion-concepts-link {
+body.reading-rizoma .rizoma-nodos-link {
   max-width: var(--reading-measure);
   margin: 2rem auto 0;
   font-family: var(--font-mono);
@@ -7841,27 +7913,27 @@ body.reading-investigacion .investigacion-concepts-link {
   text-transform: uppercase;
 }
 
-body.reading-investigacion .investigacion-concepts-link a {
+body.reading-rizoma .rizoma-nodos-link a {
   color: var(--umbral-dim);
   text-decoration: none;
   border-bottom: 1px solid transparent;
 }
 
-body.reading-investigacion .investigacion-concepts-link a:hover,
-body.reading-investigacion .investigacion-concepts-link a:focus-visible {
+body.reading-rizoma .rizoma-nodos-link a:hover,
+body.reading-rizoma .rizoma-nodos-link a:focus-visible {
   color: var(--umbral-trace);
   border-bottom-color: var(--umbral-trace);
 }
 
 /* Expediente */
-body.reading-investigacion .expediente__head {
+body.reading-rizoma .expediente__head {
   max-width: var(--reading-measure);
   margin: 0 auto 2.5rem;
   padding-bottom: 1.5rem;
   border-bottom: 1px solid var(--umbral-rule);
 }
 
-body.reading-investigacion .expediente__title {
+body.reading-rizoma .expediente__title {
   margin: 0 0 1rem;
   padding: 0;
   border: 0;
@@ -7873,7 +7945,7 @@ body.reading-investigacion .expediente__title {
   color: var(--umbral-ink);
 }
 
-body.reading-investigacion .expediente__question {
+body.reading-rizoma .expediente__question {
   max-width: 58ch;
   margin: 0 0 1rem;
   font-family: var(--font-serif);
@@ -7883,7 +7955,7 @@ body.reading-investigacion .expediente__question {
   color: var(--umbral-dim);
 }
 
-body.reading-investigacion .expediente__meta {
+body.reading-rizoma .expediente__meta {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem 1rem;
@@ -7895,13 +7967,13 @@ body.reading-investigacion .expediente__meta {
   color: var(--umbral-muted);
 }
 
-body.reading-investigacion .expediente__meta span + span::before {
+body.reading-rizoma .expediente__meta span + span::before {
   content: "·";
   margin-right: 1rem;
   color: var(--umbral-faint);
 }
 
-body.reading-investigacion .expediente {
+body.reading-rizoma .expediente {
   display: grid;
   grid-template-columns: minmax(0, 36rem) 16rem;
   gap: clamp(2rem, 4vw, 4rem);
@@ -7911,7 +7983,7 @@ body.reading-investigacion .expediente {
   align-items: start;
 }
 
-body.reading-investigacion .expediente__body {
+body.reading-rizoma .expediente__body {
   max-width: 54ch;
   font-family: var(--font-serif);
   font-size: clamp(1.05rem, 1.8vw, 1.2rem);
@@ -7919,11 +7991,11 @@ body.reading-investigacion .expediente__body {
   color: var(--umbral-ink);
 }
 
-body.reading-investigacion .expediente__body p {
+body.reading-rizoma .expediente__body p {
   margin: 0 0 1.35em;
 }
 
-body.reading-investigacion .expediente__body h2 {
+body.reading-rizoma .expediente__body h2 {
   margin: 2.5rem 0 1rem;
   padding: 0;
   border: 0;
@@ -7934,32 +8006,32 @@ body.reading-investigacion .expediente__body h2 {
   color: var(--umbral-ink);
 }
 
-body.reading-investigacion .expediente__body a {
+body.reading-rizoma .expediente__body a {
   color: var(--umbral-ink);
   text-decoration: underline;
   text-decoration-color: var(--umbral-rule);
   text-underline-offset: 3px;
 }
 
-body.reading-investigacion .expediente__body a:hover,
-body.reading-investigacion .expediente__body a:focus-visible {
+body.reading-rizoma .expediente__body a:hover,
+body.reading-rizoma .expediente__body a:focus-visible {
   color: var(--umbral-trace);
   text-decoration-color: var(--umbral-trace);
 }
 
-body.reading-investigacion .expediente__margin {
+body.reading-rizoma .expediente__margin {
   position: sticky;
   top: 2rem;
   align-self: start;
 }
 
-body.reading-investigacion .expediente__block {
+body.reading-rizoma .expediente__block {
   margin: 0 0 1.75rem;
   padding-top: 1rem;
   border-top: 1px solid var(--umbral-rule-faint);
 }
 
-body.reading-investigacion .expediente__margin-title {
+body.reading-rizoma .expediente__margin-title {
   margin: 0 0 0.75rem;
   padding: 0;
   border: 0;
@@ -7973,22 +8045,22 @@ body.reading-investigacion .expediente__margin-title {
   color: var(--umbral-muted);
 }
 
-body.reading-investigacion .expediente-corpus {
+body.reading-rizoma .expediente-corpus {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-body.reading-investigacion .expediente-corpus__item {
+body.reading-rizoma .expediente-corpus__item {
   padding: 0.7rem 0;
   border-bottom: 1px solid var(--umbral-rule-faint);
 }
 
-body.reading-investigacion .expediente-corpus__item:last-child {
+body.reading-rizoma .expediente-corpus__item:last-child {
   border-bottom: 0;
 }
 
-body.reading-investigacion .expediente-corpus__item a {
+body.reading-rizoma .expediente-corpus__item a {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
@@ -7997,7 +8069,7 @@ body.reading-investigacion .expediente-corpus__item a {
   text-decoration: none;
 }
 
-body.reading-investigacion .expediente-corpus__kind {
+body.reading-rizoma .expediente-corpus__kind {
   font-family: var(--font-mono);
   font-size: 0.7rem;
   letter-spacing: 0.08em;
@@ -8005,19 +8077,19 @@ body.reading-investigacion .expediente-corpus__kind {
   color: var(--umbral-muted);
 }
 
-body.reading-investigacion .expediente-corpus__title {
+body.reading-rizoma .expediente-corpus__title {
   font-family: var(--font-serif);
   font-size: 0.95rem;
   line-height: 1.3;
   color: var(--umbral-ink);
 }
 
-body.reading-investigacion .expediente-corpus__item a:hover .expediente-corpus__title,
-body.reading-investigacion .expediente-corpus__item a:focus-visible .expediente-corpus__title {
+body.reading-rizoma .expediente-corpus__item a:hover .expediente-corpus__title,
+body.reading-rizoma .expediente-corpus__item a:focus-visible .expediente-corpus__title {
   color: var(--umbral-trace);
 }
 
-body.reading-investigacion .expediente-corpus__note {
+body.reading-rizoma .expediente-corpus__note {
   margin: 0.35rem 0 0;
   font-family: var(--font-serif);
   font-size: 0.82rem;
@@ -8026,7 +8098,7 @@ body.reading-investigacion .expediente-corpus__note {
   color: var(--umbral-dim);
 }
 
-body.reading-investigacion .expediente__concepts {
+body.reading-rizoma .expediente__nodos {
   display: flex;
   flex-wrap: wrap;
   gap: 0.35rem 0.75rem;
@@ -8035,7 +8107,7 @@ body.reading-investigacion .expediente__concepts {
   list-style: none;
 }
 
-body.reading-investigacion .expediente__concepts a {
+body.reading-rizoma .expediente__nodos a {
   font-family: var(--font-mono);
   font-size: 0.7rem;
   letter-spacing: 0.08em;
@@ -8045,24 +8117,24 @@ body.reading-investigacion .expediente__concepts a {
   border-bottom: 1px solid transparent;
 }
 
-body.reading-investigacion .expediente__concepts a:hover,
-body.reading-investigacion .expediente__concepts a:focus-visible {
+body.reading-rizoma .expediente__nodos a:hover,
+body.reading-rizoma .expediente__nodos a:focus-visible {
   color: var(--umbral-trace);
   border-bottom-color: var(--umbral-trace);
 }
 
-body.reading-investigacion .conceptos {
+body.reading-rizoma .nodos {
   max-width: var(--reading-measure);
   margin: 0 auto;
   border-top: 1px solid var(--umbral-rule-faint);
 }
 
-body.reading-investigacion .concepto {
+body.reading-rizoma .nodo {
   padding: 1.5rem 0;
   border-bottom: 1px solid var(--umbral-rule-faint);
 }
 
-body.reading-investigacion .concepto__title {
+body.reading-rizoma .nodo__title {
   margin: 0 0 0.4rem;
   padding: 0;
   border: 0;
@@ -8073,7 +8145,7 @@ body.reading-investigacion .concepto__title {
   color: var(--umbral-ink);
 }
 
-body.reading-investigacion .concepto__definition {
+body.reading-rizoma .nodo__definition {
   max-width: 58ch;
   margin: 0 0 0.75rem;
   font-family: var(--font-serif);
@@ -8083,7 +8155,7 @@ body.reading-investigacion .concepto__definition {
   color: var(--umbral-dim);
 }
 
-body.reading-investigacion .concepto__list {
+body.reading-rizoma .nodo__list {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem 1rem;
@@ -8092,7 +8164,7 @@ body.reading-investigacion .concepto__list {
   list-style: none;
 }
 
-body.reading-investigacion .concepto__list a {
+body.reading-rizoma .nodo__list a {
   font-family: var(--font-mono);
   font-size: 0.7rem;
   letter-spacing: 0.06em;
@@ -8102,34 +8174,34 @@ body.reading-investigacion .concepto__list a {
   border-bottom: 1px solid transparent;
 }
 
-body.reading-investigacion .concepto__list a:hover,
-body.reading-investigacion .concepto__list a:focus-visible {
+body.reading-rizoma .nodo__list a:hover,
+body.reading-rizoma .nodo__list a:focus-visible {
   color: var(--umbral-trace);
   border-bottom-color: var(--umbral-trace);
 }
 
 @media (max-width: 900px) {
-  body.reading-investigacion .expediente {
+  body.reading-rizoma .expediente {
     grid-template-columns: minmax(0, 1fr);
     gap: 2rem;
   }
 
-  body.reading-investigacion .expediente__margin {
+  body.reading-rizoma .expediente__margin {
     position: static;
   }
 }
 
 @media (max-width: 600px) {
-  body.reading-investigacion .expediente-item {
+  body.reading-rizoma .expediente-item {
     grid-template-columns: 2.5rem minmax(0, 1fr);
     gap: 0.75rem;
   }
 
-  body.reading-investigacion .expediente__meta {
+  body.reading-rizoma .expediente__meta {
     gap: 0.3rem 0.75rem;
   }
 
-  body.reading-investigacion .expediente__meta span + span::before {
+  body.reading-rizoma .expediente__meta span + span::before {
     content: none;
   }
 }
@@ -10472,5 +10544,282 @@ body.reading-musica .musica-referencias a:focus-visible {
 
   body.reading-musica .musica-ahora__player iframe {
     height: 152px;
+  }
+}
+
+/* ==========================================================================
+   Rizoma — historial de evolución
+   Las versiones vienen de Git; los hitos son una lectura editorial.
+   ========================================================================== */
+
+body.reading-rizoma .historia-head {
+  max-width: var(--reading-measure);
+  margin: 0 auto 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--umbral-rule);
+}
+
+body.reading-rizoma .historia-head__title {
+  margin: 0 0 0.75rem;
+  padding: 0;
+  border: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  font-weight: 300;
+  line-height: 1.02;
+  color: var(--umbral-ink);
+}
+
+body.reading-rizoma .historia-head__exploracion {
+  max-width: 58ch;
+  margin: 0 0 0.5rem;
+  font-family: var(--font-serif);
+  font-size: clamp(1.15rem, 2vw, 1.35rem);
+  font-style: italic;
+  line-height: 1.4;
+}
+
+body.reading-rizoma .historia-head__exploracion a {
+  color: var(--umbral-ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--umbral-rule);
+}
+
+body.reading-rizoma .historia-head__exploracion a:hover,
+body.reading-rizoma .historia-head__exploracion a:focus-visible {
+  color: var(--umbral-trace);
+  border-bottom-color: var(--umbral-trace);
+}
+
+body.reading-rizoma .historia-head__question {
+  max-width: 58ch;
+  margin: 0 0 1rem;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--umbral-dim);
+}
+
+body.reading-rizoma .historia-intro {
+  max-width: 58ch;
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--umbral-dim);
+}
+
+body.reading-rizoma .historia-section {
+  max-width: var(--reading-measure);
+  margin: 2.5rem auto 0;
+}
+
+body.reading-rizoma .historia-section + .historia-section {
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--umbral-rule-faint);
+}
+
+body.reading-rizoma .historia-section__title {
+  margin: 0 0 1rem;
+  padding: 0 0 0.5rem;
+  border: 0;
+  border-bottom: 1px solid var(--umbral-rule-faint);
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: 1.2;
+  text-align: left;
+  color: var(--umbral-ink);
+}
+
+body.reading-rizoma .historia-current {
+  max-width: 58ch;
+}
+
+body.reading-rizoma .historia-current__title {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  line-height: 1.25;
+  color: var(--umbral-ink);
+}
+
+body.reading-rizoma .historia-current__question,
+body.reading-rizoma .historia-current__summary {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--umbral-dim);
+}
+
+body.reading-rizoma .historia-current__back {
+  margin: 1rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+body.reading-rizoma .historia-current__back a {
+  color: var(--umbral-dim);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+body.reading-rizoma .historia-current__back a:hover,
+body.reading-rizoma .historia-current__back a:focus-visible {
+  color: var(--umbral-trace);
+  border-bottom-color: var(--umbral-trace);
+}
+
+body.reading-rizoma .historia-note {
+  max-width: 58ch;
+  margin: 0 0 1rem;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--umbral-muted);
+}
+
+body.reading-rizoma .historia-hitos,
+body.reading-rizoma .historia-versiones {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+body.reading-rizoma .historia-hito,
+body.reading-rizoma .historia-version {
+  display: grid;
+  grid-template-columns: 8rem minmax(0, 1fr);
+  gap: 1.5rem;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--umbral-rule-faint);
+}
+
+body.reading-rizoma .historia-hito time,
+body.reading-rizoma .historia-version time {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+  color: var(--umbral-muted);
+}
+
+body.reading-rizoma .historia-version time {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+body.reading-rizoma .historia-version time span {
+  color: var(--umbral-faint);
+}
+
+body.reading-rizoma .historia-hito h3,
+body.reading-rizoma .historia-version h3 {
+  margin: 0 0 0.35rem;
+  padding: 0;
+  border: 0;
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--umbral-ink);
+}
+
+body.reading-rizoma .historia-hito p,
+body.reading-rizoma .historia-version__question,
+body.reading-rizoma .historia-version__summary {
+  max-width: 58ch;
+  margin: 0 0 0.5rem;
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--umbral-dim);
+}
+
+body.reading-rizoma .historia-version__question {
+  font-style: italic;
+}
+
+body.reading-rizoma .historia-version__meta {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0;
+  line-height: 1.5;
+  text-transform: none;
+  color: var(--umbral-muted);
+}
+
+body.reading-rizoma .historia-version__changes {
+  margin: 0 0 0.6rem;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  line-height: 1.55;
+  color: var(--umbral-trace);
+}
+
+body.reading-rizoma .historia-version__changes li::before {
+  content: "→ ";
+  color: var(--umbral-faint);
+}
+
+body.reading-rizoma .historia-version__message {
+  margin: 0 0 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--umbral-faint);
+}
+
+body.reading-rizoma .historia-version__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+}
+
+body.reading-rizoma .historia-version__links a {
+  color: var(--umbral-dim);
+  text-decoration: none;
+  border-bottom: 1px solid var(--umbral-rule);
+}
+
+body.reading-rizoma .historia-version__links a:hover,
+body.reading-rizoma .historia-version__links a:focus-visible {
+  color: var(--umbral-trace);
+  border-bottom-color: var(--umbral-trace);
+}
+
+body.reading-rizoma .historia-empty {
+  max-width: 58ch;
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--umbral-muted);
+}
+
+@media (max-width: 700px) {
+  body.reading-rizoma .historia-hito,
+  body.reading-rizoma .historia-version {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.35rem;
+  }
+
+  body.reading-rizoma .historia-version time {
+    flex-direction: row;
+    gap: 0.5rem;
   }
 }
