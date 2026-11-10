@@ -17,7 +17,7 @@ image_ratio: ''
 
 _Mantenerse firme o constante en algo._
 
-Esto encuentro cuando busco su significado.
+Eso encuentro cuando busco su significado.
 
 Cuando intento entender,
 cuando intento profundizar en algo.
