@@ -77,6 +77,9 @@ hitos:
   - date: 2026-11-10
     title: "Un código de repetición"
     text: "Se suma un experimento de redundancia con voto por mayoría y se enlaza desde §7."
+  - date: 2026-11-10
+    title: "El aparato se abre"
+    text: "Los anexos se agrupan por tipo y se suma una objeción abierta sobre el autómata."
 ---
 
 No es una tesis. Es una deriva.

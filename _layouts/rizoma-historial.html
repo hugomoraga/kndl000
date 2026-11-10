@@ -45,7 +45,7 @@
     {% if page.hitos.size > 0 %}
     <section class="historia-section" aria-labelledby="historia-hitos-title">
       <h2 class="historia-section__title" id="historia-hitos-title">Hitos editoriales</h2>
-      <p class="historia-note">Reconstrucción editorial inicial. No son eventos automáticos: son una lectura curada de los cambios que sí están registrados en Git.</p>
+      <p class="historia-note">Hitos curados: no son eventos automáticos. Registran decisiones que Git no puede leer; las versiones registran los cambios de frontmatter.</p>
       <ol class="historia-hitos">
         {% for hito in page.hitos %}
         <li class="historia-hito">
