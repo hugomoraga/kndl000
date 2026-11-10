@@ -1,21 +1,22 @@
-# Tipos de anexo. Son operaciones, no categorías cerradas.
+# Tipos de anexo. Son operaciones, no categorías de tema.
+# Un anexo declara un solo tipo primario. Ver docs/rizoma/taxonomia-anexos.md.
 - id: correccion
   label: "Corrección"
   order: 1
-  description: "Una afirmación que se rectificó: qué decía, qué se corrigió y con qué fuente."
+  question: "¿Qué afirmamos mal y qué lo corrige?"
 - id: fuente
   label: "Fuente"
   order: 2
-  description: "Un documento o conjunto de documentos examinados: qué dice, qué no dice y cómo se verificó."
+  question: "¿Qué dice esta fuente, qué no dice y cómo lo verificamos?"
 - id: concepto
   label: "Concepto"
   order: 3
-  description: "Una idea o teoría que se expande; puede ser provisional y no corrige nada."
+  question: "¿Qué idea expandimos y cómo se relaciona?"
 - id: objecion
   label: "Objeción"
   order: 4
-  description: "Un caso o contraejemplo que resiste la tesis; no se resuelve, se sostiene."
+  question: "¿Qué caso resiste la tesis y por qué no se resuelve?"
 - id: derivacion
   label: "Derivación"
   order: 5
-  description: "Un desarrollo formal o ejecutable: pasos, supuestos y límites."
+  question: "¿Qué se sigue de estos supuestos y con qué límites?"

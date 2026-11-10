@@ -28,14 +28,14 @@
 
     <div class="expediente">
       <div class="expediente__body reading-body">
-        <p class="anexos-intro">No todo anexo es una errata. Acá viven las correcciones, las fuentes, los conceptos, las objeciones y las derivaciones que no caben en la deriva; cada grupo declara qué operación hace.</p>
+        <p class="anexos-intro">No todo anexo es una errata. Acá viven las correcciones, las fuentes, los conceptos, las objeciones y las derivaciones que no caben en la deriva. Cada anexo declara una operación; el tipo se elige por la pregunta que responde.</p>
 
         {% for tipo in site.data.anexos_tipos %}
           {% assign grupo = _exp.anexos | where: "tipo", tipo.id %}
           {% if grupo.size > 0 %}
           <section class="anexos-grupo" id="{{ tipo.id }}">
             <h2>{{ tipo.label }}</h2>
-            <p class="anexos-grupo__description">{{ tipo.description }}</p>
+            <p class="anexos-grupo__question">{{ tipo.question }}</p>
             <ul class="anexo-list">
               {% for anexo in grupo %}
               <li>

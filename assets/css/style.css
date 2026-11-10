@@ -11193,7 +11193,7 @@ body.reading-rizoma .anexos-grupo:first-of-type {
   margin-top: 2rem;
 }
 
-body.reading-rizoma .anexos-grupo__description {
+body.reading-rizoma .anexos-grupo__question {
   max-width: 60ch;
   margin: .5rem 0 0;
   font-family: var(--font-serif);
