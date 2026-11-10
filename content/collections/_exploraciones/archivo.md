@@ -8,6 +8,12 @@ status: abierta
 date: 2026-11-10
 updated: 2026-11-10
 lamina: true
+procedencia: >-
+  El cuerpo de esta deriva se derivó con DeepSeek Harness (modelo
+  deepseek-v4.1-flash) en una sesión anterior. El aparato —los dos anexos, su
+  índice y la nota de ciclo— se escribió con el mismo agente en esta sesión, el
+  10 de noviembre de 2026. La curación, los cortes y la decisión de publicar son
+  del autor.
 fields:
   - memoria
   - archivo

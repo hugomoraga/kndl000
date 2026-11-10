@@ -6,6 +6,9 @@ tipo: correccion
 date: 2026-11-10
 estado: corregido
 exploracion: /rizoma/archivo/
+procedencia: >-
+  Anexo escrito con DeepSeek Harness (modelo deepseek-v4.1-flash) el 10 de
+  noviembre de 2026. La curación y la decisión de publicar son del autor.
 permalink: /rizoma/archivo/anexos/tecnologia/
 fuentes:
   - autor: "KNDL"

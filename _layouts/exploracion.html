@@ -30,6 +30,9 @@
         {% if page.fields %}<span>{{ page.fields | join: " · " }}</span>{% endif %}
         {% if page.updated %}<span>actualizado {{ page.updated | date: "%Y-%m-%d" }}</span>{% endif %}
       </p>
+      {% if page.procedencia %}
+      <p class="expediente__procedencia">{{ page.procedencia }}</p>
+      {% endif %}
     </header>
 
     <div class="expediente">

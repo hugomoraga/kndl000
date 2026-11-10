@@ -8075,6 +8075,26 @@ body.reading-rizoma .expediente__meta span + span::before {
   color: var(--umbral-faint);
 }
 
+body.reading-rizoma .expediente__procedencia {
+  max-width: 62ch;
+  margin: 1rem 0 0;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--umbral-faint);
+  font-family: var(--font-serif);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--umbral-muted);
+}
+
+body.reading-rizoma .anexos-procedencia {
+  max-width: 62ch;
+  margin: 0 0 2rem;
+  font-family: var(--font-serif);
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--umbral-muted);
+}
+
 body.reading-rizoma .expediente {
   display: grid;
   grid-template-columns: minmax(0, 36rem) 16rem;

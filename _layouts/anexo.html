@@ -27,6 +27,9 @@
         {% if page.date %}<span>{{ page.date | date: "%Y-%m-%d" }}</span>{% endif %}
         {% if _exp %}<span>{{ _exp.title }}</span>{% endif %}
       </p>
+      {% if page.procedencia %}
+      <p class="expediente__procedencia">{{ page.procedencia }}</p>
+      {% endif %}
     </header>
 
     <div class="expediente">

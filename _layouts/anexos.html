@@ -29,6 +29,9 @@
     <div class="expediente">
       <div class="expediente__body reading-body">
         <p class="anexos-intro">No todo anexo es una errata. Acá viven las correcciones, las fuentes, los conceptos, las objeciones y las derivaciones que no caben en la deriva. Cada anexo declara una operación; el tipo se elige por la pregunta que responde.</p>
+        {% if _exp.procedencia %}
+        <p class="anexos-procedencia">{{ _exp.procedencia }}</p>
+        {% endif %}
 
         {% for tipo in site.data.anexos_tipos %}
           {% assign grupo = _exp.anexos | where: "tipo", tipo.id %}
