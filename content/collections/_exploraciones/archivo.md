@@ -47,7 +47,7 @@ hitos:
 
 Si la repetición fue una deriva, el archivo es su sedimento.
 
-## 1. Dos rastros
+## 1. Dos rastros {#dos-rastros}
 
 En Rastros hay dos líneas que volvieron mientras escribía la primera deriva:
 
@@ -59,7 +59,7 @@ La primera habla de un proceso. La segunda, de un formato. Las dos preguntan lo 
 
 No sé si el archivo recuerda. Sé que guarda. Y entre guardar y recordar hay una distancia que todavía no terminé de medir.
 
-## 2. Guardar
+## 2. Guardar {#guardar}
 
 Guardar no es recordar. El registro puede sobrevivir sin nosotros; el recuerdo, no.
 
@@ -69,7 +69,7 @@ Por eso una colección de archivos no es una memoria. Es su materia prima.
 
 Y hoy el archivo se mantiene solo, o eso parece. Respaldos, índices, versiones, sincronización: procesos que se automatizan y que nadie mira. La memoria está delegada. Cuando uno de esos procesos falla, se descubre cuánto se había delegado.
 
-## 3. Recuperar
+## 3. Recuperar {#recuperar}
 
 Recuperar no es devolver. Es volver a leer desde el presente.
 
@@ -79,7 +79,7 @@ El archivo conserva lo que fuimos, pero no necesariamente aquello que nos hizo s
 
 Esa frase me parece cierta y no sé bien por qué. Quizá porque lo que nos hizo serlo no era un contenido: era una relación. Y las relaciones no se guardan: se practican.
 
-## 4. Transformar
+## 4. Transformar {#transformar}
 
 Cada migración es una interpretación. Cambiar el soporte, el formato o el nombre es decidir qué parte del original importa. Lo que no se migra no se pierde: se abandona, que es distinto y es peor.
 
@@ -87,7 +87,7 @@ Hay una transformación más silenciosa: la que hace el índice. Ordenar, etique
 
 El archivo no es lo contrario del olvido: es una forma de administrarlo.
 
-## 5. Deprecar
+## 5. Deprecar {#deprecar}
 
 Deprecar no es borrar. Es conservar algo que ya no se actualiza.
 
@@ -97,9 +97,9 @@ En Vestigios hay una página que ya no responde. El navegador devuelve un error 
 
 Un enlace roto es el residuo del archivo: sobrevive a su propia desaparición.
 
-## 6. Repetir para no perderse
+## 6. Repetir para no perderse {#repetir-para-no-perderse}
 
-En la [primera deriva](/rizoma/que-se-conserva-cuando-algo-se-repite/) la repetición aparecía como gasto. Acá aparece lo contrario: lo que llega hasta nosotros llegó porque se repitió.
+En la [primera deriva](/rizoma/que-se-conserva-cuando-algo-se-repite/#redundancia "Sección 7: Redundancia") la repetición aparecía como gasto. Acá aparece lo contrario: lo que llega hasta nosotros llegó porque se repitió.
 
 Shannon lo formuló para los mensajes: la redundancia es lo que permite que algo sobreviva al ruido. Repetir ocupa lugar y gasta tiempo, y precisamente por eso conserva. El archivo vive de esa deuda. Lo que se guarda una sola vez se pierde; lo que se copia, se cita y se vuelve a leer dura un poco más.
 
@@ -109,7 +109,7 @@ En Código hay un programa que llena una grilla con el corpus del sitio. Cada ge
 
 Y también es una pérdida. Cada copia elige qué conservar. Cada índice elige qué aparece. Cada formato elige qué se puede leer después. El archivo no conserva el pasado: conserva una versión del pasado que fue posible guardar.
 
-## 7. Preguntas abiertas
+## 7. Preguntas abiertas {#preguntas-abiertas}
 
 - ¿Qué diferencia hay entre recordar algo y conservar su registro?
 - ¿Puede un archivo sobrevivir a la desaparición de aquello que le daba significado?

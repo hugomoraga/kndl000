@@ -11035,3 +11035,27 @@ body.reading-rizoma .anexo-list p {
   line-height: 1.5;
   color: var(--umbral-muted);
 }
+
+
+/* Rizoma — referencias de sección */
+body.reading-rizoma .seccion-ref {
+  font-family: var(--font-mono);
+  font-size: .88em;
+  letter-spacing: .02em;
+  color: var(--umbral-trace);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(159, 198, 201, .28);
+}
+
+body.reading-rizoma .seccion-ref:hover,
+body.reading-rizoma .seccion-ref:focus-visible {
+  border-bottom-color: var(--umbral-trace);
+}
+
+body.reading-rizoma .expediente__body h2 {
+  scroll-margin-top: 2rem;
+}
+
+body.reading-rizoma .expediente__body h2:target {
+  color: var(--umbral-trace);
+}

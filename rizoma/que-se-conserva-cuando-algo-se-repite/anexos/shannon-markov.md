@@ -37,7 +37,7 @@ fuentes:
 > Aproximaciones al lenguaje con cadenas de Markov: el texto como repetición
 > probabilística.
 
-La palabra «Shannon» de §7 enlazaba a esa pieza desde la frase sobre
+La palabra «Shannon» de <a class="seccion-ref" href="/rizoma/que-se-conserva-cuando-algo-se-repite/#redundancia" aria-label="Sección 7: Redundancia" title="Sección 7: Redundancia">§7</a> enlazaba a esa pieza desde la frase sobre
 redundancia.
 
 ## Qué se corrigió

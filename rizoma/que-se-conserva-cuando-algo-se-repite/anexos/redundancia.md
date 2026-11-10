@@ -65,4 +65,4 @@ hace.
 
 La distinción entre conservar el sentido y conservar la señal. La redundancia
 conserva el mensaje; no garantiza el sentido. Esa diferencia es la objeción de
-§8.
+<a class="seccion-ref" href="/rizoma/que-se-conserva-cuando-algo-se-repite/#la-objecion" aria-label="Sección 8: La objeción" title="Sección 8: La objeción">§8</a>.
