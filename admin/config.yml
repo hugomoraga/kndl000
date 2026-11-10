@@ -168,7 +168,13 @@ collections:
       - { label: Date, name: date, widget: datetime }
       - { label: Note, name: note, widget: text }
       - { label: Link, name: link, widget: string, required: false, hint: "Spotify, YouTube, Bandcamp…" }
-      - { label: Source, name: source, widget: string, required: false, hint: "Álbum, track o referencia que originó la nota." }
+      - label: Fuentes
+        name: sources
+        widget: list
+        required: false
+        fields:
+          - { label: Texto, name: label, widget: string }
+          - { label: URL, name: url, widget: string, required: false, hint: "Interna (/poemas/...) o externa (https://...)." }
       - { label: Destacada en Ahora, name: featured, widget: boolean, default: false }
 
   - name: investigaciones

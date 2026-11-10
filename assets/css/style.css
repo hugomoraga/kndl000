@@ -10283,6 +10283,23 @@ body.reading-musica .musica-nota__source {
   color: var(--umbral-faint);
 }
 
+body.reading-musica .musica-nota__source-label {
+  margin-right: 0.25rem;
+  color: var(--umbral-faint);
+}
+
+body.reading-musica .musica-nota__source a {
+  color: var(--umbral-dim);
+  text-decoration: none;
+  border-bottom: 1px solid var(--umbral-rule);
+}
+
+body.reading-musica .musica-nota__source a:hover,
+body.reading-musica .musica-nota__source a:focus-visible {
+  color: var(--umbral-trace);
+  border-bottom-color: var(--umbral-trace);
+}
+
 body.reading-musica .musica-nota__note {
   max-width: 60ch;
   margin: 0;

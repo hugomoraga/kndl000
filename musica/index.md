@@ -36,7 +36,23 @@ description: "Cuaderno de escucha — KNDL 000. Ideas, referencias y máquinas."
         <div class="musica-nota__body">
           <p class="musica-nota__kind">{{ note.kind | default: "Nota" }}</p>
           <h3 class="musica-nota__title">{{ note.title }}</h3>
-          {% if note.source %}<p class="musica-nota__source">{{ note.source }}</p>{% endif %}
+          {% if note.sources %}
+          <p class="musica-nota__source">
+            <span class="musica-nota__source-label">Fuente:</span>
+            {% for source in note.sources %}
+              {% if source.url and source.url contains "://" %}
+              <a href="{{ source.url }}" target="_blank" rel="noopener noreferrer">{{ source.label }}</a>
+              {% elsif source.url %}
+              <a href="{{ source.url | relative_url }}">{{ source.label }}</a>
+              {% else %}
+              {{ source.label }}
+              {% endif %}
+              {% unless forloop.last %}<span aria-hidden="true"> · </span>{% endunless %}
+            {% endfor %}
+          </p>
+          {% elsif note.source %}
+          <p class="musica-nota__source">{{ note.source }}</p>
+          {% endif %}
           {% if note.note %}<p class="musica-nota__note">{{ note.note }}</p>{% endif %}
         </div>
         {% if note.date %}<time class="musica-nota__date" datetime="{{ note.date | date: '%Y-%m-%d' }}">{{ note.date | date: "%Y-%m-%d" }}</time>{% endif %}
