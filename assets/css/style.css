@@ -10207,25 +10207,76 @@ body.reading-musica .musica-ahora__note {
   color: var(--umbral-ink);
 }
 
+body.reading-musica .musica-ahora__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 1rem;
+}
+
+body.reading-musica .musica-ahora__play,
 body.reading-musica .musica-ahora__link {
   display: inline-flex;
   align-items: center;
-  min-height: 36px;
+  min-height: 44px;
   padding: 0.3rem 0;
   font-family: var(--font-mono);
   font-size: 0.7rem;
   letter-spacing: 0.12em;
   line-height: 1.2;
   text-transform: uppercase;
-  color: var(--umbral-trace);
   text-decoration: none;
   border-bottom: 1px solid transparent;
 }
 
+body.reading-musica .musica-ahora__play {
+  width: auto;
+  justify-content: flex-start;
+  margin: 0;
+  border-top: 0;
+  border-right: 0;
+  border-left: 0;
+  background: none;
+  color: var(--umbral-trace);
+  cursor: pointer;
+  text-align: left;
+  -webkit-appearance: none;
+}
+
+body.reading-musica .musica-ahora__link {
+  width: auto;
+  justify-content: flex-start;
+  color: var(--umbral-dim);
+  text-align: left;
+}
+
+body.reading-musica .musica-ahora__play:hover,
+body.reading-musica .musica-ahora__play:focus-visible,
 body.reading-musica .musica-ahora__link:hover,
 body.reading-musica .musica-ahora__link:focus-visible {
   color: var(--umbral-ink);
   border-bottom-color: var(--umbral-trace);
+}
+
+body.reading-musica .musica-ahora__play:not([hidden]) + .musica-ahora__link::before {
+  content: "·";
+  margin: 0 0.55rem;
+  color: var(--umbral-faint);
+}
+
+body.reading-musica .musica-ahora__player {
+  max-width: 36rem;
+  margin: 1rem 0 0;
+  border: 1px solid var(--umbral-rule);
+  background: #000;
+  overflow: hidden;
+}
+
+body.reading-musica .musica-ahora__player iframe {
+  display: block;
+  width: 100%;
+  height: 80px;
+  border: 0;
 }
 
 body.reading-musica .musica-notas {
@@ -10417,5 +10468,9 @@ body.reading-musica .musica-referencias a:focus-visible {
 
   body.reading-musica .musica-nota__date {
     grid-column: 2;
+  }
+
+  body.reading-musica .musica-ahora__player iframe {
+    height: 152px;
   }
 }

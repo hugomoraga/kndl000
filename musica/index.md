@@ -20,7 +20,18 @@ description: "Cuaderno de escucha — KNDL 000. Ideas, referencias y máquinas."
     {% if _featured.artist %}<p class="musica-ahora__artist">{{ _featured.artist }}</p>{% endif %}
     {% if _featured.note %}<p class="musica-ahora__note">{{ _featured.note }}</p>{% endif %}
     {% if _featured.link %}
-    <a class="musica-ahora__link" href="{{ _featured.link }}" target="_blank" rel="noopener noreferrer">Escuchar ↗</a>
+    {%- assign _spotify_id = "" -%}
+    {%- if _featured.link contains "spotify.com/track/" -%}
+      {%- assign _spotify_id = _featured.link | split: "/track/" | last | split: "?" | first -%}
+    {%- endif -%}
+    <div class="musica-ahora__actions">
+      {% if _spotify_id != "" %}
+      <button type="button" class="musica-ahora__play" id="musica-play" aria-controls="musica-player" aria-expanded="false" data-embed="https://open.spotify.com/embed/track/{{ _spotify_id }}?utm_source=generator&amp;theme=0" data-title="{{ _featured.artist | default: '' | escape }} — {{ _featured.title | escape }}" hidden>Reproducir</button>
+      {% endif %}
+      <a class="musica-ahora__link" href="{{ _featured.link }}" target="_blank" rel="noopener noreferrer">{% if _spotify_id != "" %}Abrir en Spotify ↗{% else %}Escuchar ↗{% endif %}</a>
+    </div>
+
+    {% if _spotify_id != "" %}<div class="musica-ahora__player" id="musica-player" hidden></div>{% endif %}
     {% endif %}
   </section>
   {% endif %}
@@ -91,3 +102,5 @@ description: "Cuaderno de escucha — KNDL 000. Ideas, referencias y máquinas."
   </section>
   {% endif %}
 </div>
+
+<script src="{{ '/assets/js/core/musica-player.js' | relative_url }}" defer></script>
