@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>¿Qué se conserva cuando algo se repite? — Cartografía 01 · KNDL</title>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --field: #060708;
+      --ink: #e9e6dc;
+      --ink-dim: #9aa3a1;
+      --ink-muted: #7f8a88;
+      --rule: rgba(233, 230, 220, .16);
+      --rule-soft: rgba(233, 230, 220, .09);
+      --trace: #9fc6c9;
+      --serif: 'Newsreader', Georgia, serif;
+      --sans: 'Lato', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--field);
+      color: var(--ink);
+      font-family: var(--serif);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    main {
+      width: min(100% - 64px, 1280px);
+      margin: 0 auto;
+      padding: 56px 0 40px;
+    }
+
+    .masthead, .colophon, .map-note {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .eyebrow, .folio, .field-index, .kind, .legend-label, .colophon {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: .08em;
+      line-height: 1.5;
+      text-transform: uppercase;
+    }
+
+    .eyebrow, .folio { color: var(--ink-muted); }
+    .folio { text-align: right; }
+
+    h1 {
+      max-width: 990px;
+      margin: 34px 0 12px;
+      font-family: var(--serif);
+      font-size: clamp(40px, 5.2vw, 70px);
+      font-weight: 350;
+      letter-spacing: -.035em;
+      line-height: .99;
+    }
+
+    .intro {
+      max-width: 700px;
+      margin: 0;
+      color: var(--ink-dim);
+      font-size: 19px;
+      font-weight: 350;
+      line-height: 1.45;
+    }
+
+    figure { margin: 50px 0 0; }
+
+    .map-scroll { overflow-x: auto; scrollbar-color: #344044 transparent; }
+
+    svg {
+      display: block;
+      width: 100%;
+      min-width: 1280px;
+      height: auto;
+    }
+
+    .contour {
+      fill: none;
+      stroke: var(--rule);
+      stroke-width: 1;
+      vector-effect: non-scaling-stroke;
+    }
+
+    .field-index { fill: var(--ink-muted); font-size: 12px; }
+    .field-title { fill: var(--ink); font-family: var(--serif); font-size: 29px; font-weight: 400; }
+    .field-words { fill: var(--ink-dim); font-family: var(--sans); font-size: 14px; font-weight: 300; letter-spacing: .015em; }
+    .kind { fill: var(--ink-muted); font-size: 12px; letter-spacing: .07em; }
+    .work { fill: var(--ink); font-family: var(--serif); font-size: 16px; font-weight: 350; }
+    .note { fill: var(--ink-dim); font-family: var(--serif); font-size: 18px; font-style: italic; }
+    .formula { fill: var(--ink-dim); font-family: var(--mono); font-size: 13px; }
+    .relation { fill: var(--trace); font-family: var(--sans); font-size: 12px; font-weight: 400; letter-spacing: .1em; text-transform: uppercase; }
+    .trace-line { fill: none; stroke: var(--trace); stroke-width: 1.2; vector-effect: non-scaling-stroke; }
+    .quiet-line { fill: none; stroke: var(--rule); stroke-width: 1; vector-effect: non-scaling-stroke; }
+
+    a { color: inherit; text-decoration-color: rgba(159, 198, 201, .42); text-underline-offset: .16em; }
+    a:hover, a:focus-visible { color: var(--trace); }
+
+    figcaption {
+      display: flex;
+      justify-content: space-between;
+      gap: 32px;
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid var(--rule-soft);
+      color: var(--ink-dim);
+      font-family: var(--sans);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .legend { display: flex; flex-wrap: wrap; gap: 10px 28px; }
+    .legend-label { color: var(--ink-muted); font-size: 9px; }
+    .legend-item { white-space: nowrap; }
+    .legend-mark { display: inline-block; width: 22px; margin-right: 8px; border-top: 1px solid var(--rule); vertical-align: middle; }
+    .legend-mark--trace { border-color: var(--trace); border-top-width: 1.2px; }
+
+    .map-note {
+      align-items: baseline;
+      margin-top: 38px;
+      padding: 16px 0 18px;
+      border-top: 1px solid var(--rule-soft);
+      border-bottom: 1px solid var(--rule-soft);
+      color: var(--ink-dim);
+      font-family: var(--sans);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .map-note p { max-width: 720px; margin: 0; }
+    .map-note .open { color: var(--trace); font-family: var(--serif); font-size: 19px; font-style: italic; }
+
+    .colophon { margin-top: 30px; color: var(--ink-muted); font-size: 9px; }
+    .colophon span:last-child { text-align: right; }
+
+    @media (max-width: 680px) {
+      main { width: min(100% - 36px, 1280px); padding-top: 28px; }
+      .masthead, .map-note, figcaption, .colophon { flex-direction: column; gap: 10px; }
+      .folio, .colophon span:last-child { text-align: left; }
+      h1 { margin-top: 28px; font-size: clamp(38px, 12vw, 54px); }
+      .intro { font-size: 17px; }
+      figure { margin-top: 36px; }
+    }
+
+    @media print {
+      body { background: #060708; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      main { width: 100%; padding: 20px; }
+      .map-scroll { overflow: visible; }
+      svg { min-width: 0; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="masthead">
+      <p class="eyebrow">Rizoma / Exploración 01 / Cartografía 01</p>
+      <p class="folio">KNDL 000 · Noviembre 2026</p>
+    </div>
+
+    <h1>¿Qué se conserva cuando algo se repite?</h1>
+    <p class="intro">Una pregunta abre varios territorios. Este primer trazo reúne materiales que la hacen cambiar de sentido; deja espacio para lo que todavía no conecta.</p>
+
+    <figure aria-labelledby="map-caption">
+      <div class="map-scroll">
+        <svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="rizoma-repeticion-title rizoma-repeticion-desc">
+          <title id="rizoma-repeticion-title">Cartografía de la repetición</title>
+          <desc id="rizoma-repeticion-desc">Mapa provisional de persistencia, desgaste, recurrencia, automatización y archivo y memoria, reunidos por una pregunta sobre la repetición.</desc>
+
+          <path class="contour" d="M44 82 C101 47 253 52 340 92 C397 119 392 227 352 283 C302 352 116 325 64 273 C20 229 8 129 44 82Z"/>
+          <path class="contour" d="M434 79 C493 48 653 57 711 100 C765 140 743 259 697 300 C646 345 472 316 427 264 C392 224 389 107 434 79Z"/>
+          <path class="contour" d="M820 83 C884 48 1092 51 1177 101 C1239 137 1222 258 1167 298 C1098 349 891 328 830 276 C777 231 775 109 820 83Z"/>
+          <path class="contour" d="M105 384 C166 350 435 353 526 397 C599 432 579 538 513 568 C433 605 186 592 114 550 C55 516 51 416 105 384Z"/>
+          <path class="contour" d="M652 379 C718 347 1081 355 1173 399 C1236 429 1219 536 1154 570 C1060 619 723 598 658 552 C602 513 598 405 652 379Z"/>
+
+          <text class="field-index" x="82" y="111">01 / PERSISTENCIA</text>
+          <text class="field-title" x="82" y="153">Insistir</text>
+          <text class="field-words" x="82" y="181">continuidad · permanencia · volver</text>
+          <text class="kind" x="82" y="226">POEMA</text>
+          <a href="/poemas/persistencias-del-algo/"><text class="work" x="82" y="249">Persistir en el algo</text></a>
+          <text class="kind" x="82" y="279">POEMA</text>
+          <a href="/poemas/cae/"><text class="work" x="82" y="302">Cae</text></a>
+          <text class="note" x="82" y="331">Dos piezas se corrigen al volver.</text>
+
+          <text class="field-index" x="459" y="111">02 / DESGASTE</text>
+          <text class="field-title" x="459" y="153">Gastar</text>
+          <text class="field-words" x="459" y="181">pérdida · lenguaje · agotamiento</text>
+          <text class="kind" x="459" y="226">RASTROS · FRAGMENTO</text>
+          <a href="/fragmentos/"><text class="work" x="459" y="249">«El alfabeto se gasta al repetirlo.</text></a>
+          <text class="work" x="459" y="276">Las palabras también.»</text>
+          <text class="note" x="459" y="310">Conservar una forma; consumir potencia.</text>
+
+          <text class="field-index" x="855" y="111">03 / RECURRENCIA</text>
+          <text class="field-title" x="855" y="153">Volver distinto</text>
+          <text class="field-words" x="855" y="181">Fibonacci · recursión · diferencia</text>
+          <text class="kind" x="855" y="226">CÓDIGO</text>
+          <a href="/codigo/espiral-fibonacci/"><text class="work" x="855" y="249">Espiral de Fibonacci</text></a>
+          <text class="formula" x="855" y="280">a(n) = a(n−1) + a(n−2)</text>
+          <text class="note" x="855" y="311">La regla vuelve; el resultado se desplaza.</text>
+
+          <text class="field-index" x="137" y="420">04 / AUTOMATIZACIÓN</text>
+          <text class="field-title" x="137" y="462">Delegar la vuelta</text>
+          <text class="field-words" x="137" y="490">máquina · algoritmo · ciclo</text>
+          <text class="kind" x="137" y="531">DISPOSITIVO</text>
+          <a href="/dispositivos/espiral/"><text class="work" x="137" y="554">Espiral</text></a>
+          <text class="note" x="137" y="582">Repite una secuencia; produce diferencia.</text>
+
+          <text class="field-index" x="686" y="415">05 / ARCHIVO Y MEMORIA</text>
+          <text class="field-title" x="686" y="457">Guardar ≠ recordar</text>
+          <text class="field-words" x="686" y="485">registro · recuperación · obsolescencia · identidad</text>
+          <text class="kind" x="686" y="527">RASTROS · PREGUNTA ABIERTA</text>
+          <a href="/fragmentos/"><text class="work" x="686" y="550">«¿Solo somos una colección de archivos markdown deprecados?»</text></a>
+          <text class="note" x="686" y="582">¿Qué sobrevive cuando cambia el contexto?</text>
+
+          <path class="trace-line" d="M590 463 H652"/>
+          <text class="relation" x="621" y="447" text-anchor="middle">fragmenta</text>
+
+          <path class="quiet-line" d="M44 652 H1236"/>
+          <text class="field-index" x="44" y="686">LECTURA</text>
+          <path class="quiet-line" d="M140 682 H164"/>
+          <text class="field-words" x="176" y="687">cercanía: pregunta compartida</text>
+          <path class="trace-line" d="M477 682 H501"/>
+          <text class="field-words" x="513" y="687">relación sostenida por un fragmento</text>
+          <text class="field-index" x="1236" y="686" text-anchor="end">SIN TRAZO · ABIERTO</text>
+        </svg>
+      </div>
+
+      <figcaption id="map-caption">
+        Cinco territorios provisionales, dispuestos alrededor de una pregunta que puede desplazarse.
+      </figcaption>
+    </figure>
+
+    <div class="map-note">
+      <p>La traza cian recoge una frase de <em>Rastros</em>: memorias que se fragmentan por procesos que se automatizan. Entre persistencia y desgaste aparece otra tensión: conservar una forma mientras se consume parte de su potencia.</p>
+      <p class="open">El mapa puede cambiar de pregunta.</p>
+    </div>
+
+    <footer class="colophon">
+      <span>Primer trazo · provisional</span>
+      <span>Referencias filosóficas y científicas: capa por explorar</span>
+    </footer>
+  </main>
+</body>
+</html>

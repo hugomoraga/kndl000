@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Lámina 01 — ¿Qué se conserva cuando algo se repite? · KNDL</title>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --field: #060708;
+      --ink: #e9e6dc;
+      --dim: #9aa3a1;
+      --muted: #7f8a88;
+      --trace: #9fc6c9;
+      --rule: rgba(233, 230, 220, .14);
+      --soft: rgba(233, 230, 220, .055);
+      --serif: 'Newsreader', Georgia, serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--field);
+      color: var(--ink);
+      font-family: var(--serif);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    main {
+      width: min(100% - 64px, 1280px);
+      margin: 0 auto;
+      padding: 48px 0 40px;
+    }
+
+    a { color: inherit; }
+
+    .masthead { border-bottom: 1px solid var(--rule); padding-bottom: 28px; }
+
+    .masthead__row {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      font-family: var(--mono);
+      font-size: .64rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .masthead__row a { text-decoration: none; }
+    .masthead__row a:hover { color: var(--trace); }
+
+    h1 {
+      margin: 34px 0 14px;
+      max-width: 28ch;
+      font-weight: 300;
+      font-size: clamp(1.9rem, 4.2vw, 3.2rem);
+      line-height: 1.04;
+      letter-spacing: -.01em;
+    }
+
+    h1 a { text-decoration: none; }
+    h1 a:hover { color: var(--trace); }
+
+    .dek {
+      margin: 0;
+      max-width: 46ch;
+      font-family: var(--mono);
+      font-size: .7rem;
+      letter-spacing: .06em;
+      line-height: 1.7;
+      color: var(--dim);
+      text-transform: uppercase;
+    }
+
+    .field {
+      position: relative;
+      margin-top: 34px;
+      aspect-ratio: 16 / 9;
+      isolation: isolate;
+    }
+
+    .contours {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .work {
+      position: absolute;
+      left: calc(var(--x) * 1%);
+      top: calc(var(--y) * 1%);
+      width: calc(var(--w) * 1%);
+      text-decoration: none;
+      color: var(--ink);
+    }
+
+    .kind {
+      display: block;
+      font-family: var(--mono);
+      font-size: .6rem;
+      font-weight: 400;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .kind__glyph {
+      display: inline-block;
+      margin-right: .35em;
+      font-size: .9em;
+      color: var(--dim);
+    }
+
+    .work__title {
+      display: block;
+      margin-top: .35rem;
+      font-size: 1.06rem;
+      line-height: 1.2;
+      font-weight: 400;
+      text-decoration: underline;
+      text-decoration-color: transparent;
+      text-decoration-thickness: 1px;
+      text-underline-offset: .2em;
+      transition: text-decoration-color .2s ease, color .2s ease;
+    }
+
+    .work:hover .work__title,
+    .work:focus-visible .work__title {
+      color: var(--trace);
+      text-decoration-color: var(--trace);
+    }
+
+    .work__sub {
+      display: block;
+      margin-top: .3rem;
+      font-family: var(--mono);
+      font-size: .58rem;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .work__quote {
+      display: block;
+      margin-top: .7rem;
+      font-size: .94rem;
+      font-style: italic;
+      line-height: 1.45;
+      color: var(--dim);
+    }
+
+    .work__quote--mono {
+      font-family: var(--mono);
+      font-style: normal;
+      font-size: .76rem;
+      letter-spacing: .01em;
+      color: var(--dim);
+    }
+
+    .node {
+      position: absolute;
+      left: calc(var(--x) * 1%);
+      top: calc(var(--y) * 1%);
+      font-family: var(--mono);
+      font-size: .68rem;
+      letter-spacing: .03em;
+      color: var(--dim);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .node::before {
+      content: "—";
+      margin-right: .45em;
+      color: rgba(233, 230, 220, .3);
+    }
+
+    .node:hover,
+    .node:focus-visible { color: var(--trace); }
+
+    .node__also {
+      font-size: .56rem;
+      vertical-align: super;
+      letter-spacing: .06em;
+      color: var(--muted);
+      margin-left: .15em;
+    }
+
+    .cut {
+      position: absolute;
+      left: 28%;
+      top: 42%;
+      width: 40%;
+    }
+
+    .cut__label {
+      display: block;
+      margin-bottom: .55rem;
+      font-family: var(--mono);
+      font-size: .6rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .cut__rule {
+      position: relative;
+      height: 1px;
+      margin-top: .5rem;
+      background: rgba(233, 230, 220, .34);
+    }
+
+    .cut__rule::after {
+      content: "";
+      position: absolute;
+      left: 36%;
+      top: -1px;
+      width: 26%;
+      height: 3px;
+      background: var(--field);
+    }
+
+    .cut__sentence {
+      margin: .9rem 0 0 36%;
+      font-size: .9rem;
+      font-style: italic;
+      line-height: 1.45;
+      color: var(--ink);
+    }
+
+    .blank {
+      position: absolute;
+      left: 3%;
+      top: 60%;
+      width: 21%;
+      padding: 1rem 1.1rem 1.2rem;
+      border: 1px dashed rgba(233, 230, 220, .16);
+      color: var(--muted);
+    }
+
+    .blank__label {
+      display: block;
+      font-family: var(--mono);
+      font-size: .6rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .blank__q {
+      margin: .9rem 0 0;
+      max-width: 20ch;
+      font-size: .9rem;
+      font-style: italic;
+      line-height: 1.5;
+      color: var(--dim);
+    }
+
+    .shift {
+      position: absolute;
+      left: 72%;
+      top: 76%;
+      width: 23%;
+      margin: 0;
+      font-size: .82rem;
+      font-style: italic;
+      line-height: 1.55;
+      color: var(--dim);
+    }
+
+    .shift::before {
+      content: "";
+      display: block;
+      width: 2.4rem;
+      height: 1px;
+      margin-bottom: .65rem;
+      background: var(--rule);
+    }
+
+    .colophon {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr 1fr;
+      gap: 24px;
+      margin-top: 44px;
+      padding-top: 14px;
+      border-top: 1px solid var(--rule);
+      font-family: var(--mono);
+      font-size: .6rem;
+      letter-spacing: .07em;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .colophon span:last-child { text-align: right; }
+
+    @media (max-width: 1000px) {
+      main { width: min(100% - 36px, 720px); padding-top: 32px; }
+      .field { aspect-ratio: auto; display: flex; flex-direction: column; }
+      .contours { display: none; }
+      .work, .node, .cut, .blank, .shift {
+        position: static;
+        width: auto;
+        margin: 0 0 1.6rem;
+      }
+      .cut { margin: 2rem 0; }
+      .blank { margin: 1rem 0 2rem; }
+      .shift { margin: 0 0 2rem; }
+      .node { display: block; margin: 0 0 .55rem; }
+      .cut__sentence {
+        width: auto;
+        margin: 1rem 0 0;
+        font-size: .98rem;
+      }
+      .colophon { flex-direction: column; gap: 8px; }
+      .colophon span:last-child { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="masthead">
+      <div class="masthead__row">
+        <span><a href="/rizoma/">KNDL · Rizoma</a> / Lámina 01</span>
+        <span>2026-11-10 · abierta</span>
+      </div>
+      <h1><a href="/rizoma/que-se-conserva-cuando-algo-se-repite/">¿Qué se conserva cuando algo se repite?</a></h1>
+      <p class="dek">Estado del campo al 2026-11-10. No es un resumen.</p>
+    </header>
+
+    <div class="field" role="group" aria-label="Campo de la repetición: siete obras, nueve nodos, un corte y un blanco">
+      <svg class="contours" viewBox="0 0 1280 720" preserveAspectRatio="none" aria-hidden="true">
+        <g fill="none" stroke="rgba(233, 230, 220, .055)" stroke-width="1">
+          <path d="M0 88 C 170 64 318 112 462 96 S 742 54 890 84 1120 120 1280 92"/>
+          <path d="M0 186 C 196 160 336 208 486 192 S 770 150 918 180 1136 216 1280 190"/>
+          <path d="M0 302 C 180 276 330 324 486 306 S 776 264 930 296 1140 330 1280 304"/>
+          <path d="M0 410 C 200 384 340 432 496 414 S 780 372 934 404 1146 438 1280 412"/>
+          <path d="M0 520 C 186 494 332 542 488 524 S 774 482 928 514 1140 548 1280 522"/>
+          <path d="M0 630 C 202 604 342 652 498 634 S 782 592 936 624 1148 658 1280 632"/>
+        </g>
+        <g fill="none" stroke="rgba(233, 230, 220, .075)" stroke-width="1">
+          <path d="M1042 130 C 1112 106 1214 122 1248 168 C 1276 208 1240 262 1178 268 C 1110 274 1052 236 1042 190 C 1036 164 1034 140 1042 130Z"/>
+          <path d="M86 566 C 156 542 258 558 292 604 C 320 644 284 698 222 704 C 154 710 96 672 86 626 C 80 600 78 576 86 566Z"/>
+        </g>
+      </svg>
+
+      <a class="work" style="--x:3;--y:5;--w:21" href="/poemas/persistencias-del-algo/">
+        <span class="kind"><span class="kind__glyph" aria-hidden="true">⁂</span> poema · serie</span>
+        <span class="work__title">Persistir en el algo</span>
+        <span class="work__sub">Una constante en mi ser</span>
+        <span class="work__quote">Camino con las palabras<br>o me enredaré en ellas.</span>
+      </a>
+
+      <a class="work" style="--x:3;--y:34;--w:19" href="/poemas/cae/">
+        <span class="kind"><span class="kind__glyph" aria-hidden="true">⁂</span> poema</span>
+        <span class="work__title">∞</span>
+        <span class="work__sub">Cae</span>
+        <span class="work__quote">No hay palabras que puedan retratarlo.</span>
+      </a>
+
+      <a class="work" style="--x:28;--y:5;--w:23" href="/fragmentos/">
+        <span class="kind"><span class="kind__glyph" aria-hidden="true">⟡</span> rastro · fragmento</span>
+        <span class="work__title">Rastros</span>
+        <span class="work__sub">2026-06-15</span>
+        <span class="work__quote">El alfabeto se gasta al repetirlo.<br>Las palabras también.</span>
+      </a>
+
+      <a class="work" style="--x:55;--y:6;--w:20" href="/codigo/espiral-fibonacci/">
+        <span class="kind"><span class="kind__glyph" aria-hidden="true">◊</span> código</span>
+        <span class="work__title">Espiral de Fibonacci</span>
+        <span class="work__sub">recurrencia</span>
+        <span class="work__quote work__quote--mono">a(n) = a(n−1) + a(n−2)</span>
+      </a>
+
+      <a class="work" style="--x:78;--y:6;--w:19" href="/dispositivos/espiral/">
+        <span class="kind"><span class="kind__glyph" aria-hidden="true">⎔</span> dispositivo</span>
+        <span class="work__title">Espiral</span>
+        <span class="work__sub">v0.1.1</span>
+        <span class="work__quote">Siete canales, patrones de 16 pasos, semilla reproducible.</span>
+      </a>
+
+      <a class="work" style="--x:70;--y:40;--w:21" href="/codigo/experimento-shannon/">
+        <span class="kind"><span class="kind__glyph" aria-hidden="true">◊</span> código</span>
+        <span class="work__title">Experimento de Shannon</span>
+        <span class="work__sub">aproximaciones al lenguaje</span>
+        <span class="work__quote">Del caos a la estructura.</span>
+      </a>
+
+      <a class="work" style="--x:46;--y:66;--w:21" href="/codigo/hormiga-langton/">
+        <span class="kind"><span class="kind__glyph" aria-hidden="true">◊</span> código</span>
+        <span class="work__title">Hormiga de Langton</span>
+        <span class="work__sub">dos reglas</span>
+        <span class="work__quote">El caos que emerge del orden. El orden que emerge del caos.</span>
+      </a>
+
+      <a class="node" style="--x:4;--y:28.5" href="/rizoma/nodos/#persistencia">persistencia</a>
+      <a class="node" style="--x:4;--y:52.5" href="/rizoma/nodos/#repeticion">repetición<span class="node__also">02</span></a>
+      <a class="node" style="--x:28;--y:24" href="/rizoma/nodos/#desgaste">desgaste</a>
+      <a class="node" style="--x:48;--y:28" href="/rizoma/nodos/#diferencia">diferencia</a>
+      <a class="node" style="--x:55;--y:24" href="/rizoma/nodos/#recurrencia">recurrencia</a>
+      <a class="node" style="--x:78;--y:33" href="/rizoma/nodos/#automatizacion">automatización<span class="node__also">02</span></a>
+      <a class="node" style="--x:62;--y:33" href="/rizoma/nodos/#memoria">memoria<span class="node__also">02</span></a>
+      <a class="node" style="--x:37;--y:60" href="/rizoma/nodos/#archivo">archivo<span class="node__also">02</span></a>
+      <a class="node" style="--x:72;--y:60.5" href="/rizoma/nodos/#redundancia">redundancia<span class="node__also">02</span></a>
+
+      <div class="cut">
+        <span class="cut__label">corte</span>
+        <div class="cut__rule" aria-hidden="true"></div>
+        <p class="cut__sentence">un ritual no es una costumbre:<br>es una máquina de producir presente</p>
+      </div>
+
+      <div class="blank">
+        <span class="blank__label">sin trazo</span>
+        <p class="blank__q">¿qué repite una memoria que no guarda nada?</p>
+      </div>
+
+      <p class="shift">La pregunta no se movió. Se movió lo que podía responderla.</p>
+    </div>
+
+    <footer class="colophon">
+      <span>Proximidad, no causalidad. La lectura es de quien cartografía.</span>
+      <span>02 = también en la segunda deriva.</span>
+      <span>La lámina se fecha y se rehace.</span>
+    </footer>
+  </main>
+</body>
+</html>
