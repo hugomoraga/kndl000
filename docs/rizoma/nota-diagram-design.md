@@ -76,8 +76,10 @@ Cambios:
   acertijo.
 - La clave de lectura sube al encabezado: «cada bloque es una obra; cada
   palabra, un nodo».
-- El SVG se ajusta por escala (no refluye) y una lupa 2× sigue al cursor en
-  puntero fino; en táctil, pellizco.
+- El SVG se ajusta por escala (no refluye). En escritorio no hay lupa: se lee
+  a escala. En táctil, un botón «Lupa» activa una lente de 180 px que se
+  arrastra sobre el campo y queda fija para leer; los enlaces se desactivan
+  mientras la lupa está abierta.
 - Los labels funcionales suben al piso de 11 px y el corte baja de tono.
 - Se retira la nota del desplazamiento: era la única línea que concluía.
 
@@ -89,7 +91,7 @@ positivo).
 
 - `lamina-01-svg.html` (fuente), `lamina-01.svg` (export estático),
   `lamina-01.png` (preview), `build-lamina.py` (generador).
-- La página del sitio agrega la lupa y el ajuste por escala; el SVG exportado
-  queda sin script.
+- La página del sitio agrega el ajuste por escala y el modo lupa táctil; el
+  SVG exportado queda sin script.
 - `lamina-01-css.html`: el test anterior en HTML/CSS; se conserva para comparar.
 - Pendiente: si el export se vuelve profile-aware.

@@ -93,8 +93,9 @@ diciendo qué clase de memoria es.
 **La lámina.** Una por exploración. Muestra el corpus, los nodos y los cortes.
 Se genera desde los datos y se anota a mano: las etiquetas son citas, no
 categorías. Deja al menos un blanco. No numera territorios fijos. Se fecha.
-Se ajusta por escala, no refluye: en escritorio una lupa 2× recorre el campo;
-en táctil, pellizco. El SVG exportado queda estático.
+Se ajusta por escala, no refluye. En escritorio se lee a escala; en táctil,
+un modo lupa con botón permite arrastrar una lente sobre el campo. El SVG
+exportado queda estático.
 
 **El margen.** Los nodos como marginalia: dónde más aparece la palabra
 («también en»), con el sigilo del kind. No es una nube de tags ni un ranking.

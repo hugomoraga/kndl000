@@ -146,7 +146,7 @@ def work_block(w):
             + "</g>")
 
 
-def build_svg(site: bool) -> str:
+def build_svg() -> str:
     out = [f'''<svg class="plate-svg" viewBox="0 0 1280 1024" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="lamina01-title lamina01-desc">
   <title id="lamina01-title">Lámina 01 — ¿Qué se conserva cuando algo se repite?</title>
   <desc id="lamina01-desc">Campo de la repetición: siete obras del archivo con los nodos que cada una trabaja. Cinco nodos están compartidos con la segunda deriva. El corte marca la sección Ritual retirada; el blanco, lo que la deriva todavía no dice.</desc>
@@ -184,26 +184,11 @@ def build_svg(site: bool) -> str:
     out.append(text(60, 796, "que no guarda nada?", 14, DIM, SERIF, italic=True))
     out.append('</g>')
 
-    # Loupe (only on the site page; the exported SVG stays static)
-    if site:
-        out.append('''<defs>
-  <clipPath id="loupe-clip"><rect x="-90" y="-90" width="180" height="180"/></clipPath>
-</defs>
-<g id="loupe" opacity="0" pointer-events="none" aria-hidden="true">
-  <rect x="-90" y="-90" width="180" height="180" fill="#060708"/>
-  <g clip-path="url(#loupe-clip)">
-    <use id="loupe-use" href="#plate-field" transform="scale(2)"/>
-  </g>
-  <rect x="-90" y="-90" width="180" height="180" fill="none" stroke="#9fc6c9" stroke-width="1"/>
-  <rect x="-84" y="-82" width="30" height="18" fill="rgba(6,7,8,0.78)"/>
-  <text x="-76" y="-69" font-size="11" fill="#9fc6c9" font-family="'JetBrains Mono', monospace">2×</text>
-</g>''')
-
     # Colophon
     out.append(f'<line x1="44" y1="984" x2="1236" y2="984" stroke="{RULE}" stroke-width="1"/>')
     out.append(text(44, 1008, "Estado del campo al 2026-11-10. No es un resumen.", 11, MUTED, MONO, spacing="0.05em"))
-    out.append(text(560, 1008, "Lupa 2× en escritorio; pellizco en táctil.", 11, MUTED, MONO, spacing="0.05em"))
-    out.append(text(1236, 1008, "La lámina se fecha y se rehace.", 11, MUTED, MONO, anchor="end", spacing="0.05em"))
+    out.append(text(560, 1008, "La lámina se fecha y se rehace.", 11, MUTED, MONO, spacing="0.05em"))
+    out.append(text(1236, 1008, "KNDL · Rizoma · 01", 11, MUTED, MONO, anchor="end", spacing="0.05em"))
 
     out.append('</svg>')
     return "".join(out)
@@ -232,9 +217,9 @@ CSS = """
       -webkit-font-smoothing: antialiased;
     }
     main { width: min(100% - 64px, 1280px); margin: 0 auto; padding: 40px 0; }
+    .plate-shell { position: relative; }
     .diagram-container { width: 100%; }
     .plate-svg { width: 100%; height: auto; display: block; }
-    .plate-svg #plate-field { cursor: zoom-in; }
     .plate-svg a { cursor: pointer; }
     .plate-svg .work-title { text-decoration: none; text-underline-offset: 3px; }
     .plate-svg .work-block:hover .work-title,
@@ -253,15 +238,8 @@ CSS = """
     }
     .plate-back a { color: #9aa3a1; text-decoration: none; }
     .plate-back a:hover, .plate-back a:focus-visible { color: #9fc6c9; }
-    .plate-hint {
-      display: none;
-      margin: 1rem 0 0;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.875rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #7f8a88;
-    }
+    .plate-tools { display: none; }
+    .plate-loupe { display: none; }
     .read-alt {
       position: absolute; width: 1px; height: 1px; overflow: hidden;
       clip-path: inset(50%); white-space: nowrap;
@@ -281,9 +259,49 @@ CSS = """
     .read-alt a { text-decoration: none; border-bottom: 1px solid transparent; }
     .read-alt a:hover, .read-alt a:focus-visible { color: #9fc6c9; border-bottom-color: #9fc6c9; }
     @media (hover: none) {
-      #loupe { display: none; }
-      .plate-hint { display: block; }
-      .plate-svg #plate-field { cursor: default; }
+      .plate-tools {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 1.25rem;
+      }
+      .plate-toggle {
+        min-height: 44px;
+        min-width: 72px;
+        padding: 0 .9rem;
+        border: 1px solid rgba(233,230,220,0.22);
+        background: transparent;
+        color: #e9e6dc;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.8rem;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+      .plate-toggle[aria-pressed="true"] { color: #9fc6c9; border-color: #9fc6c9; }
+      .plate-hint {
+        margin: 0;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.8rem;
+        letter-spacing: .04em;
+        line-height: 1.5;
+        color: #7f8a88;
+      }
+      .plate-loupe {
+        display: none;
+        position: absolute;
+        width: 180px;
+        height: 180px;
+        overflow: hidden;
+        border: 1px solid #9fc6c9;
+        background: #060708;
+        pointer-events: none;
+        z-index: 3;
+      }
+      .plate-loupe.is-on { display: block; }
+      .plate-loupe svg { width: 100%; height: 100%; display: block; }
+      .plate-shell.is-lens .plate-svg a { pointer-events: none; }
+      .plate-shell.is-lens .plate-svg #plate-field { touch-action: none; }
     }
 """
 
@@ -291,31 +309,75 @@ SCRIPT = """
 <script>
 (function () {
   "use strict";
-  if (!window.matchMedia || !window.matchMedia("(pointer: fine)").matches) return;
-  var svg = document.querySelector(".plate-svg");
+  if (!window.matchMedia || !window.matchMedia("(hover: none)").matches) return;
+  var shell = document.querySelector(".plate-shell");
+  if (!shell) return;
+  var svg = shell.querySelector(".plate-svg");
   var field = document.getElementById("plate-field");
-  var lens = document.getElementById("loupe");
-  var use = document.getElementById("loupe-use");
-  if (!svg || !field || !lens || !use) return;
+  var toggle = shell.querySelector(".plate-toggle");
+  var lens = shell.querySelector(".plate-loupe");
+  var lensSvg = lens && lens.querySelector(".plate-loupe__svg");
+  var content = lens && lens.querySelector(".plate-loupe__content");
+  if (!svg || !field || !toggle || !lens || !lensSvg || !content) return;
 
+  var clone = field.cloneNode(true);
+  clone.removeAttribute("id");
+  clone.querySelectorAll("a").forEach(function (a) { a.setAttribute("tabindex", "-1"); });
+  content.appendChild(clone);
+
+  var vb = 148;
+  var active = false;
   var pt = svg.createSVGPoint();
-  var zoom = 2;
 
-  function hide() { lens.setAttribute("opacity", "0"); }
-
-  function move(event) {
+  function point(event) {
     pt.x = event.clientX;
     pt.y = event.clientY;
-    var p = pt.matrixTransform(svg.getScreenCTM().inverse());
-    if (p.y < 240 || p.y > 960) { hide(); return; }
-    lens.setAttribute("transform", "translate(" + p.x.toFixed(2) + " " + p.y.toFixed(2) + ")");
-    use.setAttribute("transform", "scale(" + zoom + ") translate(" + (-p.x).toFixed(2) + " " + (-p.y).toFixed(2) + ")");
-    lens.setAttribute("opacity", "1");
+    return pt.matrixTransform(svg.getScreenCTM().inverse());
   }
 
+  function focus(p) {
+    lensSvg.setAttribute("viewBox", (p.x - vb / 2) + " " + (p.y - vb / 2) + " " + vb + " " + vb);
+  }
+
+  function place(event) {
+    var shellRect = shell.getBoundingClientRect();
+    var svgRect = svg.getBoundingClientRect();
+    var minL = svgRect.left - shellRect.left;
+    var minT = svgRect.top - shellRect.top;
+    var maxL = minL + svgRect.width - 180;
+    var maxT = minT + svgRect.height - 180;
+    var left = event.clientX - shellRect.left - 90;
+    var top = event.clientY - shellRect.top - 200;
+    if (top < minT) top = event.clientY - shellRect.top + 20;
+    left = Math.max(minL, Math.min(left, maxL));
+    top = Math.max(minT, Math.min(top, maxT));
+    lens.style.left = left + "px";
+    lens.style.top = top + "px";
+  }
+
+  function move(event) {
+    if (!active) return;
+    var p = point(event);
+    focus(p);
+    place(event);
+  }
+
+  function setActive(on) {
+    active = on;
+    shell.classList.toggle("is-lens", on);
+    lens.classList.toggle("is-on", on);
+    toggle.setAttribute("aria-pressed", on ? "true" : "false");
+    toggle.textContent = on ? "Cerrar" : "Lupa";
+    if (on) {
+      var rect = svg.getBoundingClientRect();
+      focus({ x: 640, y: 620 });
+      place({ clientX: rect.left + rect.width / 2, clientY: rect.top + rect.height * 0.6 });
+    }
+  }
+
+  toggle.addEventListener("click", function () { setActive(!active); });
+  svg.addEventListener("pointerdown", move);
   svg.addEventListener("pointermove", move);
-  svg.addEventListener("pointerleave", hide);
-  window.addEventListener("scroll", hide, { passive: true });
 })();
 </script>
 """
@@ -339,10 +401,12 @@ HTML = """<!doctype html>
     </ul>
   </nav>
 
-  <div class="diagram-container">
-    {{SVG}}
+  <div class="plate-shell">
+    <div class="diagram-container">
+      {{SVG}}
+    </div>
+    {{TOOLS}}
   </div>
-  <p class="plate-hint">Pellizcá para ampliar.</p>
 </main>
 {{SCRIPT}}
 </body>
@@ -352,11 +416,23 @@ HTML = """<!doctype html>
 
 def build(site: bool = False) -> str:
     back = f'  <nav class="plate-back"><a href="{EXPLORACION_URL}">← Exploración 01</a></nav>\n' if site else ""
+    tools = """
+    <div class="plate-tools">
+      <button class="plate-toggle" type="button" aria-pressed="false">Lupa</button>
+      <p class="plate-hint">Arrastrá sobre el campo para mover la lupa.</p>
+    </div>
+    <div class="plate-loupe" aria-hidden="true">
+      <svg class="plate-loupe__svg" viewBox="0 0 148 148" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <g class="plate-loupe__content"></g>
+      </svg>
+    </div>
+""" if site else ""
     html = (HTML
             .replace("{{CSS}}", CSS)
             .replace("{{BACK}}", back)
             .replace("{{READ_ALT}}", read_alt())
-            .replace("{{SVG}}", build_svg(site))
+            .replace("{{SVG}}", build_svg())
+            .replace("{{TOOLS}}", tools)
             .replace("{{SCRIPT}}", SCRIPT if site else ""))
     return html
 
