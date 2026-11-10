@@ -64,11 +64,32 @@ El SVG exportado no arrastra la fuente: Quick Look cae a Georgia. En el navegado
 con red, la fuente correcta es la del HTML. Para un artefacto offline habría que
 embeber las fuentes.
 
+## Claridad y lupa (pasada de Impeccable)
+
+El detector marcó texto funcional por debajo de 11 px y tracking en cuerpo. La
+revisión de heurísticas marcó el problema principal: los nodos flotaban y había
+que recordar la clave del colofón para entender la lámina.
+
+Cambios:
+
+- Los nodos van debajo de la obra que los trabaja; la cercanía deja de ser un
+  acertijo.
+- La clave de lectura sube al encabezado: «cada bloque es una obra; cada
+  palabra, un nodo».
+- El SVG se ajusta por escala (no refluye) y una lupa 2× sigue al cursor en
+  puntero fino; en táctil, pellizco.
+- Los labels funcionales suben al piso de 11 px y el corte baja de tono.
+- Se retira la nota del desplazamiento: era la única línea que concluía.
+
+El detector queda con dos advisories: `0.875rem` fuera de la rampa de
+DESIGN.md y 18 guiones largos (los ticks de nodo y la nav oculta; falso
+positivo).
+
 ## Estado
 
-- `lamina-01-svg.html` (fuente), `lamina-01.svg` (export), `lamina-01.png`
-  (preview), `build-lamina.py` (generador).
+- `lamina-01-svg.html` (fuente), `lamina-01.svg` (export estático),
+  `lamina-01.png` (preview), `build-lamina.py` (generador).
+- La página del sitio agrega la lupa y el ajuste por escala; el SVG exportado
+  queda sin script.
 - `lamina-01-css.html`: el test anterior en HTML/CSS; se conserva para comparar.
-  El SVG es el candidato a lámina canónica.
-- Pendiente: si la web usa el SVG inline (scroll) o el CSS (stack), y si el
-  export se vuelve profile-aware.
+- Pendiente: si el export se vuelve profile-aware.
