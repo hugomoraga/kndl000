@@ -60,13 +60,11 @@ Por eso la objeción no se responde, se sostiene. Y por eso tampoco amplía la p
 
 ## Cómo llegó acá
 
-El primer impulso fue integrarlo. *Medusa* entró al corpus como nota al margen y enseguida pareció el verbo que faltaba: una sección «Adherir» después de §6, que agotaba los verbos del archivo y encontraba la operación que no es un verbo. El cierre «Por ahora, guardo» quedaba en tensión con «se adhiere». El argumento era bueno.
-
-El problema era el lugar, pero no por la razón que parecía. La primera formulación decía que la 02 era sobre el archivo como tecnología y que una sección sobre el cuerpo la ampliaba. Esa formulación era falsa: la 02 hereda de la 01 la pregunta por la redundancia de la memoria y trabaja esa pregunta a través del archivo; el archivo es el medio, no el tema entero. La corrección está en <a href="/rizoma/archivo/anexos/tecnologia/">La 02 no es solo tecnología</a>.
-
-El criterio correcto no es el alcance, entonces, sino la operación: ¿el poema continúa el argumento o lo resiste? Una sección continúa; una objeción resiste. *Medusa* resiste: no agrega un modo más de guardar, muestra que la respuesta de §6 tiene un límite. Por eso va al aparato. No porque esté fuera de la 02, sino porque está dentro y en contra.
-
-Que este anexo cuente ese recorrido no es un adorno. El aparato también registra cómo se llegó a objetar: la primera lectura quería integrar, la segunda encontró que el lugar correcto era resistir. Esa iteración es parte del argumento.
+El primer impulso fue integrarlo como sección, después de §6. El criterio para
+decidir no era el alcance sino la operación: ¿el poema continúa el argumento o
+lo resiste? Una sección continúa; una objeción resiste. *Medusa* resiste: no
+agrega un modo más de guardar, muestra que la respuesta de §6 tiene un límite.
+Por eso va al aparato.
 
 ## Qué lo resolvería
 
