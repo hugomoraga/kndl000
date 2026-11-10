@@ -56,9 +56,15 @@ El pipeline ya no depende del clon de `diagram-design`:
 3. `python3 docs/rizoma/build-lamina.py --check`
    Falla si falta anotar una obra o un nodo, o si la exploración se actualizó
    después de la fecha de la lámina.
-4. `python3 docs/rizoma/build-lamina.py --write`
+4. `python3 docs/rizoma/build-lamina.py --verify`
+   Recalcula el esqueleto en memoria y lo compara con el archivo. Es el chequeo
+   de CI; no escribe.
+5. `python3 docs/rizoma/build-lamina.py --write`
    Genera el HTML de la lámina, la página del sitio y el SVG exportado.
-5. `qlmanage` para el preview PNG.
+6. `qlmanage` para el preview PNG.
+
+El workflow `.github/workflows/rizoma-plate.yml` corre `--verify` en cada cambio
+de exploraciones, nodos o lámina.
 
 `self_check.py` y `export_svg.py` de `diagram-design` quedaron como referencia
 externa, no como dependencia del build.

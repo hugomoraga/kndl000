@@ -1,0 +1,24 @@
+name: Rizoma plate
+
+# Verifica que el esqueleto, la anotación y la fecha de la lámina sigan
+# sincronizados. No bloquea el deploy del sitio: es un chequeo aparte.
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "content/collections/_exploraciones/**"
+      - "content/collections/_nodos/**"
+      - "docs/rizoma/lamina-*.yml"
+      - "docs/rizoma/build-lamina.py"
+      - ".github/workflows/rizoma-plate.yml"
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python3 -m pip install --quiet pyyaml
+      - run: python3 docs/rizoma/build-lamina.py --verify

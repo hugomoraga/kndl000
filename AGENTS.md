@@ -7,4 +7,5 @@ contexto; los ADR son la fuente de las decisiones.
 - No corrijas en silencio: toda rectificación deja un anexo con fuente.
 - No promuevas una idea al cuerpo sin la marca del autor.
 - Abrí una deriva con `node scripts/nueva-exploracion.mjs`.
-- Antes de cerrar: `bundle exec jekyll build` y `node scripts/check-links.mjs`.
+- Antes de cerrar: `bundle exec jekyll build`, `node scripts/check-links.mjs` y,
+  si tocaste Rizoma, `python3 docs/rizoma/build-lamina.py --verify`.

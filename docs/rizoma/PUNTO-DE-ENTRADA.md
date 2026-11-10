@@ -113,9 +113,14 @@ con `--sync` desde la exploración y las colecciones. La **anotación**
 y es manual.
 
 `--check` falla si el corpus o los nodos cambiaron sin anotar, o si la
-exploración se actualizó después de la fecha de la lámina. `--write` regenera
-el HTML de la lámina, la página del sitio y el SVG exportado. La composición no
-se autogenera: se decide.
+exploración se actualizó después de la fecha de la lámina. `--verify` hace lo
+mismo pero recalcula el esqueleto en memoria y lo compara con el archivo: es el
+chequeo de CI. `--write` regenera el HTML de la lámina, la página del sitio y el
+SVG exportado. La composición no se autogenera: se decide.
+
+El workflow `.github/workflows/rizoma-plate.yml` corre `--verify` en cada cambio
+de exploraciones, nodos o lámina. Es un chequeo aparte: no bloquea el deploy del
+sitio, pero deja visible el desfase.
 
 ## Comandos
 
@@ -123,9 +128,10 @@ se autogenera: se decide.
 bundle exec jekyll build          # construir el sitio
 node scripts/check-links.mjs      # verificar enlaces internos
 node scripts/nueva-exploracion.mjs --help
-python3 docs/rizoma/build-lamina.py --sync   # esqueleto desde la exploración
-python3 docs/rizoma/build-lamina.py --check  # fechas, corpus y nodos
-python3 docs/rizoma/build-lamina.py --write  # HTML, página y SVG
+python3 docs/rizoma/build-lamina.py --sync    # esqueleto desde la exploración
+python3 docs/rizoma/build-lamina.py --check   # fechas, corpus y nodos
+python3 docs/rizoma/build-lamina.py --verify  # recalcula en memoria y compara
+python3 docs/rizoma/build-lamina.py --write   # HTML, página y SVG
 ```
 
 ## Mapa de archivos

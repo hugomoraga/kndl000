@@ -8,6 +8,7 @@ citas, corte, blanco, colofón) vive en lamina-01.annotations.yml.
 Uso:
     python3 docs/rizoma/build-lamina.py --sync
     python3 docs/rizoma/build-lamina.py --check
+    python3 docs/rizoma/build-lamina.py --verify
     python3 docs/rizoma/build-lamina.py --write
 """
 
@@ -116,7 +117,7 @@ def all_explorations():
         yield path, fm
 
 
-def sync_data() -> None:
+def collect_data() -> dict:
     fm = read_frontmatter(EXPLORACION)
     url = f"/rizoma/{EXPLORACION.stem}/"
     works = collection_works()
@@ -145,7 +146,7 @@ def sync_data() -> None:
             "compartido_en": shared,
         })
 
-    data = {
+    return {
         "exploracion": {
             "url": url,
             "titulo": fm.get("title", ""),
@@ -157,12 +158,78 @@ def sync_data() -> None:
         "obras": obras,
         "nodos": nodes,
     }
+
+
+def sync_data() -> None:
+    data = collect_data()
     DATA.write_text(
         yaml.safe_dump(data, sort_keys=False, allow_unicode=True, width=1000),
         encoding="utf-8",
     )
+    obras = data["obras"]
+    nodes = data["nodos"]
     print(f"Esqueleto actualizado: {DATA}")
     print(f"  {len(obras)} obras · {len(nodes)} nodos · {sum(1 for n in nodes if n['compartido'])} compartidos")
+
+
+def data_problems(expected: dict, actual: dict) -> list:
+    problems = []
+    if expected.get("exploracion") != actual.get("exploracion"):
+        problems.append("El bloque 'exploracion' cambió.")
+    exp_works = {w["url"]: w for w in expected.get("obras") or []}
+    act_works = {w["url"]: w for w in actual.get("obras") or []}
+    for url in sorted(set(exp_works) - set(act_works)):
+        problems.append(f"Obra nueva sin sincronizar: {url}")
+    for url in sorted(set(act_works) - set(exp_works)):
+        problems.append(f"Obra retirada del corpus: {url}")
+    for url in sorted(set(exp_works) & set(act_works)):
+        if exp_works[url] != act_works[url]:
+            problems.append(f"La obra cambió en el corpus: {url}")
+    exp_nodes = {n["nombre"]: n for n in expected.get("nodos") or []}
+    act_nodes = {n["nombre"]: n for n in actual.get("nodos") or []}
+    for name in sorted(set(exp_nodes) - set(act_nodes)):
+        problems.append(f"Nodo nuevo sin sincronizar: {name}")
+    for name in sorted(set(act_nodes) - set(exp_nodes)):
+        problems.append(f"Nodo retirado de la exploración: {name}")
+    for name in sorted(set(exp_nodes) & set(act_nodes)):
+        if exp_nodes[name] != act_nodes[name]:
+            problems.append(f"El nodo cambió: {name}")
+    return problems
+
+
+def date_problems(data: dict, ann: dict) -> list:
+    fecha = date_str(ann.get("fecha_lamina"))
+    updated = date_str(data["exploracion"].get("actualizado"))
+    try:
+        if date.fromisoformat(updated) > date.fromisoformat(fecha):
+            return [
+                f"La lámina está fechada {fecha} y la exploración se actualizó {updated}. "
+                "Rehacé la lámina y actualizá fecha_lamina en la anotación."
+            ]
+    except ValueError:
+        return [f"Fechas inválidas: lámina={fecha!r}, exploración={updated!r}"]
+    return []
+
+
+def verify() -> None:
+    expected = collect_data()
+    actual = load_yaml(DATA)
+    problems = data_problems(expected, actual)
+    ann = load_yaml(ANNOTATIONS)
+    try:
+        works = merge(expected, ann)
+    except ValueError as error:
+        problems.append(str(error))
+        works = []
+    problems.extend(date_problems(expected, ann))
+    if problems:
+        print("La lámina está desincronizada:", file=sys.stderr)
+        for problem in problems:
+            print("  - " + problem, file=sys.stderr)
+        print("Corré --sync, anotá lo que falte y después --write.", file=sys.stderr)
+        sys.exit(1)
+    print(f"Lámina verificada · {date_str(ann.get('fecha_lamina'))} · {len(works)} obras · "
+          f"{len(expected.get('nodos') or [])} nodos")
 
 
 def merge(data: dict, ann: dict) -> list:
@@ -624,23 +691,14 @@ def extract_svg(html: str) -> str:
 
 
 def check(data: dict, ann: dict, works: list) -> None:
-    fecha = date_str(ann.get("fecha_lamina"))
-    updated = date_str(data["exploracion"].get("actualizado"))
-    errors = []
-    try:
-        if date.fromisoformat(updated) > date.fromisoformat(fecha):
-            errors.append(
-                f"La lámina está fechada {fecha} y la exploración se actualizó {updated}. "
-                "Rehacé la lámina y actualizá fecha_lamina en la anotación."
-            )
-    except ValueError:
-        errors.append(f"Fechas inválidas: lámina={fecha!r}, exploración={updated!r}")
+    errors = date_problems(data, ann)
     if errors:
         for error in errors:
             print("ERROR: " + error, file=sys.stderr)
         sys.exit(1)
     compartidos = sum(1 for n in data.get("nodos") or [] if n.get("compartido"))
-    print(f"Lámina OK · {fecha} · {len(works)} obras · {len(data.get('nodos') or [])} nodos · {compartidos} compartidos")
+    print(f"Lámina OK · {date_str(ann.get('fecha_lamina'))} · {len(works)} obras · "
+          f"{len(data.get('nodos') or [])} nodos · {compartidos} compartidos")
 
 
 def write_outputs(data: dict, ann: dict, works: list) -> None:
@@ -663,6 +721,13 @@ def main() -> None:
     args = sys.argv[1:]
     if "--sync" in args:
         sync_data()
+        return
+    if "--verify" in args:
+        try:
+            verify()
+        except ValueError as error:
+            print("ERROR: " + str(error), file=sys.stderr)
+            sys.exit(1)
         return
     try:
         data = load_yaml(DATA)
