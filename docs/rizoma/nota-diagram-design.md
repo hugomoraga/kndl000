@@ -60,7 +60,8 @@ El pipeline ya no depende del clon de `diagram-design`:
    Recalcula el esqueleto en memoria y lo compara con el archivo. Es el chequeo
    de CI; no escribe.
 5. `python3 docs/rizoma/build-lamina.py --write`
-   Genera el HTML de la lámina, la página del sitio y el SVG exportado.
+   Genera el HTML de la lámina, la página del sitio y el SVG exportado. También
+   copia el SVG a `assets/media/rizoma/` para la vista previa de la exploración.
 6. `qlmanage` para el preview PNG.
 
 El workflow `.github/workflows/rizoma-plate.yml` corre `--verify` para la 01 y la

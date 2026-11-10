@@ -32,6 +32,7 @@ PLATES = {
         "annotations": ROOT / "docs/rizoma/lamina-01.annotations.yml",
         "html": ROOT / "docs/rizoma/lamina-01-svg.html",
         "svg": ROOT / "docs/rizoma/lamina-01.svg",
+        "site_svg": ROOT / "assets/media/rizoma/lamina-01.svg",
     },
     "02": {
         "exploracion": ROOT / "content/collections/_exploraciones/archivo.md",
@@ -39,6 +40,7 @@ PLATES = {
         "annotations": ROOT / "docs/rizoma/lamina-02.annotations.yml",
         "html": ROOT / "docs/rizoma/lamina-02-svg.html",
         "svg": ROOT / "docs/rizoma/lamina-02.svg",
+        "site_svg": ROOT / "assets/media/rizoma/lamina-02.svg",
     },
 }
 DEFAULT_PLATE = "01"
@@ -47,6 +49,7 @@ DATA = PLATES[DEFAULT_PLATE]["data"]
 ANNOTATIONS = PLATES[DEFAULT_PLATE]["annotations"]
 DOCS_HTML = PLATES[DEFAULT_PLATE]["html"]
 SVG_OUT = PLATES[DEFAULT_PLATE]["svg"]
+SITE_SVG = PLATES[DEFAULT_PLATE]["site_svg"]
 
 INK = "#e9e6dc"
 DIM = "#9aa3a1"
@@ -728,11 +731,15 @@ def write_outputs(data: dict, ann: dict, works: list) -> None:
     site_path.parent.mkdir(parents=True, exist_ok=True)
     site_path.write_text(site, encoding="utf-8")
 
-    SVG_OUT.write_text(extract_svg(docs), encoding="utf-8")
+    svg = extract_svg(docs)
+    SVG_OUT.write_text(svg, encoding="utf-8")
+    SITE_SVG.parent.mkdir(parents=True, exist_ok=True)
+    SITE_SVG.write_text(svg, encoding="utf-8")
 
     print(f"HTML de la lámina: {DOCS_HTML}")
     print(f"Página del sitio: {site_path}")
     print(f"SVG exportado: {SVG_OUT}")
+    print(f"SVG del sitio: {SITE_SVG}")
 
 
 def main() -> None:
@@ -754,6 +761,7 @@ def main() -> None:
         "ANNOTATIONS": config["annotations"],
         "DOCS_HTML": config["html"],
         "SVG_OUT": config["svg"],
+        "SITE_SVG": config["site_svg"],
     })
 
     if "--sync" in args:

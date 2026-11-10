@@ -7860,6 +7860,14 @@ body.reading-serie .serie-date {
 
 /* --- Rizoma --------------------------------------------------------------- */
 
+body.reading-rizoma {
+  --expediente-measure: 36rem;
+}
+
+body.reading-exploracion .reading-breadcrumb {
+  max-width: var(--expediente-measure);
+}
+
 body.reading-rizoma .rizoma-lede {
   max-width: var(--reading-measure);
   margin: 0 auto 2.5rem;
@@ -7897,26 +7905,6 @@ body.reading-rizoma .expediente__summary {
   font-style: italic;
   line-height: 1.5;
   color: var(--umbral-dim);
-}
-
-body.reading-rizoma .expediente__history-link {
-  display: inline-flex;
-  min-height: 36px;
-  align-items: center;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.08em;
-  line-height: 1.4;
-  text-transform: uppercase;
-  color: var(--umbral-dim);
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-}
-
-body.reading-rizoma .expediente__history-link:hover,
-body.reading-rizoma .expediente__history-link:focus-visible {
-  color: var(--umbral-trace);
-  border-bottom-color: var(--umbral-trace);
 }
 
 body.reading-rizoma .expediente__related {
@@ -8030,7 +8018,7 @@ body.reading-rizoma .rizoma-nodos-link a:focus-visible {
 /* Expediente */
 body.reading-rizoma .expediente__head {
   max-width: var(--reading-measure);
-  margin: 0 auto 2.5rem;
+  margin: 0 auto 2.75rem;
   padding-bottom: 1.5rem;
   border-bottom: 1px solid var(--umbral-rule);
 }
@@ -8075,15 +8063,17 @@ body.reading-rizoma .expediente__meta span + span::before {
   color: var(--umbral-faint);
 }
 
+body.reading-rizoma .expediente__meta-order {
+  color: var(--umbral-ember);
+}
+
 body.reading-rizoma .expediente__procedencia {
   max-width: 62ch;
-  margin: 1rem 0 0;
-  padding-top: 0.7rem;
-  border-top: 1px solid var(--umbral-faint);
+  margin: 0;
   font-family: var(--font-serif);
-  font-size: 0.82rem;
-  line-height: 1.55;
-  color: var(--umbral-muted);
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--umbral-dim);
 }
 
 body.reading-rizoma .anexos-procedencia {
@@ -8096,36 +8086,53 @@ body.reading-rizoma .anexos-procedencia {
 }
 
 body.reading-rizoma .expediente {
-  display: grid;
-  grid-template-columns: minmax(0, 36rem) 16rem;
-  gap: clamp(2rem, 4vw, 4rem);
-  justify-content: start;
   max-width: var(--reading-measure);
   margin: 0 auto;
-  align-items: start;
 }
 
 body.reading-rizoma .expediente__body {
-  max-width: 54ch;
+  max-width: var(--reading-measure);
+  margin: 0 auto;
   font-family: var(--font-serif);
   font-size: clamp(1.05rem, 1.8vw, 1.2rem);
   line-height: 1.8;
   color: var(--umbral-ink);
 }
 
-body.reading-rizoma .expediente__body p {
+body.reading-exploracion .expediente__body p {
   margin: 0 0 1.35em;
+  font-size: inherit;
+  line-height: inherit;
 }
 
+body.reading-exploracion .expediente__head,
+body.reading-exploracion .expediente__body {
+  max-width: var(--expediente-measure);
+}
+
+/* Cada sección abre con una pausa: regla tenue y un tramo ámbar. */
 body.reading-rizoma .expediente__body h2 {
-  margin: 2.5rem 0 1rem;
-  padding: 0;
+  position: relative;
+  margin: clamp(3.5rem, 6vw, 5rem) 0 1.25rem;
+  padding: 1.35rem 0 0;
   border: 0;
+  border-top: 1px solid var(--umbral-rule-faint);
   font-family: var(--font-serif);
   font-size: clamp(1.5rem, 2.6vw, 1.9rem);
   font-weight: 400;
   line-height: 1.2;
   color: var(--umbral-ink);
+}
+
+body.reading-rizoma .expediente__body h2::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 2.5rem;
+  height: 1px;
+  background: var(--umbral-ember);
+  opacity: 0.8;
 }
 
 body.reading-rizoma .expediente__body a {
@@ -8141,30 +8148,181 @@ body.reading-rizoma .expediente__body a:focus-visible {
   text-decoration-color: var(--umbral-trace);
 }
 
-body.reading-rizoma .expediente__margin {
-  position: sticky;
-  top: 2rem;
-  align-self: start;
+/* Lámina: una pausa visual entre la deriva y su aparato. */
+body.reading-rizoma .expediente__plate {
+  max-width: var(--reading-measure);
+  margin: clamp(3rem, 7vw, 5rem) auto 0;
+  padding-top: clamp(2rem, 4vw, 3rem);
+  border-top: 1px solid var(--umbral-rule);
 }
 
-body.reading-rizoma .expediente__block {
-  margin: 0 0 1.75rem;
+body.reading-rizoma .expediente__plate-link {
+  display: block;
+  border: 1px solid var(--umbral-rule-faint);
+  background: #060708;
+  transition: border-color 0.25s ease;
+}
+
+body.reading-rizoma .expediente__plate-link:hover,
+body.reading-rizoma .expediente__plate-link:focus-visible {
+  border-color: rgba(159, 198, 201, 0.38);
+}
+
+body.reading-rizoma .expediente__plate-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+body.reading-rizoma .expediente__plate-caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.9rem;
+  margin-top: 0.85rem;
+}
+
+body.reading-rizoma .expediente__plate-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--umbral-ember);
+}
+
+body.reading-rizoma .expediente__plate-text {
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  font-style: italic;
+  line-height: 1.45;
+  color: var(--umbral-dim);
+}
+
+body.reading-rizoma .expediente__plate-more {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--umbral-dim);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+body.reading-rizoma .expediente__plate-more:hover,
+body.reading-rizoma .expediente__plate-more:focus-visible {
+  color: var(--umbral-trace);
+  border-bottom-color: var(--umbral-trace);
+}
+
+/* Aparato: al final, en dos columnas, sin competir con la lectura. */
+body.reading-rizoma .expediente__apparatus {
+  max-width: var(--reading-measure);
+  margin: clamp(3.5rem, 8vw, 6rem) auto 0;
+}
+
+body.reading-rizoma .expediente__apparatus-head {
+  max-width: 64ch;
+  margin: 0 0 2.25rem;
+}
+
+body.reading-rizoma .expediente__apparatus-title {
+  position: relative;
+  margin: 0 0 0.7rem;
+  padding: 1.1rem 0 0;
+  border: 0;
+  border-top: 1px solid var(--umbral-rule-faint);
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--umbral-ink);
+}
+
+body.reading-rizoma .expediente__apparatus-title::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 2.5rem;
+  height: 1px;
+  background: var(--umbral-ember);
+  opacity: 0.8;
+}
+
+body.reading-rizoma .expediente__apparatus-intro {
+  max-width: 58ch;
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-style: italic;
+  line-height: 1.55;
+  color: var(--umbral-dim);
+}
+
+body.reading-rizoma .expediente__apparatus-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(16rem, 0.8fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+
+body.reading-rizoma .expediente__apparatus-main,
+body.reading-rizoma .expediente__apparatus-side {
+  display: flex;
+  flex-direction: column;
+  gap: 2.25rem;
+}
+
+body.reading-rizoma .expediente__apparatus-block {
   padding-top: 1rem;
   border-top: 1px solid var(--umbral-rule-faint);
 }
 
-body.reading-rizoma .expediente__margin-title {
-  margin: 0 0 0.75rem;
+body.reading-rizoma .expediente__apparatus-block-title {
+  margin: 0 0 0.8rem;
   padding: 0;
   border: 0;
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.78rem;
   font-weight: 400;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   line-height: 1.4;
-  text-align: left;
   text-transform: uppercase;
-  color: var(--umbral-muted);
+  color: var(--umbral-ink);
+}
+
+body.reading-rizoma .expediente__apparatus-block-title::before {
+  content: "";
+  display: inline-block;
+  width: 0.4rem;
+  height: 0.4rem;
+  margin-right: 0.55rem;
+  background: var(--umbral-ember);
+  vertical-align: 0.08em;
+}
+
+body.reading-rizoma .expediente__history-link {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--umbral-dim);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+body.reading-rizoma .expediente__history-link:hover,
+body.reading-rizoma .expediente__history-link:focus-visible {
+  color: var(--umbral-trace);
+  border-bottom-color: var(--umbral-trace);
 }
 
 body.reading-rizoma .expediente-corpus {
@@ -8174,7 +8332,7 @@ body.reading-rizoma .expediente-corpus {
 }
 
 body.reading-rizoma .expediente-corpus__item {
-  padding: 0.7rem 0;
+  padding: 0.85rem 0;
   border-bottom: 1px solid var(--umbral-rule-faint);
 }
 
@@ -8193,7 +8351,7 @@ body.reading-rizoma .expediente-corpus__item a {
 
 body.reading-rizoma .expediente-corpus__kind {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--umbral-muted);
@@ -8201,7 +8359,7 @@ body.reading-rizoma .expediente-corpus__kind {
 
 body.reading-rizoma .expediente-corpus__title {
   font-family: var(--font-serif);
-  font-size: 0.95rem;
+  font-size: 1.02rem;
   line-height: 1.3;
   color: var(--umbral-ink);
 }
@@ -8212,11 +8370,12 @@ body.reading-rizoma .expediente-corpus__item a:focus-visible .expediente-corpus_
 }
 
 body.reading-rizoma .expediente-corpus__note {
+  max-width: 58ch;
   margin: 0.35rem 0 0;
   font-family: var(--font-serif);
-  font-size: 0.82rem;
+  font-size: 0.9rem;
   font-style: italic;
-  line-height: 1.4;
+  line-height: 1.5;
   color: var(--umbral-dim);
 }
 
@@ -8231,7 +8390,7 @@ body.reading-rizoma .expediente__nodos {
 
 body.reading-rizoma .expediente__nodos a {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.78rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--umbral-dim);
@@ -8243,6 +8402,101 @@ body.reading-rizoma .expediente__nodos a:hover,
 body.reading-rizoma .expediente__nodos a:focus-visible {
   color: var(--umbral-trace);
   border-bottom-color: var(--umbral-trace);
+}
+
+/* Anexos y fichas: conservan el margen lateral clásico. */
+body.reading-rizoma .expediente--with-margin {
+  display: grid;
+  grid-template-columns: minmax(0, 36rem) 16rem;
+  gap: clamp(2rem, 4vw, 4rem);
+  justify-content: start;
+  align-items: start;
+  max-width: var(--reading-measure);
+  margin: 0 auto;
+}
+
+body.reading-rizoma .expediente--with-margin .expediente__body {
+  max-width: 54ch;
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+body.reading-rizoma .expediente--with-margin .expediente__margin {
+  position: sticky;
+  top: 2rem;
+  align-self: start;
+}
+
+body.reading-rizoma .expediente--with-margin .expediente__block {
+  margin: 0 0 1.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--umbral-rule-faint);
+}
+
+body.reading-rizoma .expediente--with-margin .expediente__margin-title {
+  margin: 0 0 0.75rem;
+  padding: 0;
+  border: 0;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-align: left;
+  text-transform: uppercase;
+  color: var(--umbral-ink);
+}
+
+body.reading-rizoma .expediente--with-margin .expediente__margin-title::before {
+  content: "";
+  display: inline-block;
+  width: 0.4rem;
+  height: 0.4rem;
+  margin-right: 0.55rem;
+  background: var(--umbral-ember);
+  vertical-align: 0.08em;
+}
+
+@media (max-width: 900px) {
+  body.reading-rizoma .expediente__apparatus-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+  }
+
+  body.reading-rizoma .expediente--with-margin {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+  }
+
+  body.reading-rizoma .expediente--with-margin .expediente__margin {
+    position: static;
+  }
+}
+
+@media (max-width: 700px) {
+  body.reading-rizoma .expediente__plate-caption {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  body.reading-rizoma .expediente__plate-more {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Los enlaces dentro de la prosa no son controles: vuelven al flujo del texto. */
+  body.reading-rizoma .expediente__body a {
+    display: inline;
+    min-width: 0;
+    min-height: 0;
+  }
+
+  body.reading-rizoma .expediente-corpus__item a {
+    justify-content: flex-start;
+    text-align: left;
+  }
 }
 
 body.reading-rizoma .nodos {
@@ -8300,17 +8554,6 @@ body.reading-rizoma .nodo__list a:hover,
 body.reading-rizoma .nodo__list a:focus-visible {
   color: var(--umbral-trace);
   border-bottom-color: var(--umbral-trace);
-}
-
-@media (max-width: 900px) {
-  body.reading-rizoma .expediente {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2rem;
-  }
-
-  body.reading-rizoma .expediente__margin {
-    position: static;
-  }
 }
 
 @media (max-width: 600px) {
@@ -11055,7 +11298,7 @@ body.reading-rizoma .anexo-fuentes__intro {
   max-width: 60ch;
   margin: .75rem 0 0;
   font-family: var(--font-mono);
-  font-size: .66rem;
+  font-size: .8rem;
   line-height: 1.7;
   letter-spacing: .03em;
   color: var(--umbral-muted);
@@ -11082,7 +11325,7 @@ body.reading-rizoma .anexo-fuente__ref {
 body.reading-rizoma .anexo-fuente__url {
   margin: .4rem 0 0;
   font-family: var(--font-mono);
-  font-size: .64rem;
+  font-size: .75rem;
   line-height: 1.5;
   overflow-wrap: anywhere;
 }
@@ -11100,7 +11343,7 @@ body.reading-rizoma .anexo-fuente__url a:focus-visible {
 body.reading-rizoma .anexo-fuente__meta {
   margin: .35rem 0 0;
   font-family: var(--font-mono);
-  font-size: .62rem;
+  font-size: .75rem;
   letter-spacing: .04em;
   color: var(--umbral-muted);
 }
@@ -11115,7 +11358,7 @@ body.reading-rizoma .anexo-fuente__verifica {
 body.reading-rizoma .anexo__margin-note {
   margin: 0;
   font-family: var(--font-mono);
-  font-size: .66rem;
+  font-size: .75rem;
   line-height: 1.6;
   color: var(--umbral-dim);
 }
@@ -11143,6 +11386,9 @@ body.reading-rizoma .anexo-list li:first-child {
 
 body.reading-rizoma .anexo-list a {
   color: var(--umbral-ink);
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  line-height: 1.35;
   text-decoration: none;
 }
 
@@ -11152,11 +11398,12 @@ body.reading-rizoma .anexo-list a:focus-visible {
 }
 
 body.reading-rizoma .anexo-list p {
-  margin: .25rem 0 0;
-  font-family: var(--font-mono);
-  font-size: .62rem;
+  margin: .35rem 0 0;
+  font-family: var(--font-serif);
+  font-size: .85rem;
+  font-style: italic;
   line-height: 1.5;
-  color: var(--umbral-muted);
+  color: var(--umbral-dim);
 }
 
 
@@ -11187,17 +11434,18 @@ body.reading-rizoma .expediente__body h2:target {
 body.reading-rizoma .anexo-list__label {
   margin: 1.1rem 0 .35rem;
   font-family: var(--font-mono);
-  font-size: .6rem;
-  letter-spacing: .1em;
+  font-size: .78rem;
+  letter-spacing: .08em;
+  line-height: 1.4;
   text-transform: uppercase;
-  color: var(--umbral-muted);
+  color: var(--umbral-ember);
 }
 
 body.reading-rizoma .anexos-intro {
   max-width: 60ch;
-  margin: 0;
+  margin: 0 0 1.25rem;
   font-family: var(--font-mono);
-  font-size: .68rem;
+  font-size: .8rem;
   line-height: 1.7;
   letter-spacing: .03em;
   color: var(--umbral-muted);
@@ -11225,7 +11473,7 @@ body.reading-rizoma .anexos-grupo__question {
 body.reading-rizoma .anexos-back {
   margin-top: 3rem;
   font-family: var(--font-mono);
-  font-size: .68rem;
+  font-size: .75rem;
   letter-spacing: .04em;
 }
 

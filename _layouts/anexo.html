@@ -21,9 +21,9 @@
     {% assign _tipo = site.data.anexos_tipos | where: "id", page.tipo | first %}
 
     <header class="expediente__head">
-      <p class="anexo__eyebrow">Anexo {{ page.order | default: "—" }} · {{ _tipo.label | default: "Anexo" }} · {{ page.estado | default: "abierto" }}</p>
       <h1 class="expediente__title">{{ page.title }}</h1>
       <p class="expediente__meta">
+        <span>Anexo {{ page.order | default: "—" }} · {{ _tipo.label | default: "Anexo" }} · {{ page.estado | default: "abierto" }}</span>
         {% if page.date %}<span>{{ page.date | date: "%Y-%m-%d" }}</span>{% endif %}
         {% if _exp %}<span>{{ _exp.title }}</span>{% endif %}
       </p>
@@ -32,7 +32,7 @@
       {% endif %}
     </header>
 
-    <div class="expediente">
+    <div class="expediente expediente--with-margin">
       <div class="expediente__body reading-body">
         {{ content }}
 

@@ -20,13 +20,15 @@
     {% assign _exp = site.exploraciones | where: "url", page.exploracion | first %}
 
     <header class="expediente__head">
-      <p class="anexo__eyebrow">Aparato · Exploración {{ _exp.order | default: "—" }}</p>
       <h1 class="expediente__title">Anexos</h1>
       <p class="expediente__question">Correcciones, fuentes, conceptos, objeciones y derivaciones.</p>
-      <p class="expediente__meta">{% if _exp %}<span>{{ _exp.title }}</span>{% endif %}</p>
+      <p class="expediente__meta">
+        <span>Aparato · Exploración {{ _exp.order | default: "—" }}</span>
+        {% if _exp %}<span>{{ _exp.title }}</span>{% endif %}
+      </p>
     </header>
 
-    <div class="expediente">
+    <div class="expediente expediente--with-margin">
       <div class="expediente__body reading-body">
         <p class="anexos-intro">No todo anexo es una errata. Acá viven las correcciones, las fuentes, los conceptos, las objeciones y las derivaciones que no caben en la deriva. Cada anexo declara una operación; el tipo se elige por la pregunta que responde.</p>
         {% if _exp.procedencia %}

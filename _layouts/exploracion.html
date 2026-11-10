@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
   {% include analytics.html %}
 </head>
-<body class="reading-poemas reading-rizoma">
+<body class="reading-poemas reading-rizoma reading-exploracion">
   <main class="reading-main">
     <nav class="reading-breadcrumb" aria-label="Ruta">
       {% include section-link.html url="/rizoma/" %}
@@ -25,87 +25,109 @@
       <p class="expediente__summary">{{ page.summary }}</p>
       {% endif %}
       <p class="expediente__meta">
-        <span>exploración {{ page.order }}</span>
+        <span>exploración <span class="expediente__meta-order">{{ page.order }}</span></span>
         <span>{{ page.status }}</span>
         {% if page.fields %}<span>{{ page.fields | join: " · " }}</span>{% endif %}
         {% if page.updated %}<span>actualizado {{ page.updated | date: "%Y-%m-%d" }}</span>{% endif %}
       </p>
-      {% if page.procedencia %}
-      <p class="expediente__procedencia">{{ page.procedencia }}</p>
-      {% endif %}
     </header>
 
     <div class="expediente">
       <div class="expediente__body reading-body">
         {{ content }}
       </div>
+    </div>
 
-      <aside class="expediente__margin" aria-label="Corpus y nodos">
-        {% if page.corpus %}
-        <section class="expediente__block">
-          <h2 class="expediente__margin-title">Corpus</h2>
-          {% include rizoma-corpus.html %}
-        </section>
-        {% endif %}
+    {% if page.lamina %}
+    {%- assign _plate = page.order | prepend: 'lamina-' | append: '.svg' -%}
+    <figure class="expediente__plate" aria-labelledby="expediente-plate-caption">
+      <a class="expediente__plate-link" href="{{ page.url | relative_url }}lamina/">
+        <img class="expediente__plate-image" src="{{ '/assets/media/rizoma/' | append: _plate | relative_url }}" alt="Lámina {{ page.order }} — {{ page.title }}" width="1280" height="1024" loading="lazy" decoding="async">
+      </a>
+      <figcaption class="expediente__plate-caption" id="expediente-plate-caption">
+        <span class="expediente__plate-label">Lámina {{ page.order }}</span>
+        <span class="expediente__plate-text">El mapa de esta deriva: obras, nodos y cortes.</span>
+        <a class="expediente__plate-more" href="{{ page.url | relative_url }}lamina/">Ver la lámina completa →</a>
+      </figcaption>
+    </figure>
+    {% endif %}
 
-        {% if page.nodos %}
-        <section class="expediente__block">
-          <h2 class="expediente__margin-title">Nodos</h2>
-          <ul class="expediente__nodos">
-            {% for nodo in page.nodos %}
-            {% assign _slug = nodo | slugify %}
-            <li><a href="{{ '/rizoma/nodos/' | relative_url }}#{{ _slug }}">{{ nodo }}</a></li>
-            {% endfor %}
-          </ul>
-        </section>
-        {% endif %}
+    <section class="expediente__apparatus" aria-labelledby="expediente-apparatus-title">
+      <header class="expediente__apparatus-head">
+        <h2 class="expediente__apparatus-title" id="expediente-apparatus-title">Aparato</h2>
+        <p class="expediente__apparatus-intro">Las obras que sostienen la deriva, el vocabulario que comparte y las huellas de su edición.</p>
+      </header>
 
-        {% if page.relacionadas %}
-        <section class="expediente__block">
-          <h2 class="expediente__margin-title">Relacionadas</h2>
-          <ul class="expediente__related">
-            {% for rel_url in page.relacionadas %}
-            {% assign _rel = site.exploraciones | where: "url", rel_url | first %}
-            <li><a href="{{ rel_url | relative_url }}">{{ _rel.title | default: rel_url }}</a></li>
-            {% endfor %}
-          </ul>
-        </section>
-        {% endif %}
+      <div class="expediente__apparatus-grid">
+        <div class="expediente__apparatus-main">
+          {% if page.corpus %}
+          <section class="expediente__apparatus-block">
+            <h3 class="expediente__apparatus-block-title">Corpus</h3>
+            {% include rizoma-corpus.html %}
+          </section>
+          {% endif %}
+        </div>
 
-        {% if page.anexos %}
-        <section class="expediente__block">
-          <h2 class="expediente__margin-title">Anexos</h2>
-          {% for tipo in site.data.anexos_tipos %}
-            {% assign grupo = page.anexos | where: "tipo", tipo.id %}
-            {% if grupo.size > 0 %}
-            <p class="anexo-list__label">{{ tipo.label }}</p>
-            <ul class="anexo-list">
-              {% for anexo in grupo %}
-              <li>
-                <a href="{{ anexo.url | relative_url }}">{{ anexo.title }}</a>
-                {% if anexo.note %}<p>{{ anexo.note }}</p>{% endif %}
-              </li>
+        <div class="expediente__apparatus-side">
+          {% if page.nodos %}
+          <section class="expediente__apparatus-block">
+            <h3 class="expediente__apparatus-block-title">Nodos</h3>
+            <ul class="expediente__nodos">
+              {% for nodo in page.nodos %}
+              {% assign _slug = nodo | slugify %}
+              <li><a href="{{ '/rizoma/nodos/' | relative_url }}#{{ _slug }}">{{ nodo }}</a></li>
               {% endfor %}
             </ul>
-            {% endif %}
-          {% endfor %}
-          <a class="expediente__history-link" href="{{ page.url | relative_url }}anexos/">Ver el aparato →</a>
-        </section>
-        {% endif %}
+          </section>
+          {% endif %}
 
-        {% if page.lamina %}
-        <section class="expediente__block">
-          <h2 class="expediente__margin-title">Lámina</h2>
-          <a class="expediente__history-link" href="{{ page.url | relative_url }}lamina/">Ver la lámina →</a>
-        </section>
-        {% endif %}
+          {% if page.relacionadas %}
+          <section class="expediente__apparatus-block">
+            <h3 class="expediente__apparatus-block-title">Relacionadas</h3>
+            <ul class="expediente__related">
+              {% for rel_url in page.relacionadas %}
+              {% assign _rel = site.exploraciones | where: "url", rel_url | first %}
+              <li><a href="{{ rel_url | relative_url }}">{{ _rel.title | default: rel_url }}</a></li>
+              {% endfor %}
+            </ul>
+          </section>
+          {% endif %}
 
-        <section class="expediente__block">
-          <h2 class="expediente__margin-title">Evolución</h2>
-          <a class="expediente__history-link" href="{{ page.url | relative_url }}historial/">Ver historial de versiones →</a>
-        </section>
-      </aside>
-    </div>
+          {% if page.anexos %}
+          <section class="expediente__apparatus-block">
+            <h3 class="expediente__apparatus-block-title">Anexos</h3>
+            {% for tipo in site.data.anexos_tipos %}
+              {% assign grupo = page.anexos | where: "tipo", tipo.id %}
+              {% if grupo.size > 0 %}
+              <p class="anexo-list__label">{{ tipo.label }}</p>
+              <ul class="anexo-list">
+                {% for anexo in grupo %}
+                <li>
+                  <a href="{{ anexo.url | relative_url }}">{{ anexo.title }}</a>
+                  {% if anexo.note %}<p>{{ anexo.note }}</p>{% endif %}
+                </li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+            {% endfor %}
+            <a class="expediente__history-link" href="{{ page.url | relative_url }}anexos/">Ver el aparato completo →</a>
+          </section>
+          {% endif %}
+
+          <section class="expediente__apparatus-block">
+            <h3 class="expediente__apparatus-block-title">Evolución</h3>
+            <a class="expediente__history-link" href="{{ page.url | relative_url }}historial/">Ver historial de versiones →</a>
+          </section>
+        </div>
+      </div>
+
+      {% if page.procedencia %}
+      <section class="expediente__apparatus-colophon">
+        <h3 class="expediente__apparatus-block-title">Procedencia</h3>
+        <p class="expediente__procedencia">{{ page.procedencia }}</p>
+      </section>
+      {% endif %}
+    </section>
 
     {% include back-button.html %}
     {% include section-rail.html %}

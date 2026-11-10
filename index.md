@@ -38,7 +38,7 @@ main_class: umbral-main
         <a href="{{ item.url | relative_url }}">{{ item.name }}</a>
       {% endfor %}
     </nav>
-    <a class="umbral__descent" href="#laboratorio">
+    <a class="umbral__descent" href="#laboratorio" data-mobile-target="rastro">
       <span>Descender</span>
       <svg width="12" height="26" viewBox="0 0 12 26" fill="none" aria-hidden="true" focusable="false">
         <path d="M6 0v24M1 19l5 5 5-5" stroke="currentColor" stroke-width="1"/>
@@ -67,7 +67,7 @@ main_class: umbral-main
   {%- if _quote_year.size != 4 or _quote_year_num <= 2000 -%}
     {%- if _quote_first.date -%}{%- assign _quote_year = _quote_first.date | date: "%Y" -%}{%- else -%}{%- assign _quote_year = "" -%}{%- endif -%}
   {%- endif %}
-<section class="umbral-quote" aria-label="Rastro del archivo">
+<section class="umbral-quote" id="rastro" aria-label="Rastro del archivo">
   <p class="umbral-quote__label" translate="no">Rastro</p>
   <blockquote class="umbral-quote__text">{{ _quote_text | escape }}</blockquote>
   {%- if _quote_year != "" %}
