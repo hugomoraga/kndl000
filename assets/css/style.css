@@ -7860,14 +7860,6 @@ body.reading-serie .serie-date {
 
 /* --- Rizoma --------------------------------------------------------------- */
 
-body.reading-rizoma {
-  --expediente-measure: 36rem;
-}
-
-body.reading-exploracion .reading-breadcrumb {
-  max-width: var(--expediente-measure);
-}
-
 body.reading-rizoma .rizoma-lede {
   max-width: var(--reading-measure);
   margin: 0 auto 2.5rem;
@@ -8091,23 +8083,18 @@ body.reading-rizoma .expediente {
 }
 
 body.reading-rizoma .expediente__body {
-  max-width: var(--reading-measure);
-  margin: 0 auto;
+  max-width: var(--prose-measure);
+  margin: 0;
   font-family: var(--font-serif);
   font-size: clamp(1.05rem, 1.8vw, 1.2rem);
-  line-height: 1.8;
+  line-height: var(--lh-loose);
   color: var(--umbral-ink);
 }
 
 body.reading-exploracion .expediente__body p {
   margin: 0 0 1.35em;
-  font-size: inherit;
-  line-height: inherit;
-}
-
-body.reading-exploracion .expediente__head,
-body.reading-exploracion .expediente__body {
-  max-width: var(--expediente-measure);
+  font-size: var(--fs-body);
+  line-height: var(--lh-loose);
 }
 
 /* Cada sección abre con una pausa: regla tenue y un tramo ámbar. */
