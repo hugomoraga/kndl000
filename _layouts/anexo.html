@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }} · {{ site.title }}{% endif %}</title>
+  {% include seo.html %}
+  {% include head-css.html %}
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+  {% include analytics.html %}
+</head>
+<body class="reading-poemas reading-rizoma">
+  <main class="reading-main">
+    <nav class="reading-breadcrumb" aria-label="Ruta">
+      {% include section-link.html url="/rizoma/" %}
+      <a href="{{ page.exploracion | relative_url }}">← Exploración</a>
+      <a href="{{ '/' | relative_url }}" aria-label="Inicio">∅ INIT</a>
+    </nav>
+
+    {% assign _exp = site.exploraciones | where: "url", page.exploracion | first %}
+
+    <header class="expediente__head">
+      <p class="anexo__eyebrow">Anexo {{ page.order | default: "—" }} · {{ page.estado | default: "abierto" }}</p>
+      <h1 class="expediente__title">{{ page.title }}</h1>
+      <p class="expediente__meta">
+        {% if page.date %}<span>{{ page.date | date: "%Y-%m-%d" }}</span>{% endif %}
+        {% if _exp %}<span>{{ _exp.title }}</span>{% endif %}
+      </p>
+    </header>
+
+    <div class="expediente">
+      <div class="expediente__body reading-body">
+        {{ content }}
+
+        {% if page.fuentes %}
+        <section class="anexo-fuentes" id="fuentes">
+          <h2>Fuentes</h2>
+          <p class="anexo-fuentes__intro">Cada fuente declara qué se verificó. Las que no se consultaron completas se marcan como tales.</p>
+          <ol class="anexo-fuentes__list">
+            {% for f in page.fuentes %}
+            <li>
+              <p class="anexo-fuente__ref">{{ f.autor }}. <em>{{ f.titulo }}</em>{% if f.anio %} ({{ f.anio }}){% endif %}.{% if f.publicacion %} {{ f.publicacion }}.{% endif %}</p>
+              {% if f.url %}<p class="anexo-fuente__url"><a href="{{ f.url }}">{{ f.url }}</a></p>{% endif %}
+              <p class="anexo-fuente__meta">consultado {{ f.consultado }}{% if f.tipo %} · {{ f.tipo }}{% endif %}</p>
+              {% if f.verifica %}<p class="anexo-fuente__verifica">{{ f.verifica }}</p>{% endif %}
+            </li>
+            {% endfor %}
+          </ol>
+        </section>
+        {% endif %}
+      </div>
+
+      <aside class="expediente__margin" aria-label="Ficha del anexo">
+        <section class="expediente__block">
+          <h2 class="expediente__margin-title">Exploración</h2>
+          {% if _exp %}
+          <p class="anexo__margin-note"><a href="{{ page.exploracion | relative_url }}">{{ _exp.title }}</a></p>
+          {% endif %}
+        </section>
+
+        <section class="expediente__block">
+          <h2 class="expediente__margin-title">Estado</h2>
+          <p class="anexo__margin-note">{{ page.estado | default: "abierto" }}</p>
+        </section>
+
+        <section class="expediente__block">
+          <h2 class="expediente__margin-title">Fuentes</h2>
+          <a class="expediente__history-link" href="#fuentes">Ver las fuentes →</a>
+        </section>
+      </aside>
+    </div>
+
+    {% include back-button.html %}
+    {% include section-rail.html %}
+  </main>
+</body>
+</html>

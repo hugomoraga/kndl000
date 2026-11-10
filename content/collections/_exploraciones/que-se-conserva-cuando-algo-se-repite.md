@@ -44,6 +44,16 @@ corpus:
     note: "Dos reglas que van del caos a un ciclo de 104 pasos: la repetición que se vuelve periódica."
 relacionadas:
   - /rizoma/archivo/
+anexos:
+  - url: /rizoma/que-se-conserva-cuando-algo-se-repite/anexos/redundancia/
+    title: "La redundancia no es lo que sobra"
+    note: "Corrección de la definición de Shannon."
+  - url: /rizoma/que-se-conserva-cuando-algo-se-repite/anexos/langton/
+    title: "La hormiga no se ordenó"
+    note: "Comportamiento periódico e interpretación."
+  - url: /rizoma/que-se-conserva-cuando-algo-se-repite/anexos/shannon-markov/
+    title: "Shannon, Markov y el experimento"
+    note: "Atribución correcta del método."
 hitos:
   - date: 2026-11-09
     title: "La pregunta inicial"
@@ -56,7 +66,7 @@ hitos:
     text: "Se integra la redundancia como contra-cara del desgaste y la deriva se enlaza con Archivo."
   - date: 2026-11-10
     title: "Precisión y objeción"
-    text: "Se corrige la definición de redundancia, se separa el comportamiento de Langton de su lectura y se abre la objeción entre contenido y diferencia."
+    text: "Se corrige la definición de redundancia, se separa el comportamiento de Langton de su lectura y se abre la objeción entre contenido y diferencia. Las correcciones quedan como anexos con fuentes."
   - date: 2026-11-10
     title: "Un código de repetición"
     text: "Se suma un experimento de redundancia con voto por mayoría y se enlaza desde §7."

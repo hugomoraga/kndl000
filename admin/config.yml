@@ -220,6 +220,14 @@ collections:
         widget: list
         required: false
         field: { label: URL, name: url, widget: string }
+      - label: Anexos
+        name: anexos
+        widget: list
+        required: false
+        fields:
+          - { label: URL, name: url, widget: string }
+          - { label: Título, name: title, widget: string }
+          - { label: Nota, name: note, widget: text, required: false }
       - label: Hitos editoriales
         name: hitos
         widget: list

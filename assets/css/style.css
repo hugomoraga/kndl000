@@ -10908,3 +10908,130 @@ body.reading-rizoma .historia-empty {
     gap: 0.5rem;
   }
 }
+
+/* ==========================================================================
+   Rizoma — anexos de rectificación
+   El cuerpo corrige; el anexo conserva la formulación anterior y sus fuentes.
+   ========================================================================== */
+
+body.reading-rizoma .anexo__eyebrow {
+  margin: 0 0 .75rem;
+  font-family: var(--font-mono);
+  font-size: .62rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--umbral-muted);
+}
+
+body.reading-rizoma .anexo-fuentes {
+  margin-top: 3rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--umbral-rule);
+}
+
+body.reading-rizoma .anexo-fuentes__intro {
+  max-width: 60ch;
+  margin: .75rem 0 0;
+  font-family: var(--font-mono);
+  font-size: .66rem;
+  line-height: 1.7;
+  letter-spacing: .03em;
+  color: var(--umbral-muted);
+}
+
+body.reading-rizoma .anexo-fuentes__list {
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+body.reading-rizoma .anexo-fuentes__list li {
+  padding: 1.1rem 0;
+  border-top: 1px solid var(--umbral-rule-faint);
+}
+
+body.reading-rizoma .anexo-fuente__ref {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--umbral-ink);
+}
+
+body.reading-rizoma .anexo-fuente__url {
+  margin: .4rem 0 0;
+  font-family: var(--font-mono);
+  font-size: .64rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+body.reading-rizoma .anexo-fuente__url a {
+  color: var(--umbral-trace);
+  text-decoration: none;
+}
+
+body.reading-rizoma .anexo-fuente__url a:hover {
+  text-decoration: underline;
+}
+
+body.reading-rizoma .anexo-fuente__meta {
+  margin: .35rem 0 0;
+  font-family: var(--font-mono);
+  font-size: .62rem;
+  letter-spacing: .04em;
+  color: var(--umbral-muted);
+}
+
+body.reading-rizoma .anexo-fuente__verifica {
+  margin: .55rem 0 0;
+  font-size: .94rem;
+  line-height: 1.6;
+  color: var(--umbral-dim);
+}
+
+body.reading-rizoma .anexo__margin-note {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: .66rem;
+  line-height: 1.6;
+  color: var(--umbral-dim);
+}
+
+body.reading-rizoma .anexo__margin-note a {
+  color: var(--umbral-trace);
+  text-decoration: none;
+}
+
+body.reading-rizoma .anexo-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+body.reading-rizoma .anexo-list li {
+  padding: .7rem 0;
+  border-top: 1px solid var(--umbral-rule-faint);
+}
+
+body.reading-rizoma .anexo-list li:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+body.reading-rizoma .anexo-list a {
+  color: var(--umbral-ink);
+  text-decoration: none;
+}
+
+body.reading-rizoma .anexo-list a:hover,
+body.reading-rizoma .anexo-list a:focus-visible {
+  color: var(--umbral-trace);
+}
+
+body.reading-rizoma .anexo-list p {
+  margin: .25rem 0 0;
+  font-family: var(--font-mono);
+  font-size: .62rem;
+  line-height: 1.5;
+  color: var(--umbral-muted);
+}
