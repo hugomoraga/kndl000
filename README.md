@@ -4,6 +4,13 @@ Este repositorio contiene un blog minimalista basado en [Jekyll](https://jekyllr
 
 > 📁 Ver [ESTRUCTURA.md](ESTRUCTURA.md) para entender la organización del proyecto.
 
+## Rizoma
+
+Para iniciar una sesión nueva o una exploración:
+
+- Leé [docs/rizoma/PUNTO-DE-ENTRADA.md](docs/rizoma/PUNTO-DE-ENTRADA.md).
+- Creá una exploración: `node scripts/nueva-exploracion.mjs --title "Título" --question "¿Pregunta?"`.
+
 ## Uso Local
 
 ### Dependencias del sistema

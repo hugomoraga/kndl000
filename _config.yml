@@ -55,6 +55,7 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - README.md
+  - AGENTS.md
   - ESTRUCTURA.md
   - DESIGN.md
   - PRODUCT.md
