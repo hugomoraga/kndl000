@@ -255,7 +255,10 @@ collections:
       - { label: Title, name: title, widget: string }
       - { label: Image, name: image, widget: image, required: false }
       - { label: Date, name: date, widget: datetime, required: false }
-      - { label: Body, name: body, widget: markdown }
+      - label: Body
+        name: body
+        widget: markdown
+        hint: "El texto antes del primer bloque de código se muestra como Contexto, al lado del terminal."
       - { label: Language, name: language, widget: string, required: false }
       - { label: Concept, name: concept, widget: text, required: false }
 

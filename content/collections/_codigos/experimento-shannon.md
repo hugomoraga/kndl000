@@ -6,6 +6,12 @@ language: JavaScript
 concept: "Las aproximaciones al lenguaje. Del caos a la estructura. La información que emerge del orden."
 ---
 
+El experimento retoma la idea de Shannon de aproximarse al lenguaje por grados: primero letras al azar, luego frecuencias, después cadenas de Markov de orden creciente. El corpus es el texto en castellano que acompaña al sitio; si no puede leerse, se usa una muestra de ejemplo.
+
+Al ejecutar puedes elegir la longitud del texto y el nivel máximo. El programa recorre todos los niveles hasta ese límite y ofrece un fragmento de cada uno, de la sopa de letras al texto que empieza a tener sintaxis.
+
+También mide la cobertura de trigramas de cada resultado: qué porcentaje de sus secuencias de tres letras existen en el corpus. La gráfica final cuenta ese paso del ruido a la estructura.
+
 ```javascript
 // Experimento de Shannon - Aproximaciones al lenguaje en castellano
 const pedidaLongitud = parseInt(input("¿Cuántos caracteres? (80–300)"), 10);

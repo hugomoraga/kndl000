@@ -8900,11 +8900,96 @@ body.codigo-detail .codigo-page .concept {
   max-width: var(--interior-measure);
 }
 
+body.codigo-detail .codigo-detail__layout {
+  width: 100%;
+  max-width: var(--interior-wide);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+body.codigo-detail .codigo-detail__layout--with-context {
+  display: grid;
+  grid-template-columns: minmax(14rem, 17rem) minmax(0, 1fr);
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  align-items: start;
+}
+
 body.codigo-detail .codigo-detail__body {
   width: 100%;
   max-width: var(--interior-wide);
   margin-right: auto;
   margin-left: auto;
+}
+
+/* Contexto: la nota de margen que explica qué se ejecuta antes de tocarlo. */
+body.codigo-detail .codigo-contexto {
+  position: sticky;
+  top: clamp(1.5rem, 6vh, 4rem);
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--umbral-rule);
+}
+
+body.codigo-detail .codigo-contexto__title {
+  margin: 0 0 0.9rem;
+  padding: 0;
+  border: 0;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  line-height: 1.4;
+  text-align: left;
+  text-transform: uppercase;
+  color: var(--umbral-muted);
+}
+
+body.codigo-detail .codigo-contexto__body {
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--umbral-dim);
+}
+
+body.codigo-detail .codigo-contexto__body p {
+  margin: 0 0 0.85em;
+}
+
+body.codigo-detail .codigo-contexto__body p:last-child {
+  margin-bottom: 0;
+}
+
+body.codigo-detail .codigo-contexto__body strong {
+  font-weight: 600;
+  color: var(--umbral-ink);
+}
+
+body.codigo-detail .codigo-contexto__body em {
+  color: var(--umbral-ink);
+}
+
+body.codigo-detail .codigo-contexto__body a {
+  color: var(--umbral-trace);
+  text-decoration: none;
+  border-bottom: 1px solid var(--umbral-rule);
+}
+
+body.codigo-detail .codigo-contexto__body a:hover,
+body.codigo-detail .codigo-contexto__body a:focus-visible {
+  border-bottom-color: var(--umbral-trace);
+}
+
+@media (max-width: 900px) {
+  body.codigo-detail .codigo-detail__layout--with-context {
+    display: block;
+  }
+
+  body.codigo-detail .codigo-contexto {
+    position: static;
+    max-width: 58ch;
+    margin: 0 0 1.75rem;
+    padding-top: 0.75rem;
+  }
 }
 
 /* Imaginario: cabecera, nota y pager en 43rem; visor en 900px. */

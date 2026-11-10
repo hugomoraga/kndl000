@@ -40,8 +40,39 @@
       </div>
       {% endif %}
 
-      <div class="codigo-detail__body" id="codigo-contenido">
-        {{ content }}
+      {%- comment -%}
+        La prosa que precede al primer bloque de código se muestra como Contexto.
+        El bloque se detecta por el contenedor de Rouge para no dejar el envoltorio abierto.
+      {%- endcomment -%}
+      {%- assign _chunks = content | split: '<div class="language-' -%}
+      {%- assign _delimiter = '<div class="language-' -%}
+      {%- if _chunks.size == 1 -%}
+        {%- assign _chunks = content | split: '<div class="highlighter-rouge">' -%}
+        {%- assign _delimiter = '<div class="highlighter-rouge">' -%}
+      {%- endif -%}
+      {%- if _chunks.size == 1 -%}
+        {%- assign _chunks = content | split: '<pre' -%}
+        {%- assign _delimiter = '<pre' -%}
+      {%- endif -%}
+      {%- assign _intro = _chunks[0] | strip -%}
+      {%- assign _code = '' -%}
+      {%- for _chunk in _chunks offset: 1 -%}
+        {%- assign _code = _code | append: _delimiter | append: _chunk -%}
+      {%- endfor -%}
+
+      <div class="codigo-detail__layout{% if _intro != '' and _chunks.size > 1 %} codigo-detail__layout--with-context{% endif %}">
+        {% if _intro != '' and _chunks.size > 1 %}
+        <aside class="codigo-contexto" aria-labelledby="codigo-contexto-title">
+          <h2 class="codigo-contexto__title" id="codigo-contexto-title">Contexto</h2>
+          <div class="codigo-contexto__body">
+            {{ _intro }}
+          </div>
+        </aside>
+        {% endif %}
+
+        <div class="codigo-detail__body" id="codigo-contenido">
+          {{ _code | default: content }}
+        </div>
       </div>
 
       {% include reading-next.html collection="codigos" sort="title" title="Seguir en Código" label_prev="Anterior" label_next="Siguiente" related_field="language" related_prefix="Otro módulo en" %}
