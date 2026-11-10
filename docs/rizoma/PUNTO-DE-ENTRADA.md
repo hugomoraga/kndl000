@@ -104,13 +104,28 @@ No crea nodos, corpus, anexos ni relaciones: eso se agrega cuando existe. Despu�
 5. `bundle exec jekyll build` y `node scripts/check-links.mjs`.
 6. El autor decide si se publica; después, commit y push.
 
+## Lámina
+
+La lámina no es una vista automática de la exploración: es un artefacto
+fechado. El **esqueleto** (obras, nodos, tipos, compartidos, fechas) se genera
+con `--sync` desde la exploración y las colecciones. La **anotación**
+(posiciones, citas, corte, blanco, colofón) vive en `lamina-01.annotations.yml`
+y es manual.
+
+`--check` falla si el corpus o los nodos cambiaron sin anotar, o si la
+exploración se actualizó después de la fecha de la lámina. `--write` regenera
+el HTML de la lámina, la página del sitio y el SVG exportado. La composición no
+se autogenera: se decide.
+
 ## Comandos
 
 ```bash
 bundle exec jekyll build          # construir el sitio
 node scripts/check-links.mjs      # verificar enlaces internos
 node scripts/nueva-exploracion.mjs --help
-python3 docs/rizoma/build-lamina.py  # regenerar una lámina (ver nota)
+python3 docs/rizoma/build-lamina.py --sync   # esqueleto desde la exploración
+python3 docs/rizoma/build-lamina.py --check  # fechas, corpus y nodos
+python3 docs/rizoma/build-lamina.py --write  # HTML, página y SVG
 ```
 
 ## Mapa de archivos
@@ -123,6 +138,9 @@ python3 docs/rizoma/build-lamina.py  # regenerar una lámina (ver nota)
 - `docs/rizoma/adr/` — decisiones durables.
 - `docs/rizoma/lectura-01.md` — banco de lectura de la 01.
 - `docs/rizoma/nota-diagram-design.md` — pipeline de las láminas.
+- `docs/rizoma/lamina-01.data.yml` — esqueleto generado (obras, nodos, kinds).
+- `docs/rizoma/lamina-01.annotations.yml` — posiciones, citas, corte, blanco.
+- `docs/rizoma/build-lamina.py` — generador de la lámina.
 - `docs/rizoma/ciclos/` — notas de cada vuelta.
 - `_layouts/anexo.html`, `_layouts/anexos.html`, `_layouts/exploracion.html` — superficies.
 

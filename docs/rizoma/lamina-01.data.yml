@@ -1,0 +1,85 @@
+exploracion:
+  url: /rizoma/que-se-conserva-cuando-algo-se-repite/
+  titulo: ¿Qué se conserva cuando algo se repite?
+  pregunta: ¿La repetición conserva algo o solo lo gasta?
+  orden: '01'
+  estado: abierta
+  actualizado: '2026-11-10'
+obras:
+- url: /poemas/persistencias-del-algo/
+  titulo: Una constante en mi ser
+  tipo: POEMA
+  glyph: ⁂
+  series: Persistir en el algo
+- url: /poemas/cae/
+  titulo: ∞
+  tipo: POEMA
+  glyph: ⁂
+  series: Persistir en el algo
+- url: /codigo/espiral-fibonacci/
+  titulo: Espiral de Fibonacci
+  tipo: CÓDIGO
+  glyph: ◊
+- url: /fragmentos/
+  titulo: Rastros
+  tipo: RASTRO
+  glyph: ⟡
+- url: /dispositivos/espiral/
+  titulo: Espiral
+  tipo: DISPOSITIVO
+  glyph: ⎔
+  version: v0.1.1
+- url: /codigo/experimento-shannon/
+  titulo: Experimento de Shannon
+  tipo: CÓDIGO
+  glyph: ◊
+- url: /codigo/voto-por-mayoria/
+  titulo: Voto por mayoría
+  tipo: CÓDIGO
+  glyph: ◊
+- url: /codigo/hormiga-langton/
+  titulo: Hormiga de Langton
+  tipo: CÓDIGO
+  glyph: ◊
+nodos:
+- nombre: Repetición
+  ancla: repeticion
+  compartido: true
+  compartido_en:
+  - Lo que el archivo no conserva
+- nombre: Persistencia
+  ancla: persistencia
+  compartido: false
+  compartido_en: []
+- nombre: Memoria
+  ancla: memoria
+  compartido: true
+  compartido_en:
+  - Lo que el archivo no conserva
+- nombre: Desgaste
+  ancla: desgaste
+  compartido: false
+  compartido_en: []
+- nombre: Archivo
+  ancla: archivo
+  compartido: true
+  compartido_en:
+  - Lo que el archivo no conserva
+- nombre: Recurrencia
+  ancla: recurrencia
+  compartido: false
+  compartido_en: []
+- nombre: Automatización
+  ancla: automatizacion
+  compartido: true
+  compartido_en:
+  - Lo que el archivo no conserva
+- nombre: Diferencia
+  ancla: diferencia
+  compartido: false
+  compartido_en: []
+- nombre: Redundancia
+  ancla: redundancia
+  compartido: true
+  compartido_en:
+  - Lo que el archivo no conserva

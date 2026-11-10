@@ -1,21 +1,34 @@
 #!/usr/bin/env python3
 """Genera la lámina SVG de una exploración de Rizoma.
 
-Adaptación mínima de diagram-design (cathrynlavery/diagram-design) para KNDL:
-toma su contrato de SVG accesible, su grilla de 4 px y su validador, pero
-rechaza sus tipos de diagrama, sus cajas de nodo y sus radios.
-
-La página del sitio suma una lupa 2× sobre el campo (solo puntero fino) y un
-ajuste por escala que conserva la figura. El SVG exportado queda estático.
+El esqueleto (obras, nodos, tipos, compartidos, fechas) se genera desde la
+exploración y las colecciones con --sync. La anotación editorial (posiciones,
+citas, corte, blanco, colofón) vive en lamina-01.annotations.yml.
 
 Uso:
-    python3 docs/rizoma/build-lamina.py > docs/rizoma/lamina-01.svg.html
-    python3 docs/rizoma/build-lamina.py --site > rizoma/que-se-conserva-cuando-algo-se-repite/lamina/index.html
+    python3 docs/rizoma/build-lamina.py --sync
+    python3 docs/rizoma/build-lamina.py --check
+    python3 docs/rizoma/build-lamina.py --write
 """
 
 from __future__ import annotations
 
+import json
+import re
+import sys
+import unicodedata
+from datetime import date, datetime
 from html import escape
+from pathlib import Path
+
+import yaml
+
+ROOT = Path(__file__).resolve().parents[2]
+EXPLORACION = ROOT / "content/collections/_exploraciones/que-se-conserva-cuando-algo-se-repite.md"
+DATA = ROOT / "docs/rizoma/lamina-01.data.yml"
+ANNOTATIONS = ROOT / "docs/rizoma/lamina-01.annotations.yml"
+DOCS_HTML = ROOT / "docs/rizoma/lamina-01-svg.html"
+SVG_OUT = ROOT / "docs/rizoma/lamina-01.svg"
 
 INK = "#e9e6dc"
 DIM = "#9aa3a1"
@@ -24,7 +37,313 @@ TRACE = "#9fc6c9"
 RULE = "rgba(233,230,220,0.14)"
 SERIF = "'Newsreader', Georgia, serif"
 MONO = "'JetBrains Mono', ui-monospace, monospace"
-EXPLORACION_URL = "/rizoma/que-se-conserva-cuando-algo-se-repite/"
+
+KINDS = {
+    "/poemas/": ("_poems", "POEMA", "⁂"),
+    "/codigo/": ("_codigos", "CÓDIGO", "◊"),
+    "/dispositivos/": ("_dispositivos", "DISPOSITIVO", "⎔"),
+    "/imaginario/": ("_images", "IMAGEN", "◉"),
+    "/vestigios/": ("_vestigios", "VESTIGIO", "⏚"),
+    "/melange-reports/": ("_melange_reports", "REPORTE", "🜏"),
+}
+SPECIAL = {
+    "/fragmentos/": {
+        "url": "/fragmentos/",
+        "titulo": "Rastros",
+        "tipo": "RASTRO",
+        "glyph": "⟡",
+    }
+}
+FRONTMATTER = re.compile(r"\A---\s*\n(.*?)\n---\s*\n", re.S)
+NUM_WORDS = {
+    1: "una", 2: "dos", 3: "tres", 4: "cuatro", 5: "cinco",
+    6: "seis", 7: "siete", 8: "ocho", 9: "nueve", 10: "diez",
+}
+
+
+def read_frontmatter(path: Path) -> dict:
+    text = path.read_text(encoding="utf-8")
+    match = FRONTMATTER.match(text)
+    if not match:
+        raise ValueError(f"Sin frontmatter: {path}")
+    return yaml.safe_load(match.group(1)) or {}
+
+
+def load_yaml(path: Path) -> dict:
+    if not path.exists():
+        raise ValueError(f"Falta {path}. Corré --sync o creá la anotación.")
+    return yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+
+
+def date_str(value) -> str:
+    if isinstance(value, (date, datetime)):
+        return value.strftime("%Y-%m-%d")
+    return str(value or "")
+
+
+def as_slug(text: str) -> str:
+    raw = unicodedata.normalize("NFKD", str(text)).encode("ascii", "ignore").decode()
+    return re.sub(r"[^a-z0-9]+", "-", raw.lower()).strip("-")
+
+
+def num_word(value: int) -> str:
+    return NUM_WORDS.get(value, str(value))
+
+
+def collection_works() -> dict:
+    works = {}
+    for prefix, (folder, tipo, glyph) in KINDS.items():
+        for path in sorted((ROOT / "content/collections" / folder).glob("*.md")):
+            fm = read_frontmatter(path)
+            if fm.get("published") is False:
+                continue
+            url = f"{prefix}{path.stem}/"
+            item = {"url": url, "titulo": fm.get("title", ""), "tipo": tipo, "glyph": glyph}
+            if fm.get("series"):
+                item["series"] = fm["series"]
+            if fm.get("version"):
+                item["version"] = fm["version"]
+            works[url] = item
+    works.update(SPECIAL)
+    return works
+
+
+def all_explorations():
+    for path in sorted((ROOT / "content/collections/_exploraciones").glob("*.md")):
+        fm = read_frontmatter(path)
+        if fm.get("published") is False:
+            continue
+        yield path, fm
+
+
+def sync_data() -> None:
+    fm = read_frontmatter(EXPLORACION)
+    url = f"/rizoma/{EXPLORACION.stem}/"
+    works = collection_works()
+    obras = []
+    for item in fm.get("corpus") or []:
+        work_url = item.get("url") if isinstance(item, dict) else item
+        base = works.get(work_url)
+        if not base:
+            print(f"AVISO: obra sin resolver: {work_url}", file=sys.stderr)
+            base = {"url": work_url, "titulo": work_url, "tipo": "ARCHIVO", "glyph": ""}
+        obras.append(dict(base))
+
+    explorations = list(all_explorations())
+    nodes = []
+    for title in fm.get("nodos") or []:
+        shared = []
+        for path, other in explorations:
+            if path.resolve() == EXPLORACION.resolve():
+                continue
+            if title in (other.get("nodos") or []):
+                shared.append(other.get("title", path.stem))
+        nodes.append({
+            "nombre": title,
+            "ancla": as_slug(title),
+            "compartido": bool(shared),
+            "compartido_en": shared,
+        })
+
+    data = {
+        "exploracion": {
+            "url": url,
+            "titulo": fm.get("title", ""),
+            "pregunta": fm.get("question", ""),
+            "orden": str(fm.get("order", "")),
+            "estado": fm.get("status", "abierta"),
+            "actualizado": date_str(fm.get("updated") or fm.get("date")),
+        },
+        "obras": obras,
+        "nodos": nodes,
+    }
+    DATA.write_text(
+        yaml.safe_dump(data, sort_keys=False, allow_unicode=True, width=1000),
+        encoding="utf-8",
+    )
+    print(f"Esqueleto actualizado: {DATA}")
+    print(f"  {len(obras)} obras · {len(nodes)} nodos · {sum(1 for n in nodes if n['compartido'])} compartidos")
+
+
+def merge(data: dict, ann: dict) -> list:
+    works_by_url = {w["url"]: w for w in data.get("obras") or []}
+    nodes_by_name = {n["nombre"]: n for n in data.get("nodos") or []}
+    seen = set()
+    merged = []
+    for item in ann.get("obras") or []:
+        url = item.get("url")
+        base = works_by_url.get(url)
+        if not base:
+            raise ValueError(f"La anotación referencia una obra que no está en el esqueleto: {url}")
+        if url in seen:
+            raise ValueError(f"Obra duplicada en la anotación: {url}")
+        nodes = []
+        for name in item.get("nodos") or []:
+            node = nodes_by_name.get(name)
+            if not node:
+                raise ValueError(f"Nodo anotado que no está en la exploración: {name}")
+            nodes.append(node)
+        if "x" not in item or "y" not in item:
+            raise ValueError(f"Falta posición para {url}")
+        merged.append({
+            "url": url,
+            "href": url,
+            "glyph": base.get("glyph", ""),
+            "tipo": item.get("tipo") or base.get("tipo", "ARCHIVO"),
+            "titulo": item.get("titulo") or base.get("titulo", url),
+            "sub": item.get("sub", ""),
+            "cita": item.get("cita") or [],
+            "mono": bool(item.get("mono")),
+            "big": bool(item.get("big")),
+            "x": int(item["x"]),
+            "y": int(item["y"]),
+            "nodos": nodes,
+        })
+        seen.add(url)
+
+    missing = [w["url"] for w in data.get("obras") or [] if w["url"] not in seen]
+    if missing:
+        raise ValueError("Hay obras del corpus sin anotar: " + ", ".join(missing))
+    used = {n["nombre"] for w in merged for n in w["nodos"]}
+    unused = [n["nombre"] for n in data.get("nodos") or [] if n["nombre"] not in used]
+    if unused:
+        raise ValueError("Hay nodos sin ubicar: " + ", ".join(unused))
+    return merged
+
+
+def text(x, y, s, size=14, fill=INK, family=SERIF, italic=False, anchor=None,
+         weight=None, spacing=None, cls=None):
+    attrs = [f'x="{x}"', f'y="{y}"', f'font-size="{size}"', f'fill="{fill}"',
+             f'font-family="{family}"']
+    if italic:
+        attrs.append('font-style="italic"')
+    if anchor:
+        attrs.append(f'text-anchor="{anchor}"')
+    if weight:
+        attrs.append(f'font-weight="{weight}"')
+    if spacing:
+        attrs.append(f'letter-spacing="{spacing}"')
+    if cls:
+        attrs.append(f'class="{cls}"')
+    return f'<text {" ".join(attrs)}>{escape(s)}</text>'
+
+
+def link(href, inner, label):
+    return f'<a href="{href}" aria-label="{escape(label)}">{inner}</a>'
+
+
+def kind(y, glyph, label, x):
+    return (
+        f'<text x="{x}" y="{y}" font-size="11" fill="{MUTED}" '
+        f'font-family="{MONO}" letter-spacing="0.1em">'
+        f'<tspan font-family="{SERIF}" font-size="12">{glyph}</tspan>'
+        f'<tspan dx="6">{escape(label)}</tspan></text>'
+    )
+
+
+def node_line(x, y, node):
+    name = node["nombre"].lower()
+    inner = (f'<text x="{x}" y="{y}" font-size="11.5" fill="{MUTED}" '
+             f'font-family="{MONO}"><tspan fill="rgba(233,230,220,0.30)">— </tspan>'
+             f'{escape(name)}')
+    if node["compartido"]:
+        inner += '<tspan font-size="8.5" dy="-4" fill="#7f8a88">02</tspan>'
+    inner += '</text>'
+    return f'<a class="node" href="/rizoma/nodos/#{node["ancla"]}" aria-label="nodo {escape(name)}">{inner}</a>'
+
+
+def work_block(work):
+    inner = [kind(work["y"], work["glyph"], work["tipo"], work["x"])]
+    size = 26 if work["big"] else 18
+    inner.append(text(work["x"], work["y"] + 24, work["titulo"], size, INK, SERIF, cls="work-title"))
+    if work["sub"]:
+        inner.append(text(work["x"], work["y"] + 43, work["sub"], 11, MUTED, MONO, spacing="0.08em"))
+    qy = work["y"] + 68
+    for line in work["cita"]:
+        if work["mono"]:
+            inner.append(text(work["x"], qy, line, 12, DIM, MONO))
+        else:
+            inner.append(text(work["x"], qy, line, 15, DIM, SERIF, italic=True))
+        qy += 21
+    nodes = []
+    ny = work["y"] + 68 + len(work["cita"]) * 21 + 12
+    for node in work["nodos"]:
+        nodes.append(node_line(work["x"], ny, node))
+        ny += 17
+    return ('<g class="work-block">'
+            + link(work["href"], "".join(inner), work["titulo"])
+            + "".join(nodes)
+            + "</g>")
+
+
+def build_svg(data: dict, ann: dict, works: list) -> str:
+    orden = data["exploracion"]["orden"]
+    titulo = data["exploracion"]["titulo"]
+    fecha = date_str(ann.get("fecha_lamina"))
+    estado = data["exploracion"].get("estado", "abierta")
+    compartidos = sum(1 for n in data.get("nodos") or [] if n.get("compartido"))
+    desc = ann["descripcion"].format(
+        campo=ann.get("campo", "Campo"),
+        obras=num_word(len(works)),
+        nodos=num_word(len(data.get("nodos") or [])),
+        compartidos=num_word(compartidos),
+        fecha=fecha,
+        orden=orden,
+    )
+    out = [f'''<svg class="plate-svg" viewBox="0 0 1280 1024" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="lamina{orden}-title lamina{orden}-desc">
+  <title id="lamina{orden}-title">Lámina {orden} — {escape(titulo)}</title>
+  <desc id="lamina{orden}-desc">{escape(desc)}</desc>
+  <rect width="1280" height="1024" fill="#060708"/>
+''']
+    out.append(CONTOURS)
+    out.append(link("/rizoma/", text(44, 56, f"KNDL · RIZOMA / LÁMINA {orden}", 11, MUTED, MONO, spacing="0.12em"), "Rizoma"))
+    out.append(text(1236, 56, f"{fecha} · {estado.upper()}", 11, MUTED, MONO, anchor="end", spacing="0.12em"))
+    lines = ann.get("titulo_lineas") or [titulo]
+    title_html = "".join(text(44, 110 + i * 38, line, 40, INK, SERIF, weight="300") for i, line in enumerate(lines))
+    out.append(link(data["exploracion"]["url"], title_html, "Volver a la exploración"))
+    for i, line in enumerate(ann.get("clave") or []):
+        out.append(text(44, 190 + i * 18, line, 12, MUTED, MONO, spacing="0.05em"))
+    out.append(f'<line x1="44" y1="224" x2="1236" y2="224" stroke="{RULE}" stroke-width="1"/>')
+
+    out.append('<g id="plate-field">')
+    for work in works:
+        out.append(work_block(work))
+
+    cut = ann["corte"]
+    out.append(text(cut["x"], cut["y"], cut["etiqueta"], 11, MUTED, MONO, spacing="0.12em"))
+    out.append(f'<line x1="{cut["x"]}" y1="{cut["regla_y"]}" x2="{cut["hueco_ini"]}" y2="{cut["regla_y"]}" stroke="rgba(233,230,220,0.34)" stroke-width="1"/>')
+    out.append(f'<line x1="{cut["hueco_fin"]}" y1="{cut["regla_y"]}" x2="{cut["fin"]}" y2="{cut["regla_y"]}" stroke="rgba(233,230,220,0.34)" stroke-width="1"/>')
+    for i, line in enumerate(cut.get("cita") or []):
+        out.append(text(cut["cita_x"], cut["cita_y"] + i * 20, line, 13, INK, SERIF, italic=True))
+
+    blank = ann["blanco"]
+    out.append(f'<rect x="{blank["x"]}" y="{blank["y"]}" width="{blank["ancho"]}" height="{blank["alto"]}" fill="none" stroke="rgba(233,230,220,0.16)" stroke-width="1" stroke-dasharray="4 4"/>')
+    out.append(text(blank["x"] + 20, blank["y"] + 28, blank["etiqueta"], 11, MUTED, MONO, spacing="0.12em"))
+    for i, line in enumerate(blank.get("pregunta") or []):
+        out.append(text(blank["x"] + 20, blank["y"] + 76 + i * 20, line, 14, DIM, SERIF, italic=True))
+    out.append('</g>')
+
+    colofon = ann["colofon"]
+    out.append(f'<line x1="44" y1="984" x2="1236" y2="984" stroke="{RULE}" stroke-width="1"/>')
+    out.append(text(44, 1008, colofon["izquierda"].format(fecha=fecha, orden=orden), 11, MUTED, MONO, spacing="0.05em"))
+    out.append(text(560, 1008, colofon["centro"].format(fecha=fecha, orden=orden), 11, MUTED, MONO, spacing="0.05em"))
+    out.append(text(1236, 1008, colofon["derecha"].format(fecha=fecha, orden=orden), 11, MUTED, MONO, anchor="end", spacing="0.05em"))
+    out.append('</svg>')
+    return "".join(out)
+
+
+def read_alt(works: list) -> str:
+    items = []
+    seen = set()
+    for work in works:
+        items.append(f'<li><a href="{work["href"]}">{escape(work["titulo"])} — {escape(work["tipo"].lower())}</a></li>')
+        for node in work["nodos"]:
+            if node["nombre"] in seen:
+                continue
+            seen.add(node["nombre"])
+            items.append(f'<li><a href="/rizoma/nodos/#{node["ancla"]}">nodo: {escape(node["nombre"].lower())}</a></li>')
+    return items
+
 
 CONTOURS = """
 <g transform="translate(0,240)" fill="none" stroke="rgba(233,230,220,0.055)" stroke-width="1">
@@ -40,172 +359,6 @@ CONTOURS = """
   <path d="M86 566 C 156 542 258 558 292 604 C 320 644 284 698 222 704 C 154 710 96 672 86 626 C 80 600 78 576 86 566Z"/>
 </g>
 """
-
-# Cada obra lleva sus nodos: la palabra aparece debajo de la obra que la lee.
-# (nombre, ancla, ¿también en la 02?)
-WORKS = [
-    dict(x=40, y=276, href="/poemas/persistencias-del-algo/", glyph="⁂",
-         kind="POEMA · SERIE", title="Persistir en el algo",
-         sub="UNA CONSTANTE EN MI SER",
-         quote=["Camino con las palabras", "o me enredaré en ellas."],
-         nodes=[("persistencia", "persistencia", False)]),
-    dict(x=40, y=520, href="/poemas/cae/", glyph="⁂",
-         kind="POEMA", title="∞", sub="CAE", big=True,
-         quote=["No hay palabras que", "puedan retratarlo."],
-         nodes=[("repetición", "repeticion", True)]),
-    dict(x=360, y=276, href="/fragmentos/", glyph="⟡",
-         kind="RASTRO · FRAGMENTO", title="Rastros", sub="2026-06-15",
-         quote=["El alfabeto se gasta al repetirlo.", "Las palabras también."],
-         nodes=[("desgaste", "desgaste", False),
-                ("memoria", "memoria", True),
-                ("archivo", "archivo", True)]),
-    dict(x=704, y=284, href="/codigo/espiral-fibonacci/", glyph="◊",
-         kind="CÓDIGO", title="Espiral de Fibonacci", sub="RECURRENCIA",
-         quote=["a(n) = a(n−1) + a(n−2)"], mono=True,
-         nodes=[("recurrencia", "recurrencia", False),
-                ("diferencia", "diferencia", False)]),
-    dict(x=1000, y=284, href="/dispositivos/espiral/", glyph="⎔",
-         kind="DISPOSITIVO", title="Espiral", sub="V0.1.1",
-         quote=["Siete canales, patrones de", "16 pasos, semilla", "reproducible."],
-         nodes=[("automatización", "automatizacion", True)]),
-    dict(x=896, y=560, href="/codigo/experimento-shannon/", glyph="◊",
-         kind="CÓDIGO", title="Experimento de Shannon",
-         sub="APROXIMACIONES AL LENGUAJE",
-         quote=["Del caos a la estructura."],
-         nodes=[("redundancia", "redundancia", True)]),
-    dict(x=360, y=700, href="/codigo/hormiga-langton/", glyph="◊",
-         kind="CÓDIGO", title="Hormiga de Langton", sub="DOS REGLAS",
-         quote=["El caos que emerge del orden.", "El orden que emerge del caos."],
-         nodes=[]),
-]
-
-
-def text(x, y, s, size=14, fill=INK, family=SERIF, italic=False, anchor=None,
-         weight=None, spacing=None, cls=None):
-    a = [f'x="{x}"', f'y="{y}"', f'font-size="{size}"', f'fill="{fill}"',
-         f'font-family="{family}"']
-    if italic:
-        a.append('font-style="italic"')
-    if anchor:
-        a.append(f'text-anchor="{anchor}"')
-    if weight:
-        a.append(f'font-weight="{weight}"')
-    if spacing:
-        a.append(f'letter-spacing="{spacing}"')
-    if cls:
-        a.append(f'class="{cls}"')
-    return f'<text {" ".join(a)}>{escape(s)}</text>'
-
-
-def link(href, inner, label):
-    return f'<a href="{href}" aria-label="{escape(label)}">{inner}</a>'
-
-
-linked = link
-
-
-def kind(y, glyph, label, x):
-    return (
-        f'<text x="{x}" y="{y}" font-size="11" fill="{MUTED}" '
-        f'font-family="{MONO}" letter-spacing="0.1em">'
-        f'<tspan font-family="{SERIF}" font-size="12">{glyph}</tspan>'
-        f'<tspan dx="6">{escape(label)}</tspan></text>'
-    )
-
-
-def node_line(x, y, name, anchor, also):
-    inner = (f'<text x="{x}" y="{y}" font-size="11.5" fill="{MUTED}" '
-             f'font-family="{MONO}"><tspan fill="rgba(233,230,220,0.30)">— </tspan>'
-             f'{escape(name)}')
-    if also:
-        inner += '<tspan font-size="8.5" dy="-4" fill="#7f8a88">02</tspan>'
-    inner += '</text>'
-    return f'<a class="node" href="/rizoma/nodos/#{anchor}" aria-label="nodo {escape(name)}">{inner}</a>'
-
-
-def work_block(w):
-    inner = [kind(w["y"], w["glyph"], w["kind"], w["x"])]
-    size = 26 if w.get("big") else 18
-    inner.append(text(w["x"], w["y"] + 24, w["title"], size, INK, SERIF, cls="work-title"))
-    inner.append(text(w["x"], w["y"] + 43, w["sub"], 11, MUTED, MONO, spacing="0.08em"))
-    qy = w["y"] + 68
-    for line in w["quote"]:
-        if w.get("mono"):
-            inner.append(text(w["x"], qy, line, 12, DIM, MONO))
-        else:
-            inner.append(text(w["x"], qy, line, 15, DIM, SERIF, italic=True))
-        qy += 21
-    nodes = []
-    ny = w["y"] + 68 + len(w["quote"]) * 21 + 12
-    for name, anchor, also in w["nodes"]:
-        nodes.append(node_line(w["x"], ny, name, anchor, also))
-        ny += 17
-    return ('<g class="work-block">'
-            + link(w["href"], "".join(inner), w["title"])
-            + "".join(nodes)
-            + "</g>")
-
-
-def build_svg() -> str:
-    out = [f'''<svg class="plate-svg" viewBox="0 0 1280 1024" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="lamina01-title lamina01-desc">
-  <title id="lamina01-title">Lámina 01 — ¿Qué se conserva cuando algo se repite?</title>
-  <desc id="lamina01-desc">Campo de la repetición: siete obras del archivo con los nodos que cada una trabaja. Cinco nodos están compartidos con la segunda deriva. El corte marca la sección Ritual retirada; el blanco, lo que la deriva todavía no dice.</desc>
-  <rect width="1280" height="1024" fill="#060708"/>
-''']
-    out.append(CONTOURS)
-
-    # Header
-    out.append(linked("/rizoma/", text(44, 56, "KNDL · RIZOMA / LÁMINA 01", 11, MUTED, MONO, spacing="0.12em"), "Rizoma"))
-    out.append(text(1236, 56, "2026-11-10 · ABIERTA", 11, MUTED, MONO, anchor="end", spacing="0.12em"))
-    out.append(linked(EXPLORACION_URL,
-                      text(44, 110, "¿Qué se conserva cuando algo se", 40, INK, SERIF, weight="300") +
-                      text(44, 148, "repite?", 40, INK, SERIF, weight="300"),
-                      "Volver a la exploración"))
-    out.append(text(44, 190, "CADA BLOQUE ES UNA OBRA. CADA PALABRA, UN NODO.", 12, MUTED, MONO, spacing="0.07em"))
-    out.append(text(44, 208, "LA CERCANÍA ES UNA LECTURA, NO UNA RELACIÓN. · 02 = TAMBIÉN EN LA SEGUNDA DERIVA.", 12, MUTED, MONO, spacing="0.05em"))
-    out.append(f'<line x1="44" y1="224" x2="1236" y2="224" stroke="{RULE}" stroke-width="1"/>')
-
-    # Field
-    out.append('<g id="plate-field">')
-    for w in WORKS:
-        out.append(work_block(w))
-
-    # Cut
-    out.append(text(360, 500, "CORTE", 11, MUTED, MONO, spacing="0.12em"))
-    out.append(f'<line x1="360" y1="520" x2="544" y2="520" stroke="rgba(233,230,220,0.34)" stroke-width="1"/>')
-    out.append(f'<line x1="676" y1="520" x2="872" y2="520" stroke="rgba(233,230,220,0.34)" stroke-width="1"/>')
-    out.append(text(544, 552, "un ritual no es una costumbre:", 13, INK, SERIF, italic=True))
-    out.append(text(544, 572, "es una máquina de producir presente", 13, INK, SERIF, italic=True))
-
-    # Blank
-    out.append('<rect x="40" y="700" width="268" height="172" fill="none" stroke="rgba(233,230,220,0.16)" stroke-width="1" stroke-dasharray="4 4"/>')
-    out.append(text(60, 728, "SIN TRAZO", 11, MUTED, MONO, spacing="0.12em"))
-    out.append(text(60, 776, "¿qué repite una memoria", 14, DIM, SERIF, italic=True))
-    out.append(text(60, 796, "que no guarda nada?", 14, DIM, SERIF, italic=True))
-    out.append('</g>')
-
-    # Colophon
-    out.append(f'<line x1="44" y1="984" x2="1236" y2="984" stroke="{RULE}" stroke-width="1"/>')
-    out.append(text(44, 1008, "Estado del campo al 2026-11-10. No es un resumen.", 11, MUTED, MONO, spacing="0.05em"))
-    out.append(text(560, 1008, "La lámina se fecha y se rehace.", 11, MUTED, MONO, spacing="0.05em"))
-    out.append(text(1236, 1008, "KNDL · Rizoma · 01", 11, MUTED, MONO, anchor="end", spacing="0.05em"))
-
-    out.append('</svg>')
-    return "".join(out)
-
-
-def read_alt() -> str:
-    items = []
-    seen = set()
-    for w in WORKS:
-        items.append(f'<li><a href="{w["href"]}">{escape(w["title"])} — {escape(w["kind"].lower())}</a></li>')
-        for name, anchor, _also in w["nodes"]:
-            if name in seen:
-                continue
-            seen.add(name)
-            items.append(f'<li><a href="/rizoma/nodos/#{anchor}">nodo: {escape(name)}</a></li>')
-    return "\n      ".join(items)
-
 
 CSS = """
     *, *::before, *::after { box-sizing: border-box; }
@@ -414,8 +567,12 @@ HTML = """<!doctype html>
 """
 
 
-def build(site: bool = False) -> str:
-    back = f'  <nav class="plate-back"><a href="{EXPLORACION_URL}">← Exploración 01</a></nav>\n' if site else ""
+
+def build_html(site: bool, data: dict, ann: dict, works: list) -> str:
+    orden = data["exploracion"]["orden"]
+    titulo = data["exploracion"]["titulo"]
+    url = data["exploracion"]["url"]
+    back = f'  <nav class="plate-back"><a href="{url}">← Exploración {orden}</a></nav>\n' if site else ""
     tools = """
     <div class="plate-tools">
       <button class="plate-toggle" type="button" aria-pressed="false">Lupa</button>
@@ -427,27 +584,108 @@ def build(site: bool = False) -> str:
       </svg>
     </div>
 """ if site else ""
-    html = (HTML
+    html = re.sub(r"<title>.*?</title>", f"<title>Lámina {orden} — {escape(titulo)} · KNDL</title>", HTML, count=1, flags=re.S)
+    return (html
             .replace("{{CSS}}", CSS)
             .replace("{{BACK}}", back)
-            .replace("{{READ_ALT}}", read_alt())
-            .replace("{{SVG}}", build_svg())
+            .replace("{{READ_ALT}}", "\n      ".join(read_alt(works)))
+            .replace("{{SVG}}", build_svg(data, ann, works))
             .replace("{{TOOLS}}", tools)
             .replace("{{SCRIPT}}", SCRIPT if site else ""))
-    return html
+
+
+def frontmatter(data: dict) -> str:
+    orden = data["exploracion"]["orden"]
+    titulo = data["exploracion"]["titulo"]
+    url = data["exploracion"]["url"]
+    title = f"Lámina {orden} — {titulo}"
+    return (
+        "---\n"
+        "layout: null\n"
+        f"title: {json.dumps(title, ensure_ascii=False)}\n"
+        f"permalink: {url}lamina/\n"
+        "---\n"
+    )
+
+
+def extract_svg(html: str) -> str:
+    start = html.index('<svg class="plate-svg"')
+    end = html.index("</svg>", start) + len("</svg>")
+    svg = html[start:end]
+    fonts = (
+        "<style>@import url('https://fonts.googleapis.com/css2?"
+        "family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800"
+        "&amp;family=Lato:ital,wght@0,300;0,400;0,700;1,400"
+        "&amp;family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,400"
+        "&amp;display=swap');</style>"
+    )
+    svg = svg.replace("</desc>", "</desc>\n  " + fonts, 1)
+    return '<?xml version="1.0" encoding="UTF-8"?>\n' + svg + "\n"
+
+
+def check(data: dict, ann: dict, works: list) -> None:
+    fecha = date_str(ann.get("fecha_lamina"))
+    updated = date_str(data["exploracion"].get("actualizado"))
+    errors = []
+    try:
+        if date.fromisoformat(updated) > date.fromisoformat(fecha):
+            errors.append(
+                f"La lámina está fechada {fecha} y la exploración se actualizó {updated}. "
+                "Rehacé la lámina y actualizá fecha_lamina en la anotación."
+            )
+    except ValueError:
+        errors.append(f"Fechas inválidas: lámina={fecha!r}, exploración={updated!r}")
+    if errors:
+        for error in errors:
+            print("ERROR: " + error, file=sys.stderr)
+        sys.exit(1)
+    compartidos = sum(1 for n in data.get("nodos") or [] if n.get("compartido"))
+    print(f"Lámina OK · {fecha} · {len(works)} obras · {len(data.get('nodos') or [])} nodos · {compartidos} compartidos")
+
+
+def write_outputs(data: dict, ann: dict, works: list) -> None:
+    docs = build_html(False, data, ann, works)
+    DOCS_HTML.write_text(docs, encoding="utf-8")
+
+    site = frontmatter(data) + build_html(True, data, ann, works)
+    site_path = ROOT / data["exploracion"]["url"].strip("/") / "lamina/index.html"
+    site_path.parent.mkdir(parents=True, exist_ok=True)
+    site_path.write_text(site, encoding="utf-8")
+
+    SVG_OUT.write_text(extract_svg(docs), encoding="utf-8")
+
+    print(f"HTML de la lámina: {DOCS_HTML}")
+    print(f"Página del sitio: {site_path}")
+    print(f"SVG exportado: {SVG_OUT}")
+
+
+def main() -> None:
+    args = sys.argv[1:]
+    if "--sync" in args:
+        sync_data()
+        return
+    try:
+        data = load_yaml(DATA)
+        ann = load_yaml(ANNOTATIONS)
+        works = merge(data, ann)
+    except ValueError as error:
+        print("ERROR: " + str(error), file=sys.stderr)
+        sys.exit(1)
+
+    if "--check" in args:
+        check(data, ann, works)
+        return
+
+    if "--write" in args:
+        write_outputs(data, ann, works)
+        return
+
+    site = "--site" in args
+    html = build_html(site, data, ann, works)
+    if site:
+        html = frontmatter(data) + html
+    print(html, end="")
 
 
 if __name__ == "__main__":
-    import sys
-
-    site = "--site" in sys.argv
-    html = build(site)
-    if site:
-        html = (
-            "---\n"
-            "layout: null\n"
-            'title: "Lámina 01 — ¿Qué se conserva cuando algo se repite?"\n'
-            "permalink: /rizoma/que-se-conserva-cuando-algo-se-repite/lamina/\n"
-            "---\n"
-        ) + html
-    print(html, end="")
+    main()

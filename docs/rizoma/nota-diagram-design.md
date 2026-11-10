@@ -46,23 +46,34 @@ eso es un calco. Usé tokens y tipografía; no la forma.
 
 ## Flujo
 
-1. Editar datos y coordenadas en `build-lamina.py`.
-2. `python3 docs/rizoma/build-lamina.py > docs/rizoma/lamina-01-svg.html`
-3. `python3 …/self_check.py docs/rizoma/lamina-01-svg.html` → OK.
-4. `python3 …/export_svg.py … docs/rizoma/lamina-01.svg`
-5. Corregir el `@import` mientras el export no lea el perfil.
-6. `qlmanage` para el preview PNG.
+El pipeline ya no depende del clon de `diagram-design`:
+
+1. `python3 docs/rizoma/build-lamina.py --sync`
+   Regenera el esqueleto (`lamina-01.data.yml`) desde la exploración y las
+   colecciones: obras, tipos, nodos, compartidos, fecha.
+2. Editar `docs/rizoma/lamina-01.annotations.yml` si cambió el corpus o los
+   nodos: posiciones, citas, corte, blanco, colofón.
+3. `python3 docs/rizoma/build-lamina.py --check`
+   Falla si falta anotar una obra o un nodo, o si la exploración se actualizó
+   después de la fecha de la lámina.
+4. `python3 docs/rizoma/build-lamina.py --write`
+   Genera el HTML de la lámina, la página del sitio y el SVG exportado.
+5. `qlmanage` para el preview PNG.
+
+`self_check.py` y `export_svg.py` de `diagram-design` quedaron como referencia
+externa, no como dependencia del build.
 
 ## Qué resuelve y qué no
 
-Resuelve: contrato, export, grilla, una sola fuente de verdad, validación.
+Resuelve: el esqueleto automático, la exportación, la grilla, la detección de
+desfase (fecha/corpus/nodos) y una sola fuente de verdad.
 
 No resuelve: la composición editorial, los cortes de línea, la decisión de qué
 va cerca de qué, qué se corta y dónde queda el blanco. Eso sigue siendo lectura.
 
-El SVG exportado no arrastra la fuente: Quick Look cae a Georgia. En el navegador
-con red, la fuente correcta es la del HTML. Para un artefacto offline habría que
-embeber las fuentes.
+El SVG exportado conserva la estructura y el texto, pero no arrastra las fuentes:
+Quick Look cae a Georgia. En el navegador con red, la fuente correcta es la del
+HTML. Para un artefacto offline habría que embeber las fuentes.
 
 ## Claridad y lupa (pasada de Impeccable)
 
@@ -89,7 +100,8 @@ positivo).
 
 ## Estado
 
-- `lamina-01-svg.html` (fuente), `lamina-01.svg` (export estático),
+- `lamina-01.data.yml` (esqueleto), `lamina-01.annotations.yml` (anotación),
+  `lamina-01-svg.html` (fuente), `lamina-01.svg` (export estático),
   `lamina-01.png` (preview), `build-lamina.py` (generador).
 - La página del sitio agrega el ajuste por escala y el modo lupa táctil; el
   SVG exportado queda sin script.

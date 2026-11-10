@@ -1,0 +1,139 @@
+# Anotación editorial de la lámina 01. El esqueleto (obras, nodos, kinds,
+# compartidos, fechas) vive en lamina-01.data.yml y se regenera con --sync.
+# Acá quedan las decisiones que no se deducen de los datos: posiciones,
+# citas, corte, blanco y colofón.
+
+fecha_lamina: 2026-11-10
+campo: "Campo de la repetición"
+titulo_lineas:
+  - "¿Qué se conserva cuando algo se"
+  - "repite?"
+clave:
+  - "CADA BLOQUE ES UNA OBRA. CADA PALABRA, UN NODO."
+  - "LA CERCANÍA ES UNA LECTURA, NO UNA RELACIÓN. · 02 = TAMBIÉN EN LA SEGUNDA DERIVA."
+descripcion: >-
+  {campo}: {obras} obras del archivo con los nodos que cada una trabaja.
+  {compartidos} nodos están compartidos con la segunda deriva. El corte marca
+  la sección Ritual retirada; el blanco, lo que la deriva todavía no dice.
+
+obras:
+  - url: /poemas/persistencias-del-algo/
+    x: 40
+    y: 276
+    titulo: "Persistir en el algo"
+    sub: "UNA CONSTANTE EN MI SER"
+    tipo: "POEMA · SERIE"
+    cita:
+      - "Camino con las palabras"
+      - "o me enredaré en ellas."
+    nodos:
+      - "Persistencia"
+  - url: /poemas/cae/
+    x: 40
+    y: 520
+    titulo: "∞"
+    sub: "CAE"
+    tipo: "POEMA"
+    big: true
+    cita:
+      - "No hay palabras que"
+      - "puedan retratarlo."
+    nodos:
+      - "Repetición"
+  - url: /fragmentos/
+    x: 360
+    y: 276
+    titulo: "Rastros"
+    sub: "2026-06-15"
+    tipo: "RASTRO · FRAGMENTO"
+    cita:
+      - "El alfabeto se gasta al repetirlo."
+      - "Las palabras también."
+    nodos:
+      - "Desgaste"
+      - "Memoria"
+      - "Archivo"
+  - url: /codigo/espiral-fibonacci/
+    x: 704
+    y: 284
+    titulo: "Espiral de Fibonacci"
+    sub: "RECURRENCIA"
+    tipo: "CÓDIGO"
+    mono: true
+    cita:
+      - "a(n) = a(n−1) + a(n−2)"
+    nodos:
+      - "Recurrencia"
+      - "Diferencia"
+  - url: /dispositivos/espiral/
+    x: 1000
+    y: 284
+    titulo: "Espiral"
+    sub: "V0.1.1"
+    tipo: "DISPOSITIVO"
+    cita:
+      - "Siete canales, patrones de"
+      - "16 pasos, semilla"
+      - "reproducible."
+    nodos:
+      - "Automatización"
+  - url: /codigo/experimento-shannon/
+    x: 896
+    y: 560
+    titulo: "Experimento de Shannon"
+    sub: "APROXIMACIONES AL LENGUAJE"
+    tipo: "CÓDIGO"
+    cita:
+      - "Del caos a la estructura."
+    nodos:
+      - "Redundancia"
+  - url: /codigo/hormiga-langton/
+    x: 360
+    y: 700
+    titulo: "Hormiga de Langton"
+    sub: "DOS REGLAS"
+    tipo: "CÓDIGO"
+    cita:
+      - "El caos que emerge del orden."
+      - "El orden que emerge del caos."
+    nodos: []
+
+  - url: /codigo/voto-por-mayoria/
+    x: 700
+    y: 700
+    titulo: "Voto por mayoría"
+    sub: "3/5/7 · MAYORÍA"
+    tipo: "CÓDIGO"
+    cita:
+      - "Tres copias, un voto."
+      - "El umbral está en p = 0,5."
+    nodos: []
+
+corte:
+  x: 360
+  y: 500
+  regla_y: 520
+  fin: 872
+  hueco_ini: 544
+  hueco_fin: 676
+  etiqueta: "CORTE"
+  cita_x: 544
+  cita_y: 552
+  cita:
+    - "un ritual no es una costumbre:"
+    - "es una máquina de producir presente"
+
+blanco:
+  x: 40
+  y: 700
+  ancho: 268
+  alto: 172
+  etiqueta: "SIN TRAZO"
+  pregunta:
+    - "¿qué repite una memoria"
+    - "que no guarda nada?"
+
+colofon:
+  izquierda: "Estado del campo al {fecha}. No es un resumen."
+  centro: "La lámina se fecha y se rehace."
+  derecha: "KNDL · Rizoma · {orden}"

@@ -34,3 +34,7 @@ Thumbs.db
 
 # Local agent tooling
 .opencode/
+
+# Python
+__pycache__/
+*.pyc
