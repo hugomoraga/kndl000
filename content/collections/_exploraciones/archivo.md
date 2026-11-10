@@ -30,12 +30,19 @@ corpus:
     note: "El error como última forma del documento."
   - url: /vestigios/pagina-doblada-en-cuatro/
     note: "La tinta no se acuerda de quien la escribió."
+  - url: /poemas/medusa/
+    note: "El recuerdo como residuo: una experiencia que deja rastros en el cuerpo. Algo que permanece adherido, se acumula y termina modificando a quien lo carga, incluso cuando ya no quiere conservarlo."
   - url: /dispositivos/candil/
     note: "La biblioteca indexa sin copiar; el progreso y las notas quedan en disco."
   - url: /codigo/grid-palabras/
     note: "El archivo se vuelve a escribir: una grilla generada desde el corpus del sitio."
 relacionadas:
   - /rizoma/que-se-conserva-cuando-algo-se-repite/
+anexos:
+  - url: /rizoma/archivo/anexos/medusa/
+    title: "El residuo no es un archivo"
+    note: "La conservación que no pasa por ningún soporte: Medusa y la pregunta que no rige."
+    tipo: objecion
 hitos:
   - date: 2026-11-09
     title: "El frente aparece"
@@ -43,6 +50,9 @@ hitos:
   - date: 2026-11-10
     title: "Segunda deriva"
     text: "El archivo se abre como exploración propia y se enlaza con la repetición."
+  - date: 2026-11-10
+    title: "El residuo entra al aparato"
+    text: "Medusa entra al corpus; se prueba integrarla como sección y se resuelve que su lugar es una objeción: hay una conservación que no pasa por ningún archivo y que precisa la pregunta."
 ---
 
 Si la repetición fue una deriva, el archivo es su sedimento.
