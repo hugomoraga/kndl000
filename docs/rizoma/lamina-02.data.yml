@@ -1,0 +1,71 @@
+exploracion:
+  url: /rizoma/archivo/
+  titulo: Lo que el archivo no conserva
+  pregunta: ¿Qué se pierde cuando algo se guarda?
+  orden: '02'
+  estado: abierta
+  actualizado: '2026-11-10'
+obras:
+- url: /fragmentos/
+  titulo: Rastros
+  tipo: RASTRO
+  glyph: ⟡
+- url: /vestigios/pagina-que-ya-no-responde/
+  titulo: Página que ya no responde
+  tipo: VESTIGIO
+  glyph: ⏚
+- url: /vestigios/pagina-doblada-en-cuatro/
+  titulo: Página doblada en cuatro
+  tipo: VESTIGIO
+  glyph: ⏚
+- url: /poemas/medusa/
+  titulo: Medusa
+  tipo: POEMA
+  glyph: ⁂
+- url: /dispositivos/candil/
+  titulo: Candil
+  tipo: DISPOSITIVO
+  glyph: ⎔
+  version: v0.2.1
+- url: /codigo/grid-palabras/
+  titulo: Grid de Palabras
+  tipo: CÓDIGO
+  glyph: ◊
+nodos:
+- nombre: Repetición
+  ancla: repeticion
+  compartido: true
+  compartido_en:
+  - ¿Qué se conserva cuando algo se repite?
+- nombre: Memoria
+  ancla: memoria
+  compartido: true
+  compartido_en:
+  - ¿Qué se conserva cuando algo se repite?
+- nombre: Archivo
+  ancla: archivo
+  compartido: true
+  compartido_en:
+  - ¿Qué se conserva cuando algo se repite?
+- nombre: Automatización
+  ancla: automatizacion
+  compartido: true
+  compartido_en:
+  - ¿Qué se conserva cuando algo se repite?
+- nombre: Redundancia
+  ancla: redundancia
+  compartido: true
+  compartido_en:
+  - ¿Qué se conserva cuando algo se repite?
+- nombre: Olvido
+  ancla: olvido
+  compartido: false
+  compartido_en: []
+- nombre: Soporte
+  ancla: soporte
+  compartido: false
+  compartido_en: []
+- nombre: Residuo
+  ancla: residuo
+  compartido: false
+  compartido_en: []

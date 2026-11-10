@@ -25,11 +25,28 @@ from pathlib import Path
 import yaml
 
 ROOT = Path(__file__).resolve().parents[2]
-EXPLORACION = ROOT / "content/collections/_exploraciones/que-se-conserva-cuando-algo-se-repite.md"
-DATA = ROOT / "docs/rizoma/lamina-01.data.yml"
-ANNOTATIONS = ROOT / "docs/rizoma/lamina-01.annotations.yml"
-DOCS_HTML = ROOT / "docs/rizoma/lamina-01-svg.html"
-SVG_OUT = ROOT / "docs/rizoma/lamina-01.svg"
+PLATES = {
+    "01": {
+        "exploracion": ROOT / "content/collections/_exploraciones/que-se-conserva-cuando-algo-se-repite.md",
+        "data": ROOT / "docs/rizoma/lamina-01.data.yml",
+        "annotations": ROOT / "docs/rizoma/lamina-01.annotations.yml",
+        "html": ROOT / "docs/rizoma/lamina-01-svg.html",
+        "svg": ROOT / "docs/rizoma/lamina-01.svg",
+    },
+    "02": {
+        "exploracion": ROOT / "content/collections/_exploraciones/archivo.md",
+        "data": ROOT / "docs/rizoma/lamina-02.data.yml",
+        "annotations": ROOT / "docs/rizoma/lamina-02.annotations.yml",
+        "html": ROOT / "docs/rizoma/lamina-02-svg.html",
+        "svg": ROOT / "docs/rizoma/lamina-02.svg",
+    },
+}
+DEFAULT_PLATE = "01"
+EXPLORACION = PLATES[DEFAULT_PLATE]["exploracion"]
+DATA = PLATES[DEFAULT_PLATE]["data"]
+ANNOTATIONS = PLATES[DEFAULT_PLATE]["annotations"]
+DOCS_HTML = PLATES[DEFAULT_PLATE]["html"]
+SVG_OUT = PLATES[DEFAULT_PLATE]["svg"]
 
 INK = "#e9e6dc"
 DIM = "#9aa3a1"
@@ -308,18 +325,18 @@ def kind(y, glyph, label, x):
     )
 
 
-def node_line(x, y, node):
+def node_line(x, y, node, marker):
     name = node["nombre"].lower()
     inner = (f'<text x="{x}" y="{y}" font-size="11.5" fill="{MUTED}" '
              f'font-family="{MONO}"><tspan fill="rgba(233,230,220,0.30)">— </tspan>'
              f'{escape(name)}')
     if node["compartido"]:
-        inner += '<tspan font-size="8.5" dy="-4" fill="#7f8a88">02</tspan>'
+        inner += f'<tspan font-size="8.5" dy="-4" fill="#7f8a88">{escape(marker)}</tspan>'
     inner += '</text>'
     return f'<a class="node" href="/rizoma/nodos/#{node["ancla"]}" aria-label="nodo {escape(name)}">{inner}</a>'
 
 
-def work_block(work):
+def work_block(work, marker):
     inner = [kind(work["y"], work["glyph"], work["tipo"], work["x"])]
     size = 26 if work["big"] else 18
     inner.append(text(work["x"], work["y"] + 24, work["titulo"], size, INK, SERIF, cls="work-title"))
@@ -335,7 +352,7 @@ def work_block(work):
     nodes = []
     ny = work["y"] + 68 + len(work["cita"]) * 21 + 12
     for node in work["nodos"]:
-        nodes.append(node_line(work["x"], ny, node))
+        nodes.append(node_line(work["x"], ny, node, marker))
         ny += 17
     return ('<g class="work-block">'
             + link(work["href"], "".join(inner), work["titulo"])
@@ -373,8 +390,9 @@ def build_svg(data: dict, ann: dict, works: list) -> str:
     out.append(f'<line x1="44" y1="224" x2="1236" y2="224" stroke="{RULE}" stroke-width="1"/>')
 
     out.append('<g id="plate-field">')
+    marker = str(ann.get("marca_compartido", "02"))
     for work in works:
-        out.append(work_block(work))
+        out.append(work_block(work, marker))
 
     cut = ann["corte"]
     out.append(text(cut["x"], cut["y"], cut["etiqueta"], 11, MUTED, MONO, spacing="0.12em"))
@@ -719,6 +737,25 @@ def write_outputs(data: dict, ann: dict, works: list) -> None:
 
 def main() -> None:
     args = sys.argv[1:]
+    plate = DEFAULT_PLATE
+    if "--plate" in args:
+        index = args.index("--plate")
+        if index + 1 >= len(args):
+            print("ERROR: --plate requiere 01 o 02", file=sys.stderr)
+            sys.exit(1)
+        plate = args[index + 1]
+    if plate not in PLATES:
+        print(f"ERROR: lámina desconocida: {plate}", file=sys.stderr)
+        sys.exit(1)
+    config = PLATES[plate]
+    globals().update({
+        "EXPLORACION": config["exploracion"],
+        "DATA": config["data"],
+        "ANNOTATIONS": config["annotations"],
+        "DOCS_HTML": config["html"],
+        "SVG_OUT": config["svg"],
+    })
+
     if "--sync" in args:
         sync_data()
         return

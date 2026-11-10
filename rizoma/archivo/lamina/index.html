@@ -1,0 +1,246 @@
+---
+layout: null
+title: "Lámina 02 — Lo que el archivo no conserva"
+permalink: /rizoma/archivo/lamina/
+---
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Lámina 02 — Lo que el archivo no conserva · KNDL</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #060708;
+      color: #e9e6dc;
+      font-family: 'Newsreader', Georgia, serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    main { width: min(100% - 64px, 1280px); margin: 0 auto; padding: 40px 0; }
+    .plate-shell { position: relative; }
+    .diagram-container { width: 100%; }
+    .plate-svg { width: 100%; height: auto; display: block; }
+    .plate-svg a { cursor: pointer; }
+    .plate-svg .work-title { text-decoration: none; text-underline-offset: 3px; }
+    .plate-svg .work-block:hover .work-title,
+    .plate-svg .work-block:focus-within .work-title {
+      text-decoration: underline;
+      text-decoration-color: #9fc6c9;
+    }
+    .plate-svg .node:hover text,
+    .plate-svg .node:focus-visible text { fill: #9fc6c9; }
+    .plate-back {
+      margin-bottom: 1.25rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .plate-back a { color: #9aa3a1; text-decoration: none; }
+    .plate-back a:hover, .plate-back a:focus-visible { color: #9fc6c9; }
+    .plate-tools { display: none; }
+    .plate-loupe { display: none; }
+    .read-alt {
+      position: absolute; width: 1px; height: 1px; overflow: hidden;
+      clip-path: inset(50%); white-space: nowrap;
+    }
+    .read-alt:focus-within {
+      position: static; width: auto; height: auto; overflow: visible;
+      clip-path: none; white-space: normal;
+      border: 1px solid rgba(233,230,220,0.14); padding: 1rem 1.25rem; margin-bottom: 1.5rem;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; line-height: 1.8;
+    }
+    .read-alt h2 {
+      margin: 0 0 .6rem; font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem; letter-spacing: .12em; text-transform: uppercase;
+      color: #7f8a88; font-weight: 400;
+    }
+    .read-alt ul { margin: 0; padding: 0; list-style: none; }
+    .read-alt a { text-decoration: none; border-bottom: 1px solid transparent; }
+    .read-alt a:hover, .read-alt a:focus-visible { color: #9fc6c9; border-bottom-color: #9fc6c9; }
+    @media (hover: none) {
+      .plate-tools {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 1.25rem;
+      }
+      .plate-toggle {
+        min-height: 44px;
+        min-width: 72px;
+        padding: 0 .9rem;
+        border: 1px solid rgba(233,230,220,0.22);
+        background: transparent;
+        color: #e9e6dc;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.8rem;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+      .plate-toggle[aria-pressed="true"] { color: #9fc6c9; border-color: #9fc6c9; }
+      .plate-hint {
+        margin: 0;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.8rem;
+        letter-spacing: .04em;
+        line-height: 1.5;
+        color: #7f8a88;
+      }
+      .plate-loupe {
+        display: none;
+        position: absolute;
+        width: 180px;
+        height: 180px;
+        overflow: hidden;
+        border: 1px solid #9fc6c9;
+        background: #060708;
+        pointer-events: none;
+        z-index: 3;
+      }
+      .plate-loupe.is-on { display: block; }
+      .plate-loupe svg { width: 100%; height: 100%; display: block; }
+      .plate-shell.is-lens .plate-svg a { pointer-events: none; }
+      .plate-shell.is-lens .plate-svg #plate-field { touch-action: none; }
+    }
+</style>
+</head>
+<body>
+<main>
+  <nav class="plate-back"><a href="/rizoma/archivo/">← Exploración 02</a></nav>
+  <nav class="read-alt" aria-label="Lectura lineal de la lámina">
+    <h2>Lectura de la lámina</h2>
+    <ul>
+      <li><a href="/fragmentos/">Rastros — rastro · fragmento</a></li>
+      <li><a href="/rizoma/nodos/#memoria">nodo: memoria</a></li>
+      <li><a href="/rizoma/nodos/#archivo">nodo: archivo</a></li>
+      <li><a href="/rizoma/nodos/#olvido">nodo: olvido</a></li>
+      <li><a href="/vestigios/pagina-que-ya-no-responde/">Página que ya no responde — vestigio</a></li>
+      <li><a href="/rizoma/nodos/#soporte">nodo: soporte</a></li>
+      <li><a href="/rizoma/nodos/#residuo">nodo: residuo</a></li>
+      <li><a href="/vestigios/pagina-doblada-en-cuatro/">Página doblada en cuatro — vestigio</a></li>
+      <li><a href="/dispositivos/candil/">Candil — dispositivo</a></li>
+      <li><a href="/poemas/medusa/">Medusa — poema</a></li>
+      <li><a href="/codigo/grid-palabras/">Grid de Palabras — código</a></li>
+      <li><a href="/rizoma/nodos/#repeticion">nodo: repetición</a></li>
+      <li><a href="/rizoma/nodos/#redundancia">nodo: redundancia</a></li>
+      <li><a href="/rizoma/nodos/#automatizacion">nodo: automatización</a></li>
+    </ul>
+  </nav>
+
+  <div class="plate-shell">
+    <div class="diagram-container">
+      <svg class="plate-svg" viewBox="0 0 1280 1024" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="lamina02-title lamina02-desc">
+  <title id="lamina02-title">Lámina 02 — Lo que el archivo no conserva</title>
+  <desc id="lamina02-desc">Campo del archivo: seis obras del archivo con los nodos que cada una trabaja. cinco nodos están compartidos con la primera deriva. El corte es la deprecación; el blanco, lo que no entró al archivo.</desc>
+  <rect width="1280" height="1024" fill="#060708"/>
+
+<g transform="translate(0,240)" fill="none" stroke="rgba(233,230,220,0.055)" stroke-width="1">
+  <path d="M0 88 C 170 64 318 112 462 96 S 742 54 890 84 1120 120 1280 92"/>
+  <path d="M0 186 C 196 160 336 208 486 192 S 770 150 918 180 1136 216 1280 190"/>
+  <path d="M0 302 C 180 276 330 324 486 306 S 776 264 930 296 1140 330 1280 304"/>
+  <path d="M0 410 C 200 384 340 432 496 414 S 780 372 934 404 1146 438 1280 412"/>
+  <path d="M0 520 C 186 494 332 542 488 524 S 774 482 928 514 1140 548 1280 522"/>
+  <path d="M0 630 C 202 604 342 652 498 634 S 782 592 936 624 1148 658 1280 632"/>
+</g>
+<g transform="translate(0,240)" fill="none" stroke="rgba(233,230,220,0.075)" stroke-width="1">
+  <path d="M1042 130 C 1112 106 1214 122 1248 168 C 1276 208 1240 262 1178 268 C 1110 274 1052 236 1042 190 C 1036 164 1034 140 1042 130Z"/>
+  <path d="M86 566 C 156 542 258 558 292 604 C 320 644 284 698 222 704 C 154 710 96 672 86 626 C 80 600 78 576 86 566Z"/>
+</g>
+<a href="/rizoma/" aria-label="Rizoma"><text x="44" y="56" font-size="11" fill="#7f8a88" font-family="'JetBrains Mono', ui-monospace, monospace" letter-spacing="0.12em">KNDL · RIZOMA / LÁMINA 02</text></a><text x="1236" y="56" font-size="11" fill="#7f8a88" font-family="'JetBrains Mono', ui-monospace, monospace" text-anchor="end" letter-spacing="0.12em">2026-11-10 · ABIERTA</text><a href="/rizoma/archivo/" aria-label="Volver a la exploración"><text x="44" y="110" font-size="40" fill="#e9e6dc" font-family="'Newsreader', Georgia, serif" font-weight="300">Lo que el archivo</text><text x="44" y="148" font-size="40" fill="#e9e6dc" font-family="'Newsreader', Georgia, serif" font-weight="300">no conserva</text></a><text x="44" y="190" font-size="12" fill="#7f8a88" font-family="'JetBrains Mono', ui-monospace, monospace" letter-spacing="0.05em">CADA BLOQUE ES UNA OBRA. CADA PALABRA, UN NODO.</text><text x="44" y="208" font-size="12" fill="#7f8a88" font-family="'JetBrains Mono', ui-monospace, monospace" letter-spacing="0.05em">LO QUE SE GUARDA NO ES LO QUE SE RECUERDA. · 01 = TAMBIÉN EN LA PRIMERA DERIVA.</text><line x1="44" y1="224" x2="1236" y2="224" stroke="rgba(233,230,220,0.14)" stroke-width="1"/><g id="plate-field"><g class="work-block"><a href="/fragmentos/" aria-label="Rastros"><text x="40" y="276" font-size="11" fill="#7f8a88" font-family="'JetBrains Mono', ui-monospace, monospace" letter-spacing="0.1em"><tspan font-family="'Newsreader', Georgia, serif" font-size="12">⟡</tspan><tspan dx="6">RASTRO · FRAGMENTO</tspan></text><text x="40" y="300" font-size="18" fill="#e9e6dc" font-family="'Newsreader', Georgia, serif" class="work-title">Rastros</text><text x="40" y="319" font-size="11" fill="#7f8a88" font-family="'JetBrains Mono', ui-monospace, monospace" letter-spacing="0.08em">2026-06-15</text><text x="40" y="344" font-size="15" fill="#9aa3a1" font-family="'Newsreader', Georgia, serif" font-style="italic">Memorias que se fragmentan</text><text x="40" y="365" font-size="15" fill="#9aa3a1" font-family="'Newsreader', Georgia, serif" font-style="italic">¿Solo somos una colección</text><text x="40" y="386" font-size="15" fill="#9aa3a1" font-family="'Newsreader', Georgia, serif" font-style="italic">de archivos markdown deprecados?</text></a><a class="node" href="/rizoma/nodos/#memoria" aria-label="nodo memoria"><text x="40" y="419" font-size="11.5" fill="#7f8a88" font-family="'JetBrains Mono', ui-monospace, monospace"><tspan fill="rgba(233,230,220,0.30)">— </tspan>memoria<tspan font-size="8.5" dy="-4" fill="#7f8a88">01</tspan></text></a><a class="node" href="/rizoma/nodos/#archivo" aria-label="nodo archivo"><text x="40" y="436" font-size="11.5" fill="#7f8a88" font-family="'JetBrains Mono', ui-monospace, monospace"><tspan fill="rgba(233,230,220,0.30)">— </tspan>archivo<tspan font-size="8.5" dy="-4" fill="#7f8a88">01</tspan></text></a><a class="node" href="/rizoma/nodos/#olvido" aria-label="nodo olvido"><text x="40" y="453" font-size="11.5" fill="#7f8a88" font-family="'JetBrains Mono', ui-monospace, monospace"><tspan fill="rgba(233,230,220,0.30)">— </tspan>olvido</text></a></g><g class="work-block"><a href="/vestigios/pagina-que-ya-no-responde/" aria-label="Página que ya no responde"><text x="360" y="276" font-size="11" fill="#7f8a88" font-family="'JetBrains Mono', ui-monospace, monospace" letter-spacing="0.1em"><tspan font-family="'Newsreader', Georgia, serif" font-size="12">⏚</tspan><tspan dx="6">VESTIGIO</tspan></text><text x="360" y="300" font-size="18" fill="#e9e6dc" font-family="'Newsreader', Georgia, serif" class="work-title">Página que ya no responde</text><text x="360" y="319" font-size="11" fill="#7f8a88" font-family="'JetBrains Mono', ui-monospace, monospace" letter-spacing="0.08em">ERROR · DNS</text><text x="360" y="344" font-size="12" fill="#9aa3a1" font-family="'JetBrains Mono', ui-monospace, monospace">El servidor no responde.</text><text x="360" y="365" font-size="12" fill="#9aa3a1" font-family="'JetBrains Mono', ui-monospace, monospace">DNS_PROBE_FINISHED_NXDOMAIN</text></a><a class="node" href="/rizoma/nodos/#soporte" aria-label="nodo soporte"><text x="360" y="398" font-size="11.5" fill="#7f8a88" font-family="'JetBrains Mono', ui-monospace, monospace"><tspan fill="rgba(233,230,220,0.30)">— </tspan>soporte</text></a><a class="node" href="/rizoma/nodos/#residuo" aria-label="nodo residuo"><text x="360" y="415" font-size="11.5" fill="#7f8a88" font-family="'JetBrains Mono', ui-monospace, monospace"><tspan fill="rgba(233,230,220,0.30)">— </tspan>residuo</text></a></g><g class="work-block"><a href="/vestigios/pagina-doblada-en-cuatro/" aria-label="Página doblada en cuatro"><text x="704" y="276" font-size="11" fill="#7f8a88" font-family="'JetBrains Mono', ui-monospace, monospace" letter-spacing="0.1em"><tspan font-family="'Newsreader', Georgia, serif" font-size="12">⏚</tspan><tspan dx="6">VESTIGIO</tspan></text><text x="704" y="300" font-size="18" fill="#e9e6dc" font-family="'Newsreader', Georgia, serif" class="work-title">Página doblada en cuatro</text><text x="704" y="319" font-size="11" fill="#7f8a88" font-family="'JetBrains Mono', ui-monospace, monospace" letter-spacing="0.08em">2026-06-15</text><text x="704" y="344" font-size="15" fill="#9aa3a1" font-family="'Newsreader', Georgia, serif" font-style="italic">La tinta no se acuerda de mí.</text><text x="704" y="365" font-size="15" fill="#9aa3a1" font-family="'Newsreader', Georgia, serif" font-style="italic">Cuaderno pautado, tinta azul.</text></a></g><g class="work-block"><a href="/dispositivos/candil/" aria-label="Candil"><text x="1000" y="276" font-size="11" fill="#7f8a88" font-family="'JetBrains Mono', ui-monospace, monospace" letter-spacing="0.1em"><tspan font-family="'Newsreader', Georgia, serif" font-size="12">⎔</tspan><tspan dx="6">DISPOSITIVO</tspan></text><text x="1000" y="300" font-size="18" fill="#e9e6dc" font-family="'Newsreader', Georgia, serif" class="work-title">Candil</text><text x="1000" y="319" font-size="11" fill="#7f8a88" font-family="'JetBrains Mono', ui-monospace, monospace" letter-spacing="0.08em">LECTOR · EPUB</text><text x="1000" y="344" font-size="15" fill="#9aa3a1" font-family="'Newsreader', Georgia, serif" font-style="italic">La biblioteca indexa sin copiar;</text><text x="1000" y="365" font-size="15" fill="#9aa3a1" font-family="'Newsreader', Georgia, serif" font-style="italic">el progreso y las notas</text><text x="1000" y="386" font-size="15" fill="#9aa3a1" font-family="'Newsreader', Georgia, serif" font-style="italic">quedan en disco.</text></a></g><g class="work-block"><a href="/poemas/medusa/" aria-label="Medusa"><text x="40" y="540" font-size="11" fill="#7f8a88" font-family="'JetBrains Mono', ui-monospace, monospace" letter-spacing="0.1em"><tspan font-family="'Newsreader', Georgia, serif" font-size="12">⁂</tspan><tspan dx="6">POEMA</tspan></text><text x="40" y="564" font-size="18" fill="#e9e6dc" font-family="'Newsreader', Georgia, serif" class="work-title">Medusa</text><text x="40" y="583" font-size="11" fill="#7f8a88" font-family="'JetBrains Mono', ui-monospace, monospace" letter-spacing="0.08em">RESIDUO</text><text x="40" y="608" font-size="15" fill="#9aa3a1" font-family="'Newsreader', Georgia, serif" font-style="italic">lleno de residuos</text><text x="40" y="629" font-size="15" fill="#9aa3a1" font-family="'Newsreader', Georgia, serif" font-style="italic">que no son míos</text><text x="40" y="650" font-size="15" fill="#9aa3a1" font-family="'Newsreader', Georgia, serif" font-style="italic">pero se quedan</text></a></g><g class="work-block"><a href="/codigo/grid-palabras/" aria-label="Grid de Palabras"><text x="1000" y="540" font-size="11" fill="#7f8a88" font-family="'JetBrains Mono', ui-monospace, monospace" letter-spacing="0.1em"><tspan font-family="'Newsreader', Georgia, serif" font-size="12">◊</tspan><tspan dx="6">CÓDIGO</tspan></text><text x="1000" y="564" font-size="18" fill="#e9e6dc" font-family="'Newsreader', Georgia, serif" class="work-title">Grid de Palabras</text><text x="1000" y="583" font-size="11" fill="#7f8a88" font-family="'JetBrains Mono', ui-monospace, monospace" letter-spacing="0.08em">MARKOV</text><text x="1000" y="608" font-size="15" fill="#9aa3a1" font-family="'Newsreader', Georgia, serif" font-style="italic">El archivo se vuelve a escribir:</text><text x="1000" y="629" font-size="15" fill="#9aa3a1" font-family="'Newsreader', Georgia, serif" font-style="italic">una grilla generada desde el corpus.</text></a><a class="node" href="/rizoma/nodos/#repeticion" aria-label="nodo repetición"><text x="1000" y="662" font-size="11.5" fill="#7f8a88" font-family="'JetBrains Mono', ui-monospace, monospace"><tspan fill="rgba(233,230,220,0.30)">— </tspan>repetición<tspan font-size="8.5" dy="-4" fill="#7f8a88">01</tspan></text></a><a class="node" href="/rizoma/nodos/#redundancia" aria-label="nodo redundancia"><text x="1000" y="679" font-size="11.5" fill="#7f8a88" font-family="'JetBrains Mono', ui-monospace, monospace"><tspan fill="rgba(233,230,220,0.30)">— </tspan>redundancia<tspan font-size="8.5" dy="-4" fill="#7f8a88">01</tspan></text></a><a class="node" href="/rizoma/nodos/#automatizacion" aria-label="nodo automatización"><text x="1000" y="696" font-size="11.5" fill="#7f8a88" font-family="'JetBrains Mono', ui-monospace, monospace"><tspan fill="rgba(233,230,220,0.30)">— </tspan>automatización<tspan font-size="8.5" dy="-4" fill="#7f8a88">01</tspan></text></a></g><text x="360" y="500" font-size="11" fill="#7f8a88" font-family="'JetBrains Mono', ui-monospace, monospace" letter-spacing="0.12em">CORTE</text><line x1="360" y1="520" x2="544" y2="520" stroke="rgba(233,230,220,0.34)" stroke-width="1"/><line x1="676" y1="520" x2="872" y2="520" stroke="rgba(233,230,220,0.34)" stroke-width="1"/><text x="544" y="552" font-size="13" fill="#e9e6dc" font-family="'Newsreader', Georgia, serif" font-style="italic">Deprecar no es borrar.</text><text x="544" y="572" font-size="13" fill="#e9e6dc" font-family="'Newsreader', Georgia, serif" font-style="italic">es conservar algo que ya no se actualiza.</text><rect x="40" y="740" width="268" height="172" fill="none" stroke="rgba(233,230,220,0.16)" stroke-width="1" stroke-dasharray="4 4"/><text x="60" y="768" font-size="11" fill="#7f8a88" font-family="'JetBrains Mono', ui-monospace, monospace" letter-spacing="0.12em">SIN TRAZO</text><text x="60" y="816" font-size="14" fill="#9aa3a1" font-family="'Newsreader', Georgia, serif" font-style="italic">¿qué parte de nosotros</text><text x="60" y="836" font-size="14" fill="#9aa3a1" font-family="'Newsreader', Georgia, serif" font-style="italic">no entró al archivo?</text></g><line x1="44" y1="984" x2="1236" y2="984" stroke="rgba(233,230,220,0.14)" stroke-width="1"/><text x="44" y="1008" font-size="11" fill="#7f8a88" font-family="'JetBrains Mono', ui-monospace, monospace" letter-spacing="0.05em">Estado del campo al 2026-11-10. No es un resumen.</text><text x="560" y="1008" font-size="11" fill="#7f8a88" font-family="'JetBrains Mono', ui-monospace, monospace" letter-spacing="0.05em">La lámina se fecha y se rehace.</text><text x="1236" y="1008" font-size="11" fill="#7f8a88" font-family="'JetBrains Mono', ui-monospace, monospace" text-anchor="end" letter-spacing="0.05em">KNDL · Rizoma · 02</text></svg>
+    </div>
+    
+    <div class="plate-tools">
+      <button class="plate-toggle" type="button" aria-pressed="false">Lupa</button>
+      <p class="plate-hint">Arrastrá sobre el campo para mover la lupa.</p>
+    </div>
+    <div class="plate-loupe" aria-hidden="true">
+      <svg class="plate-loupe__svg" viewBox="0 0 148 148" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <g class="plate-loupe__content"></g>
+      </svg>
+    </div>
+
+  </div>
+</main>
+
+<script>
+(function () {
+  "use strict";
+  if (!window.matchMedia || !window.matchMedia("(hover: none)").matches) return;
+  var shell = document.querySelector(".plate-shell");
+  if (!shell) return;
+  var svg = shell.querySelector(".plate-svg");
+  var field = document.getElementById("plate-field");
+  var toggle = shell.querySelector(".plate-toggle");
+  var lens = shell.querySelector(".plate-loupe");
+  var lensSvg = lens && lens.querySelector(".plate-loupe__svg");
+  var content = lens && lens.querySelector(".plate-loupe__content");
+  if (!svg || !field || !toggle || !lens || !lensSvg || !content) return;
+
+  var clone = field.cloneNode(true);
+  clone.removeAttribute("id");
+  clone.querySelectorAll("a").forEach(function (a) { a.setAttribute("tabindex", "-1"); });
+  content.appendChild(clone);
+
+  var vb = 148;
+  var active = false;
+  var pt = svg.createSVGPoint();
+
+  function point(event) {
+    pt.x = event.clientX;
+    pt.y = event.clientY;
+    return pt.matrixTransform(svg.getScreenCTM().inverse());
+  }
+
+  function focus(p) {
+    lensSvg.setAttribute("viewBox", (p.x - vb / 2) + " " + (p.y - vb / 2) + " " + vb + " " + vb);
+  }
+
+  function place(event) {
+    var shellRect = shell.getBoundingClientRect();
+    var svgRect = svg.getBoundingClientRect();
+    var minL = svgRect.left - shellRect.left;
+    var minT = svgRect.top - shellRect.top;
+    var maxL = minL + svgRect.width - 180;
+    var maxT = minT + svgRect.height - 180;
+    var left = event.clientX - shellRect.left - 90;
+    var top = event.clientY - shellRect.top - 200;
+    if (top < minT) top = event.clientY - shellRect.top + 20;
+    left = Math.max(minL, Math.min(left, maxL));
+    top = Math.max(minT, Math.min(top, maxT));
+    lens.style.left = left + "px";
+    lens.style.top = top + "px";
+  }
+
+  function move(event) {
+    if (!active) return;
+    var p = point(event);
+    focus(p);
+    place(event);
+  }
+
+  function setActive(on) {
+    active = on;
+    shell.classList.toggle("is-lens", on);
+    lens.classList.toggle("is-on", on);
+    toggle.setAttribute("aria-pressed", on ? "true" : "false");
+    toggle.textContent = on ? "Cerrar" : "Lupa";
+    if (on) {
+      var rect = svg.getBoundingClientRect();
+      focus({ x: 640, y: 620 });
+      place({ clientX: rect.left + rect.width / 2, clientY: rect.top + rect.height * 0.6 });
+    }
+  }
+
+  toggle.addEventListener("click", function () { setActive(!active); });
+  svg.addEventListener("pointerdown", move);
+  svg.addEventListener("pointermove", move);
+})();
+</script>
+
+</body>
+</html>

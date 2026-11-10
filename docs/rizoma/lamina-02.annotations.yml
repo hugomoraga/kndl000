@@ -1,0 +1,120 @@
+# Anotación editorial de la lámina 02. El esqueleto se genera con:
+#   python3 docs/rizoma/build-lamina.py --sync --plate 02
+# Acá quedan posiciones, citas, corte, blanco y colofón.
+
+fecha_lamina: 2026-11-10
+campo: "Campo del archivo"
+marca_compartido: "01"
+titulo_lineas:
+  - "Lo que el archivo"
+  - "no conserva"
+clave:
+  - "CADA BLOQUE ES UNA OBRA. CADA PALABRA, UN NODO."
+  - "LO QUE SE GUARDA NO ES LO QUE SE RECUERDA. · 01 = TAMBIÉN EN LA PRIMERA DERIVA."
+descripcion: >-
+  {campo}: {obras} obras del archivo con los nodos que cada una trabaja.
+  {compartidos} nodos están compartidos con la primera deriva. El corte es la
+  deprecación; el blanco, lo que no entró al archivo.
+
+obras:
+  - url: /fragmentos/
+    x: 40
+    y: 276
+    titulo: "Rastros"
+    sub: "2026-06-15"
+    tipo: "RASTRO · FRAGMENTO"
+    cita:
+      - "Memorias que se fragmentan"
+      - "¿Solo somos una colección"
+      - "de archivos markdown deprecados?"
+    nodos:
+      - "Memoria"
+      - "Archivo"
+      - "Olvido"
+  - url: /vestigios/pagina-que-ya-no-responde/
+    x: 360
+    y: 276
+    titulo: "Página que ya no responde"
+    sub: "ERROR · DNS"
+    tipo: "VESTIGIO"
+    mono: true
+    cita:
+      - "El servidor no responde."
+      - "DNS_PROBE_FINISHED_NXDOMAIN"
+    nodos:
+      - "Soporte"
+      - "Residuo"
+  - url: /vestigios/pagina-doblada-en-cuatro/
+    x: 704
+    y: 276
+    titulo: "Página doblada en cuatro"
+    sub: "2026-06-15"
+    tipo: "VESTIGIO"
+    cita:
+      - "La tinta no se acuerda de mí."
+      - "Cuaderno pautado, tinta azul."
+    nodos: []
+  - url: /dispositivos/candil/
+    x: 1000
+    y: 276
+    titulo: "Candil"
+    sub: "LECTOR · EPUB"
+    tipo: "DISPOSITIVO"
+    cita:
+      - "La biblioteca indexa sin copiar;"
+      - "el progreso y las notas"
+      - "quedan en disco."
+    nodos: []
+  - url: /poemas/medusa/
+    x: 40
+    y: 540
+    titulo: "Medusa"
+    sub: "RESIDUO"
+    tipo: "POEMA"
+    cita:
+      - "lleno de residuos"
+      - "que no son míos"
+      - "pero se quedan"
+    nodos: []
+  - url: /codigo/grid-palabras/
+    x: 1000
+    y: 540
+    titulo: "Grid de Palabras"
+    sub: "MARKOV"
+    tipo: "CÓDIGO"
+    cita:
+      - "El archivo se vuelve a escribir:"
+      - "una grilla generada desde el corpus."
+    nodos:
+      - "Repetición"
+      - "Redundancia"
+      - "Automatización"
+
+corte:
+  x: 360
+  y: 500
+  regla_y: 520
+  fin: 872
+  hueco_ini: 544
+  hueco_fin: 676
+  etiqueta: "CORTE"
+  cita_x: 544
+  cita_y: 552
+  cita:
+    - "Deprecar no es borrar."
+    - "es conservar algo que ya no se actualiza."
+
+blanco:
+  x: 40
+  y: 740
+  ancho: 268
+  alto: 172
+  etiqueta: "SIN TRAZO"
+  pregunta:
+    - "¿qué parte de nosotros"
+    - "no entró al archivo?"
+
+colofon:
+  izquierda: "Estado del campo al {fecha}. No es un resumen."
+  centro: "La lámina se fecha y se rehace."
+  derecha: "KNDL · Rizoma · {orden}"

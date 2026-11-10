@@ -5,6 +5,7 @@
 
 fecha_lamina: 2026-11-10
 campo: "Campo de la repetición"
+marca_compartido: "02"
 titulo_lineas:
   - "¿Qué se conserva cuando algo se"
   - "repite?"

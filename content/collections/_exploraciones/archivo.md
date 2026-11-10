@@ -7,6 +7,7 @@ order: "02"
 status: abierta
 date: 2026-11-10
 updated: 2026-11-10
+lamina: true
 fields:
   - memoria
   - archivo
@@ -53,6 +54,9 @@ hitos:
   - date: 2026-11-10
     title: "El residuo entra al aparato"
     text: "Medusa entra al corpus; se prueba integrarla como sección y se resuelve que su lugar es una objeción: hay una conservación que no pasa por ningún archivo y que precisa la pregunta."
+  - date: 2026-11-10
+    title: "Lámina 02"
+    text: "Se abre la lámina de la segunda deriva: seis obras y ocho nodos, con la deprecación como corte y lo no archivado como blanco."
 ---
 
 Si la repetición fue una deriva, el archivo es su sedimento.

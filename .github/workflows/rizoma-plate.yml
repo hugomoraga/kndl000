@@ -21,4 +21,5 @@ jobs:
         with:
           python-version: "3.12"
       - run: python3 -m pip install --quiet pyyaml
-      - run: python3 docs/rizoma/build-lamina.py --verify
+      - run: python3 docs/rizoma/build-lamina.py --verify --plate 01
+      - run: python3 docs/rizoma/build-lamina.py --verify --plate 02

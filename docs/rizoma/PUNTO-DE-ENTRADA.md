@@ -27,7 +27,7 @@ terminar hablando de otra cosa.
   dos cuerpos con sentido distinto. Hay cinco nodos compartidos entre 01 y 02.
 - **Aparato**: anexos agrupados por tipo —corrección, fuente, concepto,
   objeción, derivación—. Hoy hay tres correcciones y una objeción.
-- **Láminas**: 01 publicada; la 02 todavía no.
+- **Láminas**: 01 y 02 publicadas.
 
 ## Cómo se trabaja
 
@@ -106,8 +106,9 @@ No crea nodos, corpus, anexos ni relaciones: eso se agrega cuando existe. Despu�
 
 ## Lámina
 
-La lámina no es una vista automática de la exploración: es un artefacto
-fechado. El **esqueleto** (obras, nodos, tipos, compartidos, fechas) se genera
+Las láminas no son una vista automática de la exploración: son artefactos
+fechados. Hay dos: la 01 (repetición) y la 02 (archivo); se eligen con
+`--plate 01` o `--plate 02`. El **esqueleto** (obras, nodos, tipos, compartidos, fechas) se genera
 con `--sync` desde la exploración y las colecciones. La **anotación**
 (posiciones, citas, corte, blanco, colofón) vive en `lamina-01.annotations.yml`
 y es manual.
@@ -132,6 +133,7 @@ python3 docs/rizoma/build-lamina.py --sync    # esqueleto desde la exploración
 python3 docs/rizoma/build-lamina.py --check   # fechas, corpus y nodos
 python3 docs/rizoma/build-lamina.py --verify  # recalcula en memoria y compara
 python3 docs/rizoma/build-lamina.py --write   # HTML, página y SVG
+# la 02 usa los mismos comandos con --plate 02
 ```
 
 ## Mapa de archivos
@@ -144,9 +146,9 @@ python3 docs/rizoma/build-lamina.py --write   # HTML, página y SVG
 - `docs/rizoma/adr/` — decisiones durables.
 - `docs/rizoma/lectura-01.md` — banco de lectura de la 01.
 - `docs/rizoma/nota-diagram-design.md` — pipeline de las láminas.
-- `docs/rizoma/lamina-01.data.yml` — esqueleto generado (obras, nodos, kinds).
-- `docs/rizoma/lamina-01.annotations.yml` — posiciones, citas, corte, blanco.
-- `docs/rizoma/build-lamina.py` — generador de la lámina.
+- `docs/rizoma/lamina-01.data.yml` y `lamina-02.data.yml` — esqueletos generados.
+- `docs/rizoma/lamina-01.annotations.yml` y `lamina-02.annotations.yml` — posiciones, citas, corte, blanco.
+- `docs/rizoma/build-lamina.py` — generador; `--plate 01|02`.
 - `docs/rizoma/ciclos/` — notas de cada vuelta.
 - `_layouts/anexo.html`, `_layouts/anexos.html`, `_layouts/exploracion.html` — superficies.
 
@@ -157,4 +159,4 @@ python3 docs/rizoma/build-lamina.py --write   # HTML, página y SVG
 - ¿El historial muestra prosa o solo enlace al archivo? (ADR futuro).
 - Faltan anexos de tipo **fuente**, **concepto** y **derivación** para probar la
   taxonomía.
-- Lámina 02 y posible 03 sobre lenguaje.
+- Posible 03 sobre lenguaje y su lámina.

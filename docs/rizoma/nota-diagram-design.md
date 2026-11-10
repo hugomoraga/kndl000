@@ -63,8 +63,9 @@ El pipeline ya no depende del clon de `diagram-design`:
    Genera el HTML de la lámina, la página del sitio y el SVG exportado.
 6. `qlmanage` para el preview PNG.
 
-El workflow `.github/workflows/rizoma-plate.yml` corre `--verify` en cada cambio
-de exploraciones, nodos o lámina.
+El workflow `.github/workflows/rizoma-plate.yml` corre `--verify` para la 01 y la
+02 en cada cambio de exploraciones, nodos o lámina. La 02 usa el mismo builder
+con `--plate 02`.
 
 `self_check.py` y `export_svg.py` de `diagram-design` quedaron como referencia
 externa, no como dependencia del build.
