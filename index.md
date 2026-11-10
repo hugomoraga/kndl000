@@ -100,6 +100,8 @@ main_class: umbral-main
 <script src="{{ '/assets/js/core/home-quote.js' | relative_url }}" defer></script>
 {%- endif -%}
 
+{% include home-featured.html %}
+
 {% include lab-feed.html %}
 
 <section class="umbral-exits" aria-labelledby="umbral-exits-title">
@@ -115,18 +117,6 @@ main_class: umbral-main
       </li>
     {% endfor %}
   </ul>
-
-  {% assign featured_nav = site.data.navigation | where: "featured", true %}
-  {% for item in featured_nav %}
-  <a class="umbral-featured" href="{{ item.url | relative_url }}">
-    <span class="umbral-featured__glyph sigil sigil--{{ item.sigil }}" aria-hidden="true"><span class="sigil__glyph">{{ item.glyph }}</span></span>
-    <span class="umbral-featured__body">
-      <span class="umbral-featured__name">{{ item.name }}</span>
-      <span class="umbral-featured__desc">{{ item.description }}</span>
-    </span>
-    <span class="umbral-featured__arrow" aria-hidden="true">→</span>
-  </a>
-  {% endfor %}
 
   {% assign archive_nav = site.data.navigation | where_exp: "item", "item.primary == false and item.featured != true" %}
   {% if archive_nav.size > 0 %}

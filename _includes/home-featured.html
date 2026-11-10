@@ -1,0 +1,36 @@
+{%- assign featured_nav = site.data.navigation | where: "featured", true -%}
+{%- if featured_nav.size > 0 %}
+<section class="umbral-feature" aria-labelledby="umbral-feature-title-{{ featured_nav.first.sigil }}">
+  {%- for item in featured_nav %}
+  <div class="umbral-feature__grid">
+    <div class="umbral-feature__lead">
+      <h2 class="umbral-feature__title" id="umbral-feature-title-{{ item.sigil }}">
+        <span class="umbral-feature__glyph sigil sigil--{{ item.sigil }}" aria-hidden="true"><span class="sigil__glyph">{{ item.glyph }}</span></span>
+        <a href="{{ item.url | relative_url }}">{{ item.name }}</a>
+      </h2>
+      <p class="umbral-feature__desc">{{ item.description }}</p>
+      <a class="umbral-feature__enter" href="{{ item.url | relative_url }}">Entrar al mapa <span aria-hidden="true">→</span></a>
+    </div>
+
+    {%- if item.sigil == "rizoma" %}
+    {%- assign exploraciones = site.exploraciones | sort: "order" -%}
+    <div class="umbral-feature__index">
+      <p class="umbral-feature__index-label">Exploraciones abiertas</p>
+      <ol class="umbral-feature__list">
+        {%- for exploracion in exploraciones limit: 3 %}
+        <li class="umbral-feature__item">
+          <a href="{{ exploracion.url | relative_url }}">
+            <span class="umbral-feature__num">{{ exploracion.order }}</span>
+            <span class="umbral-feature__name">{{ exploracion.title }}</span>
+            <span class="umbral-feature__meta">{{ exploracion.nodos | size }} nodos · {{ exploracion.corpus | size }} piezas</span>
+          </a>
+        </li>
+        {%- endfor %}
+      </ol>
+      <a class="umbral-feature__nodes" href="{{ '/rizoma/nodos/' | relative_url }}">Ver los {{ site.nodos | size }} nodos <span aria-hidden="true">→</span></a>
+    </div>
+    {%- endif %}
+  </div>
+  {%- endfor %}
+</section>
+{%- endif %}

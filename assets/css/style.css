@@ -4679,8 +4679,7 @@ body.umbral-page .lab-fallback {
 
 @media (max-width: 700px) {
   body.umbral-page .lab__intro h2,
-  body.umbral-page .umbral-exits h2,
-  body.umbral-page .umbral-feature__title {
+  body.umbral-page .umbral-exits h2 {
     text-align: left;
   }
 }
@@ -4809,25 +4808,11 @@ body.umbral-page .lab-fallback {
   align-items: start;
 }
 
-.umbral-feature__label {
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-  margin: 0 0 1rem;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.16em;
-  line-height: 1.4;
-  text-transform: uppercase;
-  color: var(--umbral-faint);
-}
-
-.umbral-feature__label .sigil {
-  font-size: 1rem;
-  color: var(--umbral-trace);
-}
-
 .umbral-feature__title {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.55rem;
   margin: 0 0 0.85rem;
   padding: 0;
   border: 0;
@@ -4836,7 +4821,13 @@ body.umbral-page .lab-fallback {
   font-weight: 300;
   line-height: 0.98;
   letter-spacing: -0.01em;
+  text-align: left;
   color: var(--umbral-ink);
+}
+
+.umbral-feature__glyph {
+  font-size: 0.42em;
+  color: var(--umbral-trace);
 }
 
 .umbral-feature__title a {
