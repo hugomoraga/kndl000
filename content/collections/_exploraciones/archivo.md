@@ -40,6 +40,10 @@ corpus:
 relacionadas:
   - /rizoma/que-se-conserva-cuando-algo-se-repite/
 anexos:
+  - url: /rizoma/archivo/anexos/tecnologia/
+    title: "La 02 no es solo tecnología"
+    note: "La deriva hereda de la 01 la pregunta por la redundancia de la memoria."
+    tipo: correccion
   - url: /rizoma/archivo/anexos/medusa/
     title: "El residuo no es un archivo"
     note: "La conservación que no pasa por ningún soporte: Medusa y la pregunta que no rige."
@@ -54,6 +58,9 @@ hitos:
   - date: 2026-11-10
     title: "El residuo entra al aparato"
     text: "Medusa entra al corpus; se prueba integrarla como sección y se resuelve que su lugar es una objeción: hay una conservación que no pasa por ningún archivo y que precisa la pregunta."
+  - date: 2026-11-10
+    title: "El alcance se corrige"
+    text: "La 02 no es solo sobre el archivo como tecnología: hereda de la 01 la pregunta por la redundancia de la memoria. La objeción de Medusa pasa de caso de frontera a objeción interna."
   - date: 2026-11-10
     title: "Lámina 02"
     text: "Se abre la lámina de la segunda deriva: seis obras y ocho nodos, con la deprecación como corte y lo no archivado como blanco."
