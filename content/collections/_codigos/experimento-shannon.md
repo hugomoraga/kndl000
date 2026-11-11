@@ -12,6 +12,8 @@ Al ejecutar puedes elegir la longitud del texto y el nivel máximo. El programa 
 
 También mide la cobertura de trigramas de cada resultado: qué porcentaje de sus secuencias de tres letras existen en el corpus. La gráfica final cuenta ese paso del ruido a la estructura.
 
+Una versión aprendida de esta pregunta está en [Lo que mira una palabra](/codigo/atencion/).
+
 ```javascript
 // Experimento de Shannon - Aproximaciones al lenguaje en castellano
 const pedidaLongitud = parseInt(input("¿Cuántos caracteres? (80–300)"), 10);

@@ -1,18 +1,20 @@
 ---
 layout: codigo
-title: Atención
+title: "Lo que mira una palabra"
 date: 2026-11-11
 language: JavaScript
-concept: "Un transformador mínimo entrenado con el corpus. La frase se convierte en lo que sus palabras miran."
+concept: "Un transformador mínimo con self-attention, entrenado con el corpus. La frase se convierte en lo que sus palabras miran."
 ---
 
-Un transformador de dos capas —64 dimensiones, 12.000 pasos— entrenado con `corpus.txt`. Continúa una frase carácter por carácter. No traduce: transforma. La matriz de atención muestra qué mira el modelo en el último paso; la cobertura de trigramas compara la continuación con el corpus.
+Un transformador de dos capas con **self-attention** —64 dimensiones, 12.000 pasos— entrenado con `corpus.txt`. Continúa una frase carácter por carácter. No traduce: transforma. La matriz de **self-attention** —la atención de cada posición sobre las demás de la misma frase— muestra qué mira el modelo en el último paso; la cobertura de trigramas compara la continuación con el corpus.
 
 El modelo es mínimo y se equivoca: la pérdida de validación quedó en 1,63. No es un modelo de lenguaje grande; es una forma de ver el mecanismo. Responde a §4 de [Lo que el archivo no conserva](/rizoma/archivo/#transformar).
 
+Shannon cuenta secuencias; este modelo aprende una representación y mira. La cobertura de trigramas es el mismo idioma de medición, pero el mecanismo es otro. [Ver el experimento de Shannon](/codigo/experimento-shannon/).
+
 ```javascript
 // Un transformador mínimo, entrenado con corpus.txt.
-// Carga los pesos, continúa una frase y muestra la atención de la primera capa.
+// Carga los pesos, continúa una frase y muestra la self-attention de la primera capa.
 
 const MODEL_URL = "/assets/models/transformador.json";
 const model = await (await fetch(MODEL_URL)).json();
@@ -161,7 +163,7 @@ output({ type: "text", text: continuation });
 output({
   type: "grid",
   data: lastAttention,
-  label: "Atención de la primera capa",
+  label: "Self-attention de la primera capa",
   caption: "Filas: posición que mira. Columnas: posición mirada. La mitad superior está enmascarada."
 });
 output({

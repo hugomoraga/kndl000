@@ -1,16 +1,18 @@
 ---
-title: "Nota — Atención, un transformador mínimo"
+title: "Nota — Lo que mira una palabra"
 date: 2026-11-11
 estado: experimento
 ---
 
-# Atención, un transformador mínimo
+# Lo que mira una palabra
 
 ## Qué es
 
 Un experimento de Código que entrena un transformer carácter por carácter con
-`corpus.txt` y lo usa para continuar una frase. No es un modelo de lenguaje
-grande: es una sola arquitectura mínima para ver el mecanismo.
+`corpus.txt` y lo usa para continuar una frase. La pieza se llama **Lo que mira
+una palabra**; el mecanismo es **self-attention**: cada posición de la frase se
+reescribe según las posiciones que mira. No es un modelo de lenguaje grande: es
+una sola arquitectura mínima para ver el mecanismo.
 
 - 2 capas, 1 cabeza, `d_model` 64, `d_ff` 128.
 - Contexto de 40 caracteres.
@@ -42,8 +44,10 @@ temperatura, y genera una continuación. Después muestra:
 - la matriz de atención de la primera capa para el último paso;
 - la cobertura de trigramas de la continuación contra una muestra del corpus.
 
-La matriz es la parte más interesante: muestra que el modelo no “conserva” la
-frase, sino una traza de atenciones. La continuación transforma; no traduce.
+La matriz de self-attention es la parte más interesante: muestra que el modelo
+no “conserva” la frase, sino una traza de atenciones. La continuación
+transforma; no traduce. Es el descendiente aprendido del experimento de
+Shannon: allí se cuenta; acá se aprende una representación y se mira.
 
 ## Límites
 
