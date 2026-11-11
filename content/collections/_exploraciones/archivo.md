@@ -48,15 +48,6 @@ corpus_secciones:
   - seccion: dos-rastros
     piezas:
       - /fragmentos/
-  - seccion: guardar
-    piezas:
-      - /dispositivos/candil/
-  - seccion: recuperar
-    piezas:
-      - /poemas/medusa/
-  - seccion: transformar
-    piezas:
-      - /vestigios/pagina-doblada-en-cuatro/
   - seccion: deprecar
     piezas:
       - /vestigios/pagina-que-ya-no-responde/
