@@ -2,10 +2,24 @@
   Corpus de un expediente.
   Cada entrada de page.corpus puede traer url + note. La pieza se resuelve
   contra las colecciones del archivo para mostrar su tipo, sigilo y título.
+
+  Parámetros opcionales:
+  - urls: string con las URLs a mostrar, delimitadas por |. Si está vacío, muestra todo.
+  - compact: "true" para la nota de margen de cada sección; sin notas ni tipo.
 {%- endcomment -%}
+{%- assign _only = include.urls | default: "" -%}
+{%- assign _compact = false -%}
+{%- if include.compact == "true" -%}{%- assign _compact = true -%}{%- endif -%}
 {%- assign _collections = "poems|images|codigos|melange_reports|dispositivos|vestigios" | split: "|" -%}
-<ul class="expediente-corpus">
+<ul class="expediente-corpus{% if _compact %} expediente-corpus--inline{% endif %}">
   {%- for item in page.corpus -%}
+    {%- assign _show = true -%}
+    {%- if _only != "" -%}
+      {%- assign _needle = '|' | append: item.url | append: '|' -%}
+      {%- unless _only contains _needle -%}{%- assign _show = false -%}{%- endunless -%}
+    {%- endif -%}
+
+    {%- if _show -%}
     {%- assign _url = item.url -%}
     {%- assign _title = item.label -%}
     {%- assign _kind = item.kind -%}
@@ -37,17 +51,22 @@
     {%- assign _nav = site.data.navigation | where: "sigil", _sigil | first -%}
     {%- if _nav -%}{%- assign _glyph = _nav.glyph -%}{%- endif -%}
 
-  <li class="expediente-corpus__item">
-    <a href="{{ _url | relative_url }}">
-      {%- if _glyph != "" -%}
-      <span class="sigil sigil--{{ _sigil }}" aria-hidden="true"><span class="sigil__glyph">{{ _glyph }}</span></span>
+    <li class="expediente-corpus__item">
+      <a href="{{ _url | relative_url }}">
+        {%- if _glyph != "" -%}
+        <span class="sigil sigil--{{ _sigil }}" aria-hidden="true"><span class="sigil__glyph">{{ _glyph }}</span></span>
+        {%- endif -%}
+        {%- unless _compact -%}
+        <span class="expediente-corpus__kind">{{ _kind | default: "Archivo" }}</span>
+        {%- endunless -%}
+        <span class="expediente-corpus__title">{{ _title | default: _url }}</span>
+      </a>
+      {%- unless _compact -%}
+      {%- if item.note -%}
+      <p class="expediente-corpus__note">{{ item.note }}</p>
       {%- endif -%}
-      <span class="expediente-corpus__kind">{{ _kind | default: "Archivo" }}</span>
-      <span class="expediente-corpus__title">{{ _title | default: _url }}</span>
-    </a>
-    {%- if item.note -%}
-    <p class="expediente-corpus__note">{{ item.note }}</p>
+      {%- endunless -%}
+    </li>
     {%- endif -%}
-  </li>
   {%- endfor -%}
 </ul>

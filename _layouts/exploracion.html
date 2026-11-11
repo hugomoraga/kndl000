@@ -34,9 +34,50 @@
 
     <div class="expediente">
       <div class="expediente__body reading-body">
-        {{ content }}
+        {%- assign _chunks = content | split: '<h2' -%}
+        {%- for _chunk in _chunks -%}
+          {%- if forloop.first -%}
+          <div class="expediente__intro">
+            {{ _chunk }}
+          </div>
+          {%- else -%}
+          {%- assign _id_parts = _chunk | split: 'id="' -%}
+          {%- assign _id_tail = _id_parts[1] | default: "" -%}
+          {%- assign _section_id = _id_tail | split: '"' | first -%}
+          {%- assign _urls = '' -%}
+          {%- if page.corpus_secciones -%}
+            {%- assign _map = page.corpus_secciones | where: "seccion", _section_id | first -%}
+            {%- if _map -%}
+              {%- for _url in _map.piezas -%}
+                {%- assign _needle = '|' | append: _url | append: '|' -%}
+                {%- assign _urls = _urls | append: _needle -%}
+              {%- endfor -%}
+            {%- endif -%}
+          {%- else -%}
+            {%- for _item in page.corpus -%}
+              {%- if _chunk contains _item.url -%}
+                {%- assign _needle = '|' | append: _item.url | append: '|' -%}
+                {%- assign _urls = _urls | append: _needle -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+          <section class="expediente__section{% if _urls != '' %} expediente__section--with-corpus{% endif %}">
+            <div class="expediente__section-body">
+              <h2{{ _chunk }}
+            </div>
+            {%- if _urls != '' %}
+            <aside class="expediente__section-corpus" aria-label="Corpus de esta sección">
+              <p class="expediente__section-corpus-label">Corpus</p>
+              {% include rizoma-corpus.html urls=_urls compact="true" %}
+            </aside>
+            {%- endif %}
+          </section>
+          {%- endif -%}
+        {%- endfor -%}
       </div>
     </div>
+
+    <p class="expediente__end"><span>Fin de la deriva</span></p>
 
     {% if page.lamina %}
     {%- assign _plate = page.order | prepend: 'lamina-' | append: '.svg' -%}
@@ -58,7 +99,13 @@
         <p class="expediente__apparatus-intro">Las obras que sostienen la deriva, el vocabulario que comparte y las huellas de su edición.</p>
       </header>
 
-      <div class="expediente__apparatus-grid">
+      <details class="expediente__apparatus-details" open>
+        <summary class="expediente__apparatus-summary">
+          <span class="expediente__apparatus-summary-label">Corpus, nodos y versiones</span>
+          <span class="expediente__apparatus-summary-count">{{ page.corpus | size }} piezas · {{ page.nodos | size }} nodos{% if page.anexos %} · {{ page.anexos | size }} anexos{% endif %}</span>
+        </summary>
+
+        <div class="expediente__apparatus-grid">
         <div class="expediente__apparatus-main">
           {% if page.corpus %}
           <section class="expediente__apparatus-block">
@@ -121,16 +168,18 @@
         </div>
       </div>
 
-      {% if page.procedencia %}
-      <section class="expediente__apparatus-colophon">
-        <h3 class="expediente__apparatus-block-title">Procedencia</h3>
-        <p class="expediente__procedencia">{{ page.procedencia }}</p>
-      </section>
-      {% endif %}
+        {% if page.procedencia %}
+        <details class="expediente__apparatus-colophon">
+          <summary>Procedencia</summary>
+          <p class="expediente__procedencia">{{ page.procedencia }}</p>
+        </details>
+        {% endif %}
+      </details>
     </section>
 
     {% include back-button.html %}
     {% include section-rail.html %}
   </main>
+  <script src="{{ '/assets/js/core/rizoma-apparatus.js' | relative_url }}" defer></script>
 </body>
 </html>

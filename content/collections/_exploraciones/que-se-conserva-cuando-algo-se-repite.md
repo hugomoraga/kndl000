@@ -42,6 +42,26 @@ corpus:
     note: "Tres copias, un voto: la redundancia que corrige y su umbral."
   - url: /codigo/hormiga-langton/
     note: "Dos reglas que van del caos a un ciclo de 104 pasos: la repetición que se vuelve periódica."
+# Corpus que corresponde a cada sección (ancla del h2).
+corpus_secciones:
+  - seccion: persistir
+    piezas:
+      - /poemas/persistencias-del-algo/
+      - /poemas/cae/
+  - seccion: gastar
+    piezas:
+      - /fragmentos/
+  - seccion: volver
+    piezas:
+      - /codigo/espiral-fibonacci/
+  - seccion: la-maquina
+    piezas:
+      - /dispositivos/espiral/
+      - /codigo/hormiga-langton/
+  - seccion: redundancia
+    piezas:
+      - /codigo/experimento-shannon/
+      - /codigo/voto-por-mayoria/
 relacionadas:
   - /rizoma/archivo/
 anexos:

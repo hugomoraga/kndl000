@@ -43,6 +43,26 @@ corpus:
     note: "La biblioteca indexa sin copiar; el progreso y las notas quedan en disco."
   - url: /codigo/grid-palabras/
     note: "El archivo se vuelve a escribir: una grilla generada desde el corpus del sitio."
+# Corpus que corresponde a cada sección (ancla del h2).
+corpus_secciones:
+  - seccion: dos-rastros
+    piezas:
+      - /fragmentos/
+  - seccion: guardar
+    piezas:
+      - /dispositivos/candil/
+  - seccion: recuperar
+    piezas:
+      - /poemas/medusa/
+  - seccion: transformar
+    piezas:
+      - /vestigios/pagina-doblada-en-cuatro/
+  - seccion: deprecar
+    piezas:
+      - /vestigios/pagina-que-ya-no-responde/
+  - seccion: repetir-para-no-perderse
+    piezas:
+      - /codigo/grid-palabras/
 relacionadas:
   - /rizoma/que-se-conserva-cuando-algo-se-repite/
 anexos:

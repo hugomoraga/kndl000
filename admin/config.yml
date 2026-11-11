@@ -215,6 +215,18 @@ collections:
         fields:
           - { label: URL, name: url, widget: string }
           - { label: Nota, name: note, widget: text, required: false }
+      - label: Corpus por sección
+        name: corpus_secciones
+        widget: list
+        required: false
+        hint: "Ancla de la sección (ej. dos-rastros) y piezas del corpus que le corresponden."
+        fields:
+          - { label: Sección, name: seccion, widget: string }
+          - label: Piezas
+            name: piezas
+            widget: list
+            required: false
+            field: { label: URL, name: url, widget: string }
       - label: Exploraciones relacionadas
         name: relacionadas
         widget: list

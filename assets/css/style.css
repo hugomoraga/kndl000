@@ -8083,27 +8083,56 @@ body.reading-rizoma .expediente {
 }
 
 body.reading-rizoma .expediente__body {
-  max-width: var(--prose-measure);
+  max-width: var(--reading-measure);
   margin: 0;
   font-family: var(--font-serif);
-  font-size: clamp(1.05rem, 1.8vw, 1.2rem);
-  line-height: var(--lh-loose);
+  font-size: clamp(1.0625rem, 1.2vw, 1.125rem);
+  line-height: 1.7;
   color: var(--umbral-ink);
 }
 
 body.reading-exploracion .expediente__body p {
   margin: 0 0 1.35em;
-  font-size: var(--fs-body);
-  line-height: var(--lh-loose);
+  font-size: inherit;
+  line-height: inherit;
 }
 
-/* Cada sección abre con una pausa: regla tenue y un tramo ámbar. */
-body.reading-rizoma .expediente__body h2 {
+body.reading-rizoma .expediente__intro {
+  max-width: 62ch;
+  margin: 0;
+}
+
+/* Cada sección abre con una pausa y deja una nota de corpus en el margen. */
+body.reading-rizoma .expediente__section {
   position: relative;
-  margin: clamp(3.5rem, 6vw, 5rem) 0 1.25rem;
-  padding: 1.35rem 0 0;
-  border: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 62ch) minmax(0, 1fr);
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: start;
+  margin-top: clamp(3.5rem, 6vw, 5rem);
+  padding-top: 1.35rem;
   border-top: 1px solid var(--umbral-rule-faint);
+}
+
+body.reading-rizoma .expediente__section::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 2.5rem;
+  height: 1px;
+  background: var(--umbral-ember);
+  opacity: 0.8;
+}
+
+body.reading-rizoma .expediente__section-body {
+  min-width: 0;
+}
+
+body.reading-rizoma .expediente__section h2 {
+  margin: 0 0 1.25rem;
+  padding: 0;
+  border: 0;
   font-family: var(--font-serif);
   font-size: clamp(1.5rem, 2.6vw, 1.9rem);
   font-weight: 400;
@@ -8111,11 +8140,83 @@ body.reading-rizoma .expediente__body h2 {
   color: var(--umbral-ink);
 }
 
-body.reading-rizoma .expediente__body h2::before {
+body.reading-rizoma .expediente__section-corpus {
+  align-self: start;
+  max-width: 18rem;
+  padding-top: 0.1rem;
+}
+
+body.reading-rizoma .expediente__section-corpus-label {
+  margin: 0 0 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--umbral-ember);
+}
+
+body.reading-rizoma .expediente__section-corpus-label::before {
   content: "";
-  position: absolute;
-  top: -1px;
-  left: 0;
+  display: inline-block;
+  width: 0.4rem;
+  height: 0.4rem;
+  margin-right: 0.5rem;
+  background: var(--umbral-ember);
+  vertical-align: 0.08em;
+}
+
+body.reading-rizoma .expediente-corpus--inline {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+body.reading-rizoma .expediente-corpus--inline .expediente-corpus__item {
+  padding: 0;
+  border: 0;
+}
+
+body.reading-rizoma .expediente-corpus--inline .expediente-corpus__item a {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.45rem;
+  color: var(--umbral-ink);
+  text-decoration: none;
+}
+
+body.reading-rizoma .expediente-corpus--inline .expediente-corpus__title {
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  line-height: 1.35;
+  color: var(--umbral-ink);
+}
+
+body.reading-rizoma .expediente-corpus--inline .expediente-corpus__item a:hover .expediente-corpus__title,
+body.reading-rizoma .expediente-corpus--inline .expediente-corpus__item a:focus-visible .expediente-corpus__title {
+  color: var(--umbral-trace);
+}
+
+body.reading-rizoma .expediente__end {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: 62ch;
+  margin: 3rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--umbral-faint);
+}
+
+body.reading-rizoma .expediente__end::before {
+  content: "";
   width: 2.5rem;
   height: 1px;
   background: var(--umbral-ember);
@@ -8250,11 +8351,95 @@ body.reading-rizoma .expediente__apparatus-intro {
   color: var(--umbral-dim);
 }
 
+body.reading-rizoma .expediente__apparatus-summary {
+  display: none;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  margin: 0;
+  padding: 1rem 0;
+  border-top: 1px solid var(--umbral-rule-faint);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--umbral-dim);
+  cursor: pointer;
+  list-style: none;
+}
+
+body.reading-rizoma .expediente__apparatus-summary::-webkit-details-marker {
+  display: none;
+}
+
+body.reading-rizoma .expediente__apparatus-summary::after {
+  content: "+";
+  margin-left: auto;
+  color: var(--umbral-ember);
+  font-size: 1rem;
+}
+
+body.reading-rizoma .expediente__apparatus-details[open] > .expediente__apparatus-summary::after {
+  content: "−";
+}
+
+body.reading-rizoma .expediente__apparatus-summary:focus-visible {
+  outline: 1px solid var(--umbral-trace);
+  outline-offset: 3px;
+}
+
+body.reading-rizoma .expediente__apparatus-summary-count {
+  color: var(--umbral-muted);
+  font-size: 0.7rem;
+}
+
 body.reading-rizoma .expediente__apparatus-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.45fr) minmax(16rem, 0.8fr);
   gap: clamp(2rem, 5vw, 4rem);
   align-items: start;
+}
+
+body.reading-rizoma .expediente__apparatus-colophon {
+  max-width: 62ch;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--umbral-rule-faint);
+}
+
+body.reading-rizoma .expediente__apparatus-colophon summary {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--umbral-ember);
+  cursor: pointer;
+  list-style: none;
+}
+
+body.reading-rizoma .expediente__apparatus-colophon summary::-webkit-details-marker {
+  display: none;
+}
+
+body.reading-rizoma .expediente__apparatus-colophon summary::after {
+  content: "+";
+  margin-left: 0.5rem;
+  color: var(--umbral-muted);
+}
+
+body.reading-rizoma .expediente__apparatus-colophon[open] > summary::after {
+  content: "−";
+}
+
+body.reading-rizoma .expediente__apparatus-colophon summary:focus-visible {
+  outline: 1px solid var(--umbral-trace);
+  outline-offset: 3px;
+}
+
+body.reading-rizoma .expediente__apparatus-colophon .expediente__procedencia {
+  margin-top: 0.75rem;
 }
 
 body.reading-rizoma .expediente__apparatus-main,
@@ -8446,6 +8631,26 @@ body.reading-rizoma .expediente--with-margin .expediente__margin-title::before {
 }
 
 @media (max-width: 900px) {
+  body.reading-rizoma .expediente__section {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.9rem;
+  }
+
+  body.reading-rizoma .expediente__section-corpus {
+    max-width: none;
+    margin-top: 0.75rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--umbral-rule-faint);
+  }
+
+  body.reading-rizoma .expediente__apparatus-summary {
+    display: flex;
+  }
+
+  body.reading-rizoma .expediente__apparatus-details > .expediente__apparatus-grid {
+    margin-top: 1.5rem;
+  }
+
   body.reading-rizoma .expediente__apparatus-grid {
     grid-template-columns: minmax(0, 1fr);
     gap: 2rem;
