@@ -1,6 +1,6 @@
 ---
 layout: melange-report
-title: MDMA in OZORA 2025 - Hada - Pumpui Stage
+title: MDMA - La Hada y la carne  - Pumpui Stage Ozora Festival
 seo_title: ''
 subtitle: ''
 summary: ''
@@ -29,52 +29,56 @@ ficha:
   outcome: Confusion
 ---
 
-Este trip no lo recuerdo mucho, pero sí recuerdo lo fuerte que fue.
+### El contexto
 
-Estaba bastante integrado en un grupo de amigos mexicanos que había conocido en Ozora. Todo iba bien hasta que un cuate me ofreció probar MDMA desde un gotero. Dejé caer varias gotas en mi vaso. No sé cuál fue la dosis exacta.
+Venia saliendo de una relacion de muchos años.  Años que se hicieron pedazos. Decidi viajar y de una causalidad dicotomica dui exactamente al lugar que habiamos pensando en ir juntos. Era un sueño ir a Ozorac para los dos. Y ahora quedaba viajar en solitario.  Envalentonado por la tristeza y el quehacer de un corazón roto. Arrojadondome a la locura de un festival donde las defensas se difuminan.  
 
-Hay momentos nebulosos. Por alguna razón, una mexicana se ofreció a cuidarme. Se acercó, me preguntó si había probado el eme antes. Le dije que sí, aunque quizás no me creyó. Me dijo que sería mi _hada del MDMA_.
+Pasaron alrededor de 5 meses del quiere y ya tocaba armar la mochila. Como contexto de este escrito barroco y expuesto con desmesura.  Cargaba en mi espalda una abstinencia afectiva brutal y meses  sin acariciar a nadie.
 
-Me resultó gracioso el asunto. Seguí asintiendo y pensé que no había nada de malo en tener una compañera de viaje que me cuidara.
+**Lo difuso**
 
-Lo extraño es que realmente no recuerdo cómo nos separamos del grupo. De pronto, me vi solo con ella. No entendía demasiado lo que estaba pasando. Mi cabeza ya no procesaba bien los acontecimientos.
+Este trip no lo recuerdo mucho, pero sí recuerdo lo fuerte que fue.  Ya era el tercer dia de Ozora.  Estaba integrado en un grupo de mexicanos que  amigue en el festival.  Y como contexto era el unico Chileno dentro los mexicanos. Me levante algo tarde, porque el dia anterior me amaneci en un viaje de acido. luego de comer algo y tomar jugo de naranja. Comence a beber cerveza para soltarme en la pista. Fui al main stage y pase la tarde. El ambiente estaba bastante euforico como un dia cualquiera de ozora en realidad y ya en el tecer dia de Ozora, me sentia parte del entorno.  Un carnal me ofreció probar MDMA desde un gotero. Estaba tomando cerveza en mi vaso y sin pensarlo dejó caer varias gotas, con algo de torpeza e imprecision sin medir la dosis. Esa accion quizas deliberada o azarosa se transformo en la expericia de M mas potente que he priobado hasta el dia de hoy.
 
-La música estaba bien y yo simplemente bailaba. Luego ella comenzó a hablarme de sus cosas. Me contó sus dramas y, obviamente, yo estaba superempático y abierto. La escuché y sentí su dolor.
 
-Había sido pareja de un narco que la había marcado de alguna forma. Llevaba un tatuaje relacionado con la banda de su expareja. La sentí un poco traumada por aquella historia.
 
-Yo estaba en otra frecuencia. Todo vibraba. Después comencé a perder la capacidad de distinguir las caras. Solo veía formas, pieles, sentidos.
+Hay momentos nebulosos. De hecho nose como llegamos a Pumpui Stage. Fue un cambio de escenario y el grupo de mexicas era bien grande pero con varios grupos pequeños que lo conformaban. Por alguna razón, una mexicana se acercó y me preguntó si había probado el eme antes. Le dije que sí, aunque quizás no me creyó. Me dijo que sería el hada del MDMA. Me resultó gracioso. Seguí asintiendo, pensando que no había nada de malo en tener una compañera de viaje en medio electrónico. Ya era de noche y en un momento el grupo se disperso. Nose como paso. De pronto me vi solo con ella. Hay un comentario muy posterior que me dijo un pana mexicano con el que comparti espacios comunes entre carpas. Me dijo que ella me agarro y me alejo del grupo mas grande o algo asi. 
 
-Mi mandíbula temblaba.
+Mi cabeza ya no procesaba bien los acontecimientos. La música estaba bien y yo simplemente bailaba, con el sistema nervioso abierto de par en par. Hay algunas imágenes de hada que todavía aparecen en mi memoria. Recuerdo que me decía cosas bonitas, que quería protegerme. Me abrazaba. No sé exactamente en qué momento ocurrió ni cuánto duró. Tampoco estoy seguro de si ella estaba bajo los efectos del MDMA. Yo, en cambio, estaba completamente intoxicado.
 
-Ella me hacía cariño y yo le respondía. Le pregunté si le incomodaba que la tocara. Entendí que no. Comenzamos a tocarnos, a acariciarnos, a explorar las pieles y los roces.
+En algún momento comenzó a hablarme de sus cosas. Me contó sus dramas me dio algo de tristeza ponerme en los zapatos de su dolor. Había sido pareja de un narco que la había marcado hondo.Ella llevaba un tatuaje relacionado con la banda de su expareja. Y señalaba su tatuaje indicando que estaba marcada. la senti muy traumada por lo que vivio. Luego de esa abertura los efectos comenzaron a impedirme seguir el hilo de sus palabras.
 
-Fue algo que se prolongó bastante tiempo.
+Hay algo curioso que ahora me viene a la mente. Nunca recuerdo haberle contado que venía de una ruptura. Podría haberle dicho que acababa de salir de una relación de diez años con una mujer. Quizás eso habría despejado inmediatamente sus dudas posteriores sobre mi sexualidad. Pero no recuerdo haberlo hecho. De alguna forma, era una cerradura que no quise abrir. 
 
-No recuerdo exactamente dónde estábamos. Quizás en medio de la pista de baile del Pumpui Stage, quizás en la orilla del escenario. No sé si había gente alrededor. Estaba profundamente drogado y, en ese estado, el entorno había dejado de importarme demasiado. Solo existía aquella experiencia sensorial, las pieles, el contacto y la música.
+Llevaba tanto tiempo con los canales cerrados que mi cuerpo entero exigía contacto, calor y la urgencia de volver a fundirme con otro ser humano. Podía compartir con ella mi cuerpo, escuchar su historia y conectar con su dolor, pero no necesariamente mostrarle el lugar desde donde yo venía. 
 
-Pero algo interrumpió el viaje.
+Los recuerdos son difusos, lo que siiguen son memorias de esa noche. Con un orden cronologico absurdo y una sensacion de catarsis que iba por rafagas. Todo vibraba, sobre todo yo. Lo sentia corporal. Comencé a perder la capacidad de distinguir las caras. Solo veía formas, pieles, sentidos. Mi mandibula comenzo a temblar con intermitecia. 
 
-Me preguntó qué era lo que me gustaba. Le dije que las mujeres. Ella me hizo saber que pensaba que me gustaban los hombres, y que quizás tenía alguna tranca o algo así. Me dijo que podía confiar en ella.
+Ella me hacía cariño y yo le respondía. Le pregunté si le incomodaba que la tocara. Entendí que no. Luego me deshinibi por completo: necesitaba frotarme, sentir el calor humano, el sudor, la carne viva después de meses sin calor. Empecé a olerla con desesperación, recorriendo mi  nariz en su cuello, bajando por su piel, besándola con una urgencia animal mientras ella se dejaba llevar —o al menos eso sentía yo—.
 
-Le insistí en que me gustaban las mujeres.
+No tenia ganas de una sexualidad convencional. En ese estado el cuerpo no funcionaba para eso. Menos podia tener una ereccion. Esto era otra cosa, sentir el contacto, pura carne contra carne. Un deseo de fundirme con otro. En medio de ese trance, mis manos se infiltraron bajo sus ropas y toqué sus senos, sin pensar ni analizar si era el momento adecuado. Me frote contra ella y recorria su piel más allá de lo cuerdo, llevado por esa marea donde los límites se disuelven y uno deja de calcular las consecuencias.
 
-Entonces me contó que era lesbiana y que conmigo no le iría bien, porque a ella le gustaban las panochas.
+Fue algo que se prolongó bastante tiempo. No recuerdo exactamente dónde estábamos; quizás en medio de la pista de baile del Pumpui Stage, quizás en la orilla del escenario. Aun estaba profundamente drogado, no parecia que mi estado fuera a decantar. 
 
-Le dije que no estaba buscando algo sexual. Que se calmara con eso.
+Y de momento algo se quebro. Me preguntó que era lo que me gustaba. Le dije que las mujeres. Senti de inmediato un prejuicio. Soy una persona sensible, rodeado de mexicanos. Con una manera diferente de hablar y expresarme. Ademas confieso que  no es la primera vez que alguien me categoriza con una  etiqueta forzada de como debía ser mi sensibilidad o mi sexualidad.
 
-Luego se fue.
+Ella me insistion con que si me gustaban los hombres. Que si tenía alguna tranca o algo así. Que podía confiar en ella. Le insistí en que me gustaban las mujeres. Entonces me contó que era lesbiana y que conmigo no le iría bien, porque a ella le gustaban las panochas.
 
-Yo seguía muy drogado, pero volví a enfocarme en la música y me dejé fluir. Quedé con una sensación extraña. Confusa. Algo culpable también.
+Le dije que no estaba buscando algo sexual, que se calmara con eso. (aunque ahora esta frase parece un poco disonante. Porque fui mas alla de unas caricias). 
 
-Creo que quizás me excedí con el tacto. O tal vez ella estaba conflictuada, proyectándose en mí. No lo sé. Su tema con la sexualidad terminó volcado hacia mí, justo cuando estábamos explorando las pieles y las caricias.
+Luego de la nada se fue. Yo seguía muy drogado, sin poder bajar de ese estado. Pero volví a enfocarme en la música y me dejé fluir. 
 
-En ningún momento recuerdo haber percibido una sensación de desagrado o malestar por parte de ella. Pero tampoco puedo asegurar que estuviera interpretando correctamente lo que sucedía.
+De todas formas, el hada volo, pero esa noche la música me abrió sus alas y me cobijó hasta poder descender de aquel estado, dejándome con el eco de una ambigüedad que todavía duele morder.
 
-No me explico mucho qué pasó.
+### Resaca
 
-Si la incomodé. Si ella quería sacarme de un clóset en el que no estoy. O si realmente se vio sobrepasada por mi estado.
+Al día siguiente, en el campamento, sentí que me evitaba —y quizás yo también a ella—. Quedé con una sensación extraña. Confusa. Algo culpable también.
 
-De todas formas, una hada se fue.
+Creo que quizás me excedí con el tacto. O tal vez ella estaba conflictuada, cargando con el odio hacia su ex, su identidad y sus propias proyecciones volcadas hacia mí justo cuando estábamos explorando las pieles. 
 
-Pero la música me abrió sus alas y me cobijó hasta poder descender de aquel estado.
+Me quedaron muchas sentencias y una sensacion amarga emocionalmente. Reflejos solapados y proyecciones de dos seres heridos.  Y muchas teorias rumiantes de tanto sobrepensar.
+
+¿La habre incomodado por mi urgencia de piel y deseos desatados? ¿Me  quizo sacar de un clóset en el que no estoy? ¿Fue una especie de prueba elaborda por ella y sus amigas? ¿Se vio sobrepasada por mi estado? 
+
+Si pase a llevar sus limites me carcome la consciencia. Hago memorias y me frustro no saber que paso. Hago memorias. No recuerdo algun momento en haber percibido una sensación de desagrado o malestar por parte de ella. Pero tampoco puedo asegurar que estuviera interpretando correctamente lo que sucedía. y el choque de nuestros duelos a ciegas.
+
+Quizás nunca llegue a saber qué ocurrió realmente entre nosotros. Me quedan algunas imágenes: sus abrazos, sus palabras bonitas, su historia, mi propia necesidad de contacto y aquella conversación que terminó interrumpiendo algo que hasta entonces parecía fluir sin demasiadas preguntas. También me queda esa cerradura que no quise abrir, esa parte de mí que permaneció fuera de la conversación mientras mi cuerpo parecía entregarse por completo.
