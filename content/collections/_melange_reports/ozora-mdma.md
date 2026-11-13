@@ -1,6 +1,6 @@
 ---
 layout: melange-report
-title: MDMA - La Hada y la carne  - Pumpui Stage Ozora Festival
+title: MDMA - Hada y la carne  - Pumpui Stage Ozora Festival
 seo_title: ''
 subtitle: ''
 summary: ''
@@ -29,9 +29,7 @@ ficha:
   outcome: Confusion
 ---
 
-# El hada y la carne
-
-### El contexto
+# El contexto
 
 Venía saliendo de una relación de muchos años. Años que se hicieron pedazos. Decidí viajar y, por una causalidad casi paradójica, terminé exactamente en el lugar al que habíamos pensado ir juntos. Ozora era un sueño para los dos. Ahora me tocaba viajar en solitario, envalentonado por la desilusión, la tristeza y el dolor de un corazón roto. Me arrojé a la locura de un festival donde las fronteras se difuminan. 
 
@@ -43,11 +41,11 @@ Este trip no lo recuerdo mucho, pero sí recuerdo lo fuerte que fue. Ya era el t
 
 Un carnal me ofreció probar MDMA desde un gotero. Estaba tomando cerveza en mi vaso y, sin pensarlo demasiado, dejó caer varias gotas, con cierta torpeza e imprecisión, sin medir la dosis. Yo tampoco puse objeciones. Aquella acción, deliberada o azarosa, terminó convirtiéndose en la experiencia de MDMA más potente que he vivido hasta el día de hoy.
 
-Hay momentos nebulosos. Tan así que ni recuerdo como nos cambiamos de escenario. Seguramente el efecto del eme ya estaba cortocircuitando mi razón. Ya en el Pumpui Stage el grupo de mexicanos se había expandido, con otros grupos  más pequeños. Por alguna razón, una mexicana se acercó y me preguntó si había probado el eme antes. Le dije que sí, aunque quizás no me creyó. Me dijo que sería mi hada del MDMA. Me resultó gracioso. Seguí asintiendo, pensando que no había nada de malo en tener una compañera de viaje en medio de aquel coloso electrónico.
+Hay momentos nebulosos. Tan así que ni recuerdo como nos cambiamos de escenario. Seguramente el efecto del eme ya estaba cortocircuitando mi razón. Ya en el Pumpui Stage el grupo de mexicanos se había expandido, con otros grupos  más pequeños. Por alguna razón, una mexicana se acercó y me preguntó si había probado el eme antes. Le dije que sí, aunque quizás no me creyó. Me dijo que sería mi Hada del MDMA. Me resultó gracioso. Seguí asintiendo, pensando que no había nada de malo en tener una compañera de viaje en medio de aquel coloso electrónico.
 
 Ya era de noche y, en algún momento, el grupo se dispersó. No sé cómo pasó. De pronto, me vi solo con ella. Aquí aparece un flashforward. Tiempo después, un pana mexicano con quien compartía espacios comunes entre las carpas me comentó que ella me había agarrado y alejado del grupo más grande, o algo así. No puedo asegurar si ocurrió exactamente de esa manera. Lo único que recuerdo es que me dejé llevar y tampoco opuse resistencia.
 
-Retomando, estaba solo con hada . Mi pensamiento era difuso y mi cabeza ya no procesaba bien los acontecimientos. La música fluía y yo simplemente bailaba, con el sistema nervioso abierto de par en par. Hay algunas imágenes de ella que todavía aparecen en mi memoria. Recuerdo que me decía cosas bonitas, que parecía querer protegerme. Me abrazaba. No sé exactamente en qué momento ocurrió ni cuánto duró. Tampoco estoy seguro de si ella estaba bajo los efectos del MDMA. Yo, en cambio, estaba completamente intoxicado.
+Retomando, estaba solo con Hada . Mi pensamiento era difuso y mi cabeza ya no procesaba bien los acontecimientos. La música fluía y yo simplemente bailaba, con el sistema nervioso abierto de par en par. Hay algunas imágenes de ella que todavía aparecen en mi memoria. Recuerdo que me decía cosas bonitas, que parecía querer protegerme. Me abrazaba. No sé exactamente en qué momento ocurrió ni cuánto duró. Tampoco estoy seguro de si ella estaba bajo los efectos del MDMA. Yo, en cambio, estaba completamente intoxicado.
 
 En algún momento comenzó a hablarme de sus cosas. Me contó sus dramas y sentí cierta tristeza al ponerme en el lugar de su dolor. Había sido pareja de un narco que la había maltratado profundamente. Llevaba un tatuaje relacionado con la banda de su expareja y me lo señalaba como una marca que todavía cargaba consigo. Estaba muy dolida por su vivencia. Yo en ese estado absorbi su energia y tristeza. Se abrió un canal emocional fuerte en mi y quise protegerla de algo que había ya pasado. Después de aquella apertura, los efectos comenzaron a impedirme seguir el hilo de sus palabras.
 
@@ -75,7 +73,7 @@ Luego, de la nada, se fue.
 
 Yo seguía muy drogado, sin poder bajar de ese estado. Pero volví a enfocarme en la música y me dejé fluir.
 
-Esa noche el hada se esfumo, pero la música me abrió sus alas y me cobijó hasta poder descender de aquel estado catartico, dejándome con un eco de una ambigüedad que todavía duele masticar.
+Esa noche mi Hada se esfumo, pero la música me abrió sus alas y me cobijó hasta poder descender de aquel estado catartico, dejándome con un eco de una ambigüedad que todavía duele masticar.
 
 ### Resaca
 
