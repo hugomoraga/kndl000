@@ -83,8 +83,8 @@ Creo que quizás me excedí con el tacto. O tal vez ella estaba conflictuada, ca
 
 Me quedaron muchas sentencias dando vueltas y una sensación emocionalmente amarga. Reflejos solapados y proyecciones de dos seres heridos. También muchas teorías rumiantes, alimentadas por tanto sobrepensar.
 
-¿La habré incomodado por mi urgencia de piel y deseos desatados? ¿Me quiso sacar de un clóset en el que no estoy? ¿Fue una especie de prueba elaborada por ella y sus amigas? ¿Se vio sobrepasada por mi estado? ¿Se atrapo pensando en mi estado al borde de una sobredosis? 
+¿La habré incomodado por mi urgencia de piel? ¿Se ahogo por mi marea desbordada? ¿La desencajo saber que no era homosexual como ella pensaba? ¿Fue algún tipo prueba en la que fallo? ¿Se vio sobrepasada por mi estado al borde de una sobredosis?
 
-Lo que queda es reconocer que no hay respuestas. Si pasé a llevar sus límites, aun me carcome la consciencia. Hago memoria y me frustro por no saber qué pasó. Hago memoria. No recuerdo haber percibido algún momento de desagrado o malestar por parte de ella. Pero tampoco puedo asegurar que estuviera interpretando correctamente lo que sucedía.
+Lo que si queda es reconocer que no hay respuestas. Si pasé a llevar sus límites, aun me carcome la consciencia. Hago memoria y me frustro por no saber qué pasó. Hago memoria. No recuerdo haber percibido algún momento de desagrado o malestar por parte de ella. Pero tampoco puedo asegurar que estuviera interpretando correctamente lo que sucedía.
 
 Quizás nunca llegue a saber qué ocurrió realmente entre nosotros. Me quedan algunas imágenes: sus abrazos, sus palabras bonitas, su historia, mi propia necesidad de contacto y aquella conversación que terminó interrumpiendo algo que hasta entonces parecía fluir sin demasiadas preguntas. También me queda esa cerradura que no quise abrir, esa parte de mí que permaneció fuera de la conversación mientras mi cuerpo parecía entregarse por completo.
