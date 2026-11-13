@@ -83,7 +83,7 @@ Creo que quizás me excedí con el tacto. O tal vez ella estaba conflictuada, ca
 
 Me quedaron muchas sentencias dando vueltas y una sensación emocionalmente amarga. Reflejos solapados y proyecciones de dos seres heridos. También muchas teorías rumiantes, alimentadas por tanto sobrepensar.
 
-¿La habré incomodado por mi urgencia de piel? ¿Se ahogó por mi marea desbordada? ¿Se desencajó saber que no era homosexual como ella pensaba? ¿Fue algún tipo de prueba en la que falló? ¿Se vio sobrepasada por mi estado al borde de una sobredosis?
+¿La habré incomodado por mi urgencia de piel? ¿Se ahogó por mi marea desbordada? Le desconcertó saber que no era homosexual como ella suponía? ¿Fue algún tipo de prueba en la que falló? ¿Se vio sobrepasada por mi estado al borde de una sobredosis?
 
 Lo que sí queda es reconocer que no hay respuestas. Si pasé a llevar sus límites, aún me carcome la consciencia. Hago memoria y me frustro por no saber qué pasó. Hago memoria. No recuerdo haber percibido algún momento de desagrado o malestar por parte de ella. Pero tampoco puedo asegurar que estuviera interpretando correctamente lo que sucedía.
 
