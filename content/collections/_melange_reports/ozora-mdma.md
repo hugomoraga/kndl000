@@ -29,7 +29,7 @@ ficha:
   outcome: Confusion
 ---
 
-# El contexto
+### El contexto
 
 Venía saliendo de una relación de muchos años. Años que se hicieron pedazos. Decidí viajar y, por una causalidad casi paradójica, terminé exactamente en el lugar al que habíamos pensado ir juntos. Ozora era un sueño para los dos. Ahora me tocaba viajar en solitario, envalentonado por la desilusión, la tristeza y el dolor de un corazón roto. Me arrojé a la locura de un festival donde las fronteras se difuminan. 
 
