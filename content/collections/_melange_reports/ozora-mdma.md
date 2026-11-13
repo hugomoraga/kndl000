@@ -65,7 +65,7 @@ Y de pronto algo se quebró.
 
 Me preguntó qué era lo que me gustaba. Le dije que las mujeres. Sentí de inmediato un prejuicio. Soy una persona sensible y, además, era el único chileno entre ellos. Tenía una manera diferente de hablar y expresarme. Confieso que no era la primera vez que alguien me categorizaba con una etiqueta forzada sobre cómo debía ser mi sensibilidad o mi sexualidad.
 
-Ella insistió en preguntarme si me gustaban los hombres, si tenía alguna tranca o algo así. Me dijo que podía confiar en ella. Le insistí en que me gustaban las mujeres. Entonces me contó que era lesbiana y me dijo: "Conmigo no te irá bien, porque a mí me gustaban las panochas".
+Ella insistió en preguntarme si me gustaban los hombres, si tenía alguna tranca o algo así. Me dijo que podía confiar en ella. Le insistí en que me gustaban las mujeres. Entonces me contó que era lesbiana y me dijo: "Conmigo no te irá bien, porque a mí me gustan las panochas".
 
 Le dije que no estaba buscando algo sexual, que se calmara con eso. Aunque ahora, al reconstruir la escena, esa respuesta me resulta algo disonante: había ido bastante más allá que unas simples caricias.
 
