@@ -6,6 +6,7 @@ import { resolveRepoPath } from "../lib/paths.mjs";
 import { runChecks } from "../lib/checks.mjs";
 import { createPlan, PlanError, validation } from "../lib/plan.mjs";
 import { explorationChanges } from "../lib/validations.mjs";
+import { runAudit } from "../lib/audit.mjs";
 
 const ALLOWED_PREFIXES = [
   "docs/rizoma/",
@@ -137,6 +138,13 @@ export default {
 
     await explorationGate(ctx.root, paths, input.minorReason, validations);
 
+    const warnings = [];
+    if (paths.length > 0) {
+      const audit = runAudit(ctx, paths);
+      validations.push(...audit.validations);
+      warnings.push(...audit.warnings);
+    }
+
     const checks = paths.length > 0 && !state.blockReason ? await runCommitChecks(ctx.root, paths) : [];
     if (checks.length > 0) {
       const ok = checks.every((check) => check.ok);
@@ -151,6 +159,7 @@ export default {
       changes: [],
       preview: [],
       validations,
+      warnings,
       message: String(input.message ?? ""),
       origin: String(input.origin ?? ""),
       meta: {

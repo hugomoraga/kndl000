@@ -318,13 +318,18 @@ export function readItem(root, index, path) {
     .map((vinculo) => {
       const destino = String(vinculo.destino ?? "");
       const target = resolveTarget(root, path, destino, index.publicByUrl);
+      const targetEntry = target.path
+        ? index.entries.find((candidate) => candidate.path === target.path)
+        : null;
       return {
         destino,
         motivo: String(vinculo.motivo ?? ""),
         fecha: String(vinculo.fecha ?? ""),
         external: target.kind === "external",
         missing: target.kind === "internal" ? !target.exists : target.kind !== "external",
-        targetPath: target.path ?? null
+        targetPath: target.path ?? null,
+        targetTitle: targetEntry?.title ?? null,
+        targetType: targetEntry?.typeLabel ?? null
       };
     });
   const attachments = (Array.isArray(entry.meta?.adjuntos) ? entry.meta.adjuntos : [])

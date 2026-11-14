@@ -22,7 +22,8 @@ const state = {
   planDialog: null,
   palette: { commands: [], selected: 0, filtered: [] },
   commit: { plan: null, input: null },
-  conflict: null
+  conflict: null,
+  linkSuggestions: { items: [], selected: 0 }
 };
 
 function esc(value) {
@@ -194,6 +195,16 @@ function bindEvents() {
     onEditorInput();
   });
 
+  $("#link-destino").addEventListener("input", () => {
+    state.linkSuggestions.selected = 0;
+    $("#link-destino-hint").textContent = "";
+    renderLinkSuggestions();
+  });
+  $("#link-destino").addEventListener("keydown", onLinkKeydown);
+  $("#link-destino").addEventListener("blur", () => {
+    setTimeout(() => hideLinkSuggestions(), 120);
+  });
+
   $("#link-form").addEventListener("submit", (event) => {
     event.preventDefault();
     if (!state.current) return;
@@ -209,7 +220,9 @@ function bindEvents() {
     }
     openOperation("vincular", { source: state.current.path, destino, motivo });
     $("#link-destino").value = "";
+    $("#link-destino-hint").textContent = "";
     $("#link-motivo").value = "";
+    hideLinkSuggestions();
   });
 
   const input = $("#attach-input");
@@ -463,6 +476,9 @@ async function openEntry(path) {
     renderEditor();
     renderMargin();
     renderList();
+    $("#link-destino").value = "";
+    $("#link-destino-hint").textContent = "";
+    hideLinkSuggestions();
     $("#btn-publish").disabled = false;
   } catch (error) {
     toast(`No se pudo abrir ${path}: ${formatError(error)}`, { error: true });
@@ -893,6 +909,13 @@ function renderLinks(item) {
     ].join("");
     card.innerHTML = `
       <div class="row"><span class="destino">${esc(link.destino)}</span>${badges}</div>
+      ${
+        link.targetTitle
+          ? `<div class="hint">→ ${esc(link.targetTitle)}${
+              link.targetType ? ` · ${esc(link.targetType)}` : ""
+            }</div>`
+          : ""
+      }
       <div class="motivo">${esc(link.motivo)}</div>
       <div class="meta">${esc(link.fecha)}</div>
     `;
@@ -907,6 +930,102 @@ function renderLinks(item) {
       card.append(remove);
     }
     node.append(card);
+  }
+}
+
+function linkDestinoFor(entry) {
+  return entry.url || entry.path;
+}
+
+function linkCandidates(query) {
+  if (!state.current || !LINKABLE_TYPES.has(state.current.type)) return [];
+  const normalized = normalize(query).trim();
+  const matches = (state.index?.entries ?? []).filter((entry) => {
+    if (entry.path === state.current.path) return false;
+    if (!normalized) return true;
+    return normalize(
+      `${entry.title} ${entry.path} ${entry.url ?? ""} ${entry.typeLabel} ${entry.estado}`
+    ).includes(normalized);
+  });
+  return sortedEntries(matches).slice(0, 8);
+}
+
+function renderLinkSuggestions() {
+  const list = $("#link-destino-list");
+  state.linkSuggestions.items = linkCandidates($("#link-destino").value);
+  if (state.linkSuggestions.selected >= state.linkSuggestions.items.length) {
+    state.linkSuggestions.selected = Math.max(0, state.linkSuggestions.items.length - 1);
+  }
+  if (state.linkSuggestions.items.length === 0) {
+    hideLinkSuggestions();
+    return;
+  }
+  list.innerHTML = "";
+  state.linkSuggestions.items.forEach((entry, index) => {
+    const li = document.createElement("li");
+    li.setAttribute("role", "option");
+    li.setAttribute("aria-selected", String(index === state.linkSuggestions.selected));
+    const button = document.createElement("button");
+    button.type = "button";
+    button.innerHTML = `
+      <span class="title">${esc(entry.title)}</span>
+      <span class="meta">${esc(entry.typeLabel)} · ${esc(entry.estado)} · ${esc(
+        linkDestinoFor(entry)
+      )}</span>
+    `;
+    button.addEventListener("mousedown", (event) => {
+      event.preventDefault();
+      selectLinkSuggestion(entry);
+    });
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      selectLinkSuggestion(entry);
+    });
+    li.append(button);
+    list.append(li);
+  });
+  list.hidden = false;
+  $("#link-destino").setAttribute("aria-expanded", "true");
+}
+
+function hideLinkSuggestions() {
+  $("#link-destino-list").hidden = true;
+  $("#link-destino").setAttribute("aria-expanded", "false");
+}
+
+function selectLinkSuggestion(entry) {
+  $("#link-destino").value = linkDestinoFor(entry);
+  $("#link-destino-hint").textContent = `→ ${entry.title} · ${entry.typeLabel}${
+    entry.estado ? ` · ${entry.estado}` : ""
+  }`;
+  hideLinkSuggestions();
+  $("#link-motivo").focus();
+}
+
+function onLinkKeydown(event) {
+  const list = $("#link-destino-list");
+  if (list.hidden) return;
+  const items = state.linkSuggestions.items;
+  if (event.key === "ArrowDown") {
+    event.preventDefault();
+    state.linkSuggestions.selected = Math.min(state.linkSuggestions.selected + 1, items.length - 1);
+    renderLinkSuggestions();
+  } else if (event.key === "ArrowUp") {
+    event.preventDefault();
+    state.linkSuggestions.selected = Math.max(state.linkSuggestions.selected - 1, 0);
+    renderLinkSuggestions();
+  } else if (event.key === "Enter") {
+    const entry = items[state.linkSuggestions.selected];
+    if (entry) {
+      event.preventDefault();
+      selectLinkSuggestion(entry);
+    }
+  } else if (event.key === "Escape") {
+    event.preventDefault();
+    event.stopPropagation();
+    hideLinkSuggestions();
+  } else if (event.key === "Tab") {
+    hideLinkSuggestions();
   }
 }
 

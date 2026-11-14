@@ -40,13 +40,16 @@ TALLER_PORT=4174 npm run taller
   25 MB, nombre sanitizado y deduplicado. Se sirven read-only; nunca se copian a
   `assets/` ni a `_site`.
 - **Vínculos**: lista `{destino, motivo, fecha}` en el frontmatter de la nota.
-  Los backlinks se calculan al leer; no existe archivo central ni grafo.
+  Los destinos se autocompletan por título, path o URL desde el banco. Los
+  backlinks se calculan al leer; no existe archivo central ni grafo.
 - **Publicación**: promueve a exploración, nodo, anexo o hito con las reglas del
   protocolo como validaciones. Un override pide motivo y queda en el mensaje de
   commit.
-- **Commit**: corre `bundle exec jekyll build`, `node scripts/check-links.mjs` y
-  `build-lamina.py --verify --plate 01|02`, y commitea solo los paths del plan.
-  El push es una acción aparte y explícita; no hay force push.
+- **Commit**: corre una auditoría de fuente (nodos, corpus, relacionadas,
+  anexos, adjuntos y permisos duplicados), `bundle exec jekyll build`,
+  `node scripts/check-links.mjs` y `build-lamina.py --verify --plate 01|02`.
+  Commitea solo los paths del plan. El push es una acción aparte y explícita; no
+  hay force push.
 - **Descartar**: `git restore --source=HEAD --staged --worktree` sobre un path;
   si el archivo es nuevo (untracked), lo elimina.
 - **Borrar nota**: solo notas de banco, con confirmación explícita. Muestra los
@@ -68,6 +71,7 @@ taller/
     git.mjs               # git sin shell, estado, diff, restore, commit, push
     plan.mjs              # plan de cambios, diff con git, apply transaccional
     conflict.mjs          # preview y merge de conflicto a 3 vías
+    audit.mjs             # auditoría de fuente antes del commit
     indexer.mjs           # banco, URLs, warnings, backlinks, fuentes
     links.mjs             # vínculos, backlinks, URLs del sitio
     validations.mjs       # reglas del protocolo

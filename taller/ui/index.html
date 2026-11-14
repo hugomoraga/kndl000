@@ -145,7 +145,12 @@
             <h3>Vínculos</h3>
             <div id="links-list" class="margin-list"></div>
             <form id="link-form" class="stack compact">
-              <label class="field"><span>Destino</span><input id="link-destino" type="text" placeholder="path o URL"></label>
+              <label class="field">
+                <span>Destino</span>
+                <input id="link-destino" type="text" placeholder="buscá por título, path o URL" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="link-destino-list">
+              </label>
+              <ol id="link-destino-list" class="autocomplete" role="listbox" hidden></ol>
+              <p id="link-destino-hint" class="hint"></p>
               <label class="field"><span>Motivo</span><textarea id="link-motivo" rows="2"></textarea></label>
               <button type="submit" class="btn small">Vincular</button>
             </form>
