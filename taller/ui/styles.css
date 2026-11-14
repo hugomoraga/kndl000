@@ -1043,6 +1043,57 @@ select:disabled {
   padding: 0.8rem 1rem;
 }
 
+
+.conflict-dialog {
+  width: min(1180px, calc(100vw - 3rem));
+}
+
+.conflict-body {
+  padding: 1rem;
+  display: grid;
+  gap: 0.8rem;
+}
+
+.conflict-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+.conflict-grid h3 {
+  margin: 0 0 0.3rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.conflict-grid pre {
+  margin: 0;
+  max-height: 240px;
+  overflow: auto;
+  background: #fffdf8;
+  border: 1px solid var(--line);
+  padding: 0.55rem;
+  font-size: 0.7rem;
+  white-space: pre-wrap;
+}
+
+#conflict-frontmatter {
+  min-height: 120px;
+}
+
+#conflict-body {
+  min-height: 220px;
+}
+
+@media (max-width: 900px) {
+  .conflict-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .result-dialog {
   width: min(820px, calc(100vw - 3rem));
 }

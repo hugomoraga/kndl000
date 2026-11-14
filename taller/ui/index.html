@@ -214,6 +214,51 @@
       </div>
     </dialog>
 
+    <dialog id="conflict-dialog" class="dialog conflict-dialog" aria-label="Resolver conflicto">
+      <div class="dialog-head">
+        <h2>Resolver conflicto</h2>
+        <button class="btn ghost" type="button" data-close>Esc</button>
+      </div>
+      <div class="conflict-body">
+        <p id="conflict-summary" class="hint"></p>
+        <div class="conflict-grid">
+          <section>
+            <h3>Base (cuando abriste)</h3>
+            <pre id="conflict-base"></pre>
+          </section>
+          <section>
+            <h3>Disco (ahora)</h3>
+            <pre id="conflict-current"></pre>
+          </section>
+          <section>
+            <h3>Tu edición</h3>
+            <pre id="conflict-mine"></pre>
+          </section>
+        </div>
+        <div id="conflict-warnings" class="warnings"></div>
+        <label class="field">
+          <span>Resultado — frontmatter YAML</span>
+          <textarea id="conflict-frontmatter" class="yaml-editor" spellcheck="false"></textarea>
+        </label>
+        <label class="field">
+          <span>Resultado — cuerpo</span>
+          <textarea id="conflict-body" class="yaml-editor" spellcheck="true"></textarea>
+        </label>
+        <div class="actions">
+          <button id="conflict-use-current" class="btn small" type="button">Partir del disco</button>
+          <button id="conflict-use-mine" class="btn small" type="button">Partir de mi edición</button>
+          <button id="conflict-use-merged" class="btn small" type="button">Ver merge propuesto</button>
+        </div>
+      </div>
+      <div id="conflict-error" class="error" hidden></div>
+      <div class="dialog-actions">
+        <div class="actions">
+          <button id="conflict-cancel" class="btn ghost" type="button">Cancelar</button>
+          <button id="conflict-save" class="btn accent" type="button">Guardar resultado</button>
+        </div>
+      </div>
+    </dialog>
+
     <dialog id="result-dialog" class="dialog result-dialog" aria-label="Resultado">
       <div class="dialog-head">
         <h2 id="result-title">Resultado</h2>

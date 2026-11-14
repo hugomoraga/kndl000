@@ -30,7 +30,12 @@ TALLER_PORT=4174 npm run taller
 - **Edición con diff**: guardado explícito, sin autosave. El frontmatter conserva
   claves desconocidas, orden y comentarios; el cuerpo no editado queda
   byte-idéntico. Cada lectura devuelve un hash y una escritura con hash viejo
-  termina en conflicto.
+  termina en conflicto. El conflicto se resuelve en tres vías: base, disco y
+  edición, con un resultado editable y un merge conservador.
+- **Apply transaccional**: antes de escribir se toman snapshots de los paths
+  afectados; si un cambio falla, se restauran los anteriores y se eliminan los
+  archivos nuevos. Un `exec` debe declarar `expectedPaths` para poder revertir
+  lo que creó.
 - **Adjuntos**: se guardan en `docs/rizoma/adjuntos/<slug>/` con límite de
   25 MB, nombre sanitizado y deduplicado. Se sirven read-only; nunca se copian a
   `assets/` ni a `_site`.
@@ -61,7 +66,8 @@ taller/
     frontmatter.mjs       # parser/escritor YAML con comentarios y orden
     paths.mjs             # resolución segura, hashes, slugs, nombres
     git.mjs               # git sin shell, estado, diff, restore, commit, push
-    plan.mjs              # plan de cambios, diff con git, apply atómico
+    plan.mjs              # plan de cambios, diff con git, apply transaccional
+    conflict.mjs          # preview y merge de conflicto a 3 vías
     indexer.mjs           # banco, URLs, warnings, backlinks, fuentes
     links.mjs             # vínculos, backlinks, URLs del sitio
     validations.mjs       # reglas del protocolo
@@ -144,8 +150,9 @@ después de reiniciar. No se edita el router ni `ui/app.js`.
 ```
 
 - `plan()` no escribe. Construye paths, contenido, validaciones y diff.
-- `changes` se aplica en orden; `exec` corre un comando sin shell y `frontmatter`
-  o `append` leen el archivo recién creado.
+- `changes` se aplica en orden y con rollback; `exec` corre un comando sin shell
+  y debe declarar `expectedPaths` para que el taller pueda revertir los archivos
+  que creó. `frontmatter` o `append` leen el archivo recién creado.
 - `validations` con `overridable: false` bloquean. Las overridables exigen un
   motivo y el motivo se agrega al mensaje de commit.
 - Un tipo u operación inválida se ignora al arrancar, con un warning en consola
@@ -164,6 +171,7 @@ después de reiniciar. No se edita el router ni `ui/app.js`.
 | GET | `/api/preview-status` | si Jekyll responde en `localhost:4000` |
 | POST | `/api/plan` | `{operation, input}` → plan + diff |
 | POST | `/api/apply` | `{operation, input, fingerprint, overrideReason}` |
+| POST | `/api/conflict/preview` | base + edición → conflicto a 3 vías |
 | POST | `/api/checks` | corre build, links y láminas |
 | POST | `/api/attach/plan` | plan de adjunto (JSON) |
 | POST | `/api/attach/apply?token=` | subida binaria |

@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, renameSync, rmSync, unlinkSync, writeFileSync } from "node:fs";
+import { chmodSync, existsSync, mkdirSync, mkdtempSync, readFileSync, renameSync, rmSync, rmdirSync, statSync, unlinkSync, writeFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 import { tmpdir } from "node:os";
 import { diffForPaths, restorePath, run } from "./git.mjs";
@@ -217,7 +217,10 @@ function preflight(root, plan) {
     const existsNow = abs ? existsSync(abs) : false;
 
     if (change.type === "exec") {
-      for (const path of change.expectedPaths ?? []) future.add(path);
+      for (const path of change.expectedPaths ?? []) {
+        safeChangePath(root, path);
+        future.add(path);
+      }
       continue;
     }
     if (change.type === "write") {
@@ -244,6 +247,73 @@ function preflight(root, plan) {
   }
 }
 
+function collectAffectedPaths(plan) {
+  const paths = new Set();
+  for (const change of plan.changes ?? []) {
+    if (change.path) paths.add(change.path);
+    for (const path of change.expectedPaths ?? []) paths.add(path);
+  }
+  for (const change of plan.preview ?? []) {
+    if (change.path) paths.add(change.path);
+  }
+  return [...paths];
+}
+
+function snapshotPaths(root, paths) {
+  const snapshots = new Map();
+  for (const path of paths) {
+    const abs = join(root, path);
+    if (!existsSync(abs)) {
+      snapshots.set(path, { exists: false });
+      continue;
+    }
+    const info = statSync(abs);
+    snapshots.set(path, {
+      exists: true,
+      content: readFileSync(abs),
+      mode: info.mode
+    });
+  }
+  return snapshots;
+}
+
+function removeEmptyParents(root, abs) {
+  let directory = dirname(abs);
+  while (directory.startsWith(root) && directory !== root) {
+    try {
+      rmdirSync(directory);
+    } catch {
+      break;
+    }
+    directory = dirname(directory);
+  }
+}
+
+function atomicWriteBuffer(abs, buffer, mode) {
+  mkdirSync(dirname(abs), { recursive: true });
+  const temp = join(
+    dirname(abs),
+    `.${basename(abs)}.taller-rollback-${process.pid}-${Math.random().toString(36).slice(2)}`
+  );
+  writeFileSync(temp, buffer);
+  if (mode) chmodSync(temp, mode);
+  renameSync(temp, abs);
+}
+
+function restoreSnapshots(root, snapshots) {
+  for (const [path, snapshot] of [...snapshots.entries()].reverse()) {
+    const abs = join(root, path);
+    if (!snapshot.exists) {
+      if (existsSync(abs)) {
+        unlinkSync(abs);
+        removeEmptyParents(root, abs);
+      }
+      continue;
+    }
+    atomicWriteBuffer(abs, snapshot.content, snapshot.mode);
+  }
+}
+
 export async function applyPlan(root, plan) {
   const blocking = (plan.validations ?? []).filter((item) => !item.ok && !item.overridable);
   if (blocking.length > 0) {
@@ -254,8 +324,10 @@ export async function applyPlan(root, plan) {
     );
   }
   preflight(root, plan);
+  const snapshots = snapshotPaths(root, collectAffectedPaths(plan));
   const applied = [];
   const output = [];
+  try {
   for (const change of plan.changes ?? []) {
     if (change.type === "exec") {
       const result = await run(change.command, change.args ?? [], {
@@ -326,6 +398,14 @@ export async function applyPlan(root, plan) {
     }
 
     throw new PlanError(`Cambio desconocido: ${change.type}`, 500);
+  }
+  } catch (error) {
+    try {
+      restoreSnapshots(root, snapshots);
+    } catch (rollbackError) {
+      error.message = `${error.message}\nRollback falló: ${rollbackError.message}`;
+    }
+    throw error;
   }
 
   const uniqueApplied = [...new Set(applied)];

@@ -65,10 +65,11 @@ export default {
     const updates =
       input.updates && typeof input.updates === "object" ? input.updates : {};
     const rawProvided = typeof input.rawFrontmatter === "string";
+    const rawChanged = rawProvided && input.rawFrontmatter !== (entry.rawFrontmatter ?? "");
     let next = current;
     try {
-      if (rawProvided || Object.keys(updates).length > 0) {
-        next = setFrontmatterFields(current, updates, rawProvided ? { rawFrontmatter: input.rawFrontmatter } : {});
+      if (rawChanged || Object.keys(updates).length > 0) {
+        next = setFrontmatterFields(current, updates, rawChanged ? { rawFrontmatter: input.rawFrontmatter } : {});
       }
       if (typeof input.body === "string") {
         next = replaceBody(next, input.body);

@@ -12,6 +12,7 @@ import { checkTools, runChecks } from "./lib/checks.mjs";
 import { applyPlan, checkPlan, PlanError, planFingerprint, previewChanges, serializePlan } from "./lib/plan.mjs";
 import { resolveRepoPath } from "./lib/paths.mjs";
 import { FrontmatterError } from "./lib/frontmatter.mjs";
+import { buildConflictPreview } from "./lib/conflict.mjs";
 import {
   applyAttachment,
   attachmentContentType,
@@ -309,6 +310,17 @@ async function handleChecks(req, res) {
   sendJson(res, 200, { checks: results });
 }
 
+async function handleConflictPreview(req, res) {
+  const body = await readJson(req);
+  const ctx = createContext();
+  const entry = ctx.index.entries.find((candidate) => candidate.path === body.path);
+  if (!entry) throw new HttpError(`No está en el índice: ${body.path}`, 404);
+  if (entry.readOnly) throw new HttpError("El documento es read-only.", 403);
+  const preview = buildConflictPreview(ctx.root, body.path, body.base ?? {}, body.edits ?? {});
+  console.log(`[taller] conflict preview path=${body.path}`);
+  sendJson(res, 200, preview);
+}
+
 const STATIC = new Map([
   ["/", "index.html"],
   ["/index.html", "index.html"],
@@ -371,6 +383,9 @@ const server = http.createServer(async (req, res) => {
     }
     if (req.method === "POST" && pathname === "/api/plan") {
       return await handlePlan(req, res);
+    }
+    if (req.method === "POST" && pathname === "/api/conflict/preview") {
+      return await handleConflictPreview(req, res);
     }
     if (req.method === "POST" && pathname === "/api/apply") {
       return await handleApply(req, res);

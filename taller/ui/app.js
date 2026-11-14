@@ -21,7 +21,8 @@ const state = {
   planned: new Map(),
   planDialog: null,
   palette: { commands: [], selected: 0, filtered: [] },
-  commit: { plan: null, input: null }
+  commit: { plan: null, input: null },
+  conflict: null
 };
 
 function esc(value) {
@@ -247,6 +248,11 @@ function bindEvents() {
   $("#plan-cancel").addEventListener("click", () => closeDialog($("#plan-dialog")));
   $("#plan-apply").addEventListener("click", applyCurrentPlan);
   $("#result-close").addEventListener("click", () => closeDialog($("#result-dialog")));
+  $("#conflict-cancel").addEventListener("click", () => closeDialog($("#conflict-dialog")));
+  $("#conflict-save").addEventListener("click", saveConflictResult);
+  $("#conflict-use-current").addEventListener("click", () => useConflictSide("current"));
+  $("#conflict-use-mine").addEventListener("click", () => useConflictSide("mine"));
+  $("#conflict-use-merged").addEventListener("click", () => useConflictSide("merged"));
   $("#override-reason").addEventListener("input", updatePlanApplyState);
 
   $("#operation-form").addEventListener("submit", submitOperation);
@@ -664,6 +670,10 @@ async function saveCurrent() {
   try {
     const plan = await previewSave();
     if (!plan) return;
+    if (plan.validations.some((item) => item.id === "conflicto" && !item.ok)) {
+      await openConflictDialog();
+      return;
+    }
     const result = await api("/api/apply", {
       method: "POST",
       body: {
@@ -681,11 +691,134 @@ async function saveCurrent() {
     if (error.status === 409) {
       $("#diff-state").textContent = "conflicto";
       $("#editor-hint").textContent =
-        "El archivo cambió en disco. Recargá para ver la versión actual; el guardado no se aplicó.";
-      toast(formatError(error), { error: true });
+        "El archivo cambió en disco. Abriendo la resolución de conflicto.";
+      await openConflictDialog();
       return;
     }
     toast(formatError(error), { error: true });
+  }
+}
+
+function formatConflictSide(side) {
+  const raw = String(side?.rawFrontmatter ?? "");
+  const body = String(side?.body ?? "");
+  const withNewline = raw === "" || raw.endsWith("\n") ? raw : `${raw}\n`;
+  return `---\n${withNewline}---\n${body}`;
+}
+
+async function openConflictDialog({ baseItem = state.current, edits = null } = {}) {
+  if (!baseItem) return;
+  try {
+    const current = await api(`/api/item?path=${encodeURIComponent(baseItem.path)}`);
+    if (current.hash === baseItem.hash) {
+      toast("No hay conflicto: el disco coincide con la base abierta.");
+      return;
+    }
+    const editInput = edits ?? collectSaveInput();
+    const editPayload = {
+      body: editInput.body,
+      updates: editInput.updates ?? {}
+    };
+    if (editInput.rawFrontmatter !== undefined) {
+      editPayload.rawFrontmatter = editInput.rawFrontmatter;
+    }
+    const preview = await api("/api/conflict/preview", {
+      method: "POST",
+      body: {
+        path: baseItem.path,
+        base: {
+          hash: baseItem.hash,
+          rawFrontmatter: baseItem.rawFrontmatter,
+          body: baseItem.body
+        },
+        edits: editPayload
+      }
+    });
+    state.conflict = { preview, current, baseItem };
+    $("#conflict-summary").textContent =
+      `${baseItem.path} cambió en disco desde que lo abriste. Revisá las tres versiones y editá el resultado.`;
+    $("#conflict-base").textContent = formatConflictSide(preview.base);
+    $("#conflict-current").textContent = formatConflictSide(preview.current);
+    $("#conflict-mine").textContent = formatConflictSide(preview.mine);
+    $("#conflict-frontmatter").value = preview.merged.rawFrontmatter;
+    $("#conflict-body").value = preview.merged.body;
+    const warnings = [];
+    if (preview.conflicts.frontmatter.length > 0) {
+      warnings.push(
+        `Frontmatter en conflicto: ${preview.conflicts.frontmatter.join(
+          ", "
+        )}. El resultado parte de la versión del disco; revisalo.`
+      );
+    }
+    if (preview.conflicts.body) {
+      warnings.push(
+        "El cuerpo cambió en ambos lados y el merge propuesto tiene marcas de conflicto. Editá el resultado antes de guardar."
+      );
+    }
+    $("#conflict-warnings").innerHTML = warnings
+      .map((warning) => `<div class="warning">${esc(warning)}</div>`)
+      .join("");
+    $("#conflict-error").hidden = true;
+    showDialog($("#conflict-dialog"));
+    $("#conflict-frontmatter").focus();
+  } catch (error) {
+    toast(formatError(error), { error: true });
+  }
+}
+
+function useConflictSide(side) {
+  const conflict = state.conflict;
+  if (!conflict) return;
+  const data =
+    side === "current"
+      ? conflict.preview.current
+      : side === "mine"
+        ? conflict.preview.mine
+        : conflict.preview.merged;
+  $("#conflict-frontmatter").value = data.rawFrontmatter;
+  $("#conflict-body").value = data.body;
+}
+
+async function saveConflictResult() {
+  const conflict = state.conflict;
+  if (!conflict || !state.current) return;
+  const button = $("#conflict-save");
+  const original = button.textContent;
+  button.disabled = true;
+  button.textContent = "Preparando…";
+  $("#conflict-error").hidden = true;
+  try {
+    const input = {
+      path: state.current.path,
+      hash: conflict.current.hash,
+      rawFrontmatter: $("#conflict-frontmatter").value,
+      body: $("#conflict-body").value
+    };
+    const plan = await api("/api/plan", {
+      method: "POST",
+      body: { operation: "guardar-nota", input }
+    });
+    if (plan.validations.some((item) => item.id === "conflicto" && !item.ok)) {
+      const baseItem = {
+        path: state.current.path,
+        hash: conflict.current.hash,
+        rawFrontmatter: conflict.preview.current.rawFrontmatter,
+        body: conflict.preview.current.body
+      };
+      await openConflictDialog({
+        baseItem,
+        edits: { rawFrontmatter: input.rawFrontmatter, body: input.body, updates: {} }
+      });
+      return;
+    }
+    closeDialog($("#conflict-dialog"));
+    showPlan({ plan, label: "Resolver conflicto", input });
+  } catch (error) {
+    $("#conflict-error").hidden = false;
+    $("#conflict-error").textContent = formatError(error);
+  } finally {
+    button.disabled = false;
+    button.textContent = original;
   }
 }
 

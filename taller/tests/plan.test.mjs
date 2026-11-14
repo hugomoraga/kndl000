@@ -142,6 +142,60 @@ test("applyPlan rechaza paths que escapan del repo", async () => {
   }
 });
 
+test("applyPlan rollback restaura escrituras previas si falla un cambio posterior", async () => {
+  const root = fixture();
+  try {
+    writeFileSync(join(root, "segunda.md"), "segunda vieja\n");
+    const plan = createPlan({
+      operation: "test",
+      changes: [
+        { type: "write", path: "nota.md", content: "primera nueva\n" },
+        {
+          type: "write",
+          path: "segunda.md",
+          content: "segunda nueva\n",
+          expectedHash: sha256("otra cosa")
+        }
+      ],
+      validations: []
+    });
+    await assert.rejects(() => applyPlan(root, plan), /Conflicto/);
+    assert.equal(readFileSync(join(root, "nota.md"), "utf8"), "linea vieja\n");
+    assert.equal(readFileSync(join(root, "segunda.md"), "utf8"), "segunda vieja\n");
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("applyPlan rollback elimina archivos creados por exec si falla después", async () => {
+  const root = fixture();
+  try {
+    const plan = createPlan({
+      operation: "test",
+      changes: [
+        {
+          type: "exec",
+          command: "node",
+          args: ["-e", "require('fs').writeFileSync('creado.md','x')"],
+          expectedPaths: ["creado.md"]
+        },
+        {
+          type: "frontmatter",
+          path: "creado.md",
+          updates: { title: "x" },
+          expectedHash: "hash-que-no-coincide"
+        }
+      ],
+      validations: []
+    });
+    await assert.rejects(() => applyPlan(root, plan), /Conflicto/);
+    assert.equal(existsSync(join(root, "creado.md")), false);
+    assert.equal(readFileSync(join(root, "nota.md"), "utf8"), "linea vieja\n");
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
 test("delete y huella estable", async () => {
   const root = fixture();
   try {
