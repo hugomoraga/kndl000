@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <title>Taller de Rizoma — KNDL 000</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script type="module" src="/app.js"></script>
+  </head>
+  <body>
+    <a class="skip" href="#banco">Saltar al banco</a>
+
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">KNDL 000</span>
+        <strong>Taller de Rizoma</strong>
+      </div>
+      <div id="repo-status" class="repo-status" aria-live="polite">Cargando repo…</div>
+      <div class="actions">
+        <button id="btn-palette" class="btn ghost" type="button" title="Ctrl/Cmd + K">
+          Comandos <kbd>⌘K</kbd>
+        </button>
+        <button id="btn-new-note" class="btn" type="button">Nueva nota</button>
+        <button id="btn-publish" class="btn" type="button" disabled>Publicar…</button>
+        <button id="btn-commit" class="btn accent" type="button">
+          Commit <span id="commit-count">0</span>
+        </button>
+      </div>
+    </header>
+
+    <p id="host-warning" class="host-warning" hidden>
+      Estás entrando desde un host que no es loopback. El servidor rechaza escrituras.
+    </p>
+
+    <main class="layout">
+      <section id="banco" class="panel list-panel" aria-label="Banco de Rizoma">
+        <div class="panel-head">
+          <h1>Banco</h1>
+          <span id="list-total" class="eyebrow"></span>
+        </div>
+
+        <div class="filters">
+          <label class="field">
+            <span>Buscar</span>
+            <input id="filter-q" type="search" placeholder="título, path o estado" autocomplete="off">
+          </label>
+          <div class="filter-row">
+            <label class="field">
+              <span>Tipo</span>
+              <select id="filter-type">
+                <option value="">Todos</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Estado</span>
+              <select id="filter-estado">
+                <option value="">Todos</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div id="counts" class="counts"></div>
+        <ol id="entry-list" class="entry-list" aria-label="Piezas del banco"></ol>
+      </section>
+
+      <section class="panel editor-panel" aria-label="Editor">
+        <div id="editor-empty" class="empty">
+          <p class="eyebrow">Sin pieza abierta</p>
+          <h2>Elegí una nota, exploración, nodo o anexo.</h2>
+          <p>El editor no guarda solo. El diff aparece antes de tocar git.</p>
+          <p class="hint">Atajos: <kbd>⌘K</kbd> comandos · <kbd>⌘S</kbd> guardar · <kbd>Esc</kbd> cerrar.</p>
+        </div>
+
+        <div id="editor" hidden>
+          <div class="editor-head">
+            <div>
+              <p id="editor-type" class="eyebrow"></p>
+              <h2 id="editor-title"></h2>
+              <p id="editor-path" class="path"></p>
+            </div>
+            <div id="editor-badges" class="badges"></div>
+          </div>
+
+          <form id="meta-form" class="meta-form"></form>
+
+          <div class="editor-actions">
+            <div class="tabs" role="tablist" aria-label="Vistas del editor">
+              <button id="tab-body" class="tab active" type="button" role="tab" aria-selected="true">
+                Cuerpo
+              </button>
+              <button id="tab-preview" class="tab" type="button" role="tab" aria-selected="false">
+                Vista previa
+              </button>
+              <button id="tab-yaml" class="tab" type="button" role="tab" aria-selected="false">
+                YAML
+              </button>
+            </div>
+            <div class="actions">
+              <button id="btn-discard" class="btn ghost" type="button">Descartar</button>
+              <button id="btn-reload" class="btn ghost" type="button">Recargar</button>
+              <button id="btn-save" class="btn accent" type="button">Guardar</button>
+            </div>
+          </div>
+
+          <p id="editor-hint" class="hint"></p>
+
+          <div class="body-wrap">
+            <textarea id="editor-body" spellcheck="true" aria-label="Cuerpo Markdown"></textarea>
+            <div id="editor-preview" class="preview" hidden></div>
+            <textarea id="editor-yaml" class="yaml-editor" spellcheck="false" aria-label="Frontmatter YAML" hidden></textarea>
+          </div>
+
+          <section class="diff-block" aria-label="Diff">
+            <div class="diff-head">
+              <h3>Diff</h3>
+              <span id="diff-state" class="eyebrow"></span>
+            </div>
+            <pre id="editor-diff" class="diff">Sin cambios.</pre>
+          </section>
+        </div>
+      </section>
+
+      <aside id="margen" class="panel margin-panel" aria-label="Margen">
+        <div id="margin-empty" class="empty">
+          <p class="eyebrow">Margen</p>
+          <p>Acá aparecen los vínculos, backlinks, adjuntos y advertencias de la pieza abierta.</p>
+        </div>
+
+        <div id="margin-content" hidden>
+          <div class="margin-head">
+            <h2>Margen</h2>
+            <span id="margin-state" class="eyebrow"></span>
+          </div>
+
+          <div id="margin-warnings" class="warnings"></div>
+
+          <section class="margin-section" aria-label="Preview real">
+            <h3>Preview real</h3>
+            <div id="preview-status" class="hint">Jekyll no está corriendo.</div>
+          </section>
+
+          <section class="margin-section" aria-label="Vínculos">
+            <h3>Vínculos</h3>
+            <div id="links-list" class="margin-list"></div>
+            <form id="link-form" class="stack compact">
+              <label class="field"><span>Destino</span><input id="link-destino" type="text" placeholder="path o URL"></label>
+              <label class="field"><span>Motivo</span><textarea id="link-motivo" rows="2"></textarea></label>
+              <button type="submit" class="btn small">Vincular</button>
+            </form>
+          </section>
+
+          <section class="margin-section" aria-label="Backlinks">
+            <h3>Backlinks</h3>
+            <div id="backlinks-list" class="margin-list"></div>
+          </section>
+
+          <section class="margin-section" aria-label="Adjuntos">
+            <h3>Adjuntos</h3>
+            <div id="attachments-list" class="margin-list"></div>
+            <div id="drop-zone" class="drop-zone" tabindex="0">
+              Arrastrá un archivo o <label class="link-label" for="attach-input">elegilo</label>.
+              <input id="attach-input" type="file" hidden>
+            </div>
+            <p class="hint">Máximo 25 MB. Vive en <code>docs/rizoma/adjuntos/</code>, nunca en <code>_site</code>.</p>
+          </section>
+        </div>
+      </aside>
+    </main>
+
+    <dialog id="palette-dialog" class="dialog palette-dialog" aria-label="Paleta de comandos">
+      <div class="dialog-head">
+        <h2>Comandos</h2>
+        <button class="btn ghost" type="button" data-close>Esc</button>
+      </div>
+      <input id="palette-input" type="search" placeholder="Buscar comando…" autocomplete="off">
+      <ol id="palette-list" class="palette-list"></ol>
+    </dialog>
+
+    <dialog id="plan-dialog" class="dialog plan-dialog" aria-label="Plan de cambios">
+      <div class="dialog-head">
+        <h2 id="plan-title">Plan</h2>
+        <button class="btn ghost" type="button" data-close>Esc</button>
+      </div>
+      <div id="plan-body" class="stack"></div>
+      <div id="plan-error" class="error" hidden></div>
+      <div class="dialog-actions">
+        <label id="override-wrap" class="field override" hidden>
+          <span>Motivo del override</span>
+          <textarea id="override-reason" rows="2"></textarea>
+        </label>
+        <div class="actions">
+          <button id="plan-cancel" class="btn ghost" type="button">Cancelar</button>
+          <button id="plan-apply" class="btn accent" type="button">Aplicar plan</button>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog id="operation-dialog" class="dialog operation-dialog" aria-label="Operación">
+      <div class="dialog-head">
+        <h2 id="operation-title">Operación</h2>
+        <button class="btn ghost" type="button" data-close>Esc</button>
+      </div>
+      <p id="operation-description" class="hint"></p>
+      <form id="operation-form" class="stack" novalidate></form>
+      <div class="dialog-actions">
+        <div class="actions">
+          <button id="operation-cancel" class="btn ghost" type="button">Cancelar</button>
+          <button id="operation-plan" class="btn accent" type="submit" form="operation-form">
+            Previsualizar plan
+          </button>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog id="result-dialog" class="dialog result-dialog" aria-label="Resultado">
+      <div class="dialog-head">
+        <h2 id="result-title">Resultado</h2>
+        <button class="btn ghost" type="button" data-close>Esc</button>
+      </div>
+      <div id="result-body" class="stack result-body"></div>
+      <div class="dialog-actions">
+        <div class="actions">
+          <button id="result-close" class="btn" type="button">Cerrar</button>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog id="commit-dialog" class="dialog commit-dialog" aria-label="Commit">
+      <div class="dialog-head">
+        <h2>Commit</h2>
+        <button class="btn ghost" type="button" data-close>Esc</button>
+      </div>
+      <div class="commit-grid">
+        <section class="stack">
+          <h3>Paths del plan</h3>
+          <div id="commit-paths" class="commit-paths"></div>
+          <h3>Fuera del plan</h3>
+          <div id="commit-dirty" class="dirty-list"></div>
+          <label class="field"><span>Mensaje</span><textarea id="commit-message" rows="4"></textarea></label>
+          <label class="field"><span>Motivo de cambio menor</span><textarea id="commit-minor" rows="2"></textarea></label>
+          <label class="field"><span>Motivo de override</span><textarea id="commit-override" rows="2"></textarea></label>
+          <div class="actions">
+            <button id="commit-prepare" class="btn" type="button">Preparar</button>
+            <button id="commit-apply" class="btn accent" type="button" disabled>Commitear</button>
+            <button id="push-button" class="btn ghost" type="button">Push…</button>
+          </div>
+        </section>
+        <section class="stack">
+          <h3>Chequeos y validaciones</h3>
+          <div id="commit-plan" class="commit-plan">
+            <p class="hint">Prepará el commit para correr build, links y láminas.</p>
+          </div>
+        </section>
+      </div>
+      <div id="commit-error" class="error" hidden></div>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <noscript>El taller necesita JavaScript local. No carga scripts de terceros.</noscript>
+  </body>
+</html>

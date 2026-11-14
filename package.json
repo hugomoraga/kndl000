@@ -7,7 +7,9 @@
     "build": "bundle exec jekyll build",
     "serve": "bundle exec jekyll serve",
     "clean": "rm -rf _site .jekyll-cache .sass-cache",
-    "umbral:update": "git submodule update --remote assets/js/umbral-vision"
+    "umbral:update": "git submodule update --remote assets/js/umbral-vision",
+    "taller": "node taller/server.mjs",
+    "test:taller": "node --test taller/tests/*.test.mjs"
   },
   "dependencies": {
     "@kndl/umbral-vision": "^0.3.0"
