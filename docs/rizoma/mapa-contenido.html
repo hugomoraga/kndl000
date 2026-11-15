@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cómo se conecta el contenido en Rizoma · KNDL 000</title>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --paper:      #060708;
+      --ink:        #e9e6dc;
+      --ink-dim:    #9aa3a1;
+      --ink-muted:  #7f8a88;
+      --accent:     #9fc6c9;
+      --rule:       rgba(233, 230, 220, 0.12);
+      --font-serif: 'Newsreader', Georgia, serif;
+      --font-sans:  'Lato', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      --font-mono:  'JetBrains Mono', 'Fira Code', Consolas, monospace;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--paper);
+      color: var(--ink);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 2rem 4rem;
+    }
+
+    .frame { max-width: 1000px; width: 100%; }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.6rem, 2.4vw + 0.9rem, 2.15rem);
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      line-height: 1.15;
+      margin-bottom: 1.75rem;
+    }
+
+    .diagram-container { width: 100%; overflow-x: auto; }
+    svg { width: 100%; min-width: 1000px; display: block; }
+
+    .note {
+      margin-top: 1.75rem;
+      max-width: 70ch;
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .note p {
+      font-family: var(--font-serif);
+      font-size: 0.98rem;
+      font-weight: 400;
+      line-height: 1.55;
+      color: var(--ink-dim);
+    }
+
+    .note .source {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.08em;
+      color: var(--ink-muted);
+    }
+
+    @media print {
+      .diagram-container { overflow-x: visible; }
+      svg { min-width: 0; }
+    }
+  </style>
+</head>
+<body>
+  <main class="frame">
+    <p class="eyebrow">Arquitectura de contenido · Rizoma</p>
+    <h1>Cómo se conecta el contenido en Rizoma</h1>
+
+    <div class="diagram-container">
+      <svg viewBox="0 0 1000 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="rizoma-mapa-title rizoma-mapa-desc">
+        <title id="rizoma-mapa-title">Cómo se conecta el contenido en Rizoma</title>
+        <desc id="rizoma-mapa-desc">Diagrama de arquitectura de contenido: el banco y Git en el taller; la exploración como núcleo que lee el corpus, comparte nodos, se sostiene en anexos, registra hitos y se fija en una lámina.</desc>
+        <defs>
+          <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#9aa3a1"/></marker>
+          <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#9fc6c9"/></marker>
+        </defs>
+
+        <rect width="100%" height="100%" fill="#060708"/>
+
+        <!-- Zonas -->
+        <rect x="40" y="72" width="224" height="392" rx="8"
+              fill="rgba(233,230,220,0.02)" stroke="rgba(233,230,220,0.12)" stroke-width="0.8"/>
+        <text x="56" y="92" fill="#7f8a88" font-size="7" font-family="'JetBrains Mono', monospace"
+              letter-spacing="0.14em">TALLER · PROCESO</text>
+
+        <rect x="288" y="72" width="672" height="392" rx="8"
+              fill="rgba(233,230,220,0.02)" stroke="rgba(233,230,220,0.12)" stroke-width="0.8"/>
+        <text x="304" y="92" fill="#7f8a88" font-size="7" font-family="'JetBrains Mono', monospace"
+              letter-spacing="0.14em">MAPA PÚBLICO · /rizoma/</text>
+
+        <!-- Flechas primero, detrás de las cajas -->
+        <!-- Banco → Git: commit -->
+        <line x1="120" y1="184" x2="120" y2="328" stroke="#9aa3a1" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+        <!-- Git → Hitos: versiones e historial (pasivo) -->
+        <line x1="240" y1="388" x2="320" y2="388" stroke="#9aa3a1" stroke-width="1"
+              stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+
+        <!-- Banco → Exploración: promoción (flujo focal) -->
+        <path d="M 240 148 H 264 Q 272 148 272 156 V 248 Q 272 256 280 256 H 496"
+              fill="none" stroke="#9fc6c9" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+
+        <!-- Corpus → Exploración: lee -->
+        <path d="M 496 148 H 520 Q 528 148 528 156 V 224"
+              fill="none" stroke="#9aa3a1" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+        <!-- Aparato → Exploración: sostiene -->
+        <line x1="640" y1="184" x2="640" y2="224" stroke="#9aa3a1" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+        <!-- Nodos → Exploración: nombra -->
+        <path d="M 784 148 H 768 Q 760 148 760 156 V 248 Q 760 256 752 256"
+              fill="none" stroke="#9aa3a1" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+        <!-- Exploración → Hitos: cortes -->
+        <path d="M 576 312 V 328 Q 576 336 568 336 H 416 Q 408 336 408 344 V 352"
+              fill="none" stroke="#9aa3a1" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+        <!-- Exploración → Lámina: cartografía -->
+        <path d="M 672 312 V 328 Q 672 336 680 336 H 864 Q 872 336 872 344 V 352"
+              fill="none" stroke="#9aa3a1" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+        <!-- Etiquetas de flecha -->
+        <rect x="96" y="250" width="48" height="12" rx="2" fill="#060708"/>
+        <text x="120" y="259" fill="#9aa3a1" font-size="8" font-family="'JetBrains Mono', monospace"
+              text-anchor="middle" letter-spacing="0.06em">commit</text>
+
+        <rect x="248" y="374" width="64" height="12" rx="2" fill="#060708"/>
+        <text x="280" y="383" fill="#9aa3a1" font-size="8" font-family="'JetBrains Mono', monospace"
+              text-anchor="middle" letter-spacing="0.06em">versiones</text>
+
+        <rect x="344" y="242" width="64" height="12" rx="2" fill="#060708"/>
+        <text x="376" y="251" fill="#9fc6c9" font-size="8" font-family="'JetBrains Mono', monospace"
+              text-anchor="middle" letter-spacing="0.06em">promoción</text>
+
+        <rect x="516" y="174" width="40" height="12" rx="2" fill="#060708"/>
+        <text x="536" y="183" fill="#9aa3a1" font-size="8" font-family="'JetBrains Mono', monospace"
+              text-anchor="middle" letter-spacing="0.06em">corpus</text>
+
+        <rect x="612" y="194" width="48" height="12" rx="2" fill="#060708"/>
+        <text x="636" y="203" fill="#9aa3a1" font-size="8" font-family="'JetBrains Mono', monospace"
+              text-anchor="middle" letter-spacing="0.06em">anexos</text>
+
+        <rect x="740" y="188" width="44" height="12" rx="2" fill="#060708"/>
+        <text x="762" y="197" fill="#9aa3a1" font-size="8" font-family="'JetBrains Mono', monospace"
+              text-anchor="middle" letter-spacing="0.06em">nodos</text>
+
+        <rect x="472" y="322" width="40" height="12" rx="2" fill="#060708"/>
+        <text x="492" y="331" fill="#9aa3a1" font-size="8" font-family="'JetBrains Mono', monospace"
+              text-anchor="middle" letter-spacing="0.06em">cortes</text>
+
+        <rect x="744" y="322" width="72" height="12" rx="2" fill="#060708"/>
+        <text x="780" y="331" fill="#9aa3a1" font-size="8" font-family="'JetBrains Mono', monospace"
+              text-anchor="middle" letter-spacing="0.06em">cartografía</text>
+
+        <!-- Banco -->
+        <rect x="64" y="112" width="176" height="72" rx="6" fill="#060708"/>
+        <rect x="64" y="112" width="176" height="72" rx="6" fill="rgba(154,163,161,0.10)" stroke="#7f8a88" stroke-width="1"/>
+        <rect x="72" y="120" width="44" height="12" rx="2" fill="transparent" stroke="rgba(127,138,136,0.50)" stroke-width="0.8"/>
+        <text x="94" y="129" fill="#7f8a88" font-size="7" font-family="'JetBrains Mono', monospace"
+              text-anchor="middle" letter-spacing="0.08em">TALLER</text>
+        <text x="152" y="152" fill="#e9e6dc" font-size="12" font-weight="600" font-family="'Lato', sans-serif"
+              text-anchor="middle">Banco</text>
+        <text x="152" y="168" fill="#9aa3a1" font-size="9" font-family="'JetBrains Mono', monospace"
+              text-anchor="middle">notas · ciclos · ADR</text>
+
+        <!-- Git -->
+        <rect x="64" y="328" width="176" height="72" rx="6" fill="#060708"/>
+        <rect x="64" y="328" width="176" height="72" rx="6" fill="rgba(233,230,220,0.05)" stroke="#9aa3a1" stroke-width="1"/>
+        <rect x="72" y="336" width="48" height="12" rx="2" fill="transparent" stroke="rgba(154,163,161,0.40)" stroke-width="0.8"/>
+        <text x="96" y="345" fill="#9aa3a1" font-size="7" font-family="'JetBrains Mono', monospace"
+              text-anchor="middle" letter-spacing="0.08em">REGISTRO</text>
+        <text x="152" y="368" fill="#e9e6dc" font-size="12" font-weight="600" font-family="'Lato', sans-serif"
+              text-anchor="middle">Git</text>
+        <text x="152" y="384" fill="#9aa3a1" font-size="9" font-family="'JetBrains Mono', monospace"
+              text-anchor="middle">commits · versiones</text>
+
+        <!-- Corpus -->
+        <rect x="320" y="112" width="176" height="72" rx="6" fill="#060708"/>
+        <rect x="320" y="112" width="176" height="72" rx="6" fill="rgba(233,230,220,0.03)" stroke="rgba(233,230,220,0.30)" stroke-width="1"/>
+        <rect x="328" y="120" width="36" height="12" rx="2" fill="transparent" stroke="rgba(233,230,220,0.22)" stroke-width="0.8"/>
+        <text x="346" y="129" fill="#9aa3a1" font-size="7" font-family="'JetBrains Mono', monospace"
+              text-anchor="middle" letter-spacing="0.08em">OBRA</text>
+        <text x="408" y="152" fill="#e9e6dc" font-size="12" font-weight="600" font-family="'Lato', sans-serif"
+              text-anchor="middle">Corpus</text>
+        <text x="408" y="168" fill="#9aa3a1" font-size="9" font-family="'JetBrains Mono', monospace"
+              text-anchor="middle">poemas · código · imágenes</text>
+
+        <!-- Aparato -->
+        <rect x="552" y="112" width="176" height="72" rx="6" fill="#060708"/>
+        <rect x="552" y="112" width="176" height="72" rx="6" fill="rgba(233,230,220,0.05)" stroke="#9aa3a1" stroke-width="1"/>
+        <rect x="560" y="120" width="52" height="12" rx="2" fill="transparent" stroke="rgba(154,163,161,0.40)" stroke-width="0.8"/>
+        <text x="586" y="129" fill="#9aa3a1" font-size="7" font-family="'JetBrains Mono', monospace"
+              text-anchor="middle" letter-spacing="0.08em">APARATO</text>
+        <text x="640" y="152" fill="#e9e6dc" font-size="12" font-weight="600" font-family="'Lato', sans-serif"
+              text-anchor="middle">Aparato</text>
+        <text x="640" y="168" fill="#9aa3a1" font-size="9" font-family="'JetBrains Mono', monospace"
+              text-anchor="middle">anexos · 5 tipos</text>
+
+        <!-- Nodos -->
+        <rect x="784" y="112" width="176" height="72" rx="6" fill="#060708"/>
+        <rect x="784" y="112" width="176" height="72" rx="6" fill="rgba(233,230,220,0.05)" stroke="#9aa3a1" stroke-width="1"/>
+        <rect x="792" y="120" width="40" height="12" rx="2" fill="transparent" stroke="rgba(154,163,161,0.40)" stroke-width="0.8"/>
+        <text x="812" y="129" fill="#9aa3a1" font-size="7" font-family="'JetBrains Mono', monospace"
+              text-anchor="middle" letter-spacing="0.08em">VOCAB</text>
+        <text x="872" y="152" fill="#e9e6dc" font-size="12" font-weight="600" font-family="'Lato', sans-serif"
+              text-anchor="middle">Nodos</text>
+        <text x="872" y="168" fill="#9aa3a1" font-size="9" font-family="'JetBrains Mono', monospace"
+              text-anchor="middle">compartido 01 ↔ 02</text>
+
+        <!-- Exploración (núcleo) -->
+        <rect x="496" y="224" width="256" height="88" rx="6" fill="#060708"/>
+        <rect x="496" y="224" width="256" height="88" rx="6" fill="rgba(159,198,201,0.10)" stroke="#9fc6c9" stroke-width="1.2"/>
+        <rect x="504" y="232" width="44" height="12" rx="2" fill="transparent" stroke="rgba(159,198,201,0.50)" stroke-width="0.8"/>
+        <text x="526" y="241" fill="#9fc6c9" font-size="7" font-family="'JetBrains Mono', monospace"
+              text-anchor="middle" letter-spacing="0.08em">NÚCLEO</text>
+        <text x="624" y="264" fill="#e9e6dc" font-size="12" font-weight="600" font-family="'Lato', sans-serif"
+              text-anchor="middle">Exploración</text>
+        <text x="624" y="280" fill="#9fc6c9" font-size="9" font-family="'JetBrains Mono', monospace"
+              text-anchor="middle">pregunta + cuerpo</text>
+        <text x="624" y="296" fill="#7f8a88" font-size="8" font-family="'JetBrains Mono', monospace"
+              text-anchor="middle">relacionadas ↔ otras derivas</text>
+
+        <!-- Hitos -->
+        <rect x="320" y="352" width="176" height="72" rx="6" fill="#060708"/>
+        <rect x="320" y="352" width="176" height="72" rx="6" fill="rgba(233,230,220,0.05)" stroke="#9aa3a1" stroke-width="1"/>
+        <rect x="328" y="360" width="36" height="12" rx="2" fill="transparent" stroke="rgba(154,163,161,0.40)" stroke-width="0.8"/>
+        <text x="346" y="369" fill="#9aa3a1" font-size="7" font-family="'JetBrains Mono', monospace"
+              text-anchor="middle" letter-spacing="0.08em">CORTE</text>
+        <text x="408" y="392" fill="#e9e6dc" font-size="12" font-weight="600" font-family="'Lato', sans-serif"
+              text-anchor="middle">Hitos</text>
+        <text x="408" y="408" fill="#9aa3a1" font-size="9" font-family="'JetBrains Mono', monospace"
+              text-anchor="middle">cortes + historial</text>
+
+        <!-- Lámina -->
+        <rect x="784" y="352" width="176" height="72" rx="6" fill="#060708"/>
+        <rect x="784" y="352" width="176" height="72" rx="6" fill="rgba(233,230,220,0.05)" stroke="#9aa3a1" stroke-width="1"/>
+        <rect x="792" y="360" width="56" height="12" rx="2" fill="transparent" stroke="rgba(154,163,161,0.40)" stroke-width="0.8"/>
+        <text x="820" y="369" fill="#9aa3a1" font-size="7" font-family="'JetBrains Mono', monospace"
+              text-anchor="middle" letter-spacing="0.08em">ARTEFACTO</text>
+        <text x="872" y="392" fill="#e9e6dc" font-size="12" font-weight="600" font-family="'Lato', sans-serif"
+              text-anchor="middle">Lámina</text>
+        <text x="872" y="408" fill="#9aa3a1" font-size="9" font-family="'JetBrains Mono', monospace"
+              text-anchor="middle">esqueleto + anotación</text>
+
+        <!-- Leyenda -->
+        <line x1="40" y1="492" x2="960" y2="492" stroke="rgba(233,230,220,0.12)" stroke-width="0.8"/>
+        <text x="40" y="512" fill="#7f8a88" font-size="8" font-family="'JetBrains Mono', monospace"
+              letter-spacing="0.18em">LEYENDA</text>
+
+        <rect x="40" y="524" width="14" height="10" rx="2" fill="rgba(159,198,201,0.10)" stroke="#9fc6c9" stroke-width="1"/>
+        <text x="64" y="533" fill="#9aa3a1" font-size="8.5" font-family="'Lato', sans-serif">Núcleo / promoción</text>
+
+        <line x1="240" y1="529" x2="268" y2="529" stroke="#9aa3a1" stroke-width="1.2" marker-end="url(#arrow)"/>
+        <text x="276" y="533" fill="#9aa3a1" font-size="8.5" font-family="'Lato', sans-serif">Leer / componer</text>
+
+        <line x1="440" y1="529" x2="468" y2="529" stroke="#9aa3a1" stroke-width="1"
+              stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+        <text x="476" y="533" fill="#9aa3a1" font-size="8.5" font-family="'Lato', sans-serif">Versiones / historial</text>
+      </svg>
+    </div>
+
+    <div class="note">
+      <p>La exploración es el núcleo: lee obras del corpus, comparte nodos con otras derivas, se sostiene en anexos, registra cortes y se fija en una lámina fechada. El aparato tiene cinco tipos: corrección, fuente, concepto, objeción y derivación. El banco es el proceso; Git es la memoria.</p>
+      <p class="source">Fuente: frontmatter de exploraciones y anexos · docs/rizoma/PUNTO-DE-ENTRADA.md · docs/rizoma/taxonomia-anexos.md</p>
+    </div>
+  </main>
+</body>
+</html>
