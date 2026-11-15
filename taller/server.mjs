@@ -326,7 +326,8 @@ const STATIC = new Map([
   ["/index.html", "index.html"],
   ["/styles.css", "styles.css"],
   ["/app.js", "app.js"],
-  ["/markdown.js", "markdown.js"]
+  ["/markdown.js", "markdown.js"],
+  ["/html-to-markdown.js", "html-to-markdown.js"]
 ]);
 
 const TYPES = {

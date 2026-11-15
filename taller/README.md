@@ -27,11 +27,15 @@ TALLER_PORT=4174 npm run taller
 - **Banco**: indexa notas (`docs/rizoma/*.md`, `ciclos/`, `banco/`),
   exploraciones, nodos y anexos; los ADR, el protocolo, la taxonomía y el punto
   de entrada se listan read-only.
-- **Edición con diff**: guardado explícito, sin autosave. El frontmatter conserva
-  claves desconocidas, orden y comentarios; el cuerpo no editado queda
-  byte-idéntico. Cada lectura devuelve un hash y una escritura con hash viejo
-  termina en conflicto. El conflicto se resuelve en tres vías: base, disco y
-  edición, con un resultado editable y un merge conservador.
+- **Edición con diff**: guardado explícito, sin autosave. El editor Markdown
+  tiene toolbar (títulos, negrita, código, enlaces, tablas, listas, citas), vista
+  previa con tablas y listas de tareas, y pegado inteligente: si copiás HTML
+  (por ejemplo una tabla de una página), lo convierte a Markdown; si ya copiás
+  Markdown, lo deja intacto. El frontmatter conserva claves desconocidas, orden
+  y comentarios; el cuerpo no editado queda byte-idéntico. Cada lectura devuelve
+  un hash y una escritura con hash viejo termina en conflicto. El conflicto se
+  resuelve en tres vías: base, disco y edición, con un resultado editable y un
+  merge conservador.
 - **Apply transaccional**: antes de escribir se toman snapshots de los paths
   afectados; si un cambio falla, se restauran los anteriores y se eliminan los
   archivos nuevos. Un `exec` debe declarar `expectedPaths` para poder revertir
@@ -79,6 +83,8 @@ taller/
     registry.mjs          # carga y valida el registro
   ops/                    # una operación por archivo
   ui/                     # HTML/CSS/JS sin framework ni build
+    markdown.js           # preview Markdown con tablas y listas de tareas
+    html-to-markdown.js   # conversión de HTML pegado a Markdown
   tests/                  # node --test
   vendor-yaml/            # parser YAML vendorizado (yaml 2.9.1, ISC)
 ```
@@ -185,6 +191,7 @@ después de reiniciar. No se edita el router ni `ui/app.js`.
 
 - `Ctrl/Cmd + K`: paleta de comandos.
 - `Ctrl/Cmd + S`: guardar la pieza abierta.
+- `Ctrl/Cmd + B/I`: negrita e itálica; `Ctrl/Cmd + Shift + K`: enlace en el cuerpo.
 - `Alt + 1/2/3`: foco en banco, editor y margen.
 - `Esc`: cerrar el diálogo superior.
 

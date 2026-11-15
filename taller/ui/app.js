@@ -1,4 +1,5 @@
 import { renderMarkdown } from "./markdown.js";
+import { htmlToMarkdown } from "./html-to-markdown.js";
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -184,12 +185,19 @@ function bindEvents() {
     if (state.current) openEntry(state.current.path);
   });
 
+  $("#md-toolbar").addEventListener("click", (event) => {
+    const button = event.target.closest("[data-md]");
+    if (button) applyMarkdownAction(button.dataset.md);
+  });
+
   $("#tab-body").addEventListener("click", () => setTab("body"));
   $("#tab-preview").addEventListener("click", () => setTab("preview"));
   $("#tab-yaml").addEventListener("click", () => setTab("yaml"));
 
   $("#meta-form").addEventListener("input", onEditorInput);
   $("#editor-body").addEventListener("input", onEditorInput);
+  $("#editor-body").addEventListener("keydown", onEditorKeydown);
+  $("#editor-body").addEventListener("paste", onEditorPaste);
   $("#editor-yaml").addEventListener("input", () => {
     state.editor.rawDirty = true;
     onEditorInput();
@@ -507,6 +515,7 @@ function renderEditor() {
   $("#editor-yaml").disabled = item.readOnly;
   $("#btn-save").disabled = item.readOnly;
   $("#btn-discard").disabled = item.readOnly;
+  for (const button of $$("#md-toolbar [data-md]")) button.disabled = item.readOnly;
   $("#diff-state").textContent = "sin guardar";
   $("#editor-diff").textContent = "Sin cambios.";
   $("#editor-hint").textContent = item.readOnly
@@ -599,6 +608,8 @@ function setTab(mode, focus = true) {
   $("#editor-body").hidden = !isBody;
   $("#editor-preview").hidden = !isPreview;
   $("#editor-yaml").hidden = !isYaml;
+  $("#md-toolbar").hidden = !isBody || Boolean(state.current?.readOnly);
+  $("#md-help").hidden = !isBody || Boolean(state.current?.readOnly);
   for (const [id, active] of [
     ["#tab-body", isBody],
     ["#tab-preview", isPreview],
@@ -611,6 +622,122 @@ function setTab(mode, focus = true) {
   if (isPreview) renderPreviewPane();
   if (focus && isYaml) $("#editor-yaml").focus();
   if (focus && isBody) $("#editor-body").focus();
+}
+
+const TABLE_TEMPLATE = "| Columna | Columna |\n| --- | --- |\n|  |  |";
+
+function dispatchEditorInput(textarea) {
+  textarea.dispatchEvent(new Event("input", { bubbles: true }));
+  textarea.focus();
+}
+
+function insertBlock(text) {
+  const textarea = $("#editor-body");
+  const start = textarea.selectionStart ?? textarea.value.length;
+  const end = textarea.selectionEnd ?? start;
+  const before = textarea.value.slice(0, start);
+  const after = textarea.value.slice(end);
+  const lead = before && !before.endsWith("\n\n") ? (before.endsWith("\n") ? "\n" : "\n\n") : "";
+  const trail = after && !after.startsWith("\n\n") ? (after.startsWith("\n") ? "\n" : "\n\n") : "";
+  textarea.setRangeText(`${lead}${text}${trail}`, start, end, "end");
+  dispatchEditorInput(textarea);
+}
+
+function wrapSelection(prefix, suffix, placeholder) {
+  const textarea = $("#editor-body");
+  const start = textarea.selectionStart;
+  const end = textarea.selectionEnd;
+  const selected = textarea.value.slice(start, end) || placeholder;
+  textarea.setRangeText(`${prefix}${selected}${suffix}`, start, end, "end");
+  if (start === end) {
+    textarea.setSelectionRange(start + prefix.length, start + prefix.length + selected.length);
+  }
+  dispatchEditorInput(textarea);
+}
+
+function insertLink() {
+  const textarea = $("#editor-body");
+  const start = textarea.selectionStart;
+  const end = textarea.selectionEnd;
+  const label = textarea.value.slice(start, end) || "texto";
+  const insertion = `[${label}](url)`;
+  textarea.setRangeText(insertion, start, end, "end");
+  const urlStart = start + label.length + 3;
+  textarea.setSelectionRange(urlStart, urlStart + 3);
+  dispatchEditorInput(textarea);
+}
+
+function prefixSelectedLines(prefix) {
+  const textarea = $("#editor-body");
+  const start = textarea.selectionStart;
+  const end = textarea.selectionEnd;
+  const value = textarea.value;
+  const from = value.lastIndexOf("\n", start - 1) + 1;
+  let to = value.indexOf("\n", end);
+  if (to === -1) to = value.length;
+  const block = value.slice(from, to);
+  const lines = block.split("\n").map((line) => {
+    if (line.startsWith(prefix)) return line.slice(prefix.length);
+    return `${prefix}${line}`;
+  });
+  textarea.setRangeText(lines.join("\n"), from, to, "end");
+  dispatchEditorInput(textarea);
+}
+
+function applyMarkdownAction(action) {
+  if (!state.current || state.current.readOnly) return;
+  if (action === "h2") prefixSelectedLines("## ");
+  else if (action === "bold") wrapSelection("**", "**", "texto");
+  else if (action === "italic") wrapSelection("*", "*", "texto");
+  else if (action === "code") wrapSelection("`", "`", "código");
+  else if (action === "link") insertLink();
+  else if (action === "table") insertBlock(TABLE_TEMPLATE);
+  else if (action === "ul") prefixSelectedLines("- ");
+  else if (action === "ol") prefixSelectedLines("1. ");
+  else if (action === "quote") prefixSelectedLines("> ");
+  else if (action === "hr") insertBlock("---");
+}
+
+function onEditorKeydown(event) {
+  if (!(event.metaKey || event.ctrlKey) || event.altKey) return;
+  const key = event.key.toLowerCase();
+  if (key === "b" && !event.shiftKey) {
+    event.preventDefault();
+    event.stopPropagation();
+    applyMarkdownAction("bold");
+  } else if (key === "i" && !event.shiftKey) {
+    event.preventDefault();
+    event.stopPropagation();
+    applyMarkdownAction("italic");
+  } else if (key === "k" && event.shiftKey) {
+    event.preventDefault();
+    event.stopPropagation();
+    applyMarkdownAction("link");
+  }
+}
+
+function looksLikeMarkdown(text) {
+  const source = String(text ?? "");
+  if (!source.trim()) return false;
+  return (
+    /(^|\n)\s*(?:#{1,6}\s|```|>\s|[-*+]\s|\d+[.)]\s)/.test(source) ||
+    /(^|\n)\s*\|?\s*:?-{3,}:?\s*\|/.test(source)
+  );
+}
+
+function onEditorPaste(event) {
+  if (!state.current || state.current.readOnly) return;
+  const clipboard = event.clipboardData;
+  if (!clipboard) return;
+  const html = clipboard.getData("text/html");
+  const text = clipboard.getData("text/plain");
+  if (!html || looksLikeMarkdown(text)) return;
+  if (!/<(table|h[1-6]|ul|ol|pre|blockquote|p|strong|em|a|code)\b/i.test(html)) return;
+  const markdown = htmlToMarkdown(html);
+  if (!markdown.trim()) return;
+  event.preventDefault();
+  insertBlock(markdown);
+  toast("HTML pegado y convertido a Markdown.");
 }
 
 function renderPreviewPane() {

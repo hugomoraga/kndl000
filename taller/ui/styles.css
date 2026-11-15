@@ -567,6 +567,87 @@ select:disabled {
   margin: 0;
 }
 
+
+.md-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  padding: 0.3rem 0;
+  border-top: 1px solid var(--line);
+}
+
+.md-toolbar .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.1rem;
+}
+
+.md-toolbar[hidden] {
+  display: none;
+}
+
+.preview .md-table {
+  overflow-x: auto;
+  margin: 1.2em 0;
+  border: 1px solid var(--line);
+}
+
+.preview table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+.preview th,
+.preview td {
+  border: 1px solid var(--line);
+  padding: 0.4rem 0.55rem;
+  vertical-align: top;
+}
+
+.preview thead th {
+  background: var(--paper-2);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.preview .md-align-center {
+  text-align: center;
+}
+
+.preview .md-align-right {
+  text-align: right;
+}
+
+.preview .md-align-left {
+  text-align: left;
+}
+
+.preview .md-task-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.preview .md-task-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+}
+
+.preview .md-task-list input {
+  margin-top: 0.42em;
+  accent-color: var(--accent);
+}
+
+.preview del {
+  color: var(--muted);
+}
+
 .body-wrap {
   border: 1px solid var(--line-strong);
   background: #fffdf8;
