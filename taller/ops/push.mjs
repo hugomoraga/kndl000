@@ -1,5 +1,5 @@
-import { repoState, push as gitPush } from "../lib/git.mjs";
-import { createPlan, PlanError, validation } from "../lib/plan.mjs";
+import { commitsAhead, repoState, push as gitPush } from "../lib/git.mjs";
+import { createPlan, validation } from "../lib/plan.mjs";
 
 export default {
   id: "push",
@@ -18,15 +18,31 @@ export default {
     if (state.detached) {
       validations.push(validation("branch", false, "No hay una rama para pushear."));
     }
+
+    const ahead = await commitsAhead(ctx.root);
+    const warnings = [];
+    if (!ahead.upstream) {
+      warnings.push("La rama no tiene upstream configurado; git push puede fallar.");
+    }
+    if (ahead.error) {
+      warnings.push(`No se pudieron leer los commits locales: ${ahead.error}`);
+    }
+
     return createPlan({
       operation: "push",
       summary: `Push de ${state.branch ?? "(sin rama)"} (sin force)`,
       changes: [],
       preview: [],
       validations,
+      warnings,
       message: `taller: push ${state.branch ?? ""}`.trim(),
       origin: state.branch ?? "",
-      meta: { branch: state.branch, head: state.head }
+      meta: {
+        branch: state.branch,
+        head: state.head,
+        upstream: ahead.upstream,
+        commitsAhead: ahead.commits
+      }
     });
   },
   async apply(ctx) {

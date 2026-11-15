@@ -193,6 +193,42 @@ export async function stageAndCommit(root, paths, message) {
   return { stdout: committed.stdout, stderr: committed.stderr };
 }
 
+export async function commitsAhead(root, limit = 50) {
+  const upstreamResult = await git(root, [
+    "rev-parse",
+    "--abbrev-ref",
+    "--symbolic-full-name",
+    "@{upstream}"
+  ]);
+  const upstream = upstreamResult.ok ? upstreamResult.stdout.trim() : null;
+  if (!upstream) return { upstream: null, commits: [], error: null };
+
+  const log = await git(root, [
+    "log",
+    "--no-color",
+    "--format=%h%x09%cs%x09%s",
+    "-n",
+    String(limit),
+    `${upstream}..HEAD`
+  ]);
+  if (!log.ok) {
+    return {
+      upstream,
+      commits: [],
+      error: log.stderr.trim() || log.stdout.trim() || "git log falló"
+    };
+  }
+
+  const commits = log.stdout
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => {
+      const [hash, date, ...rest] = line.split("\t");
+      return { hash, date, subject: rest.join("\t") };
+    });
+  return { upstream, commits, error: null };
+}
+
 export async function push(root) {
   const result = await git(root, ["push"]);
   if (!result.ok) throw new Error(result.stderr || result.stdout || "git push falló");

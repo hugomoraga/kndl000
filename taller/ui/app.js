@@ -2059,6 +2059,11 @@ function paletteCommands() {
   }
   commands.push(
     {
+      label: "Publicar cambios locales (push)",
+      description: "Sube la rama actual a origin con los commits locales, sin force.",
+      run: () => openOperation("push")
+    },
+    {
       label: "Guardar la pieza abierta",
       description: "Guarda con diff explícito. Atajo ⌘S.",
       run: () => saveCurrent()
@@ -2387,6 +2392,27 @@ function renderPlanDetails(plan) {
     ? `<pre class="diff">${esc(plan.diff)}</pre>`
     : '<p class="hint">Sin diff de archivos.</p>';
 
+  const commitsAhead = Array.isArray(plan.meta?.commitsAhead) ? plan.meta.commitsAhead : null;
+  const upstream = plan.meta?.upstream ? `<code>${esc(plan.meta.upstream)}</code>` : "";
+  const pushHtml =
+    plan.operation === "push" && commitsAhead
+      ? commitsAhead.length
+        ? `<div class="push-commits">
+            <div class="hint">${commitsAhead.length} commit(s) locales para subir${upstream ? ` a ${upstream}` : ""}:</div>
+            <ul>${commitsAhead
+              .map(
+                (commit) =>
+                  `<li><code>${esc(commit.hash)}</code> <span class="hint">${esc(
+                    commit.date
+                  )}</span> ${esc(commit.subject)}</li>`
+              )
+              .join("")}</ul>
+          </div>`
+        : `<p class="hint">No hay commits locales pendientes de push${
+            upstream ? ` (ya estás al día con ${upstream})` : ""
+          }.</p>`
+      : "";
+
   return `
     <p class="plan-summary">${esc(plan.summary)}</p>
     ${validationHtml}
@@ -2394,6 +2420,7 @@ function renderPlanDetails(plan) {
     ${warningHtml}
     ${checksHtml}
     ${pathsHtml}
+    ${pushHtml}
     ${diffHtml}
   `;
 }

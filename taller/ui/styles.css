@@ -1599,6 +1599,31 @@ select option {
   overflow-wrap: anywhere;
 }
 
+.push-commits {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.push-commits ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.push-commits li {
+  border-left: 1px solid var(--rule-strong);
+  padding: 0.32rem 0.6rem;
+  font-size: 0.76rem;
+  color: var(--ink-dim);
+  overflow-wrap: anywhere;
+}
+
+.push-commits code {
+  font-family: var(--mono);
+}
+
 .checks {
   display: grid;
   gap: 0.3rem;
