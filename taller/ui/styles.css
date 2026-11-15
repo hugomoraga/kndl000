@@ -1760,6 +1760,19 @@ select option {
   gap: 0.5rem;
 }
 
+.section-actions {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.corpus-dialog {
+  width: min(620px, calc(100vw - 3rem));
+}
+
+.corpus-dialog form {
+  padding: 1rem;
+}
+
 .confirm-dialog {
   width: min(560px, calc(100vw - 3rem));
 }

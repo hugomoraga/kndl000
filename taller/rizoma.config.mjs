@@ -12,6 +12,7 @@ import publicarExploracion from "./ops/publicar-exploracion.mjs";
 import publicarNodo from "./ops/publicar-nodo.mjs";
 import publicarAnexo from "./ops/publicar-anexo.mjs";
 import publicarHito from "./ops/publicar-hito.mjs";
+import editarCorpus from "./ops/editar-corpus.mjs";
 import vincular from "./ops/vincular.mjs";
 import desvincular from "./ops/desvincular.mjs";
 import desvincularAdjunto from "./ops/desvincular-adjunto.mjs";
@@ -200,6 +201,7 @@ export default {
     publicarNodo,
     publicarAnexo,
     publicarHito,
+    editarCorpus,
     vincular,
     desvincular,
     desvincularAdjunto,

@@ -220,6 +220,52 @@
 
           <div id="margin-warnings" class="warnings"></div>
 
+          <details id="corpus-section" class="margin-section" aria-label="Corpus" open hidden>
+            <summary><span>Corpus</span><span id="corpus-count" class="pane-meta"></span></summary>
+            <div class="margin-section-body">
+              <div id="corpus-list" class="margin-list"></div>
+              <p id="corpus-sections" class="hint" hidden></p>
+              <div class="section-actions">
+                <button id="corpus-add" class="btn small ghost" type="button">+ Añadir pieza</button>
+              </div>
+            </div>
+          </details>
+
+          <details id="relacionadas-section" class="margin-section" aria-label="Relacionadas" hidden>
+            <summary><span>Relacionadas</span><span id="relacionadas-count" class="pane-meta"></span></summary>
+            <div class="margin-section-body">
+              <div id="relacionadas-list" class="margin-list"></div>
+            </div>
+          </details>
+
+          <details id="anexos-section" class="margin-section" aria-label="Anexos" hidden>
+            <summary><span>Anexos</span><span id="anexos-count" class="pane-meta"></span></summary>
+            <div class="margin-section-body">
+              <div id="anexos-list" class="margin-list"></div>
+            </div>
+          </details>
+
+          <details id="nodos-section" class="margin-section" aria-label="Nodos" hidden>
+            <summary><span>Nodos</span><span id="nodos-count" class="pane-meta"></span></summary>
+            <div class="margin-section-body">
+              <div id="nodos-list" class="margin-list"></div>
+            </div>
+          </details>
+
+          <details id="hitos-section" class="margin-section" aria-label="Hitos" hidden>
+            <summary><span>Hitos</span><span id="hitos-count" class="pane-meta"></span></summary>
+            <div class="margin-section-body">
+              <div id="hitos-list" class="margin-list"></div>
+            </div>
+          </details>
+
+          <details id="fuentes-section" class="margin-section" aria-label="Fuentes" hidden>
+            <summary><span>Fuentes</span><span id="fuentes-count" class="pane-meta"></span></summary>
+            <div class="margin-section-body">
+              <div id="fuentes-list" class="margin-list"></div>
+            </div>
+          </details>
+
           <details class="margin-section" aria-label="Preview real" open>
             <summary><span>Preview real</span></summary>
             <div class="margin-section-body">
@@ -307,6 +353,36 @@
           <button id="operation-plan" class="btn accent" type="submit" form="operation-form">
             Previsualizar plan
           </button>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog id="corpus-dialog" class="dialog corpus-dialog" aria-label="Editar corpus">
+      <div class="dialog-head">
+        <h2 id="corpus-dialog-title">Añadir al corpus</h2>
+        <button class="btn ghost" type="button" data-close>Esc</button>
+      </div>
+      <form id="corpus-form" class="stack">
+        <label class="field">
+          <span>URL</span>
+          <input id="corpus-url" type="text" placeholder="/poemas/medusa/ o https://…" required>
+        </label>
+        <label class="field">
+          <span>Nota</span>
+          <textarea id="corpus-note" rows="3" placeholder="Por qué esta pieza entra al corpus"></textarea>
+        </label>
+        <label class="field">
+          <span>Sección (opcional)</span>
+          <input id="corpus-seccion" type="text" list="corpus-secciones-options" placeholder="persistir, gastar…">
+        </label>
+        <datalist id="corpus-secciones-options"></datalist>
+        <p class="hint">Si indicás una sección, la pieza también se agrega al corpus de esa sección.</p>
+      </form>
+      <div id="corpus-error" class="error" hidden></div>
+      <div class="dialog-actions">
+        <div class="actions">
+          <button id="corpus-cancel" class="btn ghost" type="button">Cancelar</button>
+          <button id="corpus-plan" class="btn accent" type="submit" form="corpus-form">Previsualizar plan</button>
         </div>
       </div>
     </dialog>

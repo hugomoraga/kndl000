@@ -223,9 +223,20 @@ async function handleItem(res, url) {
 
 async function handleStatus(res) {
   const [repo, tools] = await Promise.all([repoState(ROOT), checkTools(ROOT)]);
+  let siteUrl = null;
+  try {
+    const cnamePath = join(ROOT, "CNAME");
+    if (existsSync(cnamePath)) {
+      const cname = readFileSync(cnamePath, "utf8").trim();
+      if (cname) siteUrl = `https://${cname}`;
+    }
+  } catch {
+    siteUrl = null;
+  }
   sendJson(res, 200, {
     root: ROOT,
     port: PORT,
+    siteUrl,
     uptime: Math.round((Date.now() - STARTED) / 1000),
     repo,
     tools,

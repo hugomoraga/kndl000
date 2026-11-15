@@ -27,6 +27,7 @@ test("el registro real declara tipos y operaciones del taller", async () => {
     "publicar-nodo",
     "publicar-anexo",
     "publicar-hito",
+    "editar-corpus",
     "vincular",
     "commit",
     "push"

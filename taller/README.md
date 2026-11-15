@@ -64,7 +64,10 @@ TALLER_PORT=4174 npm run taller
   acción aparte y explícita; no hay force push.
 - **Búsqueda y margen**: `/` enfoca la búsqueda; filtros `estado:`, `tipo:`,
   `path:`, `titulo:`, `publico:`, `readonly:`, `vinculo:roto`, `adjunto:`.
-  Las secciones del margen se colapsan y muestran su conteo.
+  El margen muestra el corpus, las relacionadas, los anexos, los nodos, los
+  hitos y las fuentes del anexo, con enlaces al taller o al sitio. El corpus se
+  puede agregar, editar (URL, nota y sección) y quitar desde el margen, siempre
+  con plan y diff. Las secciones se colapsan y muestran su conteo.
 - **Descartar**: `git restore --source=HEAD --staged --worktree` sobre un path;
   si el archivo es nuevo (untracked), lo elimina.
 - **Borrar nota**: solo notas de banco, con confirmación explícita. Muestra los

@@ -224,6 +224,94 @@ test("borrar nota pide confirmación, muestra backlinks y no edita el origen", a
   }
 });
 
+test("editar corpus agrega, edita y quita piezas con su sección", async () => {
+  const root = fixture();
+  try {
+    const add = operation((await context(root)).registry, "editar-corpus");
+    let ctx = await context(root);
+    const addPlan = await add.plan(ctx, {
+      path: "content/collections/_exploraciones/a.md",
+      action: "add",
+      index: -1,
+      url: "/poemas/uno/",
+      note: "Una pieza",
+      seccion: "inicio"
+    });
+    assert.equal(addPlan.validations.some((item) => !item.ok), false);
+    await applyPlan(root, addPlan);
+    let parsed = parseFrontmatter(
+      readFileSync(join(root, "content/collections/_exploraciones/a.md"), "utf8")
+    );
+    assert.equal(parsed.meta.corpus[0].url, "/poemas/uno/");
+    assert.equal(parsed.meta.corpus_secciones[0].seccion, "inicio");
+    assert.deepEqual(parsed.meta.corpus_secciones[0].piezas, ["/poemas/uno/"]);
+
+    ctx = await context(root);
+    const editPlan = await add.plan(ctx, {
+      path: "content/collections/_exploraciones/a.md",
+      action: "edit",
+      index: 0,
+      url: "/poemas/dos/",
+      note: "Otra pieza",
+      seccion: "inicio"
+    });
+    assert.equal(editPlan.validations.some((item) => !item.ok), false);
+    await applyPlan(root, editPlan);
+    parsed = parseFrontmatter(
+      readFileSync(join(root, "content/collections/_exploraciones/a.md"), "utf8")
+    );
+    assert.equal(parsed.meta.corpus[0].url, "/poemas/dos/");
+    assert.equal(parsed.meta.corpus[0].note, "Otra pieza");
+    assert.deepEqual(parsed.meta.corpus_secciones[0].piezas, ["/poemas/dos/"]);
+
+    ctx = await context(root);
+    const removePlan = await add.plan(ctx, {
+      path: "content/collections/_exploraciones/a.md",
+      action: "remove",
+      index: 0,
+      url: "/poemas/dos/"
+    });
+    assert.equal(removePlan.validations.some((item) => !item.ok), false);
+    await applyPlan(root, removePlan);
+    parsed = parseFrontmatter(
+      readFileSync(join(root, "content/collections/_exploraciones/a.md"), "utf8")
+    );
+    assert.deepEqual(parsed.meta.corpus, []);
+    assert.deepEqual(parsed.meta.corpus_secciones[0].piezas, []);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("editar corpus rechaza duplicados", async () => {
+  const root = fixture();
+  try {
+    let ctx = await context(root);
+    const op = operation(ctx.registry, "editar-corpus");
+    await applyPlan(
+      root,
+      await op.plan(ctx, {
+        path: "content/collections/_exploraciones/a.md",
+        action: "add",
+        index: -1,
+        url: "/poemas/uno/",
+        note: "Una"
+      })
+    );
+    ctx = await context(root);
+    const duplicate = await op.plan(ctx, {
+      path: "content/collections/_exploraciones/a.md",
+      action: "add",
+      index: -1,
+      url: "/poemas/uno",
+      note: "Duplicada"
+    });
+    assert.ok(duplicate.validations.some((item) => item.id === "duplicado" && !item.ok));
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
 test("publicar hito agrega al frontmatter sin tocar el cuerpo", async () => {
   const root = fixture();
   try {

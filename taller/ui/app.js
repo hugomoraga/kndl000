@@ -33,7 +33,8 @@ const state = {
   palette: { commands: [], selected: 0, filtered: [] },
   commit: { plan: null, input: null },
   conflict: null,
-  linkSuggestions: { items: [], selected: 0 }
+  linkSuggestions: { items: [], selected: 0 },
+  corpusEditor: { index: null }
 };
 
 function esc(value) {
@@ -330,6 +331,9 @@ function bindEvents() {
   $("#dirty-dialog").addEventListener("close", () => {
     if (state.dirtyResolver) resolveDirty(false);
   });
+  $("#corpus-add").addEventListener("click", () => openCorpusDialog(null));
+  $("#corpus-cancel").addEventListener("click", () => closeDialog($("#corpus-dialog")));
+  $("#corpus-form").addEventListener("submit", prepareCorpusPlan);
   $("#conflict-cancel").addEventListener("click", () => closeDialog($("#conflict-dialog")));
   $("#conflict-save").addEventListener("click", saveConflictResult);
   $("#conflict-use-current").addEventListener("click", () => useConflictSide("current"));
@@ -1296,6 +1300,7 @@ function renderMargin() {
 
   const canLink = LINKABLE_TYPES.has(item.type) && !item.readOnly;
   $("#link-form").hidden = !canLink;
+  renderPublicStructure(item);
   const warnings = item.warnings ?? [];
   $("#margin-warnings").innerHTML = warnings.length
     ? warnings
@@ -1312,6 +1317,377 @@ function renderMargin() {
   renderLinks(item);
   renderBacklinks(item);
   renderAttachments(item);
+}
+
+function normalizeSiteUrl(value) {
+  const url = String(value ?? "").trim();
+  if (!url.startsWith("/")) return url;
+  return url.endsWith("/") ? url : `${url}/`;
+}
+
+function findEntryByUrl(value) {
+  const key = normalizeSiteUrl(value);
+  return (
+    state.index?.entries?.find((entry) => entry.url && normalizeSiteUrl(entry.url) === key) ??
+    null
+  );
+}
+
+function findNodeEntry(value) {
+  const key = normalize(value);
+  return (
+    state.index?.entries?.find(
+      (entry) => entry.type === "nodo" && normalize(entry.title) === key
+    ) ?? null
+  );
+}
+
+function structureCard({
+  title,
+  subtitle = "",
+  note = "",
+  url = "",
+  meta = "",
+  entry = null,
+  externalUrl = null,
+  extraActions = []
+}) {
+  const card = document.createElement("div");
+  card.className = "margin-item";
+  const row = document.createElement("div");
+  row.className = "row";
+  const strong = document.createElement("strong");
+  strong.textContent = title;
+  row.append(strong);
+  if (subtitle) {
+    const badge = document.createElement("span");
+    badge.className = "badge";
+    badge.textContent = subtitle;
+    row.append(badge);
+  }
+  card.append(row);
+  if (url && url !== title) {
+    const dest = document.createElement("div");
+    dest.className = "destino";
+    dest.textContent = url;
+    card.append(dest);
+  }
+  if (note) {
+    const motivo = document.createElement("div");
+    motivo.className = "motivo";
+    motivo.textContent = note;
+    card.append(motivo);
+  }
+  if (meta) {
+    const metaNode = document.createElement("div");
+    metaNode.className = "meta";
+    metaNode.textContent = meta;
+    card.append(metaNode);
+  }
+  const actions = document.createElement("div");
+  actions.className = "actions";
+  if (entry) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "btn small ghost";
+    button.textContent = "Abrir";
+    button.addEventListener("click", () => openEntry(entry.path));
+    actions.append(button);
+  } else if (externalUrl) {
+    const link = document.createElement("a");
+    link.className = "btn small ghost";
+    link.href = externalUrl;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = "Ver en sitio";
+    actions.append(link);
+  }
+  for (const action of extraActions) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "btn small ghost";
+    button.textContent = action.label;
+    button.addEventListener("click", action.onClick);
+    actions.append(button);
+  }
+  if (actions.children.length > 0) card.append(actions);
+  return card;
+}
+
+function sitePreviewUrl(url) {
+  if (!url) return null;
+  if (/^https?:/i.test(url)) return url;
+  if (!url.startsWith("/")) return null;
+  if (state.previewStatus?.running) return `${state.previewStatus.url}${url}`;
+  if (state.status?.siteUrl) return `${state.status.siteUrl}${url}`;
+  return null;
+}
+
+function fillStructureList(node, items, emptyText) {
+  node.innerHTML = "";
+  if (items.length === 0) {
+    const hint = document.createElement("p");
+    hint.className = "hint";
+    hint.textContent = emptyText;
+    node.append(hint);
+    return;
+  }
+  for (const item of items) node.append(item);
+}
+
+function renderPublicStructure(item) {
+  const sectionIds = [
+    "corpus-section",
+    "relacionadas-section",
+    "anexos-section",
+    "nodos-section",
+    "hitos-section",
+    "fuentes-section"
+  ];
+  for (const id of sectionIds) {
+    const section = $(`#${id}`);
+    if (section) section.hidden = true;
+  }
+
+  if (item.type === "exploracion") {
+    const corpus = Array.isArray(item.meta?.corpus) ? item.meta.corpus : [];
+    const corpusSection = $("#corpus-section");
+    corpusSection.hidden = false;
+    $("#corpus-add").hidden = Boolean(item.readOnly);
+    $("#corpus-count").textContent = String(corpus.length);
+    const corpusItems = corpus
+      .map((entry, index) => ({ entry, index }))
+      .filter(({ entry }) => entry && typeof entry === "object" && entry.url)
+      .map(({ entry, index }) => {
+        const target = findEntryByUrl(entry.url);
+        return structureCard({
+          title: target?.title || entry.url,
+          subtitle: target?.typeLabel || "público",
+          note: entry.note ?? "",
+          url: entry.url,
+          entry: target,
+          externalUrl: sitePreviewUrl(entry.url),
+          extraActions: item.readOnly
+            ? []
+            : [
+                {
+                  label: "Editar",
+                  onClick: () => openCorpusDialog(index)
+                },
+                {
+                  label: "Quitar",
+                  onClick: () => removeCorpusItem(index)
+                }
+              ]
+        });
+      });
+    fillStructureList(
+      $("#corpus-list"),
+      corpusItems,
+      "Sin corpus declarado todavía."
+    );
+    const sections = Array.isArray(item.meta?.corpus_secciones) ? item.meta.corpus_secciones : [];
+    const sectionsNode = $("#corpus-sections");
+    sectionsNode.hidden = sections.length === 0;
+    sectionsNode.textContent = sections
+      .map((section) => `${section.seccion ?? "?"}: ${(section.piezas ?? []).length}`)
+      .join(" · ");
+
+    const relacionadas = Array.isArray(item.meta?.relacionadas) ? item.meta.relacionadas : [];
+    if (relacionadas.length > 0) {
+      $("#relacionadas-section").hidden = false;
+      $("#relacionadas-count").textContent = String(relacionadas.length);
+      const relatedItems = relacionadas.map((url) => {
+        const target = findEntryByUrl(url);
+        return structureCard({
+          title: target?.title || url,
+          subtitle: target?.typeLabel || "relación",
+          url,
+          entry: target,
+          externalUrl: sitePreviewUrl(url)
+        });
+      });
+      fillStructureList($("#relacionadas-list"), relatedItems, "");
+    }
+
+    const anexos = Array.isArray(item.meta?.anexos) ? item.meta.anexos : [];
+    if (anexos.length > 0) {
+      $("#anexos-section").hidden = false;
+      $("#anexos-count").textContent = String(anexos.length);
+      const anexoItems = anexos
+        .filter((entry) => entry && typeof entry === "object")
+        .map((entry) => {
+          const target = findEntryByUrl(entry.url);
+          return structureCard({
+            title: entry.title || target?.title || entry.url || "Anexo",
+            subtitle: entry.tipo || target?.estado || "anexo",
+            note: entry.note ?? "",
+            url: entry.url ?? target?.url ?? "",
+            entry: target,
+            externalUrl: sitePreviewUrl(entry.url ?? target?.url)
+          });
+        });
+      fillStructureList($("#anexos-list"), anexoItems, "");
+    }
+
+    const nodos = Array.isArray(item.meta?.nodos) ? item.meta.nodos : [];
+    if (nodos.length > 0) {
+      $("#nodos-section").hidden = false;
+      $("#nodos-count").textContent = String(nodos.length);
+      const nodoItems = nodos.map((nodo) => {
+        const target = findNodeEntry(nodo);
+        return structureCard({
+          title: String(nodo),
+          subtitle: "nodo",
+          entry: target
+        });
+      });
+      fillStructureList($("#nodos-list"), nodoItems, "");
+    }
+
+    const hitos = Array.isArray(item.meta?.hitos) ? item.meta.hitos : [];
+    if (hitos.length > 0) {
+      $("#hitos-section").hidden = false;
+      $("#hitos-count").textContent = String(hitos.length);
+      const hitoItems = hitos.map((hito) =>
+        structureCard({
+          title: hito?.title ?? "Hito",
+          subtitle: "hito",
+          note: hito?.text ?? "",
+          meta: hito?.date ?? ""
+        })
+      );
+      fillStructureList($("#hitos-list"), hitoItems, "");
+    }
+  } else if (item.type === "anexo") {
+    const fuentes = Array.isArray(item.meta?.fuentes) ? item.meta.fuentes : [];
+    if (fuentes.length > 0) {
+      $("#fuentes-section").hidden = false;
+      $("#fuentes-count").textContent = String(fuentes.length);
+      const sourceItems = fuentes.map((source) => {
+        const meta = [source.autor, source.publicacion, source.consultado]
+          .filter(Boolean)
+          .join(" · ");
+        return structureCard({
+          title: source.titulo || source.url || "Fuente",
+          subtitle: source.tipo || "fuente",
+          note: source.verifica ?? "",
+          url: source.url ?? "",
+          meta,
+          externalUrl: sitePreviewUrl(source.url)
+        });
+      });
+      fillStructureList($("#fuentes-list"), sourceItems, "");
+    }
+  }
+}
+
+function sectionForUrl(meta, value) {
+  const key = normalizeSiteUrl(value).replace(/\/$/, "");
+  for (const section of Array.isArray(meta?.corpus_secciones) ? meta.corpus_secciones : []) {
+    if (
+      (Array.isArray(section?.piezas) ? section.piezas : []).some(
+        (piece) => normalizeSiteUrl(piece).replace(/\/$/, "") === key
+      )
+    ) {
+      return String(section.seccion ?? "");
+    }
+  }
+  return "";
+}
+
+function openCorpusDialog(index = null) {
+  if (!state.current) return;
+  if (state.current.type !== "exploracion") {
+    toast("El corpus solo se edita en exploraciones.", { error: true });
+    return;
+  }
+  if (state.current.readOnly) {
+    toast("La exploración es read-only.", { error: true });
+    return;
+  }
+  const corpus = Array.isArray(state.current.meta?.corpus) ? state.current.meta.corpus : [];
+  const raw = index === null ? null : corpus[index];
+  const data =
+    typeof raw === "string"
+      ? { url: raw, note: "" }
+      : raw && typeof raw === "object"
+        ? raw
+        : { url: "", note: "" };
+  state.corpusEditor = { index };
+  $("#corpus-dialog-title").textContent = index === null ? "Añadir al corpus" : "Editar corpus";
+  $("#corpus-url").value = String(data.url ?? "");
+  $("#corpus-note").value = String(data.note ?? "");
+  $("#corpus-seccion").value =
+    index === null ? "" : sectionForUrl(state.current.meta, data.url);
+  const datalist = $("#corpus-secciones-options");
+  datalist.innerHTML = "";
+  for (const section of Array.isArray(state.current.meta?.corpus_secciones)
+    ? state.current.meta.corpus_secciones
+    : []) {
+    if (!section?.seccion) continue;
+    const option = document.createElement("option");
+    option.value = String(section.seccion);
+    datalist.append(option);
+  }
+  $("#corpus-error").hidden = true;
+  $("#corpus-error").textContent = "";
+  showDialog($("#corpus-dialog"));
+  $("#corpus-url").focus();
+}
+
+async function prepareCorpusPlan(event) {
+  event.preventDefault();
+  if (!state.current) return;
+  const index = state.corpusEditor.index;
+  const action = index === null ? "add" : "edit";
+  const input = {
+    path: state.current.path,
+    action,
+    index: index === null ? -1 : index,
+    url: $("#corpus-url").value.trim(),
+    note: $("#corpus-note").value.trim(),
+    seccion: $("#corpus-seccion").value.trim()
+  };
+  try {
+    const plan = await api("/api/plan", {
+      method: "POST",
+      body: { operation: "editar-corpus", input }
+    });
+    closeDialog($("#corpus-dialog"));
+    showPlan({
+      plan,
+      label: action === "add" ? "Agregar al corpus" : "Editar corpus",
+      input
+    });
+  } catch (error) {
+    $("#corpus-error").hidden = false;
+    $("#corpus-error").textContent = formatError(error);
+  }
+}
+
+async function removeCorpusItem(index) {
+  if (!state.current) return;
+  const corpus = Array.isArray(state.current.meta?.corpus) ? state.current.meta.corpus : [];
+  const raw = corpus[index];
+  const url = typeof raw === "string" ? raw : String(raw?.url ?? "");
+  const input = {
+    path: state.current.path,
+    action: "remove",
+    index,
+    url,
+    note: "",
+    seccion: ""
+  };
+  try {
+    const plan = await api("/api/plan", {
+      method: "POST",
+      body: { operation: "editar-corpus", input }
+    });
+    showPlan({ plan, label: "Quitar del corpus", input });
+  } catch (error) {
+    toast(formatError(error), { error: true });
+  }
 }
 
 function renderPreviewStatus(item) {
