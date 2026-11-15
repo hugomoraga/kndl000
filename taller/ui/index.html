@@ -3,12 +3,28 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="color-scheme" content="light">
+    <meta name="color-scheme" content="dark light">
     <title>Taller de Rizoma — KNDL 000</title>
+    <script src="/theme-init.js"></script>
     <link rel="stylesheet" href="/styles.css">
     <script type="module" src="/app.js"></script>
   </head>
   <body>
+    <svg class="icon-sprite" aria-hidden="true" focusable="false">
+      <symbol id="icon-heading" viewBox="0 0 20 20"><path d="M4 4v12M12 4v12M4 10h8"/></symbol>
+      <symbol id="icon-bold" viewBox="0 0 20 20"><path d="M6 4h4a3 3 0 0 1 0 6H6zM6 10h5a3 3 0 0 1 0 6H6z"/></symbol>
+      <symbol id="icon-italic" viewBox="0 0 20 20"><path d="M10 4h5M7 16h5M12 4 8 16"/></symbol>
+      <symbol id="icon-code" viewBox="0 0 20 20"><path d="m7 6-4 4 4 4M13 6l4 4-4 4"/></symbol>
+      <symbol id="icon-link" viewBox="0 0 20 20"><path d="M8 8 6.5 9.5a3.5 3.5 0 0 0 5 5L13 13M12 12l1.5-1.5a3.5 3.5 0 0 0-5-5L7 7"/></symbol>
+      <symbol id="icon-table" viewBox="0 0 20 20"><path d="M3 5h14v10H3zM3 9h14M8 5v10"/></symbol>
+      <symbol id="icon-ul" viewBox="0 0 20 20"><path d="M8 5h8M8 10h8M8 15h8"/><circle cx="4.5" cy="5" r=".8"/><circle cx="4.5" cy="10" r=".8"/><circle cx="4.5" cy="15" r=".8"/></symbol>
+      <symbol id="icon-ol" viewBox="0 0 20 20"><path d="M8 5h8M8 10h8M8 15h8M4 4h1v3M3.5 10.5c0-.7 1.5-.7 1.5 0 0 .5-1.5 1.2-1.5 2h1.8M4 14h1v3H3.8"/></symbol>
+      <symbol id="icon-quote" viewBox="0 0 20 20"><path d="M7 8c0-2 1-3 3-3v2c-1 0-1.5.5-1.5 1.5H10v4H6V8zM16 8c0-2 1-3 3-3v2c-1 0-1.5.5-1.5 1.5H19v4h-4V8z" fill="currentColor" stroke="none"/></symbol>
+      <symbol id="icon-hr" viewBox="0 0 20 20"><path d="M4 10h12"/></symbol>
+      <symbol id="icon-focus" viewBox="0 0 20 20"><path d="M4 8V4h4M16 8V4h-4M4 12v4h4M16 12v4h-4"/></symbol>
+      <symbol id="icon-sun" viewBox="0 0 20 20"><circle cx="10" cy="10" r="3.5"/><path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.3 4.3l1.4 1.4M14.3 14.3l1.4 1.4M15.7 4.3l-1.4 1.4M5.7 14.3l-1.4 1.4"/></symbol>
+      <symbol id="icon-moon" viewBox="0 0 20 20"><path d="M15.5 12.5A6 6 0 0 1 7.5 4.5a6.5 6.5 0 1 0 8 8z"/></symbol>
+    </svg>
     <a class="skip" href="#banco">Saltar al banco</a>
 
     <header class="topbar">
@@ -18,6 +34,10 @@
       </div>
       <div id="repo-status" class="repo-status" aria-live="polite">Cargando repo…</div>
       <div class="actions">
+        <button id="btn-theme" class="btn ghost icon-only" type="button" aria-label="Cambiar a modo claro" title="Cambiar tema (Alt+T)">
+          <svg class="icon icon-sun" aria-hidden="true"><use href="#icon-sun"></use></svg>
+          <svg class="icon icon-moon" aria-hidden="true"><use href="#icon-moon"></use></svg>
+        </button>
         <button id="btn-palette" class="btn ghost" type="button" title="Ctrl/Cmd + K">
           Comandos <kbd>⌘K</kbd>
         </button>
@@ -43,7 +63,7 @@
         <div class="filters">
           <label class="field">
             <span>Buscar</span>
-            <input id="filter-q" type="search" placeholder="título, path o estado" autocomplete="off">
+            <input id="filter-q" type="search" placeholder="título, path o filtro: estado:banco" autocomplete="off" title="Filtros: estado:, tipo:, path:, titulo:, publico:, readonly:, vinculo:roto, adjunto:si|no|roto">
           </label>
           <div class="filter-row">
             <label class="field">
@@ -74,6 +94,7 @@
         </div>
 
         <div id="editor" hidden>
+          <button id="btn-back-list" class="btn ghost mobile-only" type="button">← Banco</button>
           <div class="editor-head">
             <div>
               <p id="editor-type" class="eyebrow"></p>
@@ -83,12 +104,21 @@
             <div id="editor-badges" class="badges"></div>
           </div>
 
-          <form id="meta-form" class="meta-form"></form>
+          <details id="meta-details" class="meta-panel">
+            <summary>
+              <span>Metadatos</span>
+              <span id="meta-summary" class="pane-meta"></span>
+            </summary>
+            <form id="meta-form" class="meta-form"></form>
+          </details>
 
           <div class="editor-actions">
             <div class="tabs" role="tablist" aria-label="Vistas del editor">
-              <button id="tab-body" class="tab active" type="button" role="tab" aria-selected="true">
+              <button id="tab-body" class="tab" type="button" role="tab" aria-selected="false">
                 Cuerpo
+              </button>
+              <button id="tab-split" class="tab active" type="button" role="tab" aria-selected="true">
+                Dividido
               </button>
               <button id="tab-preview" class="tab" type="button" role="tab" aria-selected="false">
                 Vista previa
@@ -98,6 +128,9 @@
               </button>
             </div>
             <div class="actions">
+              <button id="btn-focus" class="btn ghost icon-only" type="button" aria-pressed="false" aria-label="Modo enfoque" title="Modo enfoque (Alt+Z)">
+                <svg class="icon" aria-hidden="true"><use href="#icon-focus"></use></svg>
+              </button>
               <button id="btn-discard" class="btn ghost" type="button">Descartar</button>
               <button id="btn-reload" class="btn ghost" type="button">Recargar</button>
               <button id="btn-save" class="btn accent" type="button">Guardar</button>
@@ -107,32 +140,69 @@
           <p id="editor-hint" class="hint"></p>
 
           <div id="md-toolbar" class="md-toolbar" role="toolbar" aria-label="Formato Markdown">
-            <button type="button" class="btn small ghost" data-md="h2" title="Título de sección">H2</button>
-            <button type="button" class="btn small ghost" data-md="bold" title="Negrita (Ctrl/Cmd+B)"><strong>B</strong></button>
-            <button type="button" class="btn small ghost" data-md="italic" title="Itálica (Ctrl/Cmd+I)"><em>I</em></button>
-            <button type="button" class="btn small ghost" data-md="code" title="Código inline">&lt;/&gt;</button>
-            <button type="button" class="btn small ghost" data-md="link" title="Enlace (Ctrl/Cmd+Shift+K)">Enlace</button>
-            <button type="button" class="btn small ghost" data-md="table" title="Insertar tabla">Tabla</button>
-            <button type="button" class="btn small ghost" data-md="ul" title="Lista con viñetas">Lista</button>
-            <button type="button" class="btn small ghost" data-md="ol" title="Lista numerada">1.</button>
-            <button type="button" class="btn small ghost" data-md="quote" title="Cita">Cita</button>
-            <button type="button" class="btn small ghost" data-md="hr" title="Separador">HR</button>
+            <div class="md-toolbar-group">
+              <button type="button" class="md-btn" data-md="h2" aria-label="Título de sección" title="Título (##)">
+                <svg class="icon" aria-hidden="true"><use href="#icon-heading"></use></svg>
+              </button>
+              <button type="button" class="md-btn" data-md="bold" aria-label="Negrita" title="Negrita (Ctrl/Cmd+B)">
+                <svg class="icon" aria-hidden="true"><use href="#icon-bold"></use></svg>
+              </button>
+              <button type="button" class="md-btn" data-md="italic" aria-label="Itálica" title="Itálica (Ctrl/Cmd+I)">
+                <svg class="icon" aria-hidden="true"><use href="#icon-italic"></use></svg>
+              </button>
+              <button type="button" class="md-btn" data-md="code" aria-label="Código inline" title="Código inline">
+                <svg class="icon" aria-hidden="true"><use href="#icon-code"></use></svg>
+              </button>
+              <button type="button" class="md-btn" data-md="link" aria-label="Enlace" title="Enlace (Ctrl/Cmd+Shift+K)">
+                <svg class="icon" aria-hidden="true"><use href="#icon-link"></use></svg>
+              </button>
+            </div>
+            <div class="md-toolbar-group">
+              <button type="button" class="md-btn" data-md="table" aria-label="Insertar tabla" title="Insertar tabla">
+                <svg class="icon" aria-hidden="true"><use href="#icon-table"></use></svg>
+              </button>
+              <button type="button" class="md-btn" data-md="ul" aria-label="Lista con viñetas" title="Lista con viñetas">
+                <svg class="icon" aria-hidden="true"><use href="#icon-ul"></use></svg>
+              </button>
+              <button type="button" class="md-btn" data-md="ol" aria-label="Lista numerada" title="Lista numerada">
+                <svg class="icon" aria-hidden="true"><use href="#icon-ol"></use></svg>
+              </button>
+              <button type="button" class="md-btn" data-md="quote" aria-label="Cita" title="Cita">
+                <svg class="icon" aria-hidden="true"><use href="#icon-quote"></use></svg>
+              </button>
+              <button type="button" class="md-btn" data-md="hr" aria-label="Separador" title="Separador">
+                <svg class="icon" aria-hidden="true"><use href="#icon-hr"></use></svg>
+              </button>
+            </div>
           </div>
-          <p id="md-help" class="hint">Pegá Markdown o HTML: tablas, listas, código y enlaces se convierten. El preview es aproximado.</p>
+          <p id="md-help" class="hint">Pegá Markdown o HTML: tablas, listas y enlaces se convierten.</p>
 
           <div class="body-wrap">
-            <textarea id="editor-body" spellcheck="true" aria-label="Cuerpo Markdown"></textarea>
-            <div id="editor-preview" class="preview" hidden></div>
-            <textarea id="editor-yaml" class="yaml-editor" spellcheck="false" aria-label="Frontmatter YAML" hidden></textarea>
+            <section class="pane pane-source" aria-label="Editor Markdown">
+              <div class="pane-head"><span>Markdown</span><span id="source-meta" class="pane-meta">md</span></div>
+              <textarea id="editor-body" spellcheck="true" aria-label="Cuerpo Markdown"></textarea>
+            </section>
+            <div id="split-handle" class="split-handle" role="separator" aria-orientation="vertical" tabindex="0" aria-label="Redimensionar editor y preview" aria-valuemin="25" aria-valuemax="75" aria-valuenow="50"><span></span></div>
+            <section class="pane pane-preview" aria-label="Vista previa" hidden>
+              <div class="pane-head"><span>Preview</span><span class="pane-meta">aproximado</span></div>
+              <div id="editor-preview" class="preview"></div>
+            </section>
+            <section class="pane pane-yaml" aria-label="Frontmatter YAML" hidden>
+              <div class="pane-head"><span>Frontmatter</span><span class="pane-meta">YAML</span></div>
+              <textarea id="editor-yaml" class="yaml-editor" spellcheck="false" aria-label="Frontmatter YAML"></textarea>
+            </section>
           </div>
 
-          <section class="diff-block" aria-label="Diff">
-            <div class="diff-head">
-              <h3>Diff</h3>
-              <span id="diff-state" class="eyebrow"></span>
-            </div>
+          <div class="editor-status">
+            <span id="editor-state" class="status-state" data-state="clean" role="status" aria-live="polite">guardado</span>
+            <span id="editor-stats" class="status-stats">0 palabras</span>
+            <span class="status-shortcuts">⌘S guardar · ⌘K comandos · Alt+Z enfoque</span>
+          </div>
+
+          <details id="diff-details" class="diff-block" aria-label="Diff">
+            <summary><span>Diff</span><span id="diff-state" class="eyebrow"></span></summary>
             <pre id="editor-diff" class="diff">Sin cambios.</pre>
-          </section>
+          </details>
         </div>
       </section>
 
@@ -150,40 +220,48 @@
 
           <div id="margin-warnings" class="warnings"></div>
 
-          <section class="margin-section" aria-label="Preview real">
-            <h3>Preview real</h3>
-            <div id="preview-status" class="hint">Jekyll no está corriendo.</div>
-          </section>
-
-          <section class="margin-section" aria-label="Vínculos">
-            <h3>Vínculos</h3>
-            <div id="links-list" class="margin-list"></div>
-            <form id="link-form" class="stack compact">
-              <label class="field">
-                <span>Destino</span>
-                <input id="link-destino" type="text" placeholder="buscá por título, path o URL" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="link-destino-list">
-              </label>
-              <ol id="link-destino-list" class="autocomplete" role="listbox" hidden></ol>
-              <p id="link-destino-hint" class="hint"></p>
-              <label class="field"><span>Motivo</span><textarea id="link-motivo" rows="2"></textarea></label>
-              <button type="submit" class="btn small">Vincular</button>
-            </form>
-          </section>
-
-          <section class="margin-section" aria-label="Backlinks">
-            <h3>Backlinks</h3>
-            <div id="backlinks-list" class="margin-list"></div>
-          </section>
-
-          <section class="margin-section" aria-label="Adjuntos">
-            <h3>Adjuntos</h3>
-            <div id="attachments-list" class="margin-list"></div>
-            <div id="drop-zone" class="drop-zone" tabindex="0">
-              Arrastrá un archivo o <label class="link-label" for="attach-input">elegilo</label>.
-              <input id="attach-input" type="file" hidden>
+          <details class="margin-section" aria-label="Preview real" open>
+            <summary><span>Preview real</span></summary>
+            <div class="margin-section-body">
+              <div id="preview-status" class="hint">Jekyll no está corriendo.</div>
             </div>
-            <p class="hint">Máximo 25 MB. Vive en <code>docs/rizoma/adjuntos/</code>, nunca en <code>_site</code>.</p>
-          </section>
+          </details>
+
+          <details class="margin-section" aria-label="Vínculos" open>
+            <summary><span>Vínculos</span><span id="links-count" class="pane-meta"></span></summary>
+            <div class="margin-section-body">
+              <div id="links-list" class="margin-list"></div>
+              <form id="link-form" class="stack compact">
+                <label class="field">
+                  <span>Destino</span>
+                  <input id="link-destino" type="text" placeholder="buscá por título, path o URL" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="link-destino-list">
+                </label>
+                <ol id="link-destino-list" class="autocomplete" role="listbox" hidden></ol>
+                <p id="link-destino-hint" class="hint"></p>
+                <label class="field"><span>Motivo</span><textarea id="link-motivo" rows="2"></textarea></label>
+                <button type="submit" class="btn small">Vincular</button>
+              </form>
+            </div>
+          </details>
+
+          <details class="margin-section" aria-label="Backlinks" open>
+            <summary><span>Backlinks</span><span id="backlinks-count" class="pane-meta"></span></summary>
+            <div class="margin-section-body">
+              <div id="backlinks-list" class="margin-list"></div>
+            </div>
+          </details>
+
+          <details class="margin-section" aria-label="Adjuntos" open>
+            <summary><span>Adjuntos</span><span id="attachments-count" class="pane-meta"></span></summary>
+            <div class="margin-section-body">
+              <div id="attachments-list" class="margin-list"></div>
+              <div id="drop-zone" class="drop-zone" tabindex="0">
+                Arrastrá un archivo o <label class="link-label" for="attach-input">elegilo</label>.
+                <input id="attach-input" type="file" hidden>
+              </div>
+              <p class="hint">Máximo 25 MB. Vive en <code>docs/rizoma/adjuntos/</code>, nunca en <code>_site</code>.</p>
+            </div>
+          </details>
         </div>
       </aside>
     </main>
@@ -229,6 +307,24 @@
           <button id="operation-plan" class="btn accent" type="submit" form="operation-form">
             Previsualizar plan
           </button>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog id="dirty-dialog" class="dialog confirm-dialog" aria-label="Cambios sin guardar">
+      <div class="dialog-head">
+        <h2>Cambios sin guardar</h2>
+        <button class="btn ghost" type="button" data-close>Esc</button>
+      </div>
+      <div class="confirm-body">
+        <p>Tenés cambios en el editor que todavía no están en disco.</p>
+        <p id="dirty-path" class="hint"></p>
+      </div>
+      <div class="dialog-actions">
+        <div class="actions">
+          <button id="dirty-cancel" class="btn ghost" type="button">Seguir editando</button>
+          <button id="dirty-discard" class="btn" type="button">Descartar cambios</button>
+          <button id="dirty-save" class="btn accent" type="button">Guardar y continuar</button>
         </div>
       </div>
     </dialog>
@@ -302,6 +398,9 @@
           <div id="commit-paths" class="commit-paths"></div>
           <h3>Fuera del plan</h3>
           <div id="commit-dirty" class="dirty-list"></div>
+          <button id="adopt-dirty" class="btn ghost small" type="button" disabled>
+            Adoptar seleccionados
+          </button>
           <label class="field"><span>Mensaje</span><textarea id="commit-message" rows="4"></textarea></label>
           <label class="field"><span>Motivo de cambio menor</span><textarea id="commit-minor" rows="2"></textarea></label>
           <label class="field"><span>Motivo de override</span><textarea id="commit-override" rows="2"></textarea></label>

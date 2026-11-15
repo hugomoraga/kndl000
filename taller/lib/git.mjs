@@ -78,7 +78,7 @@ export async function diffForPaths(root, paths) {
 }
 
 export async function statusPorcelain(root) {
-  const result = await git(root, ["status", "--porcelain=v1"]);
+  const result = await git(root, ["status", "--porcelain=v1", "--untracked-files=all"]);
   if (!result.ok) return [];
   return result.stdout
     .split("\n")

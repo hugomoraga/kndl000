@@ -4,6 +4,13 @@ import { htmlToMarkdown } from "./html-to-markdown.js";
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 const LINKABLE_TYPES = new Set(["banco", "ciclo", "nota"]);
+const PLAN_PREFIXES = [
+  "docs/rizoma/",
+  "content/collections/_exploraciones/",
+  "content/collections/_nodos/",
+  "rizoma/"
+];
+const PLANNED_KEY = "kndl-taller-plan";
 
 const state = {
   registry: null,
@@ -15,10 +22,12 @@ const state = {
   editor: {
     mode: "body",
     rawDirty: false,
+    dirty: false,
     plan: null,
     timer: null,
     previewError: null
   },
+  dirtyResolver: null,
   planned: new Map(),
   planDialog: null,
   palette: { commands: [], selected: 0, filtered: [] },
@@ -110,6 +119,27 @@ function dialogFor(element) {
 
 async function boot() {
   bindEvents();
+  applyTheme(document.documentElement.dataset.theme || "dark", { persist: false });
+  const isMac = /Mac|iPhone|iPad|iPod/.test(navigator.platform);
+  if (!isMac) {
+    for (const key of $$("kbd")) {
+      if (key.textContent.includes("⌘")) key.textContent = key.textContent.replaceAll("⌘", "Ctrl+");
+    }
+    const statusShortcuts = $(".status-shortcuts");
+    if (statusShortcuts) {
+      statusShortcuts.textContent = "Ctrl+S guardar · Ctrl+K comandos · Alt+Z enfoque";
+    }
+  }
+  const themeMedia = window.matchMedia("(prefers-color-scheme: light)");
+  themeMedia.addEventListener?.("change", () => {
+    try {
+      if (!localStorage.getItem("kndl-taller-theme")) {
+        applyTheme(themeMedia.matches ? "light" : "dark", { persist: false });
+      }
+    } catch {
+      // Sin preferencia guardada disponible.
+    }
+  });
   if (!["127.0.0.1", "localhost", "::1", "[::1]"].includes(location.hostname)) {
     $("#host-warning").hidden = false;
   }
@@ -124,6 +154,7 @@ async function boot() {
     state.index = index;
     state.status = status;
     state.previewStatus = preview;
+    restorePlanned();
     renderFilters();
     renderAll();
     if (status.registryWarnings?.length) {
@@ -176,6 +207,14 @@ function bindEvents() {
   });
 
   $("#btn-palette").addEventListener("click", () => openPalette());
+  $("#btn-theme").addEventListener("click", toggleTheme);
+  $("#btn-focus").addEventListener("click", () => toggleFocusMode());
+  $("#btn-back-list").addEventListener("click", () => {
+    document.body.classList.remove("mobile-editor-open");
+    scrollCurrentIntoView();
+    $("#filter-q").focus();
+  });
+  initSplitHandle();
   $("#btn-new-note").addEventListener("click", () => openOperation("nueva-nota"));
   $("#btn-publish").addEventListener("click", () => openPalette("publicar"));
   $("#btn-commit").addEventListener("click", openCommitDialog);
@@ -185,12 +224,16 @@ function bindEvents() {
     if (state.current) openEntry(state.current.path);
   });
 
+  $("#md-toolbar").addEventListener("mousedown", (event) => {
+    if (event.target.closest("[data-md]")) event.preventDefault();
+  });
   $("#md-toolbar").addEventListener("click", (event) => {
     const button = event.target.closest("[data-md]");
     if (button) applyMarkdownAction(button.dataset.md);
   });
 
   $("#tab-body").addEventListener("click", () => setTab("body"));
+  $("#tab-split").addEventListener("click", () => setTab("split"));
   $("#tab-preview").addEventListener("click", () => setTab("preview"));
   $("#tab-yaml").addEventListener("click", () => setTab("yaml"));
 
@@ -269,6 +312,24 @@ function bindEvents() {
   $("#plan-cancel").addEventListener("click", () => closeDialog($("#plan-dialog")));
   $("#plan-apply").addEventListener("click", applyCurrentPlan);
   $("#result-close").addEventListener("click", () => closeDialog($("#result-dialog")));
+  $("#dirty-cancel").addEventListener("click", () => resolveDirty(false));
+  $("#dirty-discard").addEventListener("click", () => {
+    state.editor.dirty = false;
+    state.editor.plan = null;
+    resolveDirty(true);
+  });
+  $("#dirty-save").addEventListener("click", async () => {
+    const saved = await saveCurrent({ reload: false });
+    if (saved) {
+      state.editor.dirty = false;
+      resolveDirty(true);
+    } else {
+      resolveDirty(false);
+    }
+  });
+  $("#dirty-dialog").addEventListener("close", () => {
+    if (state.dirtyResolver) resolveDirty(false);
+  });
   $("#conflict-cancel").addEventListener("click", () => closeDialog($("#conflict-dialog")));
   $("#conflict-save").addEventListener("click", saveConflictResult);
   $("#conflict-use-current").addEventListener("click", () => useConflictSide("current"));
@@ -281,6 +342,8 @@ function bindEvents() {
 
   $("#commit-prepare").addEventListener("click", prepareCommit);
   $("#commit-apply").addEventListener("click", applyCommit);
+  $("#adopt-dirty").addEventListener("click", adoptDirtyChanges);
+  $("#commit-dirty").addEventListener("change", updateAdoptButton);
   $("#push-button").addEventListener("click", () => openOperation("push"));
   $("#commit-override").addEventListener("input", updateCommitApplyState);
   $("#commit-dialog").addEventListener("close", () => {
@@ -293,12 +356,29 @@ function bindEvents() {
   }
 
   document.addEventListener("keydown", onGlobalKeydown);
+  window.addEventListener("beforeunload", (event) => {
+    if (!state.editor.dirty) return;
+    event.preventDefault();
+    event.returnValue = "";
+  });
 }
 
 function onGlobalKeydown(event) {
   if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
     event.preventDefault();
     openPalette();
+    return;
+  }
+  const target = event.target;
+  const typing =
+    target instanceof Element &&
+    (target.matches("input, textarea, select, [contenteditable='true']") ||
+      Boolean(target.closest("dialog[open]")));
+  if (!typing && !event.metaKey && !event.ctrlKey && !event.altKey && event.key === "/") {
+    event.preventDefault();
+    toggleFocusMode(false);
+    $("#filter-q").focus();
+    $("#filter-q").select();
     return;
   }
   if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "s") {
@@ -308,18 +388,33 @@ function onGlobalKeydown(event) {
     }
     return;
   }
+  if (event.altKey && event.key.toLowerCase() === "z") {
+    event.preventDefault();
+    toggleFocusMode();
+    return;
+  }
+  if (event.altKey && event.key.toLowerCase() === "t") {
+    event.preventDefault();
+    toggleTheme();
+    return;
+  }
   if (event.altKey && event.key === "1") {
     event.preventDefault();
+    toggleFocusMode(false);
     $("#filter-q").focus();
     return;
   }
   if (event.altKey && event.key === "2") {
     event.preventDefault();
+    if (state.current && ["preview", "yaml"].includes(state.editor.mode)) {
+      setTab("split", false);
+    }
     $("#editor-body").focus();
     return;
   }
   if (event.altKey && event.key === "3") {
     event.preventDefault();
+    toggleFocusMode(false);
     $("#margen").querySelector("button, a, input, textarea")?.focus();
     return;
   }
@@ -357,13 +452,57 @@ function renderFilters() {
   estadoSelect.value = currentEstado;
 }
 
+function parseSearchQuery(raw) {
+  const filters = {};
+  const terms = [];
+  const tokens = String(raw ?? "").match(/(?:[^\s"]+|"[^"]*")+/g) ?? [];
+  for (const token of tokens) {
+    const match = token.match(/^(estado|tipo|path|titulo|publico|readonly|vinculo|adjunto):(.+)$/i);
+    if (!match) {
+      terms.push(normalize(token));
+      continue;
+    }
+    filters[match[1].toLowerCase()] = normalize(match[2].replace(/^"|"$/g, ""));
+  }
+  return { filters, terms };
+}
+
+function entryMatchesQuery(entry, { filters, terms }) {
+  const text = normalize(`${entry.title} ${entry.path} ${entry.estado} ${entry.typeLabel} ${entry.url ?? ""}`);
+  if (!terms.every((term) => text.includes(term))) return false;
+  if (filters.estado && !normalize(entry.estado).includes(filters.estado)) return false;
+  if (filters.tipo && entry.type !== filters.tipo) return false;
+  if (filters.path && !normalize(entry.path).includes(filters.path)) return false;
+  if (filters.titulo && !normalize(entry.title).includes(filters.titulo)) return false;
+  const truthy = (value) => ["si", "sí", "true", "1"].includes(value);
+  const falsy = (value) => ["no", "false", "0"].includes(value);
+  if (filters.publico) {
+    if (truthy(filters.publico) && !entry.public) return false;
+    if (falsy(filters.publico) && entry.public) return false;
+  }
+  if (filters.readonly) {
+    if (truthy(filters.readonly) && !entry.readOnly) return false;
+    if (falsy(filters.readonly) && entry.readOnly) return false;
+  }
+  if (filters.vinculo === "roto") {
+    if (!entry.warnings?.some((warning) => warning.id === "vinculo-roto")) return false;
+  }
+  if (filters.adjunto === "roto") {
+    if (!entry.warnings?.some((warning) => warning.id === "adjunto-faltante")) return false;
+  } else if (filters.adjunto) {
+    const hasAttachments = (entry.attachmentCount ?? 0) > 0;
+    if (truthy(filters.adjunto) && !hasAttachments) return false;
+    if (falsy(filters.adjunto) && hasAttachments) return false;
+  }
+  return true;
+}
+
 function filteredEntries() {
-  const query = normalize(state.filters.q);
+  const query = parseSearchQuery(state.filters.q);
   return (state.index?.entries ?? []).filter((entry) => {
     if (state.filters.type && entry.type !== state.filters.type) return false;
     if (state.filters.estado && entry.estado !== state.filters.estado) return false;
-    if (!query) return true;
-    return normalize(`${entry.title} ${entry.path} ${entry.estado} ${entry.typeLabel}`).includes(query);
+    return entryMatchesQuery(entry, query);
   });
 }
 
@@ -440,6 +579,11 @@ function renderList() {
   }
 }
 
+function scrollCurrentIntoView() {
+  const active = document.querySelector('#entry-list .entry[aria-current="true"]');
+  active?.scrollIntoView({ block: "nearest" });
+}
+
 function renderStatus() {
   const node = $("#repo-status");
   if (!state.status) {
@@ -472,18 +616,28 @@ function renderStatus() {
   node.title = dirty.map((item) => `${item.status} ${item.path}`).join("\n");
 }
 
-async function openEntry(path) {
+async function openEntry(path, { force = false } = {}) {
+  if (!force && state.editor.dirty) {
+    const proceed = await confirmDirty();
+    if (!proceed) return;
+  }
   try {
     const item = await api(`/api/item?path=${encodeURIComponent(path)}`);
     clearTimeout(state.editor.timer);
     state.current = item;
-    state.editor.mode = "body";
+    state.editor.mode = defaultEditorMode();
     state.editor.rawDirty = false;
+    state.editor.dirty = false;
     state.editor.plan = null;
     state.editor.previewError = null;
     renderEditor();
     renderMargin();
     renderList();
+    if (window.matchMedia("(min-width: 901px)").matches) scrollCurrentIntoView();
+    if (window.matchMedia("(max-width: 900px)").matches) {
+      document.body.classList.add("mobile-editor-open");
+      window.scrollTo({ top: 0, behavior: "auto" });
+    }
     $("#link-destino").value = "";
     $("#link-destino-hint").textContent = "";
     hideLinkSuggestions();
@@ -509,6 +663,12 @@ function renderEditor() {
   `;
 
   renderMetaForm(item);
+  const metaDetails = $("#meta-details");
+  if (metaDetails) metaDetails.open = false;
+  const metaSummary = $("#meta-summary");
+  if (metaSummary) {
+    metaSummary.textContent = [item.typeLabel, item.estado, item.date].filter(Boolean).join(" · ");
+  }
   $("#editor-body").value = item.body ?? "";
   $("#editor-yaml").value = item.rawFrontmatter ?? "";
   $("#editor-body").disabled = item.readOnly;
@@ -516,18 +676,23 @@ function renderEditor() {
   $("#btn-save").disabled = item.readOnly;
   $("#btn-discard").disabled = item.readOnly;
   for (const button of $$("#md-toolbar [data-md]")) button.disabled = item.readOnly;
-  $("#diff-state").textContent = "sin guardar";
+  $("#diff-state").textContent = "sin cambios";
   $("#editor-diff").textContent = "Sin cambios.";
+  const details = $("#diff-details");
+  if (details) details.open = false;
+  setEditorState("clean", "en disco");
+  updateEditorStats();
   $("#editor-hint").textContent = item.readOnly
     ? "Documento read-only: se puede leer, no editar."
-    : "Guardado explícito. El diff se calcula contra el disco; no hay autosave.";
+    : "";
 
-  setTab("body", false);
+  setTab(state.editor.mode, false);
   renderPreviewPane();
 }
 
 function clearCurrent() {
   clearTimeout(state.editor.timer);
+  document.body.classList.remove("mobile-editor-open");
   state.current = null;
   state.editor.plan = null;
   $("#editor").hidden = true;
@@ -600,18 +765,28 @@ function renderMetaForm(item) {
   }
 }
 
+function defaultEditorMode() {
+  return "split";
+}
+
 function setTab(mode, focus = true) {
   state.editor.mode = mode;
   const isBody = mode === "body";
+  const isSplit = mode === "split";
   const isPreview = mode === "preview";
   const isYaml = mode === "yaml";
-  $("#editor-body").hidden = !isBody;
-  $("#editor-preview").hidden = !isPreview;
-  $("#editor-yaml").hidden = !isYaml;
-  $("#md-toolbar").hidden = !isBody || Boolean(state.current?.readOnly);
-  $("#md-help").hidden = !isBody || Boolean(state.current?.readOnly);
+  const sourcePane = $(".pane-source");
+  const previewPane = $(".pane-preview");
+  const yamlPane = $(".pane-yaml");
+  if (sourcePane) sourcePane.hidden = !(isBody || isSplit);
+  if (previewPane) previewPane.hidden = !(isPreview || isSplit);
+  if (yamlPane) yamlPane.hidden = !isYaml;
+  $(".body-wrap").classList.toggle("split", isSplit);
+  $("#md-toolbar").hidden = !(isBody || isSplit) || Boolean(state.current?.readOnly);
+  $("#md-help").hidden = !(isBody || isSplit) || Boolean(state.current?.readOnly);
   for (const [id, active] of [
     ["#tab-body", isBody],
+    ["#tab-split", isSplit],
     ["#tab-preview", isPreview],
     ["#tab-yaml", isYaml]
   ]) {
@@ -619,9 +794,114 @@ function setTab(mode, focus = true) {
     button.classList.toggle("active", active);
     button.setAttribute("aria-selected", String(active));
   }
-  if (isPreview) renderPreviewPane();
+  if (isPreview || isSplit) renderPreviewPane();
   if (focus && isYaml) $("#editor-yaml").focus();
-  if (focus && isBody) $("#editor-body").focus();
+  if (focus && (isBody || isSplit)) $("#editor-body").focus();
+}
+
+function setEditorState(stateName, label) {
+  const node = $("#editor-state");
+  if (!node) return;
+  node.dataset.state = stateName;
+  node.textContent = label;
+}
+
+function updateEditorStats() {
+  const text = $("#editor-body")?.value ?? "";
+  const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+  const chars = text.length;
+  const stats = $("#editor-stats");
+  if (stats) {
+    const charLabel = chars === 1 ? "carácter" : "caracteres";
+    stats.textContent = `${words} palabra${words === 1 ? "" : "s"} · ${chars} ${charLabel}`;
+  }
+  const meta = $("#source-meta");
+  if (meta) {
+    const lines = text.split("\n").length;
+    meta.textContent = `${lines} línea${lines === 1 ? "" : "s"}`;
+  }
+}
+
+function applyTheme(theme, { persist = true } = {}) {
+  const normalized = theme === "light" ? "light" : "dark";
+  document.documentElement.dataset.theme = normalized;
+  if (persist) {
+    try {
+      localStorage.setItem("kndl-taller-theme", normalized);
+    } catch {
+      // Preferencia de UI: si el navegador la bloquea, el tema sigue funcionando.
+    }
+  }
+  const button = $("#btn-theme");
+  if (button) {
+    const next = normalized === "light" ? "oscuro" : "claro";
+    button.setAttribute("aria-label", `Cambiar a modo ${next}`);
+    button.title = `Cambiar a modo ${next} (Alt+T)`;
+    button.setAttribute("aria-pressed", String(normalized === "light"));
+  }
+}
+
+function toggleTheme() {
+  applyTheme(document.documentElement.dataset.theme === "light" ? "dark" : "light");
+}
+
+function toggleFocusMode(force) {
+  const active =
+    typeof force === "boolean" ? force : !document.body.classList.contains("focus-mode");
+  document.body.classList.toggle("focus-mode", active);
+  const button = $("#btn-focus");
+  if (button) {
+    button.setAttribute("aria-pressed", String(active));
+    button.setAttribute("aria-label", active ? "Salir del modo enfoque" : "Modo enfoque");
+  }
+}
+
+function initSplitHandle() {
+  const handle = $("#split-handle");
+  const wrap = $(".body-wrap");
+  if (!handle || !wrap) return;
+  let dragging = false;
+
+  const setRatio = (ratio) => {
+    const clamped = Math.min(0.75, Math.max(0.25, ratio));
+    wrap.style.setProperty("--split-left", `${Math.round(clamped * 1000) / 10}%`);
+    handle.setAttribute("aria-valuenow", String(Math.round(clamped * 100)));
+  };
+
+  const stop = (event) => {
+    if (!dragging) return;
+    dragging = false;
+    handle.classList.remove("dragging");
+    if (event?.pointerId !== undefined) {
+      try {
+        handle.releasePointerCapture(event.pointerId);
+      } catch {
+        // El puntero ya no está capturado.
+      }
+    }
+  };
+
+  handle.addEventListener("pointerdown", (event) => {
+    if (!wrap.classList.contains("split")) return;
+    dragging = true;
+    handle.classList.add("dragging");
+    handle.setPointerCapture(event.pointerId);
+    event.preventDefault();
+  });
+  handle.addEventListener("pointermove", (event) => {
+    if (!dragging) return;
+    const rect = wrap.getBoundingClientRect();
+    setRatio((event.clientX - rect.left) / rect.width);
+  });
+  handle.addEventListener("pointerup", stop);
+  handle.addEventListener("pointercancel", stop);
+  handle.addEventListener("keydown", (event) => {
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+    event.preventDefault();
+    const current =
+      parseFloat(wrap.style.getPropertyValue("--split-left")) || 50;
+    setRatio((current + (event.key === "ArrowRight" ? 5 : -5)) / 100);
+  });
 }
 
 const TABLE_TEMPLATE = "| Columna | Columna |\n| --- | --- |\n|  |  |";
@@ -731,8 +1011,14 @@ function onEditorPaste(event) {
   if (!clipboard) return;
   const html = clipboard.getData("text/html");
   const text = clipboard.getData("text/plain");
-  if (!html || looksLikeMarkdown(text)) return;
+  if (!html) return;
+
+  const htmlHasTable = /<table\b/i.test(html);
+  const textHasTable = /(^|\n)\s*\|?\s*:?-{3,}:?\s*\|/.test(text);
+  if (textHasTable) return;
+  if (!htmlHasTable && looksLikeMarkdown(text)) return;
   if (!/<(table|h[1-6]|ul|ol|pre|blockquote|p|strong|em|a|code)\b/i.test(html)) return;
+
   const markdown = htmlToMarkdown(html);
   if (!markdown.trim()) return;
   event.preventDefault();
@@ -746,7 +1032,10 @@ function renderPreviewPane() {
 }
 
 function onEditorInput() {
-  if (state.editor.mode === "preview") renderPreviewPane();
+  state.editor.dirty = true;
+  if (state.editor.mode === "preview" || state.editor.mode === "split") renderPreviewPane();
+  setEditorState("dirty", "sin guardar");
+  updateEditorStats();
   $("#diff-state").textContent = "actualizando…";
   clearTimeout(state.editor.timer);
   state.editor.timer = setTimeout(() => {
@@ -798,24 +1087,27 @@ async function previewSave() {
   $("#diff-state").textContent = diff
     ? `${plan.paths.length} archivo(s) · ${plan.validations.filter((item) => !item.ok).length} aviso(s)`
     : "sin cambios";
+  state.editor.dirty =
+    Boolean(diff) || plan.validations.some((item) => item.id !== "conflicto" && !item.ok);
+  setEditorState(diff ? "dirty" : "clean", diff ? "cambios sin guardar" : "sin cambios");
   if (plan.validations.some((item) => !item.ok)) {
     $("#diff-state").textContent += " · revisar validaciones";
   }
   return plan;
 }
 
-async function saveCurrent() {
-  if (!state.current) return;
+async function saveCurrent({ reload = true } = {}) {
+  if (!state.current) return false;
   if (state.current.readOnly) {
     toast("Este documento es read-only.", { error: true });
-    return;
+    return false;
   }
   try {
     const plan = await previewSave();
-    if (!plan) return;
+    if (!plan) return false;
     if (plan.validations.some((item) => item.id === "conflicto" && !item.ok)) {
       await openConflictDialog();
-      return;
+      return false;
     }
     const result = await api("/api/apply", {
       method: "POST",
@@ -826,20 +1118,42 @@ async function saveCurrent() {
       }
     });
     toast(result.paths.length ? `Guardado: ${result.paths.join(", ")}` : "Sin cambios.");
+    state.editor.dirty = false;
+    setEditorState("saved", "guardado");
     addPlanned(result.paths, { operation: "guardar-nota", origin: state.current.path });
     await refreshIndex();
     await refreshStatus();
-    await openEntry(state.current.path);
+    if (reload) await openEntry(state.current.path, { force: true });
+    return true;
   } catch (error) {
     if (error.status === 409) {
       $("#diff-state").textContent = "conflicto";
+      setEditorState("conflict", "conflicto");
       $("#editor-hint").textContent =
         "El archivo cambió en disco. Abriendo la resolución de conflicto.";
       await openConflictDialog();
-      return;
+      return false;
     }
     toast(formatError(error), { error: true });
+    return false;
   }
+}
+
+function resolveDirty(result) {
+  const resolver = state.dirtyResolver;
+  state.dirtyResolver = null;
+  closeDialog($("#dirty-dialog"));
+  resolver?.(result);
+}
+
+function confirmDirty() {
+  if (!state.editor.dirty) return Promise.resolve(true);
+  if (state.dirtyResolver) return Promise.resolve(false);
+  $("#dirty-path").textContent = state.current?.path ?? "";
+  showDialog($("#dirty-dialog"));
+  return new Promise((resolve) => {
+    state.dirtyResolver = resolve;
+  });
 }
 
 function formatConflictSide(side) {
@@ -976,6 +1290,9 @@ function renderMargin() {
   $("#margin-empty").hidden = true;
   $("#margin-content").hidden = false;
   $("#margin-state").textContent = `${item.typeLabel} · ${item.estado}`;
+  $("#links-count").textContent = String(item.links?.length ?? 0);
+  $("#backlinks-count").textContent = String(item.backlinks?.length ?? 0);
+  $("#attachments-count").textContent = String(item.attachments?.length ?? 0);
 
   const canLink = LINKABLE_TYPES.has(item.type) && !item.readOnly;
   $("#link-form").hidden = !canLink;
@@ -1235,6 +1552,47 @@ function formatBytes(bytes) {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
+function persistPlanned() {
+  try {
+    localStorage.setItem(PLANNED_KEY, JSON.stringify([...state.planned.entries()]));
+  } catch {
+    // Si el navegador bloquea localStorage, el plan sigue en memoria.
+  }
+}
+
+function restorePlanned() {
+  let data = null;
+  try {
+    data = JSON.parse(localStorage.getItem(PLANNED_KEY) ?? "null");
+  } catch {
+    data = null;
+  }
+  if (!Array.isArray(data)) {
+    updateCommitCount();
+    return;
+  }
+  const dirty = new Set((state.status?.repo?.dirty ?? []).map((item) => item.path));
+  const entries = [];
+  for (const pair of data) {
+    if (!Array.isArray(pair) || pair.length !== 2) continue;
+    const [path, info] = pair;
+    if (typeof path !== "string" || !path || !PLAN_PREFIXES.some((prefix) => path.startsWith(prefix))) {
+      continue;
+    }
+    if (dirty.size > 0 && !dirty.has(path)) continue;
+    entries.push([
+      path,
+      {
+        operation: String(info?.operation ?? "cambios manuales"),
+        origin: String(info?.origin ?? ""),
+        override: info?.override ?? null
+      }
+    ]);
+  }
+  state.planned = new Map(entries);
+  updateCommitCount();
+}
+
 function addPlanned(paths, info) {
   for (const path of paths ?? []) {
     state.planned.set(path, info);
@@ -1245,6 +1603,7 @@ function addPlanned(paths, info) {
 function updateCommitCount() {
   $("#commit-count").textContent = String(state.planned.size);
   $("#btn-commit").disabled = state.planned.size === 0;
+  persistPlanned();
 }
 
 async function prepareAttachment(file) {
@@ -1344,14 +1703,31 @@ function paletteCommands() {
       run: () => openCommitDialog()
     },
     {
+      label: "Cambiar tema",
+      description: "Alterna cámara oscura y arena clara.",
+      run: () => toggleTheme()
+    },
+    {
+      label: "Modo enfoque",
+      description: "Oculta banco y margen. Atajo Alt+Z.",
+      run: () => toggleFocusMode()
+    },
+    {
       label: "Ir al banco",
       description: "Foco en la búsqueda.",
-      run: () => $("#filter-q").focus()
+      run: () => {
+        toggleFocusMode(false);
+        $("#filter-q").focus();
+      }
     },
     {
       label: "Ir al editor",
       description: "Foco en el cuerpo.",
-      run: () => state.current && $("#editor-body").focus()
+      run: () => {
+        if (!state.current) return;
+        if (["preview", "yaml"].includes(state.editor.mode)) setTab("split", false);
+        $("#editor-body").focus();
+      }
     },
     {
       label: "Recargar índice",
@@ -1719,8 +2095,9 @@ async function afterApply(result, plan, overrideReason = "") {
     await refreshStatus();
     toast("Cambios descartados.");
     if (state.current && (result.paths ?? []).includes(state.current.path)) {
+      state.editor.dirty = false;
       const stillExists = state.index.entries.some((entry) => entry.path === state.current.path);
-      if (stillExists) await openEntry(state.current.path);
+      if (stillExists) await openEntry(state.current.path, { force: true });
       else clearCurrent();
     }
     return;
@@ -1770,6 +2147,7 @@ async function afterApply(result, plan, overrideReason = "") {
   const output = String(result.output ?? "").trim();
   toast(output ? output.split("\n")[0] : plan.summary);
   if (state.current && (result.paths ?? []).includes(state.current.path)) {
+    if (plan.operation === "guardar-nota") state.editor.dirty = false;
     await openEntry(state.current.path);
   } else if (plan.operation === "nueva-nota" && result.paths?.[0]) {
     await openEntry(result.paths[0]);
@@ -1853,12 +2231,16 @@ function renderCommitDialog() {
   const dirty = (state.status?.repo?.dirty ?? []).filter((item) => !state.planned.has(item.path));
   $("#commit-dirty").innerHTML = dirty.length
     ? dirty
-        .map(
-          (item) =>
-            `<div class="dirty">${esc(item.status)} ${esc(item.path)}<br><span class="hint">queda fuera del commit</span></div>`
+        .map((item) =>
+          PLAN_PREFIXES.some((prefix) => item.path.startsWith(prefix))
+            ? `<label class="dirty"><input type="checkbox" data-adopt-path value="${esc(
+                item.path
+              )}"> ${esc(item.status)} ${esc(item.path)}<br><span class="hint">fuera del plan; se puede adoptar</span></label>`
+            : `<div class="dirty">${esc(item.status)} ${esc(item.path)}<br><span class="hint">fuera del alcance del taller</span></div>`
         )
         .join("")
     : '<p class="hint">El repo no tiene cambios ajenos al plan.</p>';
+  updateAdoptButton();
 
   if (!$("#commit-message").value) {
     const operations = [...new Set([...state.planned.values()].map((item) => item.operation))];
@@ -1872,6 +2254,28 @@ function renderCommitDialog() {
   $("#commit-error").hidden = true;
   state.commit.plan = null;
   state.commit.input = null;
+}
+
+function updateAdoptButton() {
+  const button = $("#adopt-dirty");
+  if (!button) return;
+  button.disabled = !$$("[data-adopt-path]").some((input) => input.checked);
+}
+
+function adoptDirtyChanges() {
+  const paths = $$("[data-adopt-path]")
+    .filter((input) => input.checked)
+    .map((input) => input.value);
+  if (paths.length === 0) {
+    toast("Elegí al menos un cambio sucio.", { error: true });
+    return;
+  }
+  for (const path of paths) {
+    state.planned.set(path, { operation: "adopción manual", origin: "", override: null });
+  }
+  updateCommitCount();
+  renderCommitDialog();
+  toast(`${paths.length} path(s) adoptados al plan.`);
 }
 
 function commitPaths() {

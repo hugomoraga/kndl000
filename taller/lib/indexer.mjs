@@ -368,6 +368,7 @@ export function serializeEntry(entry) {
     readOnly: entry.readOnly,
     url: entry.url,
     warnings: entry.warnings,
+    attachmentCount: Array.isArray(entry.meta?.adjuntos) ? entry.meta.adjuntos.length : 0,
     binary: entry.binary,
     readError: entry.readError
   };

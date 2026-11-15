@@ -327,7 +327,8 @@ const STATIC = new Map([
   ["/styles.css", "styles.css"],
   ["/app.js", "app.js"],
   ["/markdown.js", "markdown.js"],
-  ["/html-to-markdown.js", "html-to-markdown.js"]
+  ["/html-to-markdown.js", "html-to-markdown.js"],
+  ["/theme-init.js", "theme-init.js"]
 ]);
 
 const TYPES = {
@@ -399,6 +400,16 @@ const server = http.createServer(async (req, res) => {
     }
     if (req.method === "POST" && pathname === "/api/attach/apply") {
       return await handleAttachmentApply(req, res, url);
+    }
+    if ((req.method === "GET" || req.method === "HEAD") && pathname === "/favicon.ico") {
+      const abs = join(ROOT, "favicon.ico");
+      if (existsSync(abs)) {
+        securityHeaders(res);
+        res.setHeader("Cache-Control", "public, max-age=86400");
+        res.writeHead(200, { "Content-Type": "image/x-icon" });
+        res.end(readFileSync(abs));
+        return;
+      }
     }
     if ((req.method === "GET" || req.method === "HEAD") && handleStatic(res, pathname)) {
       return;

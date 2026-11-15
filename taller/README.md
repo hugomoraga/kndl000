@@ -28,14 +28,21 @@ TALLER_PORT=4174 npm run taller
   exploraciones, nodos y anexos; los ADR, el protocolo, la taxonomía y el punto
   de entrada se listan read-only.
 - **Edición con diff**: guardado explícito, sin autosave. El editor Markdown
-  tiene toolbar (títulos, negrita, código, enlaces, tablas, listas, citas), vista
-  previa con tablas y listas de tareas, y pegado inteligente: si copiás HTML
+  tiene toolbar de iconos (títulos, negrita, código, enlaces, tablas, listas,
+  citas), vista dividida redimensionable con preview en vivo —tablas y listas de
+  tareas incluidas—, metadatos plegables y conteo de palabras. Protege cambios
+  sin guardar al cambiar de pieza o cerrar la pestaña. El modo enfoque oculta
+  topbar, banco y margen para escribir a pantalla completa.
+  El pegado es inteligente: si copiás HTML
   (por ejemplo una tabla de una página), lo convierte a Markdown; si ya copiás
   Markdown, lo deja intacto. El frontmatter conserva claves desconocidas, orden
   y comentarios; el cuerpo no editado queda byte-idéntico. Cada lectura devuelve
   un hash y una escritura con hash viejo termina en conflicto. El conflicto se
   resuelve en tres vías: base, disco y edición, con un resultado editable y un
   merge conservador.
+- **Temas**: cámara oscura y modo claro arena. El toggle del topbar (`Alt+T`)
+  recuerda la elección en `localStorage`; sin elección previa sigue la
+  preferencia del sistema.
 - **Apply transaccional**: antes de escribir se toman snapshots de los paths
   afectados; si un cambio falla, se restauran los anteriores y se eliminan los
   archivos nuevos. Un `exec` debe declarar `expectedPaths` para poder revertir
@@ -52,8 +59,12 @@ TALLER_PORT=4174 npm run taller
 - **Commit**: corre una auditoría de fuente (nodos, corpus, relacionadas,
   anexos, adjuntos y permisos duplicados), `bundle exec jekyll build`,
   `node scripts/check-links.mjs` y `build-lamina.py --verify --plate 01|02`.
-  Commitea solo los paths del plan. El push es una acción aparte y explícita; no
-  hay force push.
+  Commitea solo los paths del plan. El plan se guarda en `localStorage`, se
+  restaura al recargar y permite adoptar cambios sucios del repo. El push es una
+  acción aparte y explícita; no hay force push.
+- **Búsqueda y margen**: `/` enfoca la búsqueda; filtros `estado:`, `tipo:`,
+  `path:`, `titulo:`, `publico:`, `readonly:`, `vinculo:roto`, `adjunto:`.
+  Las secciones del margen se colapsan y muestran su conteo.
 - **Descartar**: `git restore --source=HEAD --staged --worktree` sobre un path;
   si el archivo es nuevo (untracked), lo elimina.
 - **Borrar nota**: solo notas de banco, con confirmación explícita. Muestra los
@@ -191,8 +202,12 @@ después de reiniciar. No se edita el router ni `ui/app.js`.
 
 - `Ctrl/Cmd + K`: paleta de comandos.
 - `Ctrl/Cmd + S`: guardar la pieza abierta.
+- `/`: buscar y filtrar el banco.
 - `Ctrl/Cmd + B/I`: negrita e itálica; `Ctrl/Cmd + Shift + K`: enlace en el cuerpo.
+- `Alt + Z`: modo enfoque (oculta banco y margen).
+- `Alt + T`: alterna tema oscuro/arena.
 - `Alt + 1/2/3`: foco en banco, editor y margen.
+- `←/→` sobre el divisor del split: ajusta el ancho editor/preview.
 - `Esc`: cerrar el diálogo superior.
 
 ## Límites y decisiones
