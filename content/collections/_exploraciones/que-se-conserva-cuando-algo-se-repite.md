@@ -101,8 +101,28 @@ hitos:
     title: "El aparato se abre"
     text: "Los anexos se agrupan por tipo y se suma una objeción abierta sobre el autómata."
 ---
+Desde hace años me acompaña una sentencia: la vida es un loop. No recuerdo exactamente cuándo comenzó a instalarse esa idea, pero parece haber estado presente de alguna manera en mi forma de validar y transformar mi existencia.
 
-No es una tesis. Es una deriva.
+Siempre me sentí extraño. Desde adolescente me hice muchas preguntas y busqué verdades en libros, películas, música y arte. Más adelante, durante mi juventud, aparecieron los psicodélicos y con ellos otras formas de explorar mi percepción del yo y de la realidad. No sabría identificar cuál fue el primer viaje en el que la realidad me vomitó su espiral. Esa espiral que se expande, que parece volver sobre sí misma, pero que nunca regresa exactamente al mismo lugar.
+
+Con los años fui reconociendo que algo en mí se había transformado. Una transformación que, paradójicamente, parece estar en constante iteración. Mis inquietudes vuelven, mis pensamientos se repiten, pero nunca es lo mismo otra vez. Mi mente parece haberse acostumbrado a encontrar novedad en la repetición.
+
+Lo encuentro en cosas bastante cotidianas. Volver a leer un poema que leí durante mi adolescencia y descubrir que ahora tiene otro peso, otra multiplicidad en su significante. Reescribir algo que hice hace meses y encontrar una nueva dimensión de aquella inquietud inicial. Retomar proyectos que dejé a medio camino, a veces después de horas, días o meses. Tengo una especie de Diógenes digital: acumulo ideas, herramientas, aplicaciones, proyectos y escritos. Algunos quedan olvidados y terminan depreciándose. Otros vuelven a aparecer.
+
+Cuando regreso a ellos, siento que me encuentro con algo a medio camino. A veces descubro que aquella idea ya no tiene demasiado valor. Otras veces encuentro algo que merece continuar. Y cuando sucede, suele transformarse y tomar otra arista. Quizás necesitaba dejarlo respirar. Quizás en aquel momento estaba bloqueado, desmotivado o simplemente no sabía cómo avanzar.
+
+También lo reconozco en mi trabajo. Programar es iterar. Repetir procesos, observar resultados, optimizar, automatizar y volver a intentar. Hacer algo que ya hice, pero de otra manera.
+
+Durante mucho tiempo tuve estas intuiciones dispersas entre mis distintos universos. Mis escritos más viscerales, mis proyectos, mis pensamientos recurrentes y mis exploraciones personales. Sentía que había patrones, pero no terminaba de conectarlos. Ahora estoy reconstruyendo varios años de ideas, intentando tomarles el hilo para desenredarlas y, paradójicamente, permitir que se enreden con otras.
+
+No quiero quedarme únicamente con mis intuiciones ni seguir dando por ciertas ideas que nunca he puesto realmente en juicio. Quiero encontrar herramientas para ordenar mi pensamiento, confrontarlo con otras perspectivas y respaldar algunas de esas intuiciones con conocimiento que venga de otros lugares.
+
+Quizás esta exploración sea también una forma de honrar mi propia cartografía ontológica. Reconocer los caminos que he recorrido, las transformaciones que he experimentado y las conexiones que todavía no consigo ver.
+
+Y entre todos esos rastros, una pregunta comenzó a tomar forma:
+
+¿Qué se conserva cuando algo se repite?
+
 
 ## 1. La pregunta {#la-pregunta}
 
