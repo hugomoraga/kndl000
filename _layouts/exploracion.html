@@ -79,19 +79,6 @@
 
     <p class="expediente__end"><span>Fin de la deriva</span></p>
 
-    {% if page.lamina %}
-    {%- assign _plate = page.order | prepend: 'lamina-' | append: '.svg' -%}
-    <figure class="expediente__plate" aria-labelledby="expediente-plate-caption">
-      <a class="expediente__plate-link" href="{{ page.url | relative_url }}lamina/">
-        <img class="expediente__plate-image" src="{{ '/assets/media/rizoma/' | append: _plate | relative_url }}" alt="Lámina {{ page.order }} — {{ page.title }}" width="1280" height="1024" loading="lazy" decoding="async">
-      </a>
-      <figcaption class="expediente__plate-caption" id="expediente-plate-caption">
-        <span class="expediente__plate-label">Lámina {{ page.order }}</span>
-        <span class="expediente__plate-text">El mapa de esta deriva: obras, nodos y cortes.</span>
-        <a class="expediente__plate-more" href="{{ page.url | relative_url }}lamina/">Ver la lámina completa →</a>
-      </figcaption>
-    </figure>
-    {% endif %}
 
 
     <section class="expediente__apparatus" aria-labelledby="expediente-apparatus-title">

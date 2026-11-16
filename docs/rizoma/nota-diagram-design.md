@@ -6,6 +6,11 @@ estado: evaluación y adaptación · no normativo
 
 # diagram-design, adaptado
 
+**Estado 2026-11-15:** las láminas se retiraron de la publicación hasta que la
+sección madure. Los artefactos y el generador quedan en `docs/rizoma/` como
+material interno. `--write` ya no escribe páginas ni SVG del sitio
+(`PUBLICAR_LAMINAS = False`).
+
 ## Qué es
 
 Repo de Cathryn Lavery: una skill para agentes (Claude Code, Codex, Copilot,

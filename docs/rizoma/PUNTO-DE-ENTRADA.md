@@ -27,7 +27,7 @@ terminar hablando de otra cosa.
   dos cuerpos con sentido distinto. Hay cinco nodos compartidos entre 01 y 02.
 - **Aparato**: anexos agrupados por tipo —corrección, fuente, concepto,
   objeción, derivación—. Hoy hay tres correcciones y una objeción.
-- **Láminas**: 01 y 02 publicadas.
+- **Láminas**: retiradas de la publicación; los artefactos internos quedan en `docs/rizoma/`.
 
 ## Cómo se trabaja
 
@@ -108,6 +108,12 @@ No crea nodos, corpus, anexos ni relaciones: eso se agrega cuando existe. Despu�
 
 ## Lámina
 
+**Estado 2026-11-15:** las láminas se retiraron de la publicación hasta que la
+sección madure. Los artefactos (`lamina-*.data.yml`, `annotations`, SVG, PNG) se
+conservan en `docs/rizoma/` como material interno. `--write` ya no escribe
+páginas ni SVG del sitio (`PUBLICAR_LAMINAS = False`). El generador y
+`--verify` quedan como herramienta para cuando se retome.
+
 Las láminas no son una vista automática de la exploración: son artefactos
 fechados. Hay dos: la 01 (repetición) y la 02 (archivo); se eligen con
 `--plate 01` o `--plate 02`. El **esqueleto** (obras, nodos, tipos, compartidos, fechas) se genera
@@ -118,8 +124,9 @@ y es manual.
 `--check` falla si el corpus o los nodos cambiaron sin anotar, o si la
 exploración se actualizó después de la fecha de la lámina. `--verify` hace lo
 mismo pero recalcula el esqueleto en memoria y lo compara con el archivo: es el
-chequeo de CI. `--write` regenera el HTML de la lámina, la página del sitio y el
-SVG exportado. La composición no se autogenera: se decide.
+chequeo de CI. `--write` regenera el HTML interno y el SVG; con
+`PUBLICAR_LAMINAS = False` no escribe la página del sitio. La composición no se
+autogenera: se decide.
 
 El workflow `.github/workflows/rizoma-plate.yml` corre `--verify` en cada cambio
 de exploraciones, nodos o lámina. Es un chequeo aparte: no bloquea el deploy del
@@ -161,4 +168,5 @@ python3 docs/rizoma/build-lamina.py --write   # HTML, página y SVG
 - ¿El historial muestra prosa o solo enlace al archivo? (ADR futuro).
 - Faltan anexos de tipo **fuente**, **concepto** y **derivación** para probar la
   taxonomía.
-- Posible 03 sobre lenguaje y su lámina.
+- Posible 03 sobre lenguaje; sin lámina hasta que la sección madure.
+- ¿Vuelven las láminas? ¿Con qué tesis visual?

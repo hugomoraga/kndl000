@@ -7,7 +7,7 @@ order: "01"
 status: abierta
 date: 2026-11-09
 updated: 2026-11-10
-lamina: true
+lamina: false
 fields:
   - memoria
   - lenguaje

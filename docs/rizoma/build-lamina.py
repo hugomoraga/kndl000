@@ -59,6 +59,11 @@ RULE = "rgba(233,230,220,0.14)"
 SERIF = "'Newsreader', Georgia, serif"
 MONO = "'JetBrains Mono', ui-monospace, monospace"
 
+# Las láminas están retiradas de la publicación hasta que la sección madure.
+# --write sigue generando los artefactos internos en docs/rizoma/, pero no
+# escribe páginas ni SVG en el sitio. Cambiar a True para volver a publicarlas.
+PUBLICAR_LAMINAS = False
+
 KINDS = {
     "/poemas/": ("_poems", "POEMA", "⁂"),
     "/codigo/": ("_codigos", "CÓDIGO", "◊"),
@@ -822,19 +827,25 @@ def write_outputs(data: dict, ann: dict, works: list) -> None:
     docs = build_html(False, data, ann, works)
     DOCS_HTML.write_text(docs, encoding="utf-8")
 
+    svg = extract_svg(docs)
+    SVG_OUT.write_text(svg, encoding="utf-8")
+
+    print(f"HTML de la lámina: {DOCS_HTML}")
+    print(f"SVG exportado: {SVG_OUT}")
+
+    if not PUBLICAR_LAMINAS:
+        print("Láminas retiradas: no se escriben páginas ni SVG del sitio.")
+        return
+
     site = frontmatter(data) + build_html(True, data, ann, works)
     site_path = ROOT / data["exploracion"]["url"].strip("/") / "lamina/index.html"
     site_path.parent.mkdir(parents=True, exist_ok=True)
     site_path.write_text(site, encoding="utf-8")
 
-    svg = extract_svg(docs)
-    SVG_OUT.write_text(svg, encoding="utf-8")
     SITE_SVG.parent.mkdir(parents=True, exist_ok=True)
     SITE_SVG.write_text(svg, encoding="utf-8")
 
-    print(f"HTML de la lámina: {DOCS_HTML}")
     print(f"Página del sitio: {site_path}")
-    print(f"SVG exportado: {SVG_OUT}")
     print(f"SVG del sitio: {SITE_SVG}")
 
 

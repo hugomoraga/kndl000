@@ -15,7 +15,7 @@ procedencia: >-
   2026 hizo explícita la trayectoria entre secciones, integró el aparato al
   cuerpo y abrió la sección Adherir. La curación, la voz y la decisión de
   publicar son del autor.
-lamina: true
+lamina: false
 fields:
   - memoria
   - archivo
