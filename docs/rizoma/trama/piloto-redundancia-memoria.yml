@@ -1,0 +1,137 @@
+schema: 1
+piloto: true
+frentes:
+  - id: redundancia-memoria
+    nombre_canonico: "Redundancia y memoria"
+    estado: en-tension
+    formulaciones:
+      - fecha: "2026-11-10"
+        tipo: pregunta
+        texto: "¿Cuánta redundancia necesita una memoria para no desaparecer?"
+        fuente: "01 §8"
+      - fecha: "2026-11-10"
+        tipo: afirmacion
+        texto: "La conservación no es una propiedad del objeto: es una práctica."
+        fuente: "02 §6"
+      - fecha: "2026-11-10"
+        tipo: reformulacion
+        texto: "La 02 no estudia soportes; mide cuánta redundancia necesita una memoria."
+        fuente: "anexo tecnologia"
+    tensiones:
+      - "Redundancia como corrección técnica vs redundancia como práctica de memoria."
+
+inscripciones:
+  - id: shannon-redundancia
+    material: /codigo/experimento-shannon/
+    frente: redundancia-memoria
+    interpretacion:
+      principal: lente
+      compatibles:
+        - contraste
+      motivo: "Permite leer la repetición como redundancia y no solo como gasto."
+      efecto: "La pregunta se desplaza de la forma a la señal."
+    evidencia:
+      - modo: existencia
+        fuente: /codigo/experimento-shannon/
+      - modo: relacion
+        nivel: cuerpo
+        fuente: "01 §7"
+        cita: "Shannon llamó redundancia a la diferencia entre la entropía máxima de una fuente y su entropía real: la parte del mensaje que está determinada por su estructura."
+      - modo: relacion
+        nivel: cuerpo
+        fuente: "02 §6"
+        cita: "Shannon lo formuló para los mensajes: la redundancia es lo que permite que algo sobreviva al ruido."
+      - modo: interpretacion
+        nivel: explicita
+        fuente: "anexo redundancia"
+        cita: "Shannon llamó redundancia a la diferencia entre la entropía máxima de una fuente y su entropía real: la parte del mensaje que está determinada por su estructura."
+      - modo: inferencia
+        fuente: "01 §8 → 02 §6"
+        nota: "La identidad del frente se apoya en el traspaso explícito; la etiqueta lente/contraste es una interpretación validada por el autor."
+    estado: validada
+    propuesta_por: ia
+    validado_por: autor
+    fecha: "2026-11-15"
+
+  - id: voto-mayoria
+    material: /codigo/voto-por-mayoria/
+    frente: redundancia-memoria
+    interpretacion:
+      principal: contraste
+      compatibles: []
+      motivo: "Muestra que la repetición corrige y que esa corrección tiene un umbral."
+      efecto: "La redundancia no es una garantía: si el canal es peor que el azar, amplifica el error."
+    evidencia:
+      - modo: existencia
+        fuente: /codigo/voto-por-mayoria/
+      - modo: relacion
+        nivel: cuerpo
+        fuente: "01 §7"
+        cita: "un código de repetición que triplica cada bit, vota por mayoría y mide cuánto se corrige. También muestra el límite: si el canal es peor que el azar, la repetición amplifica el error."
+      - modo: relacion
+        nivel: aparato
+        fuente: "anexo redundancia"
+        cita: "Implementa repetición 3/5/7 y voto por mayoría; el barrido de p muestra que el umbral está en p = 0,5."
+      - modo: interpretacion
+        nivel: propuesta
+        fuente: "01 §7"
+        nota: "El texto lo usa como demostración y límite; la etiqueta contraste es una lectura validada."
+    estado: validada
+    propuesta_por: ia
+    validado_por: autor
+    fecha: "2026-11-15"
+
+  - id: automata
+    material: /codigo/automata-informacion/
+    frente: redundancia-memoria
+    interpretacion:
+      principal: contraste
+      compatibles:
+        - objecion
+      motivo: "Resiste la equivalencia entre repetición y redundancia."
+      efecto: "La homogeneización no es corrección: no hay codificador, decodificador ni voto por mayoría."
+    evidencia:
+      - modo: existencia
+        fuente: /codigo/automata-informacion/
+      - modo: relacion
+        nivel: aparato
+        fuente: "anexo automata"
+        cita: "El autómata no es redundancia."
+      - modo: interpretacion
+        nivel: explicita
+        fuente: "anexo automata"
+        cita: "No hay codificador ni decodificador. El receptor recibe el mensaje sin compararlo con el original. No hay bits de control, ni voto por mayoría, ni corrección."
+      - modo: inferencia
+        fuente: "01 §7–§8 + anexo automata"
+        nota: "El cuerpo de 01 no nombra el autómata; la relación se documenta en el aparato. La inscripción en el frente se valida por el enlace del anexo a §7 y §8."
+    estado: validada
+    propuesta_por: ia
+    validado_por: autor
+    fecha: "2026-11-15"
+
+  - id: medusa
+    material: /poemas/medusa/
+    frente: redundancia-memoria
+    interpretacion:
+      principal: contraste
+      compatibles: []
+      motivo: "Un caso de conservación sin soporte que resiste la tesis de 02 §6."
+      efecto: "La conservación deja de ser solo práctica: también puede ser adherencia."
+    evidencia:
+      - modo: existencia
+        fuente: /poemas/medusa/
+      - modo: relacion
+        nivel: aparato
+        fuente: "anexo medusa"
+        cita: "El residuo no es un archivo."
+      - modo: interpretacion
+        nivel: explicita
+        fuente: "anexo medusa"
+        cita: "La objeción no se resuelve: se sostiene."
+      - modo: inferencia
+        fuente: "01 §8 → 02 §6 + anexo medusa"
+        nota: "La inscripción en el frente transversal se infiere: 01 §8 entrega la pregunta, 02 §6 la trabaja y Medusa objeta 02 §6. El cuerpo de 02 no nombra el poema."
+    estado: validada
+    propuesta_por: ia
+    validado_por: autor
+    fecha: "2026-11-15"

@@ -79,6 +79,7 @@ Reglas:
 | [0004](adr/ADR-0004-taxonomia-de-anexos.md) | Taxonomía: un tipo primario, procedimiento y estados. |
 | [0005](adr/ADR-0005-historial-y-hitos.md) | Historial: versiones de Git y hitos curados, sin fingir prosa. |
 | [0006](adr/ADR-0006-taller-de-rizoma.md) | Taller de Rizoma local-first: banco, adjuntos, vínculos y promoción con diff + commit. |
+| [0007](adr/ADR-0007-trama-composicion-cartografia.md) | Trama, composición y cartografía: piloto B3.1.1, no normativo fuera del piloto. |
 
 ## Nueva exploración
 

@@ -1,0 +1,21 @@
+id: que-se-conserva-cuando-algo-se-repite
+exploracion: content/collections/_exploraciones/que-se-conserva-cuando-algo-se-repite.md
+piloto: true
+frentes:
+  - id: redundancia-memoria
+    etiqueta: "Lo que la repetición no alcanza a conservar"
+    ancla: "#redundancia"
+    orden: 1
+inscripciones:
+  - id: shannon-redundancia
+    etiqueta: "Shannon: la redundancia como estructura"
+    ancla: "#redundancia"
+    orden: 1
+  - id: voto-mayoria
+    etiqueta: "Tres copias, un voto"
+    ancla: "#redundancia"
+    orden: 2
+  - id: automata
+    etiqueta: "El autómata no es redundancia"
+    ancla: "#la-objecion"
+    orden: 3

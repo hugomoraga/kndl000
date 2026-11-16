@@ -1,0 +1,99 @@
+{% if page.trayectoria and page.trayectoria.frentes.size > 0 %}
+<section class="expediente__trayectoria" aria-labelledby="trayectoria-title">
+  <header class="expediente__trayectoria-head">
+    <p class="expediente__trayectoria-eyebrow">Lectura posterior</p>
+    <h2 class="expediente__trayectoria-title" id="trayectoria-title">Trayectoria</h2>
+    <p class="expediente__trayectoria-intro">Esta margen no explica la obra: propone una lectura de su investigación. Es opcional, fechada y revisable.</p>
+  </header>
+
+  {% for frente in page.trayectoria.frentes %}
+  <article class="trayectoria__frente" id="trayectoria-{{ frente.id }}">
+    <p class="trayectoria__eyebrow">
+      Frente {{ forloop.index }}{% if frente.estado %} · {{ frente.estado_label | default: frente.estado }}{% endif %}
+    </p>
+    <h3 class="trayectoria__title">{{ frente.etiqueta }}</h3>
+    {% if frente.etiqueta != frente.nombre_canonico %}
+    <p class="trayectoria__canonical">Nombre canónico: {{ frente.nombre_canonico }}</p>
+    {% endif %}
+
+    {% if frente.formulaciones.size > 0 %}
+    <details class="trayectoria__details">
+      <summary>Formulaciones ({{ frente.formulaciones.size }})</summary>
+      <ol class="trayectoria__formulaciones">
+        {% for formulacion in frente.formulaciones %}
+        <li>
+          <p class="trayectoria__formulacion-meta">
+            <time datetime="{{ formulacion.fecha }}">{{ formulacion.fecha }}</time>
+            <span>{{ formulacion.tipo }}</span>
+          </p>
+          <p class="trayectoria__formulacion-texto">{{ formulacion.texto }}</p>
+          {% if formulacion.fuente %}<p class="trayectoria__fuente">{{ formulacion.fuente }}</p>{% endif %}
+        </li>
+        {% endfor %}
+      </ol>
+    </details>
+    {% endif %}
+
+    {% if frente.tensiones.size > 0 %}
+    <div class="trayectoria__tensiones">
+      {% for tension in frente.tensiones %}
+      <p>{{ tension }}</p>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <ul class="trayectoria__inscripciones">
+      {% for inscripcion in frente.inscripciones %}
+      <li class="trayectoria__inscripcion" id="trayectoria-{{ inscripcion.id }}">
+        <p class="trayectoria__material">
+          <span class="trayectoria__kind">{{ inscripcion.material.kind }}</span>
+          <a href="{{ inscripcion.material.url | relative_url }}">{{ inscripcion.material.title }}</a>
+        </p>
+
+        {% if inscripcion.etiqueta %}
+        <p class="trayectoria__etiqueta">{{ inscripcion.etiqueta }}</p>
+        {% endif %}
+
+        <p class="trayectoria__funcion">
+          {{ inscripcion.interpretacion.principal }}{% if inscripcion.interpretacion.compatibles and inscripcion.interpretacion.compatibles.size > 0 %} · {{ inscripcion.interpretacion.compatibles | join: " · " }}{% endif %}
+        </p>
+
+        {% if inscripcion.interpretacion.motivo %}
+        <p class="trayectoria__motivo">{{ inscripcion.interpretacion.motivo }}</p>
+        {% endif %}
+        {% if inscripcion.interpretacion.efecto %}
+        <p class="trayectoria__efecto">{{ inscripcion.interpretacion.efecto }}</p>
+        {% endif %}
+
+        {% if inscripcion.evidencia.size > 0 %}
+        <details class="trayectoria__details">
+          <summary>Evidencia ({{ inscripcion.evidencia.size }})</summary>
+          <ul class="trayectoria__evidencia">
+            {% for evidencia in inscripcion.evidencia %}
+            <li>
+              <span class="trayectoria__modo">{{ evidencia.modo }}</span>
+              {% if evidencia.nivel %} · {{ evidencia.nivel }}{% endif %}
+              {% if evidencia.fuente %} · {{ evidencia.fuente }}{% endif %}
+              {% if evidencia.cita %}<span class="trayectoria__cita">«{{ evidencia.cita }}»</span>{% endif %}
+              {% if evidencia.nota %}<span class="trayectoria__nota">{{ evidencia.nota }}</span>{% endif %}
+            </li>
+            {% endfor %}
+          </ul>
+        </details>
+        {% endif %}
+
+        {% if inscripcion.otras_composiciones.size > 0 %}
+        <p class="trayectoria__tambien">
+          También en
+          {% for otra in inscripcion.otras_composiciones %}
+          <a href="{{ otra.url | relative_url }}{{ otra.ancla }}">{{ otra.titulo }}</a>{% unless forloop.last %} · {% endunless %}
+          {% endfor %}
+        </p>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  </article>
+  {% endfor %}
+</section>
+{% endif %}

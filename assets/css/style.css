@@ -11680,3 +11680,277 @@ body.reading-rizoma .anexos-back a {
   color: var(--umbral-trace);
   text-decoration: none;
 }
+
+/* Trayectoria del piloto B3.1.1: margen de lectura, no dashboard. */
+body.reading-rizoma .expediente__trayectoria {
+  max-width: var(--reading-measure);
+  margin: clamp(3rem, 7vw, 5.5rem) auto 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--umbral-rule-faint);
+}
+
+body.reading-rizoma .expediente__trayectoria-head {
+  max-width: 62ch;
+  margin-bottom: 2rem;
+}
+
+body.reading-rizoma .expediente__trayectoria-eyebrow {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--umbral-ember);
+}
+
+body.reading-rizoma .expediente__trayectoria-title {
+  margin: 0 0 0.6rem;
+  font-family: var(--font-serif);
+  font-size: clamp(1.7rem, 2.6vw, 2.2rem);
+  font-weight: 300;
+  line-height: 1.1;
+  color: var(--umbral-ink);
+}
+
+body.reading-rizoma .expediente__trayectoria-intro {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 0.98rem;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--umbral-dim);
+}
+
+body.reading-rizoma .trayectoria__frente {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--umbral-rule);
+}
+
+body.reading-rizoma .trayectoria__eyebrow {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--umbral-muted);
+}
+
+body.reading-rizoma .trayectoria__title {
+  margin: 0 0 0.3rem;
+  font-family: var(--font-serif);
+  font-size: clamp(1.35rem, 2vw, 1.65rem);
+  font-weight: 300;
+  line-height: 1.2;
+  color: var(--umbral-ink);
+}
+
+body.reading-rizoma .trayectoria__canonical,
+body.reading-rizoma .trayectoria__fuente,
+body.reading-rizoma .trayectoria__nota {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  line-height: 1.5;
+  letter-spacing: 0.03em;
+  color: var(--umbral-muted);
+}
+
+body.reading-rizoma .trayectoria__details {
+  margin-top: 0.7rem;
+}
+
+body.reading-rizoma .trayectoria__details summary {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--umbral-dim);
+  cursor: pointer;
+  list-style: none;
+}
+
+body.reading-rizoma .trayectoria__details summary::-webkit-details-marker {
+  display: none;
+}
+
+body.reading-rizoma .trayectoria__details summary::after {
+  content: "+";
+  margin-left: 0.45rem;
+  color: var(--umbral-ember);
+}
+
+body.reading-rizoma .trayectoria__details[open] > summary::after {
+  content: "−";
+}
+
+body.reading-rizoma .trayectoria__details summary:focus-visible {
+  outline: 1px solid var(--umbral-trace);
+  outline-offset: 3px;
+}
+
+body.reading-rizoma .trayectoria__formulaciones,
+body.reading-rizoma .trayectoria__evidencia {
+  margin: 0.6rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+body.reading-rizoma .trayectoria__formulaciones li,
+body.reading-rizoma .trayectoria__evidencia li {
+  padding: 0.55rem 0;
+  border-top: 1px solid var(--umbral-rule-faint);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  line-height: 1.55;
+  color: var(--umbral-muted);
+}
+
+body.reading-rizoma .trayectoria__formulacion-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.8rem;
+  margin: 0 0 0.2rem;
+  color: var(--umbral-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+body.reading-rizoma .trayectoria__formulacion-texto {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--umbral-ink);
+}
+
+body.reading-rizoma .trayectoria__tensiones {
+  margin-top: 0.8rem;
+  padding-left: 0.8rem;
+  border-left: 1px solid var(--umbral-ember);
+}
+
+body.reading-rizoma .trayectoria__tensiones p {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 0.92rem;
+  font-style: italic;
+  line-height: 1.55;
+  color: var(--umbral-dim);
+}
+
+body.reading-rizoma .trayectoria__inscripciones {
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+body.reading-rizoma .trayectoria__inscripcion {
+  padding: 1rem 0;
+  border-top: 1px solid var(--umbral-rule-faint);
+}
+
+body.reading-rizoma .trayectoria__material {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.6rem;
+  margin: 0 0 0.35rem;
+}
+
+body.reading-rizoma .trayectoria__material a {
+  font-family: var(--font-serif);
+  font-size: 1.02rem;
+  line-height: 1.35;
+  color: var(--umbral-ink);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+body.reading-rizoma .trayectoria__material a:hover,
+body.reading-rizoma .trayectoria__material a:focus-visible {
+  color: var(--umbral-trace);
+  border-bottom-color: var(--umbral-trace);
+}
+
+body.reading-rizoma .trayectoria__kind {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--umbral-ember);
+}
+
+body.reading-rizoma .trayectoria__etiqueta,
+body.reading-rizoma .trayectoria__funcion,
+body.reading-rizoma .trayectoria__tambien,
+body.reading-rizoma .trayectoria__modo {
+  margin: 0 0 0.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: var(--umbral-dim);
+}
+
+body.reading-rizoma .trayectoria__funcion {
+  color: var(--umbral-trace);
+}
+
+body.reading-rizoma .trayectoria__motivo,
+body.reading-rizoma .trayectoria__efecto {
+  max-width: 64ch;
+  margin: 0.35rem 0;
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+body.reading-rizoma .trayectoria__motivo {
+  color: var(--umbral-ink);
+}
+
+body.reading-rizoma .trayectoria__efecto {
+  font-style: italic;
+  color: var(--umbral-dim);
+}
+
+body.reading-rizoma .trayectoria__cita {
+  display: block;
+  margin-top: 0.2rem;
+  font-family: var(--font-serif);
+  font-size: 0.86rem;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--umbral-dim);
+}
+
+body.reading-rizoma .trayectoria__nota {
+  display: block;
+  margin-top: 0.2rem;
+}
+
+body.reading-rizoma .trayectoria__tambien a {
+  color: var(--umbral-trace);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+body.reading-rizoma .trayectoria__tambien a:hover,
+body.reading-rizoma .trayectoria__tambien a:focus-visible {
+  border-bottom-color: var(--umbral-trace);
+}
+
+@media (max-width: 700px) {
+  body.reading-rizoma .expediente__trayectoria {
+    margin-top: 2.5rem;
+  }
+
+  body.reading-rizoma .trayectoria__frente {
+    margin-top: 2rem;
+  }
+}
