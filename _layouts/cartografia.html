@@ -28,26 +28,56 @@
       </p>
     </header>
 
+    <section class="cartografia-section" aria-labelledby="cartografia-guide">
+      <h2 class="cartografia-section__title" id="cartografia-guide">Cómo leer</h2>
+      <p class="cartografia-line"><span class="cartografia-label">Frente:</span> una línea de indagación que puede cambiar de formulación sin perder identidad.</p>
+      <p class="cartografia-line"><span class="cartografia-label">Procedencia:</span> de dónde viene la pregunta.</p>
+      <p class="cartografia-line"><span class="cartografia-label">Lente:</span> qué cambia la mirada sobre la pregunta.</p>
+      <p class="cartografia-line"><span class="cartografia-label">Contraste:</span> qué sostiene, cuestiona o tensiona una afirmación.</p>
+      <p class="cartografia-line"><span class="cartografia-label">Evidencia:</span> de dónde se sostiene la relación; puede ser explícita o inferida.</p>
+      <p class="cartografia-line"><span class="cartografia-label">Formulación:</span> cada cambio de la pregunta a lo largo del tiempo.</p>
+    </section>
+
     <section class="cartografia-section" aria-labelledby="cartografia-alcance">
       <h2 class="cartografia-section__title" id="cartografia-alcance">Alcance</h2>
       {% if page.cartografia.frente %}
-      <p class="cartografia-line"><span class="cartografia-label">Frente</span> {{ page.cartografia.frente.nombre }}{% if page.cartografia.frente.estado %} · {{ page.cartografia.frente.estado }}{% endif %}</p>
+      <p class="cartografia-line"><span class="cartografia-label">Frente:</span> {{ page.cartografia.frente.nombre }}{% if page.cartografia.frente.estado %} · {{ page.cartografia.frente.estado_label | default: page.cartografia.frente.estado }}{% endif %}</p>
       {% endif %}
       {% if page.cartografia.composiciones.size > 0 %}
       <p class="cartografia-line">
-        <span class="cartografia-label">Composiciones</span>
+        <span class="cartografia-label">Composiciones:</span>
         {% for composicion in page.cartografia.composiciones %}
         <a href="{{ composicion.url | relative_url }}">{{ composicion.titulo }}</a>{% unless forloop.last %} · {% endunless %}
         {% endfor %}
       </p>
       {% endif %}
       {% if page.cartografia.evidencia.size > 0 %}
-      <p class="cartografia-line"><span class="cartografia-label">Evidencia</span> {{ page.cartografia.evidencia | join: " · " }}</p>
+      <p class="cartografia-line"><span class="cartografia-label">Evidencia:</span> {{ page.cartografia.evidencia | join: " · " }}</p>
       {% endif %}
     </section>
 
+    {% if page.cartografia.frente.formulaciones.size > 0 %}
+    <section class="cartografia-section" aria-labelledby="cartografia-formulaciones">
+      <h2 class="cartografia-section__title" id="cartografia-formulaciones">Formulaciones del frente</h2>
+      <ol class="cartografia-formulaciones">
+        {% for formulacion in page.cartografia.frente.formulaciones %}
+        <li>
+          <p class="cartografia-line"><time datetime="{{ formulacion.fecha }}">{{ formulacion.fecha }}</time> · {{ formulacion.tipo }}</p>
+          <p class="trayectoria__motivo">{{ formulacion.texto }}</p>
+          {% if formulacion.fuente %}<p class="cartografia-line"><span class="cartografia-label">Fuente:</span> {{ formulacion.fuente }}</p>{% endif %}
+        </li>
+        {% endfor %}
+      </ol>
+      {% if page.cartografia.frente.tensiones.size > 0 %}
+      <div class="trayectoria__tensiones">
+        {% for tension in page.cartografia.frente.tensiones %}<p>{{ tension }}</p>{% endfor %}
+      </div>
+      {% endif %}
+    </section>
+    {% endif %}
+
     <section class="cartografia-section" aria-labelledby="cartografia-aceptadas">
-      <h2 class="cartografia-section__title" id="cartografia-aceptadas">Aceptadas ({{ page.cartografia.aceptadas.size }})</h2>
+      <h2 class="cartografia-section__title" id="cartografia-aceptadas">Inscripciones aceptadas ({{ page.cartografia.aceptadas.size }})</h2>
       <ul class="trayectoria__inscripciones">
         {% for inscripcion in page.cartografia.aceptadas %}
         <li class="trayectoria__inscripcion" id="cartografia-{{ inscripcion.id }}">
@@ -55,7 +85,7 @@
             <span class="trayectoria__kind">{{ inscripcion.material.kind }}</span>
             <a href="{{ inscripcion.material.url | relative_url }}">{{ inscripcion.material.title }}</a>
           </p>
-          <p class="trayectoria__etiqueta">{{ inscripcion.frente.nombre }} · {{ inscripcion.id }}</p>
+          <p class="trayectoria__etiqueta">{{ inscripcion.frente.nombre }} · ID: {{ inscripcion.id }}</p>
           <p class="trayectoria__funcion">
             {{ inscripcion.interpretacion.principal }}{% if inscripcion.interpretacion.compatibles and inscripcion.interpretacion.compatibles.size > 0 %} · {{ inscripcion.interpretacion.compatibles | join: " · " }}{% endif %}
           </p>
@@ -84,7 +114,7 @@
 
     {% if page.cartografia.rechazadas.size > 0 %}
     <section class="cartografia-section" aria-labelledby="cartografia-rechazadas">
-      <h2 class="cartografia-section__title" id="cartografia-rechazadas">Rechazadas ({{ page.cartografia.rechazadas.size }})</h2>
+      <h2 class="cartografia-section__title" id="cartografia-rechazadas">Propuestas rechazadas ({{ page.cartografia.rechazadas.size }})</h2>
       <ul class="cartografia-list">
         {% for rechazo in page.cartografia.rechazadas %}
         <li>

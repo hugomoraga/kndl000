@@ -63,21 +63,21 @@ Se implementa una rebanada mínima:
 - un frente transversal: `redundancia-memoria`;
 - cuatro inscripciones: Shannon, voto por mayoría, autómata y Medusa;
 - una cartografía revisada;
-- una margen read-only en las dos exploraciones;
+- una vista de cartografía no indexada; la exploración solo enlaza a ella;
 - sin nodos ni cortes obligatorios, sin páginas globales, sin migración.
 
 La trama vive en `docs/rizoma/trama/`; las composiciones en
 `_data/composiciones/`; las cartografías en `docs/rizoma/cartografias/`. Un
-plugin de Jekyll resuelve la trama, adjunta `page.trayectoria` y renderiza la
-margen. La trama no se copia a `_site`.
+plugin de Jekyll resuelve la trama y adjunta `page.trayectoria`; la exploración
+enlaza a la cartografía desde el aparato. La trama no se copia a `_site`.
 
 ## Consecuencias
 
 - La exploración deja de ser el contenedor propietario de la investigación.
 - La composición conserva su voz y puede publicarse sin trama.
 - Un frente puede atravesar varias composiciones con un `id` estable.
-- La margen muestra el “por qué” de los materiales sin convertir la escritura
-  en un formulario.
+- La cartografía muestra el “por qué” de los materiales sin convertir la escritura
+  en un formulario; la exploración queda limpia.
 - El modelo es más complejo que el hub anterior; el piloto debe demostrar que
   el valor intelectual compensa la complejidad.
 - Si el piloto falla, se vuelve a B sin migrar el contenido.
@@ -91,4 +91,5 @@ margen. La trama no se copia a `_site`.
 - `_data/composiciones/`
 - `docs/rizoma/cartografias/2026-11-15-piloto.yml`
 - `_plugins/rizoma_trayectoria.rb`
-- `_includes/rizoma-trayectoria.html`
+- `_layouts/cartografia.html`
+- `_plugins/rizoma_cartografia.rb`

@@ -12090,3 +12090,26 @@ body.reading-cartografia .cartografia-list li {
 body.reading-cartografia .cartografia-list li:first-child {
   border-top: 0;
 }
+
+body.reading-rizoma .expediente__trayectoria-front {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.5;
+  color: var(--umbral-dim);
+}
+
+body.reading-cartografia .cartografia-formulaciones {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+body.reading-cartografia .cartografia-formulaciones li {
+  padding: 0.85rem 0;
+  border-top: 1px solid var(--umbral-rule-faint);
+}
+
+body.reading-cartografia .cartografia-formulaciones li:first-child {
+  border-top: 0;
+}

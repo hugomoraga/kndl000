@@ -103,7 +103,10 @@ module KNDL
       {
         "id" => front["id"],
         "nombre" => front["nombre_canonico"] || front["id"],
-        "estado" => front["estado"]
+        "estado" => front["estado"],
+        "estado_label" => state_label(front["estado"]),
+        "formulaciones" => Array(front["formulaciones"]),
+        "tensiones" => Array(front["tensiones"])
       }
     end
 
@@ -138,6 +141,17 @@ module KNDL
         "evidencia" => Array(inscription["evidencia"]),
         "estado" => inscription["estado"]
       }
+    end
+
+    def state_label(value)
+      {
+        "abierto" => "abierto",
+        "en-tension" => "en tensión",
+        "resuelto" => "resuelto",
+        "latente" => "latente",
+        "cortado" => "cortado",
+        "derivado" => "derivado"
+      }.fetch(value.to_s, value.to_s)
     end
 
     def find_exploration(site, path)
