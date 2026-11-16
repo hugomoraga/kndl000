@@ -1,0 +1,16 @@
+{% if page.presentacion and page.presentacion.mapa.size > 0 %}
+<nav class="expediente__mapa" aria-label="Mapa de lectura">
+  <p class="expediente__mapa-eyebrow">Mapa de lectura</p>
+  <ol class="expediente__mapa-lista">
+    {% for paso in page.presentacion.mapa %}
+    <li class="expediente__mapa-paso">
+      <a href="#{{ paso.id }}">
+        <span class="expediente__mapa-num">{{ forloop.index }}</span>
+        <span class="expediente__mapa-label">{{ paso.etiqueta }}</span>
+        {% if paso.movimiento %}<span class="expediente__mapa-movimiento">{{ paso.movimiento }}</span>{% endif %}
+      </a>
+    </li>
+    {% endfor %}
+  </ol>
+</nav>
+{% endif %}

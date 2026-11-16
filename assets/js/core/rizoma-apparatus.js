@@ -7,11 +7,12 @@
   var mobile = window.matchMedia
     ? window.matchMedia("(max-width: 900px)")
     : null;
+  var keepClosed = details.hasAttribute("data-keep-closed");
 
   function sync() {
     if (mobile && mobile.matches) {
       details.removeAttribute("open");
-    } else {
+    } else if (!keepClosed) {
       details.setAttribute("open", "");
     }
   }

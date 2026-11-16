@@ -32,6 +32,8 @@
       </p>
     </header>
 
+    {% include rizoma-presentacion-mapa.html %}
+
     <div class="expediente">
       <div class="expediente__body reading-body">
         {%- assign _chunks = content | split: '<h2' -%}
@@ -61,6 +63,16 @@
               {%- endif -%}
             {%- endfor -%}
           {%- endif -%}
+          {% if page.presentacion.diagrama and page.presentacion.diagrama.antes_de == _section_id %}
+            {% include rizoma-presentacion-diagrama.html diagrama=page.presentacion.diagrama %}
+          {% endif %}
+          {% assign _respiros = page.presentacion.respiros[_section_id] %}
+          {% if _respiros %}
+            {% for _respiro in _respiros %}
+              {% include rizoma-respiro.html respiro=_respiro %}
+            {% endfor %}
+          {% endif %}
+
           <section class="expediente__section{% if _urls != '' %} expediente__section--with-corpus{% endif %}">
             <div class="expediente__section-body">
               <h2{{ _chunk }}
@@ -87,7 +99,9 @@
         <p class="expediente__apparatus-intro">Las obras que sostienen la deriva, el vocabulario que comparte y las huellas de su edición.</p>
       </header>
 
-      <details class="expediente__apparatus-details" open>
+      {% assign _aparato_abierto = false %}
+      {% if page.presentacion and page.presentacion.aparato_abierto %}{% assign _aparato_abierto = true %}{% endif %}
+      <details class="expediente__apparatus-details"{% if _aparato_abierto %} open{% else %} data-keep-closed{% endif %}>
         <summary class="expediente__apparatus-summary">
           <span class="expediente__apparatus-summary-label">Corpus, nodos y versiones</span>
           <span class="expediente__apparatus-summary-count">{{ page.corpus | size }} piezas · {{ page.nodos | size }} nodos{% if page.anexos %} · {{ page.anexos | size }} anexos{% endif %}</span>

@@ -1,0 +1,43 @@
+{% assign _diagrama = include.diagrama %}
+<figure class="expediente__diagrama">
+  <figcaption class="expediente__diagrama-head">
+    <p class="expediente__diagrama-eyebrow">Diagrama de tensión</p>
+    <h2 class="expediente__diagrama-title">{{ _diagrama.titulo }}</h2>
+  </figcaption>
+
+  <div class="expediente__diagrama-grid">
+    <section class="expediente__diagrama-lado">
+      <p class="expediente__diagrama-etiqueta">{{ _diagrama.izquierda.etiqueta }}</p>
+      {% if _diagrama.izquierda.nota %}<p class="expediente__diagrama-nota">{{ _diagrama.izquierda.nota }}</p>{% endif %}
+      <ul class="expediente__diagrama-obras">
+        {% for obra in _diagrama.izquierda.obras %}
+        <li>
+          <span class="expediente__diagrama-kind">{{ obra.kind }}</span>
+          <a href="{{ obra.url | relative_url }}">{{ obra.title }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <div class="expediente__diagrama-corte" aria-hidden="true">
+      {% if _diagrama.corte %}<span>{{ _diagrama.corte }}</span>{% endif %}
+    </div>
+
+    <section class="expediente__diagrama-lado">
+      <p class="expediente__diagrama-etiqueta">{{ _diagrama.derecha.etiqueta }}</p>
+      {% if _diagrama.derecha.nota %}<p class="expediente__diagrama-nota">{{ _diagrama.derecha.nota }}</p>{% endif %}
+      <ul class="expediente__diagrama-obras">
+        {% for obra in _diagrama.derecha.obras %}
+        <li>
+          <span class="expediente__diagrama-kind">{{ obra.kind }}</span>
+          <a href="{{ obra.url | relative_url }}">{{ obra.title }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+  </div>
+
+  {% if _diagrama.blanco %}
+  <p class="expediente__diagrama-blanco">Blanco: {{ _diagrama.blanco }}</p>
+  {% endif %}
+</figure>
