@@ -168,7 +168,7 @@
             {% if page.trayectoria.frentes.size > 0 %}
             <p class="expediente__trayectoria-front">Frente: {% for frente in page.trayectoria.frentes %}{{ frente.nombre_canonico }}{% unless forloop.last %} · {% endunless %}{% endfor %}</p>
             {% endif %}
-            <a class="expediente__history-link" href="{{ page.trayectoria.cartografia.url | relative_url }}">Ver cartografía →</a>
+            <a class="expediente__history-link" href="{{ page.trayectoria.cartografia.url | relative_url }}">Ver trayectoria →</a>
           </section>
           {% endif %}
 

@@ -86,7 +86,7 @@ module KNDL
         "id" => cartography["id"],
         "fecha" => cartography["fecha"],
         "decision" => cartography["decision"],
-        "url" => "/rizoma/cartografia/#{cartography['id']}/"
+        "url" => "/rizoma/trayectoria/#{cartography['id']}/"
       }
     end
 

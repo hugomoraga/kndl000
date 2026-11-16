@@ -53,7 +53,9 @@ decisión editorial, no una consecuencia automática de la investigación.
    no significa privado. Si se necesita privacidad real, se usará un repo
    privado o un directorio local-only; el piloto no decide esa infraestructura.
 10. La **cartografía** conserva revisiones significativas y rechazos valiosos,
-    no todas las ejecuciones de IA. Git es el historial.
+    no todas las ejecuciones de IA. Git es el historial. En la interfaz pública
+    la vista se llama **Trayectoria**; el artefacto de investigación sigue
+    llamándose cartografía.
 
 ## Piloto
 
@@ -63,20 +65,20 @@ Se implementa una rebanada mínima:
 - un frente transversal: `redundancia-memoria`;
 - cuatro inscripciones: Shannon, voto por mayoría, autómata y Medusa;
 - una cartografía revisada;
-- una vista de cartografía no indexada; la exploración solo enlaza a ella;
+- una vista de trayectoria no indexada; la exploración solo enlaza a ella;
 - sin nodos ni cortes obligatorios, sin páginas globales, sin migración.
 
 La trama vive en `docs/rizoma/trama/`; las composiciones en
 `_data/composiciones/`; las cartografías en `docs/rizoma/cartografias/`. Un
 plugin de Jekyll resuelve la trama y adjunta `page.trayectoria`; la exploración
-enlaza a la cartografía desde el aparato. La trama no se copia a `_site`.
+enlaza a la trayectoria desde el aparato. La trama no se copia a `_site`.
 
 ## Consecuencias
 
 - La exploración deja de ser el contenedor propietario de la investigación.
 - La composición conserva su voz y puede publicarse sin trama.
 - Un frente puede atravesar varias composiciones con un `id` estable.
-- La cartografía muestra el “por qué” de los materiales sin convertir la escritura
+- La trayectoria muestra el “por qué” de los materiales sin convertir la escritura
   en un formulario; la exploración queda limpia.
 - El modelo es más complejo que el hub anterior; el piloto debe demostrar que
   el valor intelectual compensa la complejidad.

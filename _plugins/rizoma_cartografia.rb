@@ -30,14 +30,14 @@ module KNDL
         page.content = ""
         page.data.merge!(
           "layout" => "cartografia",
-          "title" => "Cartografía · #{cartography['fecha']}",
-          "seo_title" => "Cartografía · #{id} · KNDL 000",
-          "description" => "Cartografía revisada del piloto B3.1.1: aceptadas, rechazadas y pendientes.",
+          "title" => "Trayectoria · #{cartography['fecha']}",
+          "seo_title" => "Trayectoria · #{id} · KNDL 000",
+          "description" => "Trayectoria revisada del piloto B3.1.1: aceptadas, rechazadas y pendientes.",
           "body_class" => "reading-poemas reading-rizoma",
           "main_class" => "reading-main",
           "noindex" => true,
           "sitemap" => false,
-          "permalink" => "/rizoma/cartografia/#{id}/",
+          "permalink" => "/rizoma/trayectoria/#{id}/",
           "cartografia" => build_data(site, trama, cartography)
         )
         site.pages << page
