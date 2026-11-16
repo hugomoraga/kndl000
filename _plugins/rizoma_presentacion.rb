@@ -46,8 +46,10 @@ module KNDL
 
     def section_map(content)
       sections = []
-      in_fence = false
+      intro = content.split(/^##\s+/, 2).first.to_s.strip
+      sections << { "id" => "introduccion", "titulo" => "Introducción" } unless intro.empty?
 
+      in_fence = false
       content.each_line do |line|
         if line.start_with?("```")
           in_fence = !in_fence

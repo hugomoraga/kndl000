@@ -12117,8 +12117,9 @@ body.reading-cartografia .cartografia-formulaciones li:first-child {
 /* Presentación de la exploración: mapa, respiros y diagrama. */
 body.reading-rizoma .expediente__mapa {
   max-width: var(--reading-measure);
-  margin: 1.5rem auto 0;
+  margin: 1.5rem auto 2.5rem;
   padding-top: 1rem;
+  padding-bottom: 0.5rem;
   border-top: 1px solid var(--umbral-rule-faint);
 }
 
@@ -12177,6 +12178,16 @@ body.reading-rizoma .expediente__mapa-movimiento {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--umbral-muted);
+}
+
+body.reading-rizoma .expediente__intro-eyebrow {
+  margin: 0 0 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--umbral-ember);
 }
 
 body.reading-rizoma .expediente__respiro {

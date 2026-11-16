@@ -39,7 +39,8 @@
         {%- assign _chunks = content | split: '<h2' -%}
         {%- for _chunk in _chunks -%}
           {%- if forloop.first -%}
-          <div class="expediente__intro">
+          <div class="expediente__intro" id="introduccion">
+            <p class="expediente__intro-eyebrow">Introducción</p>
             {{ _chunk }}
           </div>
           {%- else -%}

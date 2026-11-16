@@ -2,6 +2,9 @@
 # deriva el mapa de los encabezados y deja el aparato cerrado.
 
 mapa:
+  - seccion: introduccion
+    etiqueta: "Introducción"
+    movimiento: "entrada"
   - seccion: dos-rastros
     etiqueta: "Dos rastros"
     movimiento: "origen"
