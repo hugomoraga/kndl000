@@ -6,6 +6,8 @@ estado: evaluación estructural · validación editorial pendiente · no publica
 
 # Evaluación del piloto B3.1.1
 
+> **Actualización 2026-11-15.** Después de esta evaluación, la exploración 02 se reorganizó editorialmente y se abrió la sección §7 Adherir. El piloto estructural sigue siendo válido; las referencias al “cuerpo sin cambios” corresponden a la versión evaluada antes de esa reescritura.
+
 ## Alcance
 
 Se probó una rebanada mínima de B3.1.1:
@@ -39,10 +41,10 @@ Se probó una rebanada mínima de B3.1.1:
 | Continuidad entre composiciones | **Pasa** | Shannon es la misma inscripción en 01 y 02; “También en” enlaza al ancla de la otra composición |
 | Fuente única de apariciones | **Pasa** | La inscripción no tiene `apariciones`; las composiciones seleccionan y anclan |
 | Trazabilidad | **Pasa** | Las cuatro inscripciones tienen evidencia; la margen distingue `existencia`, `relacion`, `interpretacion`, `inferencia` |
-| Relaciones explícitas | **Pasa** | Shannon y voto están documentados en el cuerpo; autómata y Medusa en el aparato |
+| Relaciones explícitas | **Pasa** | Shannon y voto en el cuerpo; autómata en el aparato; Medusa en el aparato y, desde la reorganización, en 02 §7 |
 | No inventar relaciones | **Pasa** | No se agregó ninguna relación nueva; Medusa se marca como inferencia en el frente transversal |
 | Rechazo conservado | **Pasa estructuralmente** | `medusa-lente` queda en `rechazadas` con motivo |
-| Autonomía editorial | **Pasa** | El cuerpo de 01 y 02 no cambió; la margen es opcional |
+| Autonomía editorial | **Pasa en el piloto original** | El cuerpo de 01 y 02 no cambió durante el piloto; luego 02 se reescribió por decisión editorial |
 | Lectura | **Pasa en escritorio y móvil** | La Trayectoria aparece después de la lámina y antes del Aparato |
 | No grafo / no dashboard | **Pasa** | No hay páginas globales de frentes o nodos; la cartografía es una lista |
 | La trama no se publica completa | **Pasa** | `_site` no contiene `docs/`; solo se renderiza la margen y la cartografía seleccionada |
@@ -66,12 +68,12 @@ El piloto todavía no prueba la parte más importante: **la validación del auto
 | Shannon | Explícita en 01 §7 y 02 §6; también en anexos | `lente` + `contraste` es una lectura validada | La etiqueta de función no está escrita en el cuerpo |
 | Voto por mayoría | Explícita en 01 §7 y anexo redundancia | `contraste` es una lectura de una demostración | El cuerpo lo describe como código, no como argumento |
 | Autómata | Explícita en el anexo automata; **no** en el cuerpo ni en el corpus | `contraste` / `objeción` está en el aparato | El cuerpo de 01 no lo nombra |
-| Medusa | Explícita en el anexo medusa; **no** en el cuerpo de 02 | `contraste` es explícito como objeción | La inscripción en el frente transversal es una inferencia: 01 §8 → 02 §6 + objeción de Medusa |
+| Medusa | Explícita en el anexo medusa; desde la reorganización, también en **02 §7** | `contraste` es explícito como objeción | La inscripción en el frente transversal sigue siendo una inferencia: 01 §8 → 02 §6/§7 + objeción de Medusa |
 
 ## Riesgos observados
 
 1. **Sesgo de autoría.** La trama la escribió el colaborador; el piloto no prueba que el autor la mantenga.
-2. **Evidencia de aparato.** Autómata y Medusa son explícitos en el aparato, no en el cuerpo. La margen lo dice, pero un lector rápido puede sobreleer.
+2. **Evidencia de aparato.** El autómata sigue siendo explícito solo en el aparato; Medusa pasó al cuerpo en §7. La margen lo dice, pero un lector rápido puede sobreleer.
 3. **Densidad de la margen.** La evidencia y las formulaciones están colapsadas; el lector ve motivo y efecto, pero debe abrir para auditar.
 4. **Vista de cartografía pública.** La página es `noindex` y no está en el sitemap, pero el repo es público; no es privacidad real.
 5. **Fricción no medida.** El piloto no prueba cuánto cuesta escribir o validar la trama.

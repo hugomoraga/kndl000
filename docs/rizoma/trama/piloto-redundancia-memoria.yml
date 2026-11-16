@@ -115,11 +115,15 @@ inscripciones:
     interpretacion:
       principal: contraste
       compatibles: []
-      motivo: "Un caso de conservación sin soporte que resiste la tesis de 02 §6."
+      motivo: "Un caso de conservación sin soporte que resiste la tesis de 02 §6 y abre Adherir."
       efecto: "La conservación deja de ser solo práctica: también puede ser adherencia."
     evidencia:
       - modo: existencia
         fuente: /poemas/medusa/
+      - modo: relacion
+        nivel: cuerpo
+        fuente: "02 §7"
+        cita: "En Medusa algo ocurre, deja restos, los restos se adhieren, se acumulan y terminan modificando a quien los recibe."
       - modo: relacion
         nivel: aparato
         fuente: "anexo medusa"
@@ -129,8 +133,8 @@ inscripciones:
         fuente: "anexo medusa"
         cita: "La objeción no se resuelve: se sostiene."
       - modo: inferencia
-        fuente: "01 §8 → 02 §6 + anexo medusa"
-        nota: "La inscripción en el frente transversal se infiere: 01 §8 entrega la pregunta, 02 §6 la trabaja y Medusa objeta 02 §6. El cuerpo de 02 no nombra el poema."
+        fuente: "01 §8 → 02 §6/§7 + anexo medusa"
+        nota: "La inscripción en el frente transversal se infiere: 01 §8 entrega la pregunta, 02 §6 la trabaja y Medusa objeta en §7. El cuerpo de 02 ya nombra el poema; la pertenencia al frente es la inferencia."
     estado: validada
     propuesta_por: ia
     validado_por: autor

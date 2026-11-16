@@ -18,6 +18,7 @@ evidencia:
   - "01 §7"
   - "01 §8"
   - "02 §6"
+  - "02 §7"
   - "anexo redundancia"
   - "anexo automata"
   - "anexo medusa"
@@ -34,4 +35,4 @@ rechazadas:
 pendientes:
   - "No se promueve ningún nodo en el piloto."
   - "No se registra ningún corte en el piloto."
-notas: "La cartografía no fuerza una relación nueva. La inscripción de Medusa en el frente transversal se infiere del traspaso 01 §8 → 02 §6 y de la objeción del anexo medusa."
+notas: "La cartografía no fuerza una relación nueva. La inscripción de Medusa en el frente transversal se infiere del traspaso 01 §8 → 02 §6 y de la objeción que el cuerpo desarrolla en §7; el anexo medusa conserva el desarrollo largo."

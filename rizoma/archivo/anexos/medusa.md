@@ -76,5 +76,5 @@ Decidir qué nombra «archivo». Si nombra un soporte, el residuo queda fuera y 
 ## Qué queda abierto
 
 - La definición del nodo Residuo: hoy dice «Lo que queda cuando algo deja de funcionar». *Medusa* sugiere «lo que sigue actuando cuando algo deja de significar».
-- Si el cuerpo suma una sección breve que señale este anexo: ¿va al final de <a class="seccion-ref" href="/rizoma/archivo/#repetir-para-no-perderse" aria-label="Sección 6: Repetir para no perderse" title="Sección 6: Repetir para no perderse">§6</a>, después de la tesis de la redundancia, o se pliega en <a class="seccion-ref" href="/rizoma/archivo/#deprecar" aria-label="Sección 5: Deprecar" title="Sección 5: Deprecar">§5</a>?
+- La sección <a class="seccion-ref" href="/rizoma/archivo/#adherir" aria-label="Sección 7: Adherir" title="Sección 7: Adherir">§7 Adherir</a> ya señala este anexo. Queda decidir si se mantiene como sección o se pliega en <a class="seccion-ref" href="/rizoma/archivo/#repetir-para-no-perderse" aria-label="Sección 6: Repetir para no perderse" title="Sección 6: Repetir para no perderse">§6</a>.
 - Si la objeción toma también la relación entre el margen y <a class="seccion-ref" href="/rizoma/archivo/#recuperar" aria-label="Sección 3: Recuperar" title="Sección 3: Recuperar">§3</a> —las cinco notas del corpus como relaciones guardadas— o si ese caso queda para otra vuelta.

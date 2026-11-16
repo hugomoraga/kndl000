@@ -58,5 +58,5 @@ La formulación anterior quedó corregida en «El residuo no es un archivo»; es
 
 ## Qué queda abierto
 
-- Si la sección breve del cuerpo va al final de §6, donde está la tesis de la redundancia, o se pliega en §5.
-- Si el resumen de la 02 —«Una deriva por el registro, la pérdida y lo que sobrevive al soporte»— alcanza para decir que también es una deriva sobre la memoria, o si hay que ajustarlo.
+- La sección §7 Adherir ya señala el anexo medusa. Queda decidir si se mantiene como sección o se pliega en §6.
+- El resumen de la 02 ya incluye la memoria y el residuo: «Una deriva por el registro, la pérdida, la memoria y el residuo». Queda decidir si esa formulación alcanza.

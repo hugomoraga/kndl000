@@ -2,7 +2,7 @@
 #   python3 docs/rizoma/build-lamina.py --sync --plate 02
 # Acá quedan posiciones, citas, corte, blanco y colofón.
 
-fecha_lamina: 2026-11-10
+fecha_lamina: 2026-11-15
 campo: "Campo del archivo"
 marca_compartido: "01"
 titulo_lineas:
