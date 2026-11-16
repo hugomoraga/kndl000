@@ -1,8 +1,9 @@
-id: cartografia-2026-11-15-piloto
+id: 2026-11-15-piloto
 fecha: "2026-11-15"
 autor: hugo
 propuesta_por: ia
 piloto: true
+publicar: true
 alcance:
   composiciones:
     - que-se-conserva-cuando-algo-se-repite

@@ -18,15 +18,19 @@ module KNDL
 
       entries = build_entries(site, compositions)
       appearances = build_appearances(entries)
+      cartographies = load_cartographies(site.source)
 
       entries.each do |entry|
-        entry["doc"].data["trayectoria"] = build_trayectoria(
+        trayectoria = build_trayectoria(
           site,
           trama,
           entry["data"],
           entry["id"],
           appearances
         )
+        cartografia = latest_cartography_for(entry["id"], cartographies)
+        trayectoria["cartografia"] = cartografia if cartografia
+        entry["doc"].data["trayectoria"] = trayectoria
       end
     end
 
@@ -51,6 +55,39 @@ module KNDL
       merged
     rescue Psych::SyntaxError => error
       fail!("trama inválida: #{error.message}")
+    end
+
+    def load_cartographies(root)
+      files = Dir[File.join(root, "docs", "rizoma", "cartografias", "*.yml")].sort
+
+      files.filter_map do |path|
+        data = YAML.safe_load(
+          File.read(path),
+          permitted_classes: [Date, Time],
+          aliases: true
+        )
+        next unless data.is_a?(Hash)
+        next if data["publicar"] == false
+
+        data
+      end
+    rescue Psych::SyntaxError => error
+      fail!("cartografía inválida: #{error.message}")
+    end
+
+    def latest_cartography_for(composition_id, cartographies)
+      matches = cartographies.select do |cartography|
+        Array(cartography.dig("alcance", "composiciones")).include?(composition_id)
+      end
+      cartography = matches.max_by { |candidate| candidate["fecha"].to_s }
+      return nil unless cartography
+
+      {
+        "id" => cartography["id"],
+        "fecha" => cartography["fecha"],
+        "decision" => cartography["decision"],
+        "url" => "/rizoma/cartografia/#{cartography['id']}/"
+      }
     end
 
     def build_entries(site, compositions)

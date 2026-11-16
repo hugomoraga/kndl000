@@ -11954,3 +11954,139 @@ body.reading-rizoma .trayectoria__tambien a:focus-visible {
     margin-top: 2rem;
   }
 }
+
+/* Vista de cartografía: artefacto de trabajo, no página de mapa. */
+body.reading-rizoma .expediente__trayectoria-cartografia {
+  margin: 0.9rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  color: var(--umbral-muted);
+}
+
+body.reading-rizoma .expediente__trayectoria-cartografia a {
+  color: var(--umbral-trace);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+body.reading-rizoma .expediente__trayectoria-cartografia a:hover,
+body.reading-rizoma .expediente__trayectoria-cartografia a:focus-visible {
+  border-bottom-color: var(--umbral-trace);
+}
+
+body.reading-cartografia .cartografia-head {
+  max-width: 68ch;
+  margin-bottom: clamp(2.5rem, 6vw, 4rem);
+}
+
+body.reading-cartografia .cartografia-eyebrow {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--umbral-ember);
+}
+
+body.reading-cartografia .cartografia-title {
+  margin: 0 0 0.8rem;
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--umbral-ink);
+}
+
+body.reading-cartografia .cartografia-intro {
+  max-width: 62ch;
+  margin: 0 0 1rem;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--umbral-dim);
+}
+
+body.reading-cartografia .cartografia-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+  text-transform: uppercase;
+  color: var(--umbral-muted);
+}
+
+body.reading-cartografia .cartografia-section {
+  max-width: var(--reading-measure);
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--umbral-rule);
+}
+
+body.reading-cartografia .cartografia-section__title {
+  margin: 0 0 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--umbral-ink);
+}
+
+body.reading-cartografia .cartografia-section__title::before {
+  content: "";
+  display: inline-block;
+  width: 0.4rem;
+  height: 0.4rem;
+  margin-right: 0.55rem;
+  background: var(--umbral-ember);
+  vertical-align: 0.08em;
+}
+
+body.reading-cartografia .cartografia-line {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.55;
+  color: var(--umbral-dim);
+}
+
+body.reading-cartografia .cartografia-label {
+  color: var(--umbral-ember);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+body.reading-cartografia .cartografia-line a {
+  color: var(--umbral-trace);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+body.reading-cartografia .cartografia-line a:hover,
+body.reading-cartografia .cartografia-line a:focus-visible {
+  border-bottom-color: var(--umbral-trace);
+}
+
+body.reading-cartografia .cartografia-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+body.reading-cartografia .cartografia-list li {
+  padding: 0.85rem 0;
+  border-top: 1px solid var(--umbral-rule-faint);
+}
+
+body.reading-cartografia .cartografia-list li:first-child {
+  border-top: 0;
+}

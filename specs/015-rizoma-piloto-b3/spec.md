@@ -25,7 +25,8 @@ Este piloto implementa una rebanada mínima:
 - Las composiciones viven en `_data/composiciones/` y se leen en build.
 - La cartografía revisada vive en `docs/rizoma/cartografias/`.
 - Un plugin de Jekyll (`_plugins/rizoma_trayectoria.rb`) resuelve la trama y las composiciones, y adjunta `page.trayectoria` a cada exploración.
-- La única superficie pública nueva es una margen read-only en las dos exploraciones. No hay páginas globales de frentes o nodos.
+- La única superficie pública nueva en las exploraciones es una margen read-only. No hay páginas globales de frentes o nodos.
+- La cartografía revisada se publica como vista de trabajo no indexada en `/rizoma/cartografia/<id>/`, solo si `publicar: true`.
 - La composición no reescribe la interpretación de una inscripción. Si otra interpretación fuera necesaria, se crearía otra inscripción.
 - Las apariciones se derivan de las composiciones; no se guardan en la inscripción.
 - La evidencia tiene `modo` y, cuando corresponde, `nivel`.
@@ -92,6 +93,8 @@ Contiene: alcance, evidencia, decisión, aceptadas, rechazadas, pendientes y not
 - **AC-05**: La margen muestra la evidencia de cada inscripción y distingue `existencia`, `relacion`, `interpretacion`, `inferencia`.
 - **AC-06**: La margen indica “también en” para Shannon en ambas composiciones.
 - **AC-07**: No se crean páginas para frentes o nodos.
+- **AC-07b**: La cartografía revisada se renderiza en `/rizoma/cartografia/2026-11-15-piloto/` con `noindex` y sin entrada en el sitemap.
+- **AC-07c**: La margen de cada exploración enlaza a la cartografía revisada.
 - **AC-08**: Las exploraciones 01 y 02 conservan su cuerpo y sus URLs.
 - **AC-09**: `node scripts/check-links.mjs` pasa.
 - **AC-10**: La trama no se copia a `_site`.

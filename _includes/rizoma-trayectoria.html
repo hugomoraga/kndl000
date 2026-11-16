@@ -4,6 +4,12 @@
     <p class="expediente__trayectoria-eyebrow">Lectura posterior</p>
     <h2 class="expediente__trayectoria-title" id="trayectoria-title">Trayectoria</h2>
     <p class="expediente__trayectoria-intro">Esta margen no explica la obra: propone una lectura de su investigación. Es opcional, fechada y revisable.</p>
+    {% if page.trayectoria.cartografia %}
+    <p class="expediente__trayectoria-cartografia">
+      Cartografía revisada:
+      <a href="{{ page.trayectoria.cartografia.url | relative_url }}">{{ page.trayectoria.cartografia.fecha }} · {{ page.trayectoria.cartografia.decision }}</a>
+    </p>
+    {% endif %}
   </header>
 
   {% for frente in page.trayectoria.frentes %}
