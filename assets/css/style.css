@@ -4303,18 +4303,6 @@ body.umbral-page #art.umbral__chamber {
   );
 }
 
-.umbral__sub {
-  max-width: 40ch;
-  margin: 0;
-  font-family: var(--font-serif);
-  font-size: clamp(0.95rem, 1.2vw, 1.08rem);
-  font-style: italic;
-  line-height: 1.5;
-  text-align: center;
-  text-wrap: balance;
-  color: var(--umbral-dim);
-}
-
 .umbral__foot {
   display: flex;
   flex-direction: column;

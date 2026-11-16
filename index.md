@@ -29,7 +29,6 @@ main_class: umbral-main
       <span class="umbral__title-bottom" aria-hidden="true">CENIZAS</span>
       <span class="umbral__threshold" aria-hidden="true"></span>
     </h1>
-    <p class="umbral__sub">Texto, imagen y código se condensan en el mismo lugar.</p>
   </div>
 
   <div class="umbral__foot">
