@@ -10,7 +10,8 @@ titulo_lineas:
   - "no conserva"
 clave:
   - "CADA BLOQUE ES UNA OBRA. CADA PALABRA, UN NODO."
-  - "LO QUE SE GUARDA NO ES LO QUE SE RECUERDA. · 01 = TAMBIÉN EN LA PRIMERA DERIVA."
+  - "LO QUE SE GUARDA NO ES LO QUE SE RECUERDA."
+  - "LÍNEAS DEL FONDO: CAMPO, NO RELACIÓN. · 01 = TAMBIÉN EN LA PRIMERA DERIVA."
 descripcion: >-
   {campo}: {obras} obras del archivo con los nodos que cada una trabaja.
   {compartidos} nodos están compartidos con la primera deriva. El corte es la

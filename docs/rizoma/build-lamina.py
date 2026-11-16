@@ -388,9 +388,11 @@ def build_svg(data: dict, ann: dict, works: list) -> str:
     lines = ann.get("titulo_lineas") or [titulo]
     title_html = "".join(text(44, 110 + i * 38, line, 40, INK, SERIF, weight="300") for i, line in enumerate(lines))
     out.append(link(data["exploracion"]["url"], title_html, "Volver a la exploración"))
-    for i, line in enumerate(ann.get("clave") or []):
+    key_lines = ann.get("clave") or []
+    for i, line in enumerate(key_lines):
         out.append(text(44, 190 + i * 18, line, 12, MUTED, MONO, spacing="0.05em"))
-    out.append(f'<line x1="44" y1="224" x2="1236" y2="224" stroke="{RULE}" stroke-width="1"/>')
+    rule_y = max(224, 190 + max(0, len(key_lines) - 1) * 18 + 16)
+    out.append(f'<line x1="44" y1="{rule_y}" x2="1236" y2="{rule_y}" stroke="{RULE}" stroke-width="1"/>')
 
     out.append('<g id="plate-field">')
     marker = str(ann.get("marca_compartido", "02"))
@@ -433,18 +435,38 @@ def read_alt(works: list) -> str:
     return items
 
 
+def build_node_index(works: list, data: dict) -> str:
+    by_node = {}
+    for work in works:
+        for node in work["nodos"]:
+            by_node.setdefault(node["nombre"], []).append(work["titulo"])
+
+    items = []
+    for node in data.get("nodos") or []:
+        titles = by_node.get(node["nombre"], [])
+        works_html = " · ".join(escape(title) for title in titles) or "sin obra"
+        shared = ""
+        if node.get("compartido") and node.get("compartido_en"):
+            others = " · ".join(escape(title) for title in node["compartido_en"])
+            shared = f'<span class="plate-index__shared">también en {others}</span>'
+        items.append(
+            '<li>'
+            f'<a href="/rizoma/nodos/#{node["ancla"]}">{escape(node["nombre"])}</a>'
+            f'<span class="plate-index__works">{works_html}</span>'
+            f'{shared}'
+            '</li>'
+        )
+    return "\n      ".join(items)
+
+
 CONTOURS = """
-<g transform="translate(0,240)" fill="none" stroke="rgba(233,230,220,0.055)" stroke-width="1">
+<g transform="translate(0,240)" fill="none" stroke="rgba(233,230,220,0.04)" stroke-width="1">
   <path d="M0 88 C 170 64 318 112 462 96 S 742 54 890 84 1120 120 1280 92"/>
   <path d="M0 186 C 196 160 336 208 486 192 S 770 150 918 180 1136 216 1280 190"/>
   <path d="M0 302 C 180 276 330 324 486 306 S 776 264 930 296 1140 330 1280 304"/>
   <path d="M0 410 C 200 384 340 432 496 414 S 780 372 934 404 1146 438 1280 412"/>
   <path d="M0 520 C 186 494 332 542 488 524 S 774 482 928 514 1140 548 1280 522"/>
   <path d="M0 630 C 202 604 342 652 498 634 S 782 592 936 624 1148 658 1280 632"/>
-</g>
-<g transform="translate(0,240)" fill="none" stroke="rgba(233,230,220,0.075)" stroke-width="1">
-  <path d="M1042 130 C 1112 106 1214 122 1248 168 C 1276 208 1240 262 1178 268 C 1110 274 1052 236 1042 190 C 1036 164 1034 140 1042 130Z"/>
-  <path d="M86 566 C 156 542 258 558 292 604 C 320 644 284 698 222 704 C 154 710 96 672 86 626 C 80 600 78 576 86 566Z"/>
 </g>
 """
 
@@ -470,6 +492,71 @@ CSS = """
     }
     .plate-svg .node:hover text,
     .plate-svg .node:focus-visible text { fill: #9fc6c9; }
+
+    .plate-index {
+      max-width: 1280px;
+      margin: 48px auto 0;
+      padding-top: 24px;
+      border-top: 1px solid rgba(233, 230, 220, 0.12);
+    }
+    .plate-index h2 {
+      margin: 0 0 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #9aa3a1;
+    }
+    .plate-index__hint {
+      max-width: 72ch;
+      margin: 0 0 20px;
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-size: 15px;
+      line-height: 1.55;
+      color: #9aa3a1;
+    }
+    .plate-index ul {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0 48px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .plate-index li {
+      display: grid;
+      gap: 4px;
+      padding: 10px 0;
+      border-top: 1px solid rgba(233, 230, 220, 0.07);
+    }
+    .plate-index a {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 18px;
+      color: #e9e6dc;
+      text-decoration: none;
+    }
+    .plate-index a:hover,
+    .plate-index a:focus-visible { color: #9fc6c9; }
+    .plate-index__works {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.04em;
+      line-height: 1.45;
+      color: #9aa3a1;
+    }
+    .plate-index__shared {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.04em;
+      line-height: 1.45;
+      color: #9fc6c9;
+    }
+    @media (max-width: 700px) {
+      .plate-index ul { grid-template-columns: 1fr; }
+      .plate-index { margin-top: 32px; }
+    }
     .plate-back {
       margin-bottom: 1.25rem;
       font-family: 'JetBrains Mono', monospace;
@@ -648,6 +735,14 @@ HTML = """<!doctype html>
     </div>
     {{TOOLS}}
   </div>
+
+  <section class="plate-index" aria-labelledby="plate-index-title">
+    <h2 id="plate-index-title">Nodos del campo</h2>
+    <p class="plate-index__hint">Cada nodo indica la obra donde la lámina lo ubica. Las líneas del fondo son campo, no relaciones. «01» o «02» señala que el nodo también aparece en la otra deriva. Es un índice de la anotación, no un grafo.</p>
+    <ul>
+      {{NODE_INDEX}}
+    </ul>
+  </section>
 </main>
 {{SCRIPT}}
 </body>
@@ -677,6 +772,7 @@ def build_html(site: bool, data: dict, ann: dict, works: list) -> str:
             .replace("{{CSS}}", CSS)
             .replace("{{BACK}}", back)
             .replace("{{READ_ALT}}", "\n      ".join(read_alt(works)))
+            .replace("{{NODE_INDEX}}", build_node_index(works, data))
             .replace("{{SVG}}", build_svg(data, ann, works))
             .replace("{{TOOLS}}", tools)
             .replace("{{SCRIPT}}", SCRIPT if site else ""))
