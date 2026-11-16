@@ -12354,7 +12354,7 @@ body.reading-rizoma .expediente__diagrama-blanco {
   padding-top: 0.8rem;
   border-top: 1px dashed var(--umbral-rule);
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   letter-spacing: 0.05em;
   line-height: 1.5;
   color: var(--umbral-muted);
