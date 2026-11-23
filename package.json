@@ -12,7 +12,7 @@
     "test:taller": "node --test taller/tests/*.test.mjs"
   },
   "dependencies": {
-    "@kndl/umbral-vision": "^0.3.0"
+    "@kndl/umbral-vision": "^0.1.0"
   },
   "keywords": [],
   "author": "KNDL",
