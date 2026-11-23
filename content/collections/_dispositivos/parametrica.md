@@ -10,6 +10,7 @@ repo: https://github.com/quicio/parametrica
 formats: Web
 platform: Browser
 description: "Banco de trabajo de geometría paramétrica: ecuaciones, armónicos y operadores para descubrir formas de una sola línea."
+tagline: "Geometría en movimiento."
 ---
 
 **Parametrica** es un banco de trabajo de geometría paramétrica. No se dibuja: se parametriza. Escribís una ecuación, la ves convertirse en línea, apilás operadores, mutás, animás y exportás.

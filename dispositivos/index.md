@@ -70,7 +70,7 @@ hide_title: true
       <h2 id="atelier-collection-title" class="atelier-collection__title"><span class="atelier-index-mark">[ 03 ]</span> Colección</h2>
     </header>
     <div class="atelier-grid">
-      {% assign wanted = "semina|parametrica|candil|espiral|umbral-vision" | split: "|" %}
+      {% assign wanted = site.data.dispositivos_orden %}
       {% assign shown = featured.slug | default: "" %}
       {% assign n = 1 %}
       {% for slug in wanted %}
@@ -143,6 +143,13 @@ hide_title: true
           {% assign num = n | prepend: "00" | slice: -2, 2 %}
           {% include atelier-archive-row.html index=num %}
         {% endif %}
+      {% endfor %}
+      {% for d in all %}
+        {% unless shown contains d.slug %}
+          {% assign n = n | plus: 1 %}
+          {% assign num = n | prepend: "00" | slice: -2, 2 %}
+          {% include atelier-archive-row.html index=num %}
+        {% endunless %}
       {% endfor %}
     </ol>
   </section>

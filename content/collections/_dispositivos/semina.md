@@ -9,6 +9,7 @@ repo: https://github.com/quicio/semina
 formats: Web
 platform: Browser
 description: "Revista personal que crece con una biblioteca curada: edición, investigación y serendipia."
+tagline: "Biblioteca que crece."
 ---
 
 **Semina** es una revista personal que crece con una biblioteca curada. Toma libros, documentos, artículos, imágenes y notas, y los presenta en tres lecturas: una edición diaria finita, una investigación que cruza fuentes y conexiones inesperadas entre disciplinas.

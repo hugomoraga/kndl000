@@ -10,11 +10,25 @@ repo: https://github.com/hugomoraga/kndl000/tree/main/assets/js/umbral-vision
 formats: Web
 platform: Browser
 description: "Generador de visuales en tiempo real con 15 efectos y audio reactivo."
+tagline: "Un campo visual en transformación."
+claim: "Un sistema para explorar lo invisible."
+hero: /assets/media/dispositivos/umbral-vision-hero.jpg
+hero_label: "Efecto 01 / Túnel"
+gallery:
+  - { label: Túnel, effect: tunnel }
+  - { label: Mandala, effect: mandala }
+  - { label: Fractal, effect: fractal }
+  - { label: Glitch, effect: glitch }
+  - { label: Geometría, effect: geometria }
+  - { label: Biomech, effect: biomech }
+capabilities:
+  - "15 efectos"
+  - "Transiciones automáticas"
+  - "Entrada de audio"
+  - "Fullscreen"
 ---
 
 Generador de visuales en tiempo real construido con [p5.js](https://p5js.org/) y JavaScript vanilla. Renderiza 15 efectos visuales (tunnel, mandala, fractal, glitch, sacred geometry, biomech, yin-yang…) con transiciones automáticas, control manual y reactividad a audio vía micrófono.
-
-→ [Abrir el generador](/imaginario/generator/) 🎨
 
 ### Cómo funciona
 

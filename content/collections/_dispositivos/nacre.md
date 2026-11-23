@@ -9,6 +9,7 @@ featured: true
 repo: https://github.com/quicio/nacre
 platform: Desktop
 description: "Instrumento generativo en Rust: sistemas que producen música, no canciones programadas."
+tagline: "Instrumento generativo de sonido."
 ---
 
 **Nacre** es un instrumento musical generativo escrito en Rust. No es un DAW, ni un secuenciador, ni un modular: pide cómo evoluciona un sistema sonoro y lo deja funcionar.

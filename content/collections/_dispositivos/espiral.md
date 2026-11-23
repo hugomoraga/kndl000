@@ -11,6 +11,7 @@ repo: https://github.com/quicio/espiral
 formats: Web
 platform: Browser
 description: "Instrumento generativo de ritmos, escalas y automatización."
+tagline: "Exploración rítmica."
 ---
 
 **Espiral** es un instrumento de performance y exploración musical: siete canales, patrones de 16 pasos, semilla reproducible, escenas, escalas y automatización.

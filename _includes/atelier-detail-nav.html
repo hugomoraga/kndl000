@@ -1,0 +1,30 @@
+{%- assign _orden = site.data.dispositivos_orden -%}
+{%- assign _all = site.dispositivos -%}
+{%- assign _idx = -1 -%}
+{%- for _slug in _orden -%}
+  {%- assign _d = _all | where: "slug", _slug | first -%}
+  {%- if _d and _d.url == page.url -%}{%- assign _idx = forloop.index0 -%}{%- endif -%}
+{%- endfor -%}
+{%- assign _size = _orden | size -%}
+{%- if _idx >= 0 and _size > 1 -%}
+  {%- assign _prev_i = _idx | minus: 1 -%}
+  {%- if _prev_i < 0 -%}{%- assign _prev_i = _size | minus: 1 -%}{%- endif -%}
+  {%- assign _next_i = _idx | plus: 1 -%}
+  {%- if _next_i >= _size -%}{%- assign _next_i = 0 -%}{%- endif -%}
+  {%- assign _prev = _all | where: "slug", _orden[_prev_i] | first -%}
+  {%- assign _next = _all | where: "slug", _orden[_next_i] | first -%}
+  <nav class="atelier-detail__nav" aria-label="Otros dispositivos">
+    {%- if _prev -%}
+    <a class="atelier-detail__nav-link" href="{{ _prev.url | relative_url }}">
+      <span class="atelier-detail__nav-kicker">Anterior</span>
+      <span class="atelier-detail__nav-name">← {{ _prev.title }}</span>
+    </a>
+    {%- else -%}<span></span>{%- endif -%}
+    {%- if _next -%}
+    <a class="atelier-detail__nav-link atelier-detail__nav-link--next" href="{{ _next.url | relative_url }}">
+      <span class="atelier-detail__nav-kicker">Siguiente dispositivo</span>
+      <span class="atelier-detail__nav-name">{{ _next.title }} →</span>
+    </a>
+    {%- else -%}<span></span>{%- endif -%}
+  </nav>
+{%- endif -%}

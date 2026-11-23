@@ -436,6 +436,13 @@ Todo es recto: radios de 0px, reglas de 1px, bordes completos cuando existen. La
 
 **The Atelier Rule.** El índice de Dispositivos muestra el instrumento antes que la ficha. La ficha técnica no desaparece: vive en el detalle y, en corto, en el archivo de versiones.
 
+### Dispositivos — ficha
+- **Masthead:** miga `Dispositivos / 06`, luna, título grande, tagline en cursiva y meta a la derecha (tipo · versión, estado en caja, stack). La misma luna y el mismo peso que el índice.
+- **Placa:** imagen ancha con barra mono: a la izquierda el rótulo (`Efecto 01 / Túnel` o `Placa`), a la derecha demo y repositorio. Sin placa propia, el cuadrado del índice se muestra a 3:2.
+- **Cuerpo:** columna de lectura a la izquierda; a la derecha, galería 3×2 de efectos que enlaza al generador con `?effect=`, y las capacidades en rejilla 2×2. Si no hay galería, la columna muestra la ficha técnica.
+- **Navegación:** anterior y siguiente circulares, resueltos con `_data/dispositivos_orden.yml`. El mismo archivo manda el orden del índice.
+- **No:** toggles ni controles falsos. Los enlaces abren la demo real.
+
 ### Section sigils
 - **Regla:** cada sección tiene un solo sigilo, siempre como prefijo del nombre. No hay sufijos, paréntesis ni símbolos dentro del título.
 - **Tamaño:** la tinta se normaliza a `0.68em` del título, con ajustes ópticos para glifos de poca masa.

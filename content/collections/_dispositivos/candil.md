@@ -9,6 +9,7 @@ repo: https://github.com/quicio/candil
 formats: macOS · Linux · Windows
 platform: Desktop
 description: "Lector de EPUB minimalista en Rust: tipografía cuidada, biblioteca local, anotaciones y consultas."
+tagline: "Lectura como espacio."
 ---
 
 **Candil** es un lector de EPUB minimalista escrito en Rust. Una columna, scroll continuo y tipografía cuidada; sin webview ni motor HTML. La biblioteca indexa carpetas sin copiar los libros y el progreso, los destacados y las notas quedan en disco.

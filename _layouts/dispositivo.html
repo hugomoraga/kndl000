@@ -11,62 +11,118 @@
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
     {% include analytics.html %}
   </head>
-  <body class="interior-page dispositivo-detail">
+  {% assign _orden = site.data.dispositivos_orden %}
+  {% assign _all = site.dispositivos %}
+  {% assign _num = "" %}
+  {% for _slug in _orden %}
+    {% assign _d = _all | where: "slug", _slug | first %}
+    {% if _d and _d.url == page.url %}{% assign _num = forloop.index | prepend: "00" | slice: -2, 2 %}{% endif %}
+  {% endfor %}
+  {% assign _state = page.status | default: "activo" %}
+  {% case _state %}{% when "en-curso" %}{% assign _state_label = "en curso" %}{% else %}{% assign _state_label = _state %}{% endcase %}
+  {% case page.kind %}{% when 'vst' %}{% assign _kind_label = "VST" %}{% when 'app' %}{% assign _kind_label = "App" %}{% when 'tool' %}{% assign _kind_label = "Herramienta" %}{% when 'visual' %}{% assign _kind_label = "Visual" %}{% when 'hardware' %}{% assign _kind_label = "Hardware" %}{% when 'plugin' %}{% assign _kind_label = "Plugin" %}{% else %}{% assign _kind_label = page.kind | default: "Dispositivo" %}{% endcase %}
+  {% assign _hero = page.hero | default: "" %}
+  {% if _hero == "" %}{% assign _hero = '/assets/media/dispositivos/' | append: page.slug | append: '.jpg' %}{% endif %}
+  <body class="interior-page dispositivo-detail atelier-detail">
     <main class="dispositivo-page">
-      <nav class="reading-breadcrumb" aria-label="Ruta">
-        {% include section-link.html url="/dispositivos/" %}
+      <nav class="atelier-detail__crumb" aria-label="Ruta">
+        <span class="atelier-detail__crumb-glyph" aria-hidden="true"></span>
+        <a href="{{ '/dispositivos/' | relative_url }}">Dispositivos</a>
+        {% if _num != "" %}<span aria-hidden="true">/</span><span>{{ _num }}</span>{% endif %}
       </nav>
 
-      {% include title.html symbol="⎔" sigil="dispositivos" %}
+      <header class="atelier-detail__mast">
+        <span class="atelier-mast__moon" aria-hidden="true">
+          <img src="{{ '/assets/media/dispositivos/moon.jpg' | relative_url }}" alt="" width="640" height="640">
+        </span>
+        <div class="atelier-detail__lead">
+          <h1 class="atelier-detail__title">{{ page.title }}</h1>
+          {% if page.tagline %}
+          <p class="atelier-detail__tagline">{{ page.tagline }}</p>
+          {% endif %}
+        </div>
+        <dl class="atelier-detail__meta">
+          <div class="atelier-detail__meta-row">
+            <dt class="sr-only">Tipo y versión</dt>
+            <dd class="atelier-detail__kind">{{ _kind_label }}{% if page.version %} · {{ page.version }}{% endif %}</dd>
+          </div>
+          {% if page.status %}
+          <div class="atelier-detail__meta-row">
+            <dt class="sr-only">Estado</dt>
+            <dd><span class="atelier-detail__status atelier-detail__status--{{ _state }}">{{ _state_label }}</span></dd>
+          </div>
+          {% endif %}
+          {% if page.tech %}
+          <div class="atelier-detail__meta-row">
+            <dt class="sr-only">Stack</dt>
+            <dd class="atelier-detail__tech">{{ page.tech | replace: " · ", " / " | upcase }}</dd>
+          </div>
+          {% endif %}
+        </dl>
+      </header>
 
-      {% if page.description %}
-      <p class="dispositivo-page__lead">{{ page.description }}</p>
-      {% endif %}
+      <figure class="atelier-detail__hero{% unless page.hero %} atelier-detail__hero--plate{% endunless %}">
+        <img src="{{ _hero | relative_url }}" alt="" width="1600" height="650">
+        <figcaption class="atelier-detail__bar">
+          <span class="atelier-detail__bar-label">{{ page.hero_label | default: "Placa" }}</span>
+          <span class="atelier-detail__bar-actions">
+            {% if page.demo_url %}
+            <a href="{{ page.demo_url }}" target="_blank" rel="noopener noreferrer">Abrir demo ↗</a>
+            {% endif %}
+            {% if page.repo %}
+            <a href="{{ page.repo }}" target="_blank" rel="noopener noreferrer">Repositorio ↗</a>
+            {% endif %}
+          </span>
+        </figcaption>
+      </figure>
 
-      {% if page.kind or page.date or page.tech or page.formats or page.platform or page.repo or page.demo_url %}
-      <div class="dispositivo-meta">
-        {% if page.kind %}
-        <span class="dispositivo-meta__badge dispositivo-meta__badge--{{ page.kind }}">{% case page.kind %}{% when 'vst' %}VST{% when 'app' %}APP{% when 'tool' %}HERRAMIENTA{% when 'visual' %}VISUAL{% when 'hardware' %}HARDWARE{% when 'plugin' %}PLUGIN{% else %}{{ page.kind }}{% endcase %}</span>
-        {% endif %}
-        {% if page.version %}
-        <span class="dispositivo-meta__version">{{ page.version }}</span>
-        {% endif %}
-        {% if page.status %}
-        {% case page.status %}{% when "en-curso" %}{% assign _status_label = "en curso" %}{% else %}{% assign _status_label = page.status %}{% endcase %}
-        <span class="dispositivo-meta__status dispositivo-meta__status--{{ page.status }}">{{ _status_label }}</span>
-        {% endif %}
-        {% if page.date %}
-        <span><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y-%m-%d" }}</time></span>
-        {% endif %}
-        {% if page.tech %}
-        <span class="dispositivo-meta__tech">{{ page.tech }}</span>
-        {% endif %}
-        {% if page.formats %}
-        <span>{{ page.formats }}</span>
-        {% endif %}
-        {% if page.platform %}
-        <span>{{ page.platform }}</span>
-        {% endif %}
-        {% if page.repo %}
-        <span><a href="{{ page.repo }}" rel="noopener noreferrer" target="_blank">Repositorio</a></span>
-        {% endif %}
-        {% if page.demo_url %}
-        <span><a href="{{ page.demo_url }}" rel="noopener noreferrer" target="_blank">Demo ↗</a></span>
-        {% endif %}
+      <div class="atelier-detail__columns">
+        <div class="atelier-detail__intro">
+          {% if page.claim %}
+          <p class="atelier-detail__claim">{{ page.claim }}</p>
+          {% endif %}
+          <div class="dispositivo-page__body">
+            {%- assign _dispositivo_body = content -%}
+            {%- unless _dispositivo_body contains '<h2' -%}
+              {%- assign _dispositivo_body = _dispositivo_body | replace: '<h3', '<h2' | replace: '</h3>', '</h2>' -%}
+            {%- endunless -%}
+            {{ _dispositivo_body }}
+          </div>
+        </div>
+
+        <aside class="atelier-detail__side">
+          {% if page.gallery %}
+          <ul class="atelier-detail__gallery">
+            {% for item in page.gallery %}
+            {% assign _src = '/assets/media/dispositivos/' | append: page.slug | append: '-' | append: item.effect | append: '.jpg' %}
+            <li>
+              <a class="atelier-detail__thumb" href="{{ page.demo_url | default: page.url | append: '?effect=' | append: item.effect }}">
+                <img src="{{ _src | relative_url }}" alt="" width="600" height="600" loading="lazy">
+                <span>{{ item.label }}</span>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+
+          {% if page.capabilities %}
+          <ul class="atelier-detail__caps">
+            {% for cap in page.capabilities %}<li>{{ cap }}</li>{% endfor %}
+          </ul>
+          {% elsif page.kind or page.tech or page.formats or page.platform or page.version %}
+          <dl class="atelier-detail__specs">
+            {% if page.kind %}<div><dt>Tipo</dt><dd>{{ _kind_label }}</dd></div>{% endif %}
+            {% if page.tech %}<div><dt>Stack</dt><dd>{{ page.tech }}</dd></div>{% endif %}
+            {% if page.platform %}<div><dt>Target</dt><dd>{{ page.platform }}</dd></div>{% endif %}
+            {% if page.formats %}<div><dt>Formato</dt><dd>{{ page.formats }}</dd></div>{% endif %}
+            {% if page.version %}<div><dt>Versión</dt><dd>{{ page.version }}</dd></div>{% endif %}
+            {% if page.status %}<div><dt>Estado</dt><dd>{{ _state_label }}</dd></div>{% endif %}
+          </dl>
+          {% endif %}
+        </aside>
       </div>
-      {% endif %}
 
-      <div class="dispositivo-page__body">
-        {%- assign _dispositivo_body = content -%}
-        {%- unless _dispositivo_body contains '<h2' -%}
-          {%- assign _dispositivo_body = _dispositivo_body | replace: '<h3', '<h2' | replace: '</h3>', '</h2>' -%}
-        {%- endunless -%}
-        {{ _dispositivo_body }}
-      </div>
-
-      {% include reading-next.html collection="dispositivos" sort="date" reverse=true title="Seguir en Dispositivos" label_prev="Más reciente" label_next="Más antiguo" %}
-
-      {% include back-button.html %}
+      {% include atelier-detail-nav.html %}
       {% include section-rail.html %}
     </main>
 
