@@ -423,15 +423,18 @@ Todo es recto: radios de 0px, reglas de 1px, bordes completos cuando existen. La
 
 **The One Container Rule.** Toda página interior usa un contenedor de 1000px centrado. Dentro de él, la prosa se mide a 75ch; el contenedor es uno, la medida de lectura es otra.
 
-### Dispositivos — rack modular
-- **Estructura:** rack de tres columnas (dos en tablet, una en móvil) con gutters de 1px. Cada módulo es una ficha técnica sin caja: dirección `DEV/01`, estado, título serif, descripción, franja de especificaciones (`tipo`, `stack`, `target`, `versión`) y pie con fecha + enlaces.
-- **Barra:** conteo de módulos, activos y en línea en mono 0.7rem, sobre una regla capilar. Es un resumen funcional, no un kicker decorativo.
-- **Estado:** punto de 5px y etiqueta mono: `activo` en Trace Cyan, `en curso` y `experimental` en Event Amber, `archivado` en Ink Muted. El valor de frontmatter de un proyecto en curso es `en-curso`; la etiqueta visible es `en curso`.
-- **Interacción:** una línea cian de 1px recorre el borde superior del módulo en hover/focus-within; el título se subraya y los enlaces del pie pasan a Ink.
-- **Campos:** `version` y `status` en el frontmatter del dispositivo; el estado por defecto es `activo`. La ficha del detalle repite versión y estado en la meta.
-- **No:** tarjetas, sombras, fondos elevados ni una segunda retícula. La separación es la regla de 1px.
+### Dispositivos — atelier
+- **Estructura:** el índice es una portada, no un rack. Masthead (luna, título, bajada, conteo, texto de laboratorio), banda destacada y colección de seis marcos de 1px. El archivo completo, bajo la colección, lista versión, estado y stack.
+- **Destacado:** el dispositivo con `featured: true`. Hoy es Nacre. La banda lleva placa, número `01`, título, línea corta y marcas.
+- **Colección:** el resto, en el orden Semina, Parametrica, Candil, Espiral, Umbral Vision, más la puerta al archivo. Cada marco es imagen + número + título + línea + dos marcas. No es una ficha técnica.
+- **Marcas:** abrevian el stack real. Parametrica es P5, no Rust. Candil es Rust, no TypeScript. Umbral Vision es P5, no CV.
+- **Conteo:** objetos, activos y en desarrollo. `en-curso` se cuenta como en desarrollo; en la ficha y en el archivo la etiqueta sigue siendo `en curso`.
+- **Estado:** en el archivo, `activo` en Trace Cyan, `en curso` y `experimental` en Event Amber, `archivado` en Ink Muted.
+- **Interacción:** el marco y la flecha pasan a Trace Cyan en hover/focus. Sin sombra, sin radio, sin halo.
+- **Placas:** `assets/media/dispositivos/`. Generadas para esta portada; no son capturas de los instrumentos.
+- **No:** la barra de navegación del mockup (Archivo / Notas / Sobre) no existe en el sitio. El rail del archivo se conserva. No inventar stacks.
 
-**The Module Rack Rule.** El índice de Dispositivos no es una lista de enlaces: es un rack de módulos donde cada pieza declara qué es, con qué stack se construyó y en qué estado está. La dirección `DEV/nn` es wayfinding técnico, no numeración decorativa.
+**The Atelier Rule.** El índice de Dispositivos muestra el instrumento antes que la ficha. La ficha técnica no desaparece: vive en el detalle y, en corto, en el archivo de versiones.
 
 ### Section sigils
 - **Regla:** cada sección tiene un solo sigilo, siempre como prefijo del nombre. No hay sufijos, paréntesis ni símbolos dentro del título.

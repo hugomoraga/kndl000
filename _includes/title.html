@@ -1,6 +1,6 @@
 {%- assign _sym = include.symbol | default: page.symbol -%}
 {%- assign _sigil = include.sigil | default: page.sigil | default: "default" -%}
-{% unless page.url == "/" %}
+{% unless page.url == "/" or page.hide_title %}
     <h1 class="page-title" aria-label="{{ page.title | escape }}">
       <span class="page-title__text">
         {%- if _sym -%}

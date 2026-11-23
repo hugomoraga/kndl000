@@ -1,0 +1,9 @@
+{% assign state = d.status | default: "activo" %}
+{% case state %}{% when "en-curso" %}{% assign state_label = "en curso" %}{% else %}{% assign state_label = state %}{% endcase %}
+<li class="atelier-archive__row">
+  <span class="atelier-archive__num">{{ include.index }}</span>
+  <a class="atelier-archive__name" href="{{ d.url | relative_url }}">{{ d.title }}</a>
+  <span class="atelier-archive__version">{{ d.version | default: "—" }}</span>
+  <span class="atelier-archive__status atelier-archive__status--{{ state }}">{{ state_label }}</span>
+  <span class="atelier-archive__stack">{{ d.tech | default: "—" }}</span>
+</li>

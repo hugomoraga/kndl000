@@ -5,6 +5,7 @@ kind: tool
 tech: Rust
 version: M0
 status: en-curso
+featured: true
 repo: https://github.com/quicio/nacre
 platform: Desktop
 description: "Instrumento generativo en Rust: sistemas que producen música, no canciones programadas."

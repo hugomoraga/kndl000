@@ -3,89 +3,147 @@ layout: default
 title: Dispositivos
 symbol: "⎔"
 sigil: dispositivos
-body_class: interior-page section-index
-description: "Módulos propios de audio, software y visuales — KNDL 000."
+body_class: interior-page section-index atelier-index
+description: "Sistemas, instrumentos y artefactos en construcción — KNDL 000."
 back: false
+hide_title: true
 ---
 
-<p class="dispositivo-index-lead">Módulos propios: audio, software y visuales. Cada dispositivo muestra su stack, su estado y su puerta de entrada.</p>
-
-{% assign sorted = site.dispositivos | sort: "date" | reverse %}
-{% assign _module_count = sorted | size %}
-{% assign _active_count = 0 %}
-{% assign _course_count = 0 %}
-{% assign _online_count = 0 %}
-{% for d in sorted %}
+{% assign all = site.dispositivos %}
+{% assign featured = all | where: "featured", true | first %}
+{% unless featured %}{% assign featured = all | where: "slug", "nacre" | first %}{% endunless %}
+{% assign _objs = all | size %}
+{% assign _activos = 0 %}
+{% assign _curso = 0 %}
+{% for d in all %}
   {% assign _state = d.status | default: "activo" %}
-  {% if _state == "activo" %}{% assign _active_count = _active_count | plus: 1 %}{% endif %}
-  {% if _state == "en-curso" %}{% assign _course_count = _course_count | plus: 1 %}{% endif %}
-  {% if d.demo_url %}{% assign _online_count = _online_count | plus: 1 %}{% endif %}
+  {% if _state == "activo" %}{% assign _activos = _activos | plus: 1 %}{% endif %}
+  {% if _state == "en-curso" %}{% assign _curso = _curso | plus: 1 %}{% endif %}
 {% endfor %}
+{% assign _objs_n = _objs | prepend: "00" | slice: -2, 2 %}
+{% assign _activos_n = _activos | prepend: "00" | slice: -2, 2 %}
+{% assign _curso_n = _curso | prepend: "00" | slice: -2, 2 %}
 
-<div class="device-rack">
-  <div class="device-rack__bar" aria-label="Resumen de dispositivos">
-    <span>{{ _module_count }} {% if _module_count == 1 %}módulo{% else %}módulos{% endif %}</span>
-    <span>{{ _active_count }} {% if _active_count == 1 %}activo{% else %}activos{% endif %}</span>
-    {% if _course_count > 0 %}<span>{{ _course_count }} en curso</span>{% endif %}
-    <span>{{ _online_count }} con demo</span>
-  </div>
-
-  <div class="device-modules{% if _module_count == 4 %} device-modules--two{% endif %}">
-    {% for d in sorted %}
-      {% assign label = d.list_title | default: d.title %}
-      {% assign kind = d.kind | default: "tool" %}
-      {% assign state = d.status | default: "activo" %}
-      {% case state %}{% when "en-curso" %}{% assign state_label = "en curso" %}{% else %}{% assign state_label = state %}{% endcase %}
-      <article class="device-module" aria-labelledby="device-module-{{ forloop.index }}">
-        <header class="device-module__head">
-          <span class="device-module__addr">DEV/{{ forloop.index | prepend: "0" | slice: -2, 2 }}</span>
-          <span class="device-module__status device-module__status--{{ state }}">{{ state_label }}</span>
-        </header>
-
-        <h2 class="device-module__title" id="device-module-{{ forloop.index }}">
-          <a href="{{ d.url | relative_url }}">{{ label }}</a>
-        </h2>
-
-        {% if d.description %}
-        <p class="device-module__desc">{{ d.description }}</p>
+<div class="atelier">
+  <header class="atelier-mast">
+    <span class="atelier-mast__moon" aria-hidden="true">
+      <img src="{{ '/assets/media/dispositivos/moon.jpg' | relative_url }}" alt="" width="640" height="640">
+    </span>
+    <div class="atelier-mast__lead">
+      <p class="atelier-index-mark">[ 02 ]</p>
+      <h1 class="atelier-title">Dispositivos</h1>
+      <p class="atelier-lede">Sistemas, instrumentos y artefactos<br>en construcción.</p>
+      <p class="atelier-stats">
+        <span>{{ _objs_n }} {% if _objs == 1 %}objeto{% else %}objetos{% endif %}</span>
+        <span class="atelier-stats__dot" aria-hidden="true">·</span>
+        <span>{{ _activos_n }} {% if _activos == 1 %}activo{% else %}activos{% endif %}</span>
+        {% if _curso > 0 %}
+        <span class="atelier-stats__dot" aria-hidden="true">·</span>
+        <span>{{ _curso_n }} en desarrollo</span>
         {% endif %}
+      </p>
+    </div>
+    <p class="atelier-mast__aside">Un laboratorio de exploración donde el código, el sonido, la imagen y el texto se encuentran para producir nuevas formas de experimentar y pensar.</p>
+  </header>
 
-        <dl class="device-module__specs">
-          <div>
-            <dt>tipo</dt>
-            <dd>{% case kind %}{% when "vst" %}VST{% when "app" %}APP{% when "tool" %}HERRAMIENTA{% when "visual" %}VISUAL{% when "hardware" %}HARDWARE{% when "plugin" %}PLUGIN{% else %}{{ kind | upcase }}{% endcase %}</dd>
-          </div>
-          <div>
-            <dt>stack</dt>
-            <dd>{{ d.tech | default: "—" }}</dd>
-          </div>
-          <div>
-            <dt>target</dt>
-            <dd>{{ d.platform | default: "—" }}</dd>
-          </div>
-          <div>
-            <dt>versión</dt>
-            <dd>{{ d.version | default: "—" }}</dd>
-          </div>
-        </dl>
+  {% if featured %}
+  {% assign d = featured %}
+  {% include atelier-voice.html %}
+  <a class="atelier-feature" href="{{ d.url | relative_url }}">
+    <img class="atelier-feature__plate" src="{{ '/assets/media/dispositivos/' | append: d.slug | append: '.jpg' | relative_url }}" alt="" width="1600" height="700">
+    <div class="atelier-feature__copy">
+      <p class="atelier-kicker"><span>01</span> / Destacado</p>
+      <h2 class="atelier-feature__title">{{ d.title }}</h2>
+      <p class="atelier-feature__line">{{ line }}</p>
+      <ul class="atelier-marks">
+        {% if mark_a %}<li>{{ mark_a }}</li>{% endif %}
+        {% if mark_b %}<li>{{ mark_b }}</li>{% endif %}
+        {% if mark_c %}<li>{{ mark_c }}</li>{% endif %}
+      </ul>
+      {% include atelier-arrow.html %}
+    </div>
+  </a>
+  {% endif %}
 
-        <footer class="device-module__foot">
-          {% if d.date %}
-          <time datetime="{{ d.date | date: '%Y-%m-%d' }}">{{ d.date | date: "%Y-%m-%d" }}</time>
-          {% else %}
-          <span>—</span>
-          {% endif %}
-          <span class="device-module__links">
-            {% if d.repo %}
-            <a href="{{ d.repo }}" target="_blank" rel="noopener noreferrer" aria-label="Repositorio de {{ label | escape }}">repo ↗</a>
-            {% endif %}
-            {% if d.demo_url %}
-            <a href="{{ d.demo_url }}" target="_blank" rel="noopener noreferrer" aria-label="Demo de {{ label | escape }}">demo ↗</a>
-            {% endif %}
-            <a href="{{ d.url | relative_url }}" aria-label="Ficha de {{ label | escape }}">ficha →</a>
-          </span>
-        </footer>
-      </article>
-    {% endfor %}
-  </div>
+  <section class="atelier-collection" aria-labelledby="atelier-collection-title">
+    <header class="atelier-collection__head">
+      <h2 id="atelier-collection-title" class="atelier-collection__title"><span class="atelier-index-mark">[ 03 ]</span> Colección</h2>
+    </header>
+    <div class="atelier-grid">
+      {% assign wanted = "semina|parametrica|candil|espiral|umbral-vision" | split: "|" %}
+      {% assign shown = featured.slug | default: "" %}
+      {% assign n = 1 %}
+      {% for slug in wanted %}
+        {% assign d = all | where: "slug", slug | first %}
+        {% if d and d.slug != featured.slug %}
+          {% assign n = n | plus: 1 %}
+          {% assign num = n | prepend: "00" | slice: -2, 2 %}
+          {% include atelier-voice.html %}
+          <a class="atelier-card" href="{{ d.url | relative_url }}">
+            <img class="atelier-card__plate" src="{{ '/assets/media/dispositivos/' | append: d.slug | append: '.jpg' | relative_url }}" alt="" width="800" height="800">
+            <span class="atelier-card__copy">
+              <span class="atelier-card__num">{{ num }}</span>
+              <span class="atelier-card__title">{{ d.title }}</span>
+              <span class="atelier-card__line">{{ line }}</span>
+              <ul class="atelier-marks">
+                {% if mark_a %}<li>{{ mark_a }}</li>{% endif %}
+                {% if mark_b %}<li>{{ mark_b }}</li>{% endif %}
+                {% if mark_c %}<li>{{ mark_c }}</li>{% endif %}
+              </ul>
+              {% include atelier-arrow.html %}
+            </span>
+          </a>
+          {% assign shown = shown | append: "|" | append: d.slug %}
+        {% endif %}
+      {% endfor %}
+      {% for d in all %}
+        {% unless shown contains d.slug %}
+          {% assign n = n | plus: 1 %}
+          {% assign num = n | prepend: "00" | slice: -2, 2 %}
+          {% include atelier-voice.html %}
+          <a class="atelier-card" href="{{ d.url | relative_url }}">
+            <img class="atelier-card__plate" src="{{ '/assets/media/dispositivos/' | append: d.slug | append: '.jpg' | relative_url }}" alt="" width="800" height="800">
+            <span class="atelier-card__copy">
+              <span class="atelier-card__num">{{ num }}</span>
+              <span class="atelier-card__title">{{ d.title }}</span>
+              <span class="atelier-card__line">{{ line }}</span>
+              <ul class="atelier-marks">
+                {% if mark_a %}<li>{{ mark_a }}</li>{% endif %}
+                {% if mark_b %}<li>{{ mark_b }}</li>{% endif %}
+              </ul>
+              {% include atelier-arrow.html %}
+            </span>
+          </a>
+        {% endunless %}
+      {% endfor %}
+      <a class="atelier-card atelier-card--archive" href="#archivo">
+        <img class="atelier-card__plate" src="{{ '/assets/media/dispositivos/archivo.jpg' | relative_url }}" alt="" width="800" height="800">
+        <span class="atelier-card__copy">
+          <span class="atelier-card__title">Archivo completo</span>
+          <span class="atelier-card__line">Todos los dispositivos y sus versiones.</span>
+          {% include atelier-arrow.html %}
+        </span>
+      </a>
+    </div>
+  </section>
+
+  <section id="archivo" class="atelier-archive" aria-labelledby="atelier-archive-title">
+    <h2 id="atelier-archive-title">Archivo</h2>
+    <p class="atelier-archive__lead">Versión, estado y stack de cada dispositivo.</p>
+    <ol class="atelier-archive__list">
+      {% if featured %}
+        {% assign d = featured %}
+        {% include atelier-archive-row.html index="01" %}
+      {% endif %}
+      {% assign n = 1 %}
+      {% for slug in wanted %}
+        {% assign d = all | where: "slug", slug | first %}
+        {% if d and d.slug != featured.slug %}
+          {% assign n = n | plus: 1 %}
+          {% assign num = n | prepend: "00" | slice: -2, 2 %}
+          {% include atelier-archive-row.html index=num %}
+        {% endif %}
+      {% endfor %}
+    </ol>
+  </section>
 </div>

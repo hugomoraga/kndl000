@@ -1,0 +1,37 @@
+{% case d.slug %}
+  {% when "nacre" %}
+    {% assign line = "Instrumento generativo de sonido." %}
+    {% assign mark_a = "RUST" %}
+    {% assign mark_b = "AUDIO" %}
+    {% assign mark_c = "M0" %}
+  {% when "semina" %}
+    {% assign line = "Biblioteca que crece." %}
+    {% assign mark_a = "TS" %}
+    {% assign mark_b = "BIBLIOTECA" %}
+    {% assign mark_c = nil %}
+  {% when "parametrica" %}
+    {% assign line = "Geometría en movimiento." %}
+    {% assign mark_a = "P5" %}
+    {% assign mark_b = "GEOMETRÍA" %}
+    {% assign mark_c = nil %}
+  {% when "candil" %}
+    {% assign line = "Lectura como espacio." %}
+    {% assign mark_a = "RUST" %}
+    {% assign mark_b = "LECTURA" %}
+    {% assign mark_c = nil %}
+  {% when "espiral" %}
+    {% assign line = "Exploración rítmica." %}
+    {% assign mark_a = "AUDIO" %}
+    {% assign mark_b = "SECUENCIA" %}
+    {% assign mark_c = nil %}
+  {% when "umbral-vision" %}
+    {% assign line = "Sistema de visión experimental." %}
+    {% assign mark_a = "P5" %}
+    {% assign mark_b = "VISUAL" %}
+    {% assign mark_c = nil %}
+  {% else %}
+    {% assign line = d.description %}
+    {% assign mark_a = d.tech | default: d.kind | upcase %}
+    {% assign mark_b = d.version %}
+    {% assign mark_c = nil %}
+{% endcase %}
