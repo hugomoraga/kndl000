@@ -71,7 +71,8 @@ body.dispositivo-detail .dispositivo-page__lead {
   color: var(--umbral-trace);
 }
 
-.dispositivo-meta__status--experimental {
+.dispositivo-meta__status--experimental,
+.dispositivo-meta__status--en-curso {
   color: var(--event-amber);
 }
 

@@ -426,7 +426,7 @@ Todo es recto: radios de 0px, reglas de 1px, bordes completos cuando existen. La
 ### Dispositivos — rack modular
 - **Estructura:** rack de tres columnas (dos en tablet, una en móvil) con gutters de 1px. Cada módulo es una ficha técnica sin caja: dirección `DEV/01`, estado, título serif, descripción, franja de especificaciones (`tipo`, `stack`, `target`, `versión`) y pie con fecha + enlaces.
 - **Barra:** conteo de módulos, activos y en línea en mono 0.7rem, sobre una regla capilar. Es un resumen funcional, no un kicker decorativo.
-- **Estado:** punto de 5px y etiqueta mono: `activo` en Trace Cyan, `experimental` en Event Amber, `archivado` en Ink Muted.
+- **Estado:** punto de 5px y etiqueta mono: `activo` en Trace Cyan, `en curso` y `experimental` en Event Amber, `archivado` en Ink Muted. El valor de frontmatter de un proyecto en curso es `en-curso`; la etiqueta visible es `en curso`.
 - **Interacción:** una línea cian de 1px recorre el borde superior del módulo en hover/focus-within; el título se subraya y los enlaces del pie pasan a Ink.
 - **Campos:** `version` y `status` en el frontmatter del dispositivo; el estado por defecto es `activo`. La ficha del detalle repite versión y estado en la meta.
 - **No:** tarjetas, sombras, fondos elevados ni una segunda retícula. La separación es la regla de 1px.

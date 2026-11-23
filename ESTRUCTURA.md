@@ -154,7 +154,7 @@ kndl000/
 - **`core/`**: Código principal y helpers base. Audio, visualización, efectos de imagen, navegación, collage, nube de palabras, lab feed, infinite scroll y code runner. Carga vía `<script defer>` en layouts/pages.
 - **`utils/`**: Utilidades y componentes UI reutilizables. `control-panel.js` y `components/control-panel.js` (módulo y componente).
 - **`umbral-vision/`**: Módulo de visual generativo. AudioReactive, Effects, Transition, Visualizer, Utils, orquestados desde `app.js` (entry point).
-- **Módulos externos:** el motor de audio vive en [`quicio/umbral-tone`](https://github.com/quicio/umbral-tone) y el instrumento **Espiral** en [`quicio/espiral`](https://github.com/quicio/espiral). El sitio los consume como dispositivos, no como código embebido.
+- **Módulos externos:** el motor de audio vive en [`quicio/umbral-tone`](https://github.com/quicio/umbral-tone) y el instrumento **Espiral** en [`quicio/espiral`](https://github.com/quicio/espiral). **Nacre** ([`quicio/nacre`](https://github.com/quicio/nacre)) y **Semina** ([`quicio/semina`](https://github.com/quicio/semina), privado) están en curso. El sitio los consume como dispositivos, no como código embebido.
 
 ### Media (`assets/media/`)
 

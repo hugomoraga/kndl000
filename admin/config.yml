@@ -401,7 +401,7 @@ collections:
         widget: select
         required: false
         default: activo
-        options: [activo, experimental, archivado]
+        options: [activo, en-curso, experimental, archivado]
       - { label: "Demo URL", name: demo_url, widget: string, required: false }
       - { label: "Repo URL", name: repo, widget: string, required: false }
       - { label: Formats, name: formats, widget: string, required: false }

@@ -3066,7 +3066,8 @@ body.section-index :focus-visible {
   color: var(--umbral-trace);
 }
 
-.device-module__status--experimental {
+.device-module__status--experimental,
+.device-module__status--en-curso {
   color: var(--event-amber);
 }
 

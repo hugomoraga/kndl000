@@ -13,10 +13,12 @@ back: false
 {% assign sorted = site.dispositivos | sort: "date" | reverse %}
 {% assign _module_count = sorted | size %}
 {% assign _active_count = 0 %}
+{% assign _course_count = 0 %}
 {% assign _online_count = 0 %}
 {% for d in sorted %}
   {% assign _state = d.status | default: "activo" %}
   {% if _state == "activo" %}{% assign _active_count = _active_count | plus: 1 %}{% endif %}
+  {% if _state == "en-curso" %}{% assign _course_count = _course_count | plus: 1 %}{% endif %}
   {% if d.demo_url %}{% assign _online_count = _online_count | plus: 1 %}{% endif %}
 {% endfor %}
 
@@ -24,6 +26,7 @@ back: false
   <div class="device-rack__bar" aria-label="Resumen de dispositivos">
     <span>{{ _module_count }} {% if _module_count == 1 %}módulo{% else %}módulos{% endif %}</span>
     <span>{{ _active_count }} {% if _active_count == 1 %}activo{% else %}activos{% endif %}</span>
+    {% if _course_count > 0 %}<span>{{ _course_count }} en curso</span>{% endif %}
     <span>{{ _online_count }} con demo</span>
   </div>
 
@@ -32,10 +35,11 @@ back: false
       {% assign label = d.list_title | default: d.title %}
       {% assign kind = d.kind | default: "tool" %}
       {% assign state = d.status | default: "activo" %}
+      {% case state %}{% when "en-curso" %}{% assign state_label = "en curso" %}{% else %}{% assign state_label = state %}{% endcase %}
       <article class="device-module" aria-labelledby="device-module-{{ forloop.index }}">
         <header class="device-module__head">
           <span class="device-module__addr">DEV/{{ forloop.index | prepend: "0" | slice: -2, 2 }}</span>
-          <span class="device-module__status device-module__status--{{ state }}">{{ state }}</span>
+          <span class="device-module__status device-module__status--{{ state }}">{{ state_label }}</span>
         </header>
 
         <h2 class="device-module__title" id="device-module-{{ forloop.index }}">
