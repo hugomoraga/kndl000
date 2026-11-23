@@ -127,7 +127,12 @@
 
     <div class="uv-transport" id="uv-transport">
       <div class="uv-audio" id="uv-audio">
-        <canvas id="audio-spectrum" aria-label="Espectro de audio en vivo: graves, medios y agudos" title="Graves · Medios · Agudos"></canvas>
+        <div class="uv-spectrum-wrap">
+          <canvas id="audio-spectrum" aria-label="Espectro de audio en vivo: graves, medios y agudos" title="Graves · Medios · Agudos"></canvas>
+          <div class="uv-spectrum-labels" aria-hidden="true">
+            <span data-band="bass">Bajos</span><span data-band="mid">Medios</span><span data-band="high">Agudos</span>
+          </div>
+        </div>
         <button type="button" class="uv-btn uv-btn-quiet uv-mic" id="micBtn" aria-pressed="false">
           <span class="uv-mic-copy">
             <span class="uv-mic-title" data-uv-mic-label>Audio</span>

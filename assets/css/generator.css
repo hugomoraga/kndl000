@@ -1451,6 +1451,12 @@ body.uv-immersive .uv-crosshair { opacity: 0; }
 }
 
 /* Espectro de audio (studio) */
+.uv-spectrum-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
 #audio-spectrum {
   display: block;
   width: 156px;
@@ -1459,8 +1465,25 @@ body.uv-immersive .uv-crosshair { opacity: 0; }
   transition: opacity 240ms var(--uv-ease);
 }
 
+.uv-spectrum-labels {
+  display: flex;
+  justify-content: space-between;
+  width: 156px;
+  font-family: var(--uv-mono);
+  font-size: 6.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--uv-faint);
+  opacity: 0.7;
+}
+
+.uv-spectrum-labels [data-band="bass"] { color: #bb8cff; }
+.uv-spectrum-labels [data-band="mid"] { color: #89b0ff; }
+.uv-spectrum-labels [data-band="high"] { color: #e2ddf2; }
+
 .uv-audio.is-on #audio-spectrum { opacity: 1; }
 
 @media (max-width: 720px) {
   #audio-spectrum { width: 108px; height: 30px; }
+  .uv-spectrum-labels { width: 108px; font-size: 5.5px; }
 }
