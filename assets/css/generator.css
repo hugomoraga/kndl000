@@ -1487,3 +1487,113 @@ body.uv-immersive .uv-crosshair { opacity: 0; }
   #audio-spectrum { width: 108px; height: 30px; }
   .uv-spectrum-labels { width: 108px; font-size: 5.5px; }
 }
+
+/* === Audio reactivo (controles) === */
+
+#audio-controls { margin-top: 16px; }
+
+.uv-audio-panel {
+  border-top: 1px solid var(--uv-border);
+  padding-top: 4px;
+}
+
+.uv-audio-head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 0;
+  color: var(--uv-muted);
+  font-family: var(--uv-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.uv-audio-head .uv-icon:first-child { opacity: 0.6; }
+.uv-audio-head .uv-btn { margin-left: auto; height: 24px; width: 24px; }
+
+.uv-audio-body {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding-bottom: 10px;
+}
+
+.uv-audio-row {
+  grid-template-columns: minmax(76px, 0.9fr) 1fr;
+}
+
+.uv-audio-row select { height: 28px; }
+
+.uv-select,
+.uv-number {
+  width: 100%;
+  min-width: 0;
+  height: 28px;
+  padding: 0 8px;
+  border: 1px solid var(--uv-border);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.38);
+  color: var(--uv-text);
+  font-family: var(--uv-sans);
+  font-size: 11.5px;
+}
+
+.uv-select:focus-visible,
+.uv-number:focus-visible {
+  outline: 2px solid var(--uv-accent);
+  outline-offset: 1px;
+}
+
+.uv-number:disabled { opacity: 0.5; }
+
+.uv-bpm-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.uv-bpm-wrap .uv-number { width: 64px; }
+.uv-bpm-wrap .uv-btn { height: 28px; }
+
+.uv-audio-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0 2px;
+  border-top: 1px solid var(--uv-border);
+  font-family: var(--uv-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.08em;
+  color: var(--uv-faint);
+  text-transform: uppercase;
+}
+
+.uv-audio-status-text { white-space: nowrap; }
+
+.uv-kick-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--uv-accent);
+  opacity: 0.45;
+  transition: opacity 80ms, transform 80ms;
+}
+
+.uv-kick-dot.is-hit { opacity: 1; }
+
+.uv-phase-track {
+  flex: 1;
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.uv-phase-fill {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: 999px;
+  background: var(--uv-accent-line);
+}
