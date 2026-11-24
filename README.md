@@ -20,8 +20,8 @@ usa la home) y copia `dist/` en `_site/rizoma/`. Para desarrollo local:
 npm run serve:rizoma
 ```
 
-La documentación editorial y los ADR de Rizoma viven en el repo de Rizoma, no
-acá.
+La documentación editorial, los ADR y el taller de Rizoma viven en el repo de
+Rizoma, no acá.
 
 ## Uso Local
 

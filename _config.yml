@@ -62,7 +62,6 @@ exclude:
   - openspec
   - scripts
   - docs
-  - taller
   - .ruby-version
   - vendor
   - .bundle
