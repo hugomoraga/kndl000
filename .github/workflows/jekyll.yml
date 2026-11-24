@@ -25,12 +25,12 @@ jobs:
           submodules: recursive
           fetch-depth: 0
 
-      # Rizoma vive en su propio repo. Requiere que hugomoraga/rizoma exista y
+      # Rizoma vive en su propio repo. Requiere que quicio/rizoma exista y
       # sea accesible por el token del workflow (público o privado con acceso).
       - name: Checkout Rizoma
         uses: actions/checkout@v6
         with:
-          repository: hugomoraga/rizoma
+          repository: quicio/rizoma
           path: rizoma-src
           fetch-depth: 0
 
