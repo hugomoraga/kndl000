@@ -13,7 +13,8 @@
     </div>
 
     {%- if item.sigil == "rizoma" %}
-    {%- assign exploraciones = site.exploraciones | sort: "order" -%}
+    {%- assign rizoma_index = site.data.rizoma_index -%}
+    {%- assign exploraciones = rizoma_index.exploraciones -%}
     <div class="umbral-feature__index">
       <p class="umbral-feature__index-label">Exploraciones abiertas</p>
       <ol class="umbral-feature__list">
@@ -22,12 +23,12 @@
           <a href="{{ exploracion.url | relative_url }}">
             <span class="umbral-feature__num">{{ exploracion.order }}</span>
             <span class="umbral-feature__name">{{ exploracion.title }}</span>
-            <span class="umbral-feature__meta">{{ exploracion.nodos | size }} nodos · {{ exploracion.corpus | size }} piezas</span>
+            <span class="umbral-feature__meta">{{ exploracion.nodos }} nodos · {{ exploracion.corpus }} piezas</span>
           </a>
         </li>
         {%- endfor %}
       </ol>
-      <a class="umbral-feature__nodes" href="{{ '/rizoma/nodos/' | relative_url }}">Ver los {{ site.nodos | size }} nodos <span aria-hidden="true">→</span></a>
+      <a class="umbral-feature__nodes" href="{{ '/rizoma/nodos/' | relative_url }}">Ver los {{ rizoma_index.nodos }} nodos <span aria-hidden="true">→</span></a>
     </div>
     {%- endif %}
   </div>

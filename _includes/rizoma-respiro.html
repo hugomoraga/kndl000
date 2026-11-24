@@ -1,9 +1,0 @@
-{% assign _respiro = include.respiro %}
-<figure class="expediente__respiro">
-  <blockquote class="expediente__respiro-texto">{{ _respiro.texto | newline_to_br }}</blockquote>
-  {% if _respiro.fuente %}
-  <figcaption class="expediente__respiro-fuente">
-    <a href="{{ _respiro.fuente | relative_url }}">{{ _respiro.fuente_titulo | default: _respiro.fuente }}</a>
-  </figcaption>
-  {% endif %}
-</figure>

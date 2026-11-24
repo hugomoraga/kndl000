@@ -1,12 +1,14 @@
 # KNDL — instrucciones para agentes
 
-Antes de tocar Rizoma, leé `docs/rizoma/PUNTO-DE-ENTRADA.md`. Es el mapa de
-contexto; los ADR son la fuente de las decisiones.
+Rizoma vive en su propio repositorio (Astro). En este repo no está su contenido,
+sus layouts ni sus datos: se construye aparte y se embebe en `/rizoma/` como
+artefacto estático. Antes de tocar Rizoma, leé el `PUNTO-DE-ENTRADA.md` del repo
+de Rizoma; ahí están el mapa de contexto y los ADR.
 
 - No inventes fuentes: verificá y declarás qué no pudiste consultar.
 - No corrijas en silencio: toda rectificación deja un anexo con fuente.
 - No promuevas una idea al cuerpo sin la marca del autor.
-- Abrí una deriva con `node scripts/nueva-exploracion.mjs`.
+- Para construir el sitio completo con Rizoma: `bash scripts/build-rizoma.sh`.
 - Antes de cerrar: `bundle exec jekyll build`, `node scripts/check-links.mjs` y,
-  si tocaste Rizoma, `python3 docs/rizoma/build-lamina.py --verify --plate 01`
-  y `--plate 02`.
+  si tocaste la integración, `bash scripts/build-rizoma.sh` seguido de
+  `node scripts/check-links.mjs`.

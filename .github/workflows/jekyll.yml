@@ -25,6 +25,15 @@ jobs:
           submodules: recursive
           fetch-depth: 0
 
+      # Rizoma vive en su propio repo. Requiere que hugomoraga/rizoma exista y
+      # sea accesible por el token del workflow (público o privado con acceso).
+      - name: Checkout Rizoma
+        uses: actions/checkout@v6
+        with:
+          repository: hugomoraga/rizoma
+          path: rizoma-src
+          fetch-depth: 0
+
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -32,13 +41,21 @@ jobs:
           bundler-cache: true
           cache-version: 0
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v6
 
-      - name: Build with Jekyll
-        run: bundle exec jekyll build
+      - name: Build kndl + Rizoma
+        run: bash scripts/build-rizoma.sh
         env:
+          RIZOMA_DIR: ${{ github.workspace }}/rizoma-src
+          RIZOMA_BASE: /rizoma
+          RIZOMA_SITE: https://kndl.quicio.qzz.io
           JEKYLL_ENV: production
 
       - name: Check internal links
