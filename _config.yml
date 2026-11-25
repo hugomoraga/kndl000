@@ -62,10 +62,13 @@ exclude:
   - openspec
   - scripts
   - docs
-  - taller
   - .ruby-version
   - vendor
   - .bundle
+  # Rizoma se construye desde su propio repo y se copia a _site/rizoma.
+  # El checkout de CI o un submódulo local no deben procesarse con Jekyll.
+  - rizoma
+  - rizoma-src
 
 # Collections configuration
 collections_dir: content/collections
@@ -101,11 +104,6 @@ collections:
   dispositivos:
     output: true
     permalink: /dispositivos/:name/
-  exploraciones:
-    output: true
-    permalink: /rizoma/:name/
-  nodos:
-    output: false
 
 defaults:
   - scope:

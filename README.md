@@ -6,10 +6,22 @@ Este repositorio contiene un blog minimalista basado en [Jekyll](https://jekyllr
 
 ## Rizoma
 
-Para iniciar una sesión nueva o una exploración:
+Rizoma vive en su propio repositorio Astro. Este repo lo construye y lo embebe
+en `/rizoma/` como artefacto estático:
 
-- Leé [docs/rizoma/PUNTO-DE-ENTRADA.md](docs/rizoma/PUNTO-DE-ENTRADA.md).
-- Creá una exploración: `node scripts/nueva-exploracion.mjs --title "Título" --question "¿Pregunta?"`.
+```bash
+bash scripts/build-rizoma.sh          # RIZOMA_DIR=../rizoma por defecto
+```
+
+El script construye Rizoma, actualiza `_data/rizoma_index.json` (el índice que
+usa la home) y copia `dist/` en `_site/rizoma/`. Para desarrollo local:
+
+```bash
+npm run serve:rizoma
+```
+
+La documentación editorial, los ADR y el taller de Rizoma viven en el repo de
+Rizoma, no acá.
 
 ## Uso Local
 
