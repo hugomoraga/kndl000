@@ -14,6 +14,9 @@ lee el checkout de Rizoma en build time y arma:
 - el bloque de últimas exploraciones del home.
 - redirects de las URLs viejas del embed.
 
+Las fichas de obras muestran **“En Rizoma”** con las exploraciones, secciones y
+anexos que las citan.
+
 El checkout se toma de `RIZOMA_DIR` (por defecto `../rizoma`; en CI,
 `rizoma-src`). Para desarrollo local:
 

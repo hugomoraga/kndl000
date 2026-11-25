@@ -1,0 +1,19 @@
+{% assign apariciones = site.data.rizoma_apariciones[include.url] %}
+{% if apariciones and apariciones.size > 0 %}
+<aside class="rizoma-apariciones" aria-label="Apariciones en Rizoma">
+  <p class="rizoma-apariciones__label">En Rizoma</p>
+  <ul class="rizoma-apariciones__list">
+    {% for item in apariciones %}
+    <li>
+      {% if item.kind == "anexo" %}
+      <a href="{{ item.url }}" target="_blank" rel="noreferrer">Anexo · {{ item.label }} ↗</a>
+      <span class="rizoma-apariciones__context">{{ item.exploration }}</span>
+      {% else %}
+      <a href="{{ item.url }}" target="_blank" rel="noreferrer">{{ item.exploration }}{% if item.section %} · {% if item.section_number %}§{{ item.section_number }} {% endif %}{{ item.section }}{% endif %} ↗</a>
+      {% endif %}
+      {% if item.note != "" %}<p class="rizoma-apariciones__note">{{ item.note }}</p>{% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+</aside>
+{% endif %}

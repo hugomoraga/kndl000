@@ -12621,3 +12621,58 @@ body.reading-rizoma .expediente__apparatus-details:not([open]) > .expediente__ap
     border-top: 1px solid var(--umbral-rule);
   }
 }
+
+/* --- Apariciones en Rizoma ------------------------------------------------ */
+.rizoma-apariciones {
+  max-width: var(--reading-measure, 68ch);
+  margin: 3rem auto 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--umbral-rule);
+}
+
+.rizoma-apariciones__label {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--umbral-muted);
+}
+
+.rizoma-apariciones__list {
+  display: grid;
+  gap: 0.8rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rizoma-apariciones__list a {
+  color: var(--umbral-ink);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.rizoma-apariciones__list a:hover,
+.rizoma-apariciones__list a:focus-visible {
+  color: var(--umbral-trace);
+  border-bottom-color: var(--umbral-trace);
+}
+
+.rizoma-apariciones__context {
+  display: block;
+  margin-top: 0.15rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  color: var(--umbral-faint);
+}
+
+.rizoma-apariciones__note {
+  margin: 0.25rem 0 0;
+  font-family: var(--font-serif);
+  font-size: 0.9rem;
+  font-style: italic;
+  line-height: 1.45;
+  color: var(--umbral-dim);
+}

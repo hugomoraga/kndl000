@@ -15,10 +15,12 @@ module KNDL
       root = rizoma_root(site)
       index = build_index(root)
       site.data["rizoma_index"] = index
+      site.data["rizoma_apariciones"] = build_appearances(root, index)
       generate_redirects(site, root, index)
     rescue StandardError => error
       Jekyll.logger.warn "Rizoma:", "no se pudo leer #{root}: #{error.message}"
       site.data["rizoma_index"] = empty_index
+      site.data["rizoma_apariciones"] = {}
     end
 
     private
@@ -79,15 +81,183 @@ module KNDL
       }
     end
 
+    def build_appearances(root, index)
+      appearances = Hash.new { |hash, key| hash[key] = [] }
+      by_slug = index["exploraciones"].each_with_object({}) do |item, hash|
+        hash[item["slug"]] = item
+      end
+      seen = Set.new
+
+      Dir[File.join(root, "src", "content", "exploraciones", "*.md")].sort.each do |path|
+        fm, body = read_document(path)
+        next if fm["published"] == false
+
+        slug = File.basename(path, ".md")
+        exploration = by_slug[slug]
+        next unless exploration
+
+        sections = section_map(body)
+        notes = corpus_notes(fm)
+        sectioned = Set.new
+
+        Array(fm["corpus_secciones"]).each do |group|
+          next unless group.is_a?(Hash)
+
+          section = sections[group["seccion"].to_s]
+          Array(group["piezas"]).each do |piece|
+            work = normalize_work_url(piece.is_a?(Hash) ? piece["url"] : piece)
+            next unless work
+
+            sectioned << work
+            add_appearance(appearances, seen, work, exploration, section, notes[work], "exploracion")
+          end
+        end
+
+        Array(fm["corpus"]).each do |item|
+          work = normalize_work_url(item.is_a?(Hash) ? item["url"] : item)
+          next unless work
+          next if sectioned.include?(work)
+
+          add_appearance(appearances, seen, work, exploration, nil, notes[work], "exploracion")
+        end
+      end
+
+      Dir[File.join(root, "src", "content", "anexos", "*", "*.md")].sort.each do |path|
+        next if File.basename(path, ".md") == "index"
+
+        fm, = read_document(path)
+        exp_slug = File.basename(File.dirname(path))
+        exploration = by_slug[exp_slug]
+        next unless exploration
+
+        anexo_slug = File.basename(path, ".md")
+        anexo_url = "#{rizoma_url}/#{exp_slug}/anexos/#{anexo_slug}/"
+
+        Array(fm["fuentes"]).each do |source|
+          next unless source.is_a?(Hash)
+
+          work = normalize_work_url(source["url"])
+          next unless work
+
+          add_appearance(
+            appearances,
+            seen,
+            work,
+            exploration,
+            nil,
+            source["titulo"].to_s,
+            "anexo",
+            label: fm["title"].to_s,
+            url: anexo_url
+          )
+        end
+      end
+
+      appearances.each_value do |list|
+        list.sort_by! do |item|
+          [item["order"], item["kind_order"], item["section_order"], item["label"].to_s]
+        end
+      end
+      appearances
+    end
+
+    def add_appearance(map, seen, work, exploration, section, note, kind, label: nil, url: nil)
+      key = [work, exploration["url"], kind, section ? section["id"] : nil, label]
+      return if seen.include?(key)
+
+      seen << key
+      map[work] << {
+        "kind" => kind,
+        "kind_order" => kind == "anexo" ? 1 : 0,
+        "label" => label || exploration["title"],
+        "exploration" => exploration["title"],
+        "exploration_url" => exploration["url"],
+        "section" => section ? section["label"] : nil,
+        "section_number" => section ? section["number"] : nil,
+        "url" => url || (section ? "#{exploration["url"]}#{section["anchor"]}" : exploration["url"]),
+        "note" => note.to_s,
+        "order" => exploration["order"].to_i,
+        "section_order" => section ? section["order"].to_i : 0
+      }
+    end
+
+    def section_map(body)
+      sections = {}
+      in_fence = false
+
+      body.each_line do |line|
+        if line.start_with?("```")
+          in_fence = !in_fence
+          next
+        end
+        next if in_fence
+
+        match = line.match(/^##\s+(.+?)\s*\{#([^}]+)\}\s*$/)
+        if match
+          title = match[1].strip
+          id = match[2].strip
+        else
+          match = line.match(/^##\s+(.+?)\s*$/)
+          next unless match
+
+          title = match[1].strip
+          id = Jekyll::Utils.slugify(title)
+        end
+
+        number = title[/\A(\d+)[.)]\s*/, 1]
+        sections[id] = {
+          "id" => id,
+          "title" => title,
+          "label" => title.sub(/\A\d+[.)]\s*/, ""),
+          "number" => number,
+          "anchor" => "##{id}",
+          "order" => number.to_i
+        }
+      end
+
+      sections
+    end
+
+    def corpus_notes(fm)
+      Array(fm["corpus"]).each_with_object({}) do |item, notes|
+        next unless item.is_a?(Hash)
+
+        work = normalize_work_url(item["url"])
+        next unless work
+
+        note = item["note"].to_s.strip
+        notes[work] = note unless note.empty?
+      end
+    end
+
+    def normalize_work_url(value)
+      raw = value.to_s.strip
+      return nil if raw.empty?
+      return nil if raw.start_with?("//")
+
+      raw = raw.sub(%r{\Ahttps?://kndl\.quicio\.(?:org|qzz\.io)}, "")
+      return nil unless raw.start_with?("/")
+      return nil if raw.start_with?("/rizoma/")
+
+      raw = raw.split(/[?#]/).first.to_s
+      raw = "/#{raw}" unless raw.start_with?("/")
+      raw.end_with?("/") ? raw : "#{raw}/"
+    end
+
     def frontmatter(path)
+      read_document(path).first
+    end
+
+    def read_document(path)
       content = File.read(path, encoding: "UTF-8")
       parts = content.split(/^---\s*$/, 3)
-      return {} if parts.length < 2
+      return [{}, content] if parts.length < 2
 
-      YAML.safe_load(parts[1], permitted_classes: [Date, Time], aliases: true) || {}
+      meta = YAML.safe_load(parts[1], permitted_classes: [Date, Time], aliases: true) || {}
+      [meta, parts[2] || ""]
     rescue Psych::SyntaxError => error
       Jekyll.logger.warn "Rizoma:", "frontmatter inválido en #{path}: #{error.message}"
-      {}
+      [{}, ""]
     end
 
     def date_string(value)

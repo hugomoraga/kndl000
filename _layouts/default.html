@@ -27,6 +27,8 @@
 
       {{ content }}
 
+      {% include rizoma-apariciones.html url=page.url %}
+
       {% unless page.back == false %}
       {% include back-button.html %}
       {% endunless %}

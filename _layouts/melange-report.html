@@ -111,6 +111,8 @@
           {% endif %}
         </div>
 
+        {% include rizoma-apariciones.html url=page.url %}
+
         {% include reading-next.html collection="melange_reports" published_only=true title="Seguir leyendo" label_prev="Más reciente" label_next="Más antiguo" related_field="ficha" related_key="event" related_prefix="Otro reporte en" %}
       </article>
 
