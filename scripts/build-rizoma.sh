@@ -11,7 +11,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 RIZOMA_DIR="${RIZOMA_DIR:-$ROOT/../rizoma}"
 SITE_DIR="${SITE_DIR:-$ROOT/_site}"
 BASE="${RIZOMA_BASE:-/rizoma}"
-SITE_URL="${RIZOMA_SITE:-https://kndl.quicio.qzz.io}"
+SITE_URL="${RIZOMA_SITE:-https://kndl.quicio.org}"
 
 if [ ! -d "$RIZOMA_DIR" ]; then
   echo "Rizoma no encontrado en $RIZOMA_DIR" >&2

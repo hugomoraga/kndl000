@@ -55,7 +55,7 @@ jobs:
         env:
           RIZOMA_DIR: ${{ github.workspace }}/rizoma-src
           RIZOMA_BASE: /rizoma
-          RIZOMA_SITE: https://kndl.quicio.qzz.io
+          RIZOMA_SITE: https://kndl.quicio.org
           JEKYLL_ENV: production
 
       - name: Check internal links

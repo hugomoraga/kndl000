@@ -12,7 +12,7 @@ backend:
 
 media_folder: assets/media/images
 public_folder: /assets/media/images
-site_url: https://kndl.quicio.qzz.io
+site_url: https://kndl.quicio.org
 
 collections:
   - name: diario
