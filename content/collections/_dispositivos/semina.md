@@ -1,34 +1,43 @@
 ---
 title: Semina
-date: 2026-11-23
+date: 2026-11-24
 kind: app
 tech: TypeScript · Next.js · Fastify
 version: PoC
 status: en-curso
+demo_url: https://semina.quicio.qzz.io/
 repo: https://github.com/quicio/semina
 formats: Web
 platform: Browser
-description: "Revista personal que crece con una biblioteca curada: edición, investigación y serendipia."
-tagline: "Biblioteca que crece."
+description: "Una revista personal que transforma una biblioteca curada en lecturas diarias, investigación y conexiones inesperadas."
+tagline: "Una biblioteca viva, una lectura cada día."
+claim: "Semina convierte lo que guardas en una revista personal: finita al leer, rastreable al investigar y abierta a conexiones inesperadas."
+capabilities:
+  - "Hoy reúne lecturas publicadas de tus perfiles editoriales y conserva tu progreso privado."
+  - "Taller genera borradores desde fuentes de tu biblioteca y deja la revisión y publicación en manos de una persona."
+  - "Investigación semanal y exploración serendípica enlazan hallazgos con sus fuentes."
+  - "Guías editoriales, colecciones y feedback privado ayudan a orientar futuras lecturas."
 ---
 
-**Semina** es una revista personal que crece con una biblioteca curada. Toma libros, documentos, artículos, imágenes y notas, y los presenta en tres lecturas: una edición diaria finita, una investigación que cruza fuentes y conexiones inesperadas entre disciplinas.
+**Semina** es una revista personal alimentada por una biblioteca propia de libros, documentos, artículos, imágenes y notas. En lugar de ofrecer un flujo interminable, organiza el material para volver a él con intención y seguir el rastro de dónde viene cada idea.
 
-→ [Repositorio](https://github.com/quicio/semina)
+La experiencia se despliega en tres modos: una edición diaria breve y cerrada; investigación semanal que conecta fuentes; y exploración serendípica, donde las conexiones se presentan como posibilidades y no como certezas.
 
-## Qué tiene
+## Leer
 
-- Edición diaria de 10–20 minutos, con cierre explícito. Sin scroll infinito ni likes.
-- Investigación semanal que separa evidencia de interpretación y puede rastrear cada afirmación hasta un fragmento de la biblioteca.
-- Exploración serendípica, presentada como posibilidad, no como verdad.
-- Biblioteca personal, colecciones, perfiles editoriales y una prueba de concepto local.
+**Hoy** reúne las ediciones publicadas de los perfiles editoriales en una lectura del día, con progreso y guardados privados. **Commentarii** ofrece la emisión personal; **Archivo** permite volver a las publicaciones y explorar la biblioteca sin convertirla en un feed infinito.
+
+## Investigar
+
+La investigación parte de fragmentos recuperados de la biblioteca. Las publicaciones conservan procedencia y fuentes para poder seguir las afirmaciones hasta el material que las originó. Las conexiones inesperadas se proponen como pistas para explorar, no como hechos demostrados.
+
+## Editar
+
+En el **Taller**, una edición se genera como borrador, puede revisarse y corregirse, y solo se publica mediante una acción explícita. Los perfiles y las guías editoriales orientan la selección y el tratamiento del material; el feedback permanece privado.
 
 ## Estado
 
-Las fases 0–8 están completadas. Siguen en curso el perfil de ejecución y el feedback entre modos. La revista con invitados todavía no está construida. Hay una sola cuenta por instalación.
+La aplicación está en desarrollo y funciona como prueba de concepto web de una sola cuenta por instalación. La revista para invitados todavía no está construida.
 
-El repositorio es privado: el enlace solo abre para quien tiene acceso.
-
-## Repositorio
-
-[quicio/semina](https://github.com/quicio/semina).
+- [Abrir Semina](https://semina.quicio.qzz.io/)
+- [Repositorio del proyecto](https://github.com/quicio/semina) — privado; requiere acceso.
