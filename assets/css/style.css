@@ -3014,7 +3014,7 @@ body.atelier-index :focus-visible {
   position: relative;
   z-index: 1;
   min-width: 0;
-  padding-left: 4.6rem;
+  padding-left: 0;
 }
 
 .atelier-index-mark,

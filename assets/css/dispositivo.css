@@ -50,7 +50,6 @@ body.dispositivo-detail {
   position: relative;
   z-index: 1;
   min-width: 0;
-  padding-left: 4.6rem;
 }
 
 .atelier-detail__title {
@@ -453,7 +452,7 @@ body.dispositivo-detail {
 
 @media (max-width: 640px) {
   .atelier-detail__lead {
-    padding-left: 3.2rem;
+    padding-left: 0;
   }
 
   .atelier-detail__title {
