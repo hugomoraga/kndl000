@@ -6,15 +6,16 @@ Este repositorio contiene un blog minimalista basado en [Jekyll](https://jekyllr
 
 ## Rizoma
 
-Rizoma vive en su propio repositorio Astro. Este repo lo construye y lo embebe
-en `/rizoma/` como artefacto estático:
+Rizoma vive en su propio repositorio Astro y se publica en
+<https://rizoma.quicio.org/>. Este repo no lo embebe: un generator de Jekyll
+lee el checkout de Rizoma en build time y arma:
 
-```bash
-bash scripts/build-rizoma.sh          # RIZOMA_DIR=../rizoma por defecto
-```
+- `/rizoma/`: índice de exploraciones y enlaces a Rizoma.
+- el bloque de últimas exploraciones del home.
+- redirects de las URLs viejas del embed.
 
-El script construye Rizoma, actualiza `_data/rizoma_index.json` (el índice que
-usa la home) y copia `dist/` en `_site/rizoma/`. Para desarrollo local:
+El checkout se toma de `RIZOMA_DIR` (por defecto `../rizoma`; en CI,
+`rizoma-src`). Para desarrollo local:
 
 ```bash
 npm run serve:rizoma

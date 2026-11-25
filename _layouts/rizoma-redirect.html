@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Redirigiendo a Rizoma…</title>
+  <link rel="canonical" href="{{ page.redirect_to }}">
+  <meta http-equiv="refresh" content="0; url={{ page.redirect_to }}">
+  <script>location.replace({{ page.redirect_to | jsonify }});</script>
+</head>
+<body>
+  <p>Esta página se mudó a <a href="{{ page.redirect_to }}">Rizoma</a>.</p>
+</body>
+</html>

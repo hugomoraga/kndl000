@@ -6,11 +6,9 @@
   "scripts": {
     "build": "bundle exec jekyll build",
     "serve": "bundle exec jekyll serve",
-    "build:rizoma": "bash scripts/build-rizoma.sh",
-    "serve:rizoma": "bash scripts/build-rizoma.sh && bundle exec jekyll serve --skip-initial-build",
+    "serve:rizoma": "RIZOMA_DIR=../rizoma bundle exec jekyll serve",
     "clean": "rm -rf _site .jekyll-cache .sass-cache",
-    "umbral:update": "git submodule update --remote assets/js/umbral-vision",
-    "test:taller": "node --test taller/tests/*.test.mjs"
+    "umbral:update": "git submodule update --remote assets/js/umbral-vision"
   },
   "dependencies": {
     "@kndl/umbral-vision": "^0.1.0"

@@ -42,7 +42,7 @@ jobs:
           cache-version: 0
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 24
 
@@ -50,12 +50,10 @@ jobs:
         id: pages
         uses: actions/configure-pages@v6
 
-      - name: Build kndl + Rizoma
-        run: bash scripts/build-rizoma.sh
+      - name: Build with Jekyll
+        run: bundle exec jekyll build
         env:
           RIZOMA_DIR: ${{ github.workspace }}/rizoma-src
-          RIZOMA_BASE: /rizoma
-          RIZOMA_SITE: https://kndl.quicio.org
           JEKYLL_ENV: production
 
       - name: Check internal links

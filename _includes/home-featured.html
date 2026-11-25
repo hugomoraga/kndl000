@@ -14,13 +14,13 @@
 
     {%- if item.sigil == "rizoma" %}
     {%- assign rizoma_index = site.data.rizoma_index -%}
-    {%- assign exploraciones = rizoma_index.exploraciones -%}
+    {%- assign exploraciones = rizoma_index.ultimas | default: rizoma_index.exploraciones -%}
     <div class="umbral-feature__index">
-      <p class="umbral-feature__index-label">Exploraciones abiertas</p>
+      <p class="umbral-feature__index-label">Últimas exploraciones</p>
       <ol class="umbral-feature__list">
         {%- for exploracion in exploraciones limit: 3 %}
         <li class="umbral-feature__item">
-          <a href="{{ exploracion.url | relative_url }}">
+          <a href="{{ exploracion.url }}" target="_blank" rel="noreferrer">
             <span class="umbral-feature__num">{{ exploracion.order }}</span>
             <span class="umbral-feature__name">{{ exploracion.title }}</span>
             <span class="umbral-feature__meta">{{ exploracion.nodos }} nodos · {{ exploracion.corpus }} piezas</span>
@@ -28,7 +28,7 @@
         </li>
         {%- endfor %}
       </ol>
-      <a class="umbral-feature__nodes" href="{{ '/rizoma/nodos/' | relative_url }}">Ver los {{ rizoma_index.nodos }} nodos <span aria-hidden="true">→</span></a>
+      <a class="umbral-feature__nodes" href="{{ rizoma_index.site }}/nodos/" target="_blank" rel="noreferrer">Ver los {{ rizoma_index.nodos }} nodos <span aria-hidden="true">→</span></a>
     </div>
     {%- endif %}
   </div>
