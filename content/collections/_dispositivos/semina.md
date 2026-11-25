@@ -5,7 +5,7 @@ kind: app
 tech: TypeScript · Next.js · Fastify
 version: PoC
 status: en-curso
-demo_url: https://semina.quicio.org/
+demo_url: https://semina.quicio.qzz.io/
 repo: https://github.com/quicio/semina
 formats: Web
 platform: Browser
@@ -39,5 +39,5 @@ En el **Taller**, una edición se genera como borrador, puede revisarse y correg
 
 La aplicación está en desarrollo y funciona como prueba de concepto web de una sola cuenta por instalación. La revista para invitados todavía no está construida.
 
-- [Abrir Semina](https://semina.quicio.org/)
+- [Abrir Semina](https://semina.quicio.qzz.io/)
 - [Repositorio del proyecto](https://github.com/quicio/semina) — privado; requiere acceso.
