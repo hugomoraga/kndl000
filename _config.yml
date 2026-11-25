@@ -5,7 +5,7 @@ title: "KNDL 000"
 description: "Fragments on technology, art, culture, philosophy — and the quiet noise of life."
 author: "KNDL"
 baseurl: ""
-url: "https://kndl.quicio.qzz.io"
+url: "https://kndl.quicio.org"
 repository: "hugomoraga/kndl000"
 locale: es_ES
 # Imagen por defecto para redes (opcional; ruta bajo el sitio, ej. /assets/media/og.jpg)
