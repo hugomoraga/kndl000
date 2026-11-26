@@ -15,7 +15,7 @@ image_ratio: ''
 
 Una ciudad es mil veces otra ciudad
 Rincones próximos
-invisibles a las emociones
+invisible a las emociones
 Pies acelerados cruzando monolitos
 Devenires de segundos estrellados
 Luciérnaga de los ciegos
